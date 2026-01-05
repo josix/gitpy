@@ -44,15 +44,39 @@ profile = "black"
 
 
 [tool.mypy]
-files = [
-    "gitpy",
-    "tests"
-]
-ignore_missing_imports = true
-follow_imports = "silent"
-warn_redundant_casts = true
-warn_unused_ignores = true
+python_version = "3.12"
+files = ["gitpy", "tests"]
+strict = true
+warn_return_any = true
 warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # Pyflakes
+    "I",      # isort
+    "B",      # flake8-bugbear
+    "C4",     # flake8-comprehensions
+    "UP",     # pyupgrade
+    "ARG",    # flake8-unused-arguments
+    "SIM",    # flake8-simplify
+]
+ignore = [
+    "E501",   # line too long (handled by formatter)
+    "B008",   # function calls in argument defaults
+    "W191",   # indentation contains tabs
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.ruff.isort]
+known-first-party = ["gitpy"]
 
 
 
@@ -111,34 +135,34 @@ readme = "docs/README.md"
 repository = "https://github.com/josix/gitpy"
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.12"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 # task management
-invoke = "^1.4.1"
+invoke = "^2.2"
 # test
-pytest = "^6.0.1"
-pytest-cov = "^2.8.1"
-pytest-mock = "^3.0.0"
-pytest-xdist = "^1.31.0"
-hypothesis = "^5.8.0"
-coverage = {extras = ["toml"], version = "^5.0.4"}
+pytest = "^8.0"
+pytest-cov = "^4.1"
+pytest-mock = "^3.12"
+pytest-xdist = "^3.5"
+hypothesis = "^6.92"
+coverage = {extras = ["toml"], version = "^7.4"}
 # style
-flake8 = "^3.7.9"
-pylint = "^2.7.0"
-mypy = "^0.910"
-black = "^21.7b0"
-isort = "^5.0.0"
+ruff = "^0.1.9"
+mypy = "^1.8"
 # security
-bandit = "^1.6.2"
-safety = "^1.8.7"
+bandit = "^1.7"
+pip-audit = "^2.6"
 # git
-commitizen = "^2.4.0"
-pre-commit = "^2.2.0"
+commitizen = "^3.13"
+pre-commit = "^3.6"
 # documentation
-mkdocs = "^1.1"
-mkdocs-material = "^7.0.6"
+mkdocs = "^1.5"
+mkdocs-material = "^9.5"
+
+[tool.poetry.scripts]
+gitpy = "gitpy.cli:main"
 
 [build-system]
-requires = ["poetry>=1.0.0"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

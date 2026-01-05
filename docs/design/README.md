@@ -1,8 +1,10 @@
 # gitpy Design Documentation
 
-This directory contains detailed design specifications for implementing Git's core functionality in Python.
+This directory contains detailed design specifications for implementing Git's core functionality in Python 3.12+.
 
 ## Document Index
+
+### Phase Specifications
 
 | Phase | Document | Description |
 |-------|----------|-------------|
@@ -11,6 +13,13 @@ This directory contains detailed design specifications for implementing Git's co
 | 3 | [References](phase3_references.md) | HEAD, branches, tags, reflog, revision parsing |
 | 4 | [Index](phase4_index.md) | Staging area, binary format, status tracking |
 | 5-8 | [Commands](phase5_8_commands.md) | Diff engine, plumbing/porcelain commands, merge |
+
+### Implementation Guides
+
+| Document | Description |
+|----------|-------------|
+| [Implementation Agents](implementation_agents.md) | Agent-based implementation strategy with 8 specialized agents |
+| [Python 3.12+ Features](python312_features.md) | Modern Python features to use (type syntax, pattern matching, etc.) |
 
 ## Architecture Overview
 
