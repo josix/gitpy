@@ -201,7 +201,57 @@ Pre-approved tool patterns:
 ### Workflow Tips
 
 1. **Start a session**: Run `/setup` to verify environment
-2. **Implement a feature**: Use `/implement <phase>` to follow design specs
+2. **Implement a feature**: Use `/implement-loop <phase>` for automated implementation
 3. **Check your work**: Run `/test` and `/style`
 4. **Before committing**: Run `/secure` for security check
-5. **Verify Git compat**: Use `/verify-git` to test against real Git
+5. **Verify Git compat**: Use `/verify-loop` to test against real Git
+
+### Subagents
+
+Specialized subagents in `.claude/agents/` for different tasks:
+
+| Agent | Purpose | When to Use |
+|-------|---------|-------------|
+| `code-reviewer` | Python 3.12+ and Git internals review | After writing/modifying code |
+| `test-runner` | Run tests, analyze failures, iterate | After code changes |
+| `implementer` | Build components from design specs | For new features |
+| `git-verifier` | Verification loop for Git compatibility | After implementing features |
+| `debugger` | Debug failing tests and errors | When something breaks |
+
+**Usage**: Subagents are invoked automatically via the Task tool when relevant, or you can request them explicitly (e.g., "run the code-reviewer agent").
+
+### Ralph-Wiggum Integration
+
+This project uses the ralph-wiggum plugin for automated verification loops:
+
+| Command | Description |
+|---------|-------------|
+| `/implement-loop <phase>` | Implement a phase with ralph-wiggum loop until complete |
+| `/verify-loop [component]` | Verify Git compatibility in a loop until all pass |
+
+**How it works**:
+1. Ralph-wiggum runs an iterative loop with a completion promise
+2. Each iteration runs verification/implementation steps
+3. Loop continues until success criteria met (e.g., all tests pass)
+4. Outputs `<promise>VERIFIED</promise>` or `<promise>PHASE_COMPLETE</promise>` when done
+
+**Reference Hashes** (must match real Git):
+- Empty blob: `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391`
+- Empty tree: `4b825dc642cb6eb9a060e54bf8d69288fbee4904`
+- `"hello\n"` blob: `ce013625030ba8dba906f756967f9e9ca394464a`
+
+### Quick Reference
+
+```
+# Implement Phase 1 (Object Model) with verification loop
+/implement-loop 1
+
+# Verify blob implementation against real Git
+/verify-loop blob
+
+# Run code review after changes
+# (Subagent invoked automatically or request: "review this code")
+
+# Debug a failing test
+# (Request: "debug the test_blob_hash test")
+```

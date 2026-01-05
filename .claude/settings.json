@@ -8,7 +8,16 @@
       "Bash(ruff *)",
       "Bash(mypy *)",
       "Bash(git *)",
-      "Bash(python *)"
+      "Bash(python *)",
+      "Bash(pip *)",
+      "Bash(ls *)",
+      "Bash(mkdir *)",
+      "Task(*)",
+      "Skill(*)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(sudo *)"
     ]
   },
   "hooks": {
@@ -18,7 +27,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo 'Remember: Use Python 3.12+ features (type X = ..., Self, match/case, slots=True)'"
+            "command": "echo 'Python 3.12+: type X = ..., Self, match/case, @dataclass(slots=True)'"
           }
         ]
       }
@@ -29,18 +38,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -c 'FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r \".file_path // empty\"); if [[ \"$FILE\" == *.py ]] && [[ -f \"$FILE\" ]]; then ruff format \"$FILE\" 2>/dev/null && ruff check \"$FILE\" --fix --silent 2>/dev/null; fi'"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "matcher": "*",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash /home/user/gitpy/.claude/hooks/session-summary.sh"
+            "command": "bash -c 'FILE=\"$CLAUDE_FILE_PATH\"; if [[ \"$FILE\" == *.py ]] && [[ -f \"$FILE\" ]]; then ruff format \"$FILE\" 2>/dev/null || true; fi'"
           }
         ]
       }
