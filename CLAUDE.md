@@ -7,7 +7,7 @@ This file provides guidance for AI assistants working with this codebase.
 **gitpy** is an educational project that re-implements Git's core functionality in Python. The goal is to help developers understand Git's internals by building it from scratch.
 
 - **Language**: Python 3.12+
-- **Package Manager**: Poetry
+- **Package Manager**: uv
 - **Task Runner**: Invoke
 - **Linting**: Ruff (replaces flake8, isort, black)
 - **Type Checking**: mypy (strict mode)
@@ -16,41 +16,44 @@ This file provides guidance for AI assistants working with this codebase.
 
 ### Environment Setup
 ```sh
-inv env.init-dev          # Create virtual environment and install dependencies
+uv sync --group dev       # Create venv and install all dependencies
+uv run inv env.init-dev   # Or use invoke task
 ```
 
 ### Testing
 ```sh
-inv test                  # Run all tests
-inv test.cov              # Run tests with coverage report
+uv run pytest             # Run all tests
+uv run pytest --cov       # Run tests with coverage report
+uv run inv test           # Or use invoke task
 ```
 
 ### Code Style
 ```sh
-ruff check .              # Lint code
-ruff format .             # Format code
-mypy gitpy tests          # Type check
+uv run ruff check .       # Lint code
+uv run ruff format .      # Format code
+uv run mypy gitpy tests   # Type check
 ```
 
 ### Security
 ```sh
-inv secure                # Run security checks (bandit + pip-audit)
+uv run bandit -r gitpy    # Security static analysis
+uv run pip-audit          # Dependency vulnerability check
 ```
 
 ### Git/Commits
 ```sh
-inv git.commit            # Create a conventional commit
+uv run cz commit          # Create a conventional commit
 ```
 
 ### Documentation
 ```sh
-inv doc.build             # Build documentation
-inv doc.serve             # Serve documentation locally
+uv run mkdocs build       # Build documentation
+uv run mkdocs serve       # Serve documentation locally
 ```
 
 ### Run gitpy
 ```sh
-poetry run gitpy <command>   # Run gitpy CLI
+uv run gitpy <command>    # Run gitpy CLI
 ```
 
 ## Project Structure
@@ -71,7 +74,7 @@ gitpy/
 ├── tasks/                # Invoke task definitions
 ├── docs/                 # MkDocs documentation
 │   └── design/           # Design specifications
-└── pyproject.toml        # Poetry config and tool settings
+└── pyproject.toml        # Project config (PEP 621) and tool settings
 ```
 
 ## Code Style
@@ -191,8 +194,8 @@ Configured in `.claude/settings.json`:
 ### Permissions
 
 Pre-approved tool patterns:
+- `Bash(uv *)` - Package management
 - `Bash(inv *)` - Invoke tasks
-- `Bash(poetry *)` - Package management
 - `Bash(pytest *)` - Testing
 - `Bash(ruff *)` - Linting/formatting
 - `Bash(mypy *)` - Type checking

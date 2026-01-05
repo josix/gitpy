@@ -1,5 +1,5 @@
 ---
-allowed-tools: Bash(inv test*), Bash(pytest*)
+allowed-tools: Bash(uv run pytest*), Bash(uv run inv*)
 description: Run pytest tests with optional coverage
 argument-hint: [--cov] [test_pattern]
 ---
@@ -14,12 +14,12 @@ Arguments: $ARGUMENTS
 
 If `--cov` is specified or no arguments given, run with coverage:
 ```
-inv test.cov
+uv run pytest --cov=gitpy --cov-report=term-missing
 ```
 
 If a specific test pattern is provided:
 ```
-pytest tests/$ARGUMENTS -v
+uv run pytest tests/$ARGUMENTS -v
 ```
 
 After running tests, report:

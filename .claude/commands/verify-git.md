@@ -1,5 +1,5 @@
 ---
-allowed-tools: Bash(git*), Bash(python*), Read
+allowed-tools: Bash(git*), Bash(uv run python*), Bash(uv run gitpy*), Read
 description: Verify gitpy compatibility with real Git
 argument-hint: <component>
 ---
@@ -26,7 +26,7 @@ Component to verify: $ARGUMENTS
    - Dump index: `git ls-files --stage`
 
 3. **Compare with gitpy**:
-   - Parse the same objects with gitpy
+   - Parse the same objects with gitpy: `uv run gitpy cat-file -p <sha>`
    - Verify SHA-1 hashes match
    - Verify serialization roundtrip
 

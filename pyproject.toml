@@ -1,47 +1,60 @@
+[project]
+name = "gitpy"
+version = "0.0.1"
+description = "Rediscover git through re-implementing it in python"
+readme = "docs/README.md"
+license = {text = "MIT"}
+authors = [{name = "Josix Wang", email = "josixwang@gmail.com"}]
+requires-python = ">=3.12"
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/josix/gitpy"
+
+[project.scripts]
+gitpy = "gitpy.cli:main"
+
+[dependency-groups]
+dev = [
+    # task management
+    "invoke>=2.2",
+    # test
+    "pytest>=8.0",
+    "pytest-cov>=4.1",
+    "pytest-mock>=3.12",
+    "pytest-xdist>=3.5",
+    "hypothesis>=6.92",
+    "coverage[toml]>=7.4",
+    # style
+    "ruff>=0.1.9",
+    "mypy>=1.8",
+    # security
+    "bandit>=1.7",
+    "pip-audit>=2.6",
+    # git
+    "commitizen>=3.13",
+    "pre-commit>=3.6",
+    # documentation
+    "mkdocs>=1.5",
+    "mkdocs-material>=9.5",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["gitpy"]
+
+# ============================================================
+# Tool Configurations
+# ============================================================
+
 [tool.commitizen]
 name = "cz_conventional_commits"
 version = "0.0.1"
 tag_format = "$version"
-version_files = [
-    "pyproject.toml:version"
-]
-
-
-[tool.black]
-line-length = 88
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.eggs
-  | \.git
-  | \.hg
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | _build
-  | buck-out
-  | build
-  | dist
-)/
-'''
-
-
-[tool.isort]
-profile = "black"
-
-
-[tool.pylint]
-    [tool.pylint.messages_control]
-    disable = [
-        "bad-continuation",
-        "missing-function-docstring",
-        "missing-module-docstring",
-        "invalid-name"
-    ]
-
-    [tool.pylint.format]
-    max-line-length = 88
-
+version_files = ["pyproject.toml:version"]
 
 [tool.mypy]
 python_version = "3.12"
@@ -75,14 +88,12 @@ ignore = [
 quote-style = "double"
 indent-style = "space"
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-first-party = ["gitpy"]
-
-
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-testpaths = "tests"
+testpaths = ["tests"]
 addopts = "--strict-markers"
 norecursedirs = [
     ".*",
@@ -94,75 +105,26 @@ norecursedirs = [
     "*.egg",
     "venv",
     "env",
-    "virtualenv"
+    "virtualenv",
+    ".venv",
 ]
 
-
-[tool.coverage]
-    [tool.coverage.report]
-    show_missing = true
-    exclude_lines = [
-        # Have to re-enable the standard pragma
-        'pragma: no cover',
-
-        # Don't complain about missing debug-only code:
-        'def __repr__',
-        'if self\.debug',
-
-        # Don't complain if tests don't hit defensive assertion code:
-        'raise AssertionError',
-        'raise NotImplementedError',
-
-        # Don't complain if non-runnable code isn't run:
-        'if 0:',
-        'if __name__ == .__main__.:'
-    ]
-    omit = [
-        'env/*',
-        'venv/*',
-        '*/virtualenv/*',
-        '*/virtualenvs/*',
-        '*/tests/*'
-    ]
-
-[tool.poetry]
-name = "gitpy"
-version = "0.0.1"
-authors = ["Josix Wang <josixwang@gmail.com>"]
-description = "Rediscover git through re-implementing it in python"
-license = "MIT license"
-readme = "docs/README.md"
-repository = "https://github.com/josix/gitpy"
-
-[tool.poetry.dependencies]
-python = "^3.12"
-
-[tool.poetry.group.dev.dependencies]
-# task management
-invoke = "^2.2"
-# test
-pytest = "^8.0"
-pytest-cov = "^4.1"
-pytest-mock = "^3.12"
-pytest-xdist = "^3.5"
-hypothesis = "^6.92"
-coverage = {extras = ["toml"], version = "^7.4"}
-# style
-ruff = "^0.1.9"
-mypy = "^1.8"
-# security
-bandit = "^1.7"
-pip-audit = "^2.6"
-# git
-commitizen = "^3.13"
-pre-commit = "^3.6"
-# documentation
-mkdocs = "^1.5"
-mkdocs-material = "^9.5"
-
-[tool.poetry.scripts]
-gitpy = "gitpy.cli:main"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.coverage.report]
+show_missing = true
+exclude_lines = [
+    'pragma: no cover',
+    'def __repr__',
+    'if self\.debug',
+    'raise AssertionError',
+    'raise NotImplementedError',
+    'if 0:',
+    'if __name__ == .__main__.:',
+]
+omit = [
+    'env/*',
+    'venv/*',
+    '.venv/*',
+    '*/virtualenv/*',
+    '*/virtualenvs/*',
+    '*/tests/*',
+]

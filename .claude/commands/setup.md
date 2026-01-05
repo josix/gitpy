@@ -1,5 +1,5 @@
 ---
-allowed-tools: Bash(inv*), Bash(poetry*), Bash(python*)
+allowed-tools: Bash(uv*), Bash(python*)
 description: Initialize or verify development environment
 ---
 
@@ -14,20 +14,20 @@ Set up the gitpy development environment.
 
 2. **Initialize virtual environment and install dependencies**:
    ```
-   inv env.init-dev
+   uv sync --group dev
    ```
 
 3. **Verify installation**:
    ```
-   poetry --version
-   poetry show
+   uv --version
+   uv pip list
    ```
 
 4. **Run quick validation**:
    ```
-   ruff --version
-   mypy --version
-   pytest --version
+   uv run ruff --version
+   uv run mypy --version
+   uv run pytest --version
    ```
 
 5. **Report status**:

@@ -1,5 +1,5 @@
 ---
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash(pytest*), Bash(ruff*), Bash(mypy*)
+allowed-tools: Read, Write, Edit, Glob, Grep, Bash(uv run pytest*), Bash(uv run ruff*), Bash(uv run mypy*)
 description: Implement a phase or component from design docs
 argument-hint: <phase_number|component_name>
 ---
@@ -26,10 +26,10 @@ Argument: $ARGUMENTS
    - Create corresponding test file in `tests/`
 
 4. **Run validation**:
-   - Format: `ruff format <files>`
-   - Lint: `ruff check <files>`
-   - Type check: `mypy <files>`
-   - Tests: `pytest tests/<test_file> -v`
+   - Format: `uv run ruff format <files>`
+   - Lint: `uv run ruff check <files>`
+   - Type check: `uv run mypy <files>`
+   - Tests: `uv run pytest tests/<test_file> -v`
 
 5. **Report completion status** with:
    - Files created/modified
