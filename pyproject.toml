@@ -6,13 +6,16 @@ readme = "docs/README.md"
 license = {text = "MIT"}
 authors = [{name = "Josix Wang", email = "josixwang@gmail.com"}]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "typer>=0.9",
+    "rich>=13.0",
+]
 
 [project.urls]
 Repository = "https://github.com/josix/gitpy"
 
 [project.scripts]
-gitpy = "gitpy.cli:main"
+gitpy = "gitpy.cli:app"
 
 [dependency-groups]
 dev = [
