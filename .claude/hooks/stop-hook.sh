@@ -1,14 +1,23 @@
 #!/bin/bash
-# stop-hook.sh - Ralph Wiggum stop hook for self-referential loops
-# This hook intercepts session exits and feeds the prompt back if a loop is active
+# stop-hook.sh - Stop hook for session cleanup and ralph-wiggum loops
+# Runs consistency checks and handles self-referential loops
 
 set -e
 
 CLAUDE_DIR="${CLAUDE_LOCAL_DIR:-.claude}"
 STATE_FILE="$CLAUDE_DIR/ralph-loop.local.md"
+SCRIPT_DIR="$(cd "$(dirname "$0")/../scripts" 2>/dev/null && pwd)"
 
-# If no active loop, allow normal exit
+# Run consistency check on session end (non-blocking)
+run_consistency_check() {
+    if [[ -x "$SCRIPT_DIR/check-consistency.sh" ]]; then
+        bash "$SCRIPT_DIR/check-consistency.sh" || true
+    fi
+}
+
+# If no active loop, run checks and allow normal exit
 if [[ ! -f "$STATE_FILE" ]]; then
+    run_consistency_check >&2
     echo '{"decision": "allow"}'
     exit 0
 fi
