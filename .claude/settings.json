@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(inv *)",
+      "Bash(poetry *)",
+      "Bash(pytest *)",
+      "Bash(ruff *)",
+      "Bash(mypy *)",
+      "Bash(git *)",
+      "Bash(python *)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'Remember: Use Python 3.12+ features (type X = ..., Self, match/case, slots=True)'"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'FILE=$(echo \"$CLAUDE_TOOL_INPUT\" | jq -r \".file_path // empty\"); if [[ \"$FILE\" == *.py ]] && [[ -f \"$FILE\" ]]; then ruff format \"$FILE\" 2>/dev/null && ruff check \"$FILE\" --fix --silent 2>/dev/null; fi'"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /home/user/gitpy/.claude/hooks/session-summary.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

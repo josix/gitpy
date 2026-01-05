@@ -161,3 +161,47 @@ Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
 ## Pre-commit Hooks
 
 Pre-commit hooks are configured for automated checks. They run style, security, and test validations before commits and pushes.
+
+---
+
+## Claude Code Integration
+
+### Slash Commands
+
+Custom commands available in this project (`.claude/commands/`):
+
+| Command | Description |
+|---------|-------------|
+| `/test [--cov] [pattern]` | Run pytest tests with optional coverage |
+| `/style [--fix]` | Format and lint code with ruff/mypy |
+| `/implement <phase>` | Implement a component from design specs |
+| `/design <phase>` | View design specification for a phase |
+| `/setup` | Initialize development environment |
+| `/secure` | Run security checks (bandit, pip-audit) |
+| `/verify-git <component>` | Verify compatibility with real Git |
+
+### Hooks
+
+Configured in `.claude/settings.json`:
+
+- **PreToolUse (Write/Edit)**: Reminds to use Python 3.12+ features
+- **PostToolUse (Write/Edit)**: Auto-formats Python files with ruff
+- **Stop**: Runs session summary (uncommitted changes, style issues)
+
+### Permissions
+
+Pre-approved tool patterns:
+- `Bash(inv *)` - Invoke tasks
+- `Bash(poetry *)` - Package management
+- `Bash(pytest *)` - Testing
+- `Bash(ruff *)` - Linting/formatting
+- `Bash(mypy *)` - Type checking
+- `Bash(git *)` - Version control
+
+### Workflow Tips
+
+1. **Start a session**: Run `/setup` to verify environment
+2. **Implement a feature**: Use `/implement <phase>` to follow design specs
+3. **Check your work**: Run `/test` and `/style`
+4. **Before committing**: Run `/secure` for security check
+5. **Verify Git compat**: Use `/verify-git` to test against real Git
