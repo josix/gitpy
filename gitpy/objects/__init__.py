@@ -73,7 +73,7 @@ def parse_object(data: bytes) -> tuple[str, GitObject]:
     obj = obj_class.deserialize(content)
 
     # Compute and return SHA
-    sha = hashlib.sha1(data).hexdigest()
+    sha = hashlib.sha1(data, usedforsecurity=False).hexdigest()
 
     return sha, obj
 

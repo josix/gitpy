@@ -46,7 +46,7 @@ class GitObject(ABC):
         """
         content = self.serialize()
         header = f"{self.type_name} {len(content)}\0".encode()
-        return hashlib.sha1(header + content).hexdigest()
+        return hashlib.sha1(header + content, usedforsecurity=False).hexdigest()
 
     @property
     def oid(self) -> str:
