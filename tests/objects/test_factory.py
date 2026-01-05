@@ -151,7 +151,10 @@ class TestObjectFactory:
     def test_roundtrip_commit(self) -> None:
         """Commit roundtrips through create/parse."""
         author = Identity(
-            name="Test", email="test@example.com", timestamp=1234567890, tz_offset="+0000"
+            name="Test",
+            email="test@example.com",
+            timestamp=1234567890,
+            tz_offset="+0000",
         )
         original = Commit(
             tree_sha="a" * 40,
@@ -170,7 +173,10 @@ class TestObjectFactory:
     def test_roundtrip_tag(self) -> None:
         """Tag roundtrips through create/parse."""
         tagger = Identity(
-            name="Test", email="test@example.com", timestamp=1234567890, tz_offset="+0000"
+            name="Test",
+            email="test@example.com",
+            timestamp=1234567890,
+            tz_offset="+0000",
         )
         original = Tag(
             object_sha="a" * 40,

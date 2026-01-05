@@ -1,7 +1,5 @@
 """Tests for Commit and Identity objects."""
 
-import pytest
-
 from gitpy.objects import Commit, Identity
 
 
@@ -119,7 +117,10 @@ class TestCommit:
     def test_commit_roundtrip(self) -> None:
         """Serialize then deserialize preserves all fields."""
         author = Identity(
-            name="Alice", email="alice@example.com", timestamp=1234567890, tz_offset="-0700"
+            name="Alice",
+            email="alice@example.com",
+            timestamp=1234567890,
+            tz_offset="-0700",
         )
         committer = Identity(
             name="Bob", email="bob@example.com", timestamp=1234567899, tz_offset="+0530"
@@ -164,7 +165,10 @@ class TestCommit:
     def test_commit_serialization_format(self) -> None:
         """Verify exact serialization format."""
         author = Identity(
-            name="Test", email="test@example.com", timestamp=1234567890, tz_offset="+0000"
+            name="Test",
+            email="test@example.com",
+            timestamp=1234567890,
+            tz_offset="+0000",
         )
         commit = Commit(
             tree_sha="a" * 40,
@@ -187,7 +191,10 @@ class TestCommit:
     def test_commit_hash_deterministic(self) -> None:
         """Same commit data produces same hash."""
         author = Identity(
-            name="Test", email="test@example.com", timestamp=1234567890, tz_offset="+0000"
+            name="Test",
+            email="test@example.com",
+            timestamp=1234567890,
+            tz_offset="+0000",
         )
         commit1 = Commit(
             tree_sha="a" * 40,

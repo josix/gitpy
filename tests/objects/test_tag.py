@@ -1,7 +1,5 @@
 """Tests for Tag object."""
 
-import pytest
-
 from gitpy.objects import Identity, Tag
 
 
@@ -74,7 +72,10 @@ class TestTag:
     def test_tag_serialization_format(self) -> None:
         """Verify exact serialization format."""
         tagger = Identity(
-            name="Test", email="test@example.com", timestamp=1234567890, tz_offset="+0000"
+            name="Test",
+            email="test@example.com",
+            timestamp=1234567890,
+            tz_offset="+0000",
         )
         tag = Tag(
             object_sha="a" * 40,
@@ -127,7 +128,10 @@ class TestTag:
     def test_tag_hash_deterministic(self) -> None:
         """Same tag data produces same hash."""
         tagger = Identity(
-            name="Test", email="test@example.com", timestamp=1234567890, tz_offset="+0000"
+            name="Test",
+            email="test@example.com",
+            timestamp=1234567890,
+            tz_offset="+0000",
         )
         tag1 = Tag(
             object_sha="a" * 40,

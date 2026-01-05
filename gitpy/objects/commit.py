@@ -1,7 +1,7 @@
 """Commit object implementation."""
 
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import Self
 
 from .base import GitObject
@@ -70,7 +70,7 @@ class Identity:
         Returns:
             A new Identity instance with current time.
         """
-        now = datetime.now(timezone.utc)
+        now = datetime.now(UTC)
         return cls(
             name=name,
             email=email,

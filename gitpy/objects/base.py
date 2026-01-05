@@ -1,7 +1,7 @@
 """Base class for all Git objects."""
 
-from abc import ABC, abstractmethod
 import hashlib
+from abc import ABC, abstractmethod
 from typing import Self
 
 
