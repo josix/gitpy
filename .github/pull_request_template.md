@@ -15,9 +15,9 @@
 
 ## Checklist:
 - [ ] Add test cases to all the changes you introduce
-- [ ] Run `inv style` locally to ensure all linter checks pass
-- [ ] Run `inv test` locally to ensure all test cases pass
-- [ ] Run `inv secure` locally to ensure no major vulnerability is introduced
+- [ ] Run `uv run inv style` locally to ensure all linter checks pass
+- [ ] Run `uv run inv test` locally to ensure all test cases pass
+- [ ] Run `uv run inv secure` locally to ensure no major vulnerability is introduced
 - [ ] Update the documentation if necessary
 
 ## Steps to Test This Pull Request
