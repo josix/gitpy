@@ -1310,8 +1310,8 @@ if __name__ == "__main__":
 ### 8.3 pyproject.toml Entry Point
 
 ```toml
-[tool.poetry.scripts]
-gitpy = "gitpy.cli:main"
+[project.scripts]
+gitpy = "gitpy.cli:app"
 ```
 
 ---

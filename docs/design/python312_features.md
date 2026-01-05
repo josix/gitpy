@@ -5,8 +5,8 @@ This document outlines modern Python 3.12+ features to leverage in the implement
 ## Required Python Version
 
 ```toml
-[tool.poetry.dependencies]
-python = "^3.12"
+[project]
+requires-python = ">=3.12"
 ```
 
 ## Key Features to Use
