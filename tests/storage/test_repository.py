@@ -129,7 +129,9 @@ class TestRepositoryFind:
         with pytest.raises(ValueError, match="Not a git repository"):
             Repository.find(tmp_path)
 
-    def test_find_default_cwd(self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    def test_find_default_cwd(
+        self, tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
         """Find with no argument uses cwd."""
         Repository.init(tmp_path / "repo")
         monkeypatch.chdir(tmp_path / "repo")

@@ -34,7 +34,7 @@ class TestObjectDatabase:
         blob_sha = db.write(blob)
 
         # Create tree with entry
-        entry = TreeEntry(mode=0o100644, name="file.txt", sha=blob_sha)
+        entry = TreeEntry(mode="100644", name="file.txt", sha=blob_sha)
         tree = Tree(entries=[entry])
         tree_sha = db.write(tree)
 
@@ -50,7 +50,12 @@ class TestObjectDatabase:
         tree_sha = db.write(tree)
 
         # Create commit
-        author = Identity(name="Test", email="test@example.com", timestamp=1234567890, tz_offset=0)
+        author = Identity(
+            name="Test",
+            email="test@example.com",
+            timestamp=1234567890,
+            tz_offset="+0000",
+        )
         commit = Commit(
             tree_sha=tree_sha,
             parent_shas=[],
