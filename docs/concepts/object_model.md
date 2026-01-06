@@ -651,6 +651,166 @@ Because objects never change, Git can share them freely:
 
 ---
 
+## Implementation in gitpy
+
+Now let's see how these concepts map to actual code in the gitpy codebase.
+
+### Code Organization
+
+The object model lives in `gitpy/objects/`:
+
+```
+gitpy/objects/
+├── __init__.py   # Factory functions and exports
+├── base.py       # GitObject base class
+├── blob.py       # Blob implementation
+├── tree.py       # Tree and TreeEntry
+├── commit.py     # Commit and Identity
+└── tag.py        # Tag implementation
+```
+
+Each Git concept gets its own module, making the code easy to navigate.
+
+### The Base Class: GitObject
+
+All four object types share common behavior—they can be serialized, deserialized, and hashed. We capture this in a base class:
+
+```
+GitObject (base class)
+├── type_name      → "blob", "tree", "commit", or "tag"
+├── serialize()    → Convert to bytes (content only)
+├── deserialize()  → Create from bytes (content only)
+├── compute_hash() → SHA-1 of header + content
+└── oid            → The 40-char hash (property)
+```
+
+The key insight: `serialize()` returns just the content, while `compute_hash()` adds the header (`type size\0`) before hashing. This separation keeps each method focused.
+
+### Blob: The Simplest Implementation
+
+A blob just wraps raw bytes:
+
+```
+Blob
+├── data: bytes    → The file contents
+├── serialize()    → Returns data as-is
+├── deserialize()  → Wraps bytes in a Blob
+└── from_file()    → Helper to read from disk
+```
+
+There's almost no logic—a blob is just a container. The complexity lives in how blobs are *used* by trees.
+
+### Tree: Entries and Sorting
+
+Trees are more complex because they contain structured data:
+
+```
+TreeEntry
+├── mode: str      → "100644", "100755", "40000", etc.
+├── name: str      → Filename (no path separators)
+├── sha: str       → 40-char hash of referenced object
+├── is_tree        → True if mode is "40000"
+├── is_blob        → True if mode is "100644" or "100755"
+└── sort_key()     → Name with "/" appended for directories
+
+Tree
+├── entries: list  → List of TreeEntry objects
+├── serialize()    → Sort entries, encode as binary
+├── deserialize()  → Parse binary format
+├── add_entry()    → Add entry (validates no "/" in name)
+└── get_entry()    → Look up by name
+```
+
+The tricky parts:
+1. **Binary SHA**: `serialize()` converts hex SHA to 20 raw bytes
+2. **Sorting**: Uses `sort_key()` to handle the directory trailing-slash rule
+3. **Parsing**: `deserialize()` must find null bytes and extract 20-byte chunks
+
+### Commit: Multiple Fields
+
+Commits have the most fields to manage:
+
+```
+Identity
+├── name: str       → "Alice Smith"
+├── email: str      → "alice@example.com"
+├── timestamp: int  → Unix epoch seconds
+├── tz_offset: str  → "+0000" or "-0700"
+├── parse()         → Parse "Name <email> timestamp tz"
+└── now()           → Create with current time
+
+Commit
+├── tree_sha: str        → Root tree hash
+├── parent_shas: list    → Parent commit hashes (0, 1, or many)
+├── author: Identity     → Who wrote the change
+├── committer: Identity  → Who committed it
+├── message: str         → Commit message (can be multiline)
+├── is_root              → True if no parents
+└── is_merge             → True if multiple parents
+```
+
+Serialization writes headers line-by-line, then a blank line, then the message. Deserialization parses until the blank line, then captures everything after as the message.
+
+### Tag: Similar to Commit
+
+Tags share structure with commits:
+
+```
+Tag
+├── object_sha: str    → Hash of tagged object
+├── object_type: str   → "commit", "tree", "blob", or "tag"
+├── tag_name: str      → "v1.0.0"
+├── tagger: Identity   → Who created the tag
+└── message: str       → Tag message
+```
+
+The serialization format is nearly identical to commits—headers, blank line, message.
+
+### Factory Functions
+
+The `__init__.py` provides two key functions:
+
+```
+parse_object(data: bytes) → (sha, GitObject)
+    1. Find the null byte separating header from content
+    2. Parse header to get type and size
+    3. Verify size matches content length
+    4. Look up the class for this type
+    5. Call deserialize() on the content
+    6. Compute SHA-1 of the full data
+    7. Return (sha, object)
+
+create_object_data(obj: GitObject) → bytes
+    1. Call serialize() to get content
+    2. Build header: "type size\0"
+    3. Return header + content
+```
+
+These handle the header that wraps every object. Individual classes don't worry about headers—they just serialize their content.
+
+### Design Decisions
+
+**Immutability**: Objects don't have setter methods. To "change" a blob, you create a new one. This mirrors Git's actual behavior.
+
+**Separation of concerns**: Objects know how to serialize themselves but not how to be stored. Storage (compression, disk I/O) is a separate layer.
+
+**Validation at boundaries**: `Tree.add_entry()` rejects names with `/`. Invalid data is caught early, not during serialization.
+
+**Hash on demand**: The `oid` property computes the hash each time. For performance-critical code, you'd cache this, but for clarity we keep it simple.
+
+### Testing Strategy
+
+Tests live in `tests/objects/` and verify:
+
+1. **Known hashes**: Empty blob, empty tree, and `hello\n` must match Git's hashes
+2. **Roundtrips**: `deserialize(serialize(obj))` preserves all data
+3. **Edge cases**: Empty content, multiline messages, merge commits, binary data
+4. **Format compliance**: Serialized output matches Git's exact format
+
+The known hash tests are critical—they prove we're Git-compatible.
+
+---
+
 ## What's Next?
 
 The object model is the foundation. The next layers build on top:
