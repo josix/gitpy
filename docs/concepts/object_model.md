@@ -673,120 +673,248 @@ Each Git concept gets its own module, making the code easy to navigate.
 
 ### The Base Class: GitObject
 
-All four object types share common behavior—they can be serialized, deserialized, and hashed. We capture this in a base class:
+All four object types share common behavior. The base class in `base.py`:
 
-```
-GitObject (base class)
-├── type_name      → "blob", "tree", "commit", or "tag"
-├── serialize()    → Convert to bytes (content only)
-├── deserialize()  → Create from bytes (content only)
-├── compute_hash() → SHA-1 of header + content
-└── oid            → The 40-char hash (property)
-```
+```python
+class GitObject(ABC):
+    type_name: str  # "blob", "tree", "commit", or "tag"
 
-The key insight: `serialize()` returns just the content, while `compute_hash()` adds the header (`type size\0`) before hashing. This separation keeps each method focused.
+    def serialize(self) -> bytes:
+        """Convert to bytes (content only, no header)."""
+        ...
 
-### Blob: The Simplest Implementation
+    def deserialize(cls, data: bytes) -> Self:
+        """Create from bytes (content only, no header)."""
+        ...
 
-A blob just wraps raw bytes:
+    def compute_hash(self) -> str:
+        """SHA-1 of header + content."""
+        content = self.serialize()
+        header = f"{self.type_name} {len(content)}\0".encode()
+        return hashlib.sha1(header + content, usedforsecurity=False).hexdigest()
 
-```
-Blob
-├── data: bytes    → The file contents
-├── serialize()    → Returns data as-is
-├── deserialize()  → Wraps bytes in a Blob
-└── from_file()    → Helper to read from disk
-```
-
-There's almost no logic—a blob is just a container. The complexity lives in how blobs are *used* by trees.
-
-### Tree: Entries and Sorting
-
-Trees are more complex because they contain structured data:
-
-```
-TreeEntry
-├── mode: str      → "100644", "100755", "40000", etc.
-├── name: str      → Filename (no path separators)
-├── sha: str       → 40-char hash of referenced object
-├── is_tree        → True if mode is "40000"
-├── is_blob        → True if mode is "100644" or "100755"
-└── sort_key()     → Name with "/" appended for directories
-
-Tree
-├── entries: list  → List of TreeEntry objects
-├── serialize()    → Sort entries, encode as binary
-├── deserialize()  → Parse binary format
-├── add_entry()    → Add entry (validates no "/" in name)
-└── get_entry()    → Look up by name
+    @property
+    def oid(self) -> str:
+        """The 40-character object ID."""
+        return self.compute_hash()
 ```
 
-The tricky parts:
-1. **Binary SHA**: `serialize()` converts hex SHA to 20 raw bytes
-2. **Sorting**: Uses `sort_key()` to handle the directory trailing-slash rule
-3. **Parsing**: `deserialize()` must find null bytes and extract 20-byte chunks
+The key insight: `serialize()` returns just the content, while `compute_hash()` adds the header (`type size\0`) before hashing.
 
-### Commit: Multiple Fields
+### Blob Implementation
 
-Commits have the most fields to manage:
+A blob is the simplest object—just a wrapper around bytes:
 
-```
-Identity
-├── name: str       → "Alice Smith"
-├── email: str      → "alice@example.com"
-├── timestamp: int  → Unix epoch seconds
-├── tz_offset: str  → "+0000" or "-0700"
-├── parse()         → Parse "Name <email> timestamp tz"
-└── now()           → Create with current time
+```python
+class Blob(GitObject):
+    type_name: str = "blob"
+    data: bytes = b""
 
-Commit
-├── tree_sha: str        → Root tree hash
-├── parent_shas: list    → Parent commit hashes (0, 1, or many)
-├── author: Identity     → Who wrote the change
-├── committer: Identity  → Who committed it
-├── message: str         → Commit message (can be multiline)
-├── is_root              → True if no parents
-└── is_merge             → True if multiple parents
+    def serialize(self) -> bytes:
+        return self.data
+
+    def deserialize(cls, data: bytes) -> Self:
+        return cls(data=data)
+
+    def from_file(cls, path: str | Path) -> Self:
+        with open(path, "rb") as f:
+            return cls(data=f.read())
 ```
 
-Serialization writes headers line-by-line, then a blank line, then the message. Deserialization parses until the blank line, then captures everything after as the message.
+### Tree Implementation
 
-### Tag: Similar to Commit
+Trees require more logic for binary serialization and sorting:
 
-Tags share structure with commits:
+```python
+class TreeEntry:
+    mode: str   # "100644", "100755", "40000"
+    name: str   # Filename
+    sha: str    # 40-char hex hash
 
+    @property
+    def is_tree(self) -> bool:
+        return self.mode == "40000"
+
+    def sort_key(self) -> str:
+        # Directories sort as if they had trailing "/"
+        return self.name + "/" if self.is_tree else self.name
+
+
+class Tree(GitObject):
+    type_name: str = "tree"
+    entries: list[TreeEntry]
+
+    def serialize(self) -> bytes:
+        # Sort entries by Git's rules
+        sorted_entries = sorted(self.entries, key=lambda e: e.sort_key())
+
+        result = b""
+        for entry in sorted_entries:
+            # Mode and name as ASCII, null separator
+            mode_name = f"{entry.mode} {entry.name}\0".encode()
+            # SHA as 20 binary bytes (not 40 hex chars!)
+            sha_binary = bytes.fromhex(entry.sha)
+            result += mode_name + sha_binary
+        return result
+
+    def deserialize(cls, data: bytes) -> Self:
+        entries = []
+        pos = 0
+        while pos < len(data):
+            # Find space after mode
+            space_idx = data.index(b" ", pos)
+            mode = data[pos:space_idx].decode("ascii")
+
+            # Find null after name
+            null_idx = data.index(b"\0", space_idx)
+            name = data[space_idx + 1:null_idx].decode("utf-8")
+
+            # Next 20 bytes are binary SHA
+            sha_binary = data[null_idx + 1:null_idx + 21]
+            sha = sha_binary.hex()
+
+            entries.append(TreeEntry(mode=mode, name=name, sha=sha))
+            pos = null_idx + 21
+        return cls(entries=entries)
 ```
-Tag
-├── object_sha: str    → Hash of tagged object
-├── object_type: str   → "commit", "tree", "blob", or "tag"
-├── tag_name: str      → "v1.0.0"
-├── tagger: Identity   → Who created the tag
-└── message: str       → Tag message
+
+### Commit Implementation
+
+Commits parse and generate the header-based text format:
+
+```python
+class Identity:
+    name: str
+    email: str
+    timestamp: int
+    tz_offset: str
+
+    def __str__(self) -> str:
+        return f"{self.name} <{self.email}> {self.timestamp} {self.tz_offset}"
+
+    def parse(cls, line: str) -> Self:
+        # Parse "Name <email> timestamp tz"
+        lt = line.index("<")
+        gt = line.index(">")
+        name = line[:lt].strip()
+        email = line[lt + 1:gt]
+        rest = line[gt + 1:].strip().split()
+        return cls(name=name, email=email,
+                   timestamp=int(rest[0]), tz_offset=rest[1])
+
+
+class Commit(GitObject):
+    type_name: str = "commit"
+    tree_sha: str
+    parent_shas: list[str]
+    author: Identity
+    committer: Identity
+    message: str
+
+    def serialize(self) -> bytes:
+        lines = [f"tree {self.tree_sha}"]
+        for parent in self.parent_shas:
+            lines.append(f"parent {parent}")
+        lines.append(f"author {self.author}")
+        lines.append(f"committer {self.committer}")
+        lines.append("")  # Blank line before message
+        lines.append(self.message)
+        return "\n".join(lines).encode("utf-8")
+
+    def deserialize(cls, data: bytes) -> Self:
+        text = data.decode("utf-8")
+        lines = text.split("\n")
+
+        tree_sha, parent_shas, author, committer = "", [], None, None
+        for i, line in enumerate(lines):
+            if line == "":
+                message = "\n".join(lines[i + 1:])
+                break
+            if line.startswith("tree "):
+                tree_sha = line[5:]
+            elif line.startswith("parent "):
+                parent_shas.append(line[7:])
+            elif line.startswith("author "):
+                author = Identity.parse(line[7:])
+            elif line.startswith("committer "):
+                committer = Identity.parse(line[10:])
+
+        return cls(tree_sha=tree_sha, parent_shas=parent_shas,
+                   author=author, committer=committer, message=message)
+
+    @property
+    def is_root(self) -> bool:
+        return len(self.parent_shas) == 0
+
+    @property
+    def is_merge(self) -> bool:
+        return len(self.parent_shas) > 1
 ```
 
-The serialization format is nearly identical to commits—headers, blank line, message.
+### Tag Implementation
+
+Tags follow the same pattern as commits:
+
+```python
+class Tag(GitObject):
+    type_name: str = "tag"
+    object_sha: str
+    object_type: str  # "commit", "tree", "blob", or "tag"
+    tag_name: str
+    tagger: Identity
+    message: str
+
+    def serialize(self) -> bytes:
+        lines = [
+            f"object {self.object_sha}",
+            f"type {self.object_type}",
+            f"tag {self.tag_name}",
+            f"tagger {self.tagger}",
+            "",
+            self.message,
+        ]
+        return "\n".join(lines).encode("utf-8")
+```
 
 ### Factory Functions
 
-The `__init__.py` provides two key functions:
+The `__init__.py` provides functions to handle the header:
 
+```python
+OBJECT_TYPES = {
+    "blob": Blob,
+    "tree": Tree,
+    "commit": Commit,
+    "tag": Tag,
+}
+
+def parse_object(data: bytes) -> tuple[str, GitObject]:
+    """Parse complete object data (with header)."""
+    # Find null byte separating header from content
+    null_idx = data.index(b"\0")
+    header = data[:null_idx].decode("ascii")
+    content = data[null_idx + 1:]
+
+    # Parse "type size" header
+    type_name, size_str = header.split(" ")
+    if len(content) != int(size_str):
+        raise ValueError("Size mismatch")
+
+    # Create the appropriate object
+    obj_class = OBJECT_TYPES[type_name]
+    obj = obj_class.deserialize(content)
+
+    # Compute hash of full data
+    sha = hashlib.sha1(data, usedforsecurity=False).hexdigest()
+    return sha, obj
+
+
+def create_object_data(obj: GitObject) -> bytes:
+    """Create complete object data (with header)."""
+    content = obj.serialize()
+    header = f"{obj.type_name} {len(content)}\0".encode()
+    return header + content
 ```
-parse_object(data: bytes) → (sha, GitObject)
-    1. Find the null byte separating header from content
-    2. Parse header to get type and size
-    3. Verify size matches content length
-    4. Look up the class for this type
-    5. Call deserialize() on the content
-    6. Compute SHA-1 of the full data
-    7. Return (sha, object)
-
-create_object_data(obj: GitObject) → bytes
-    1. Call serialize() to get content
-    2. Build header: "type size\0"
-    3. Return header + content
-```
-
-These handle the header that wraps every object. Individual classes don't worry about headers—they just serialize their content.
 
 ### Design Decisions
 
@@ -802,10 +930,28 @@ These handle the header that wraps every object. Individual classes don't worry 
 
 Tests live in `tests/objects/` and verify:
 
-1. **Known hashes**: Empty blob, empty tree, and `hello\n` must match Git's hashes
-2. **Roundtrips**: `deserialize(serialize(obj))` preserves all data
-3. **Edge cases**: Empty content, multiline messages, merge commits, binary data
-4. **Format compliance**: Serialized output matches Git's exact format
+```python
+def test_blob_hash_empty():
+    """Empty blob must match Git's hash."""
+    blob = Blob(data=b"")
+    assert blob.oid == "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+
+def test_blob_hash_hello():
+    """'hello\\n' must match Git's hash."""
+    blob = Blob(data=b"hello\n")
+    assert blob.oid == "ce013625030ba8dba906f756967f9e9ca394464a"
+
+def test_tree_empty():
+    """Empty tree must match Git's hash."""
+    tree = Tree(entries=[])
+    assert tree.oid == "4b825dc642cb6eb9a060e54bf8d69288fbee4904"
+
+def test_roundtrip():
+    """Deserialize(serialize(obj)) must preserve all data."""
+    original = Blob(data=b"test content")
+    restored = Blob.deserialize(original.serialize())
+    assert original.data == restored.data
+```
 
 The known hash tests are critical—they prove we're Git-compatible.
 
