@@ -38,8 +38,8 @@ class TestPackIndex:
         """Create index with entries."""
         entries = [
             PackIndexEntry(sha="a" * 40, offset=100, crc32=0x12345678),
-            PackIndexEntry(sha="b" * 40, offset=200, crc32=0xdeadbeef),
-            PackIndexEntry(sha="c" * 40, offset=300, crc32=0xcafebabe),
+            PackIndexEntry(sha="b" * 40, offset=200, crc32=0xDEADBEEF),
+            PackIndexEntry(sha="c" * 40, offset=300, crc32=0xCAFEBABE),
         ]
 
         index = PackIndex(pack_sha="d" * 40, entries=entries)
@@ -65,7 +65,7 @@ class TestPackIndex:
         """Find existing entry."""
         entries = [
             PackIndexEntry(sha="a" * 40, offset=100, crc32=0x12345678),
-            PackIndexEntry(sha="b" * 40, offset=200, crc32=0xdeadbeef),
+            PackIndexEntry(sha="b" * 40, offset=200, crc32=0xDEADBEEF),
         ]
 
         index = PackIndex(pack_sha="c" * 40, entries=entries)
@@ -99,12 +99,12 @@ class TestPackIndex:
     def test_get_crc32(self) -> None:
         """Get CRC32 for SHA."""
         entries = [
-            PackIndexEntry(sha="a" * 40, offset=100, crc32=0xdeadbeef),
+            PackIndexEntry(sha="a" * 40, offset=100, crc32=0xDEADBEEF),
         ]
 
         index = PackIndex(pack_sha="b" * 40, entries=entries)
 
-        assert index.get_crc32("a" * 40) == 0xdeadbeef
+        assert index.get_crc32("a" * 40) == 0xDEADBEEF
         assert index.get_crc32("x" * 40) is None
 
     def test_contains(self) -> None:
@@ -147,7 +147,7 @@ class TestPackIndexFanout:
 
         # Both objects have first byte 0x00
         assert index._fanout[0x00] == 2
-        assert index._fanout[0xff] == 2
+        assert index._fanout[0xFF] == 2
 
     def test_fanout_distribution(self) -> None:
         """Fanout with distributed entries."""
@@ -161,10 +161,10 @@ class TestPackIndexFanout:
 
         # Cumulative counts
         assert index._fanout[0x00] == 1  # 1 object <= 0x00
-        assert index._fanout[0x7f] == 1  # still 1 (none in 01-7f)
+        assert index._fanout[0x7F] == 1  # still 1 (none in 01-7f)
         assert index._fanout[0x80] == 2  # 2 objects <= 0x80
-        assert index._fanout[0xfe] == 2  # still 2
-        assert index._fanout[0xff] == 3  # 3 total
+        assert index._fanout[0xFE] == 2  # still 2
+        assert index._fanout[0xFF] == 3  # 3 total
 
 
 class TestPackIndexSerialization:
@@ -191,8 +191,8 @@ class TestPackIndexSerialization:
         """Roundtrip index with entries."""
         entries = [
             PackIndexEntry(sha="a" * 40, offset=100, crc32=0x12345678),
-            PackIndexEntry(sha="b" * 40, offset=500, crc32=0xdeadbeef),
-            PackIndexEntry(sha="f" * 40, offset=1000, crc32=0xcafebabe),
+            PackIndexEntry(sha="b" * 40, offset=500, crc32=0xDEADBEEF),
+            PackIndexEntry(sha="f" * 40, offset=1000, crc32=0xCAFEBABE),
         ]
 
         index = PackIndex(pack_sha="c" * 40, entries=entries)
@@ -204,7 +204,7 @@ class TestPackIndexSerialization:
         assert restored.get_offset("b" * 40) == 500
         assert restored.get_offset("f" * 40) == 1000
         assert restored.get_crc32("a" * 40) == 0x12345678
-        assert restored.get_crc32("b" * 40) == 0xdeadbeef
+        assert restored.get_crc32("b" * 40) == 0xDEADBEEF
 
     def test_roundtrip_large_offset(self) -> None:
         """Roundtrip index with large offsets (>2GB)."""
@@ -242,7 +242,7 @@ class TestPackIndexFile:
         """Write and read index file."""
         entries = [
             PackIndexEntry(sha="a" * 40, offset=100, crc32=0x12345678),
-            PackIndexEntry(sha="b" * 40, offset=200, crc32=0xdeadbeef),
+            PackIndexEntry(sha="b" * 40, offset=200, crc32=0xDEADBEEF),
         ]
 
         index = PackIndex(pack_sha="c" * 40, entries=entries)

@@ -50,11 +50,18 @@ class TestDeltaInstructions:
     def test_parse_insert_instruction(self) -> None:
         """Parse INSERT instruction."""
         # INSERT 5 bytes: "Hello"
-        data = bytes([
-            10, 10,          # source/target sizes (varint)
-            5,               # INSERT 5
-            72, 101, 108, 108, 111  # "Hello"
-        ])
+        data = bytes(
+            [
+                10,
+                10,  # source/target sizes (varint)
+                5,  # INSERT 5
+                72,
+                101,
+                108,
+                108,
+                111,  # "Hello"
+            ]
+        )
 
         source_size, target_size, ops = parse_delta(data)
         assert source_size == 10
@@ -66,12 +73,15 @@ class TestDeltaInstructions:
     def test_parse_copy_instruction(self) -> None:
         """Parse COPY instruction."""
         # COPY from offset 10, size 20
-        data = bytes([
-            100, 30,         # source/target sizes
-            0x91,            # COPY: 1 (copy) + 0x10 (size byte) + 0x01 (offset byte)
-            10,              # offset = 10
-            20               # size = 20
-        ])
+        data = bytes(
+            [
+                100,
+                30,  # source/target sizes
+                0x91,  # COPY: 1 (copy) + 0x10 (size byte) + 0x01 (offset byte)
+                10,  # offset = 10
+                20,  # size = 20
+            ]
+        )
 
         source_size, target_size, ops = parse_delta(data)
         assert source_size == 100
@@ -86,7 +96,7 @@ class TestDeltaInstructions:
         # Create a simple delta manually
         data = bytearray()
         data.extend(_encode_delta_size(100))  # source size
-        data.extend(_encode_delta_size(25))   # target size
+        data.extend(_encode_delta_size(25))  # target size
 
         # COPY 10 bytes from offset 0
         data.extend(_encode_copy_instruction(0, 10))
@@ -106,10 +116,13 @@ class TestDeltaInstructions:
 
     def test_invalid_instruction_raises(self) -> None:
         """Invalid 0x00 instruction raises ValueError."""
-        data = bytes([
-            10, 10,  # sizes
-            0x00     # Invalid instruction
-        ])
+        data = bytes(
+            [
+                10,
+                10,  # sizes
+                0x00,  # Invalid instruction
+            ]
+        )
 
         with pytest.raises(ValueError, match="Invalid delta instruction"):
             parse_delta(data)

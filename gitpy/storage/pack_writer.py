@@ -155,9 +155,7 @@ class PackWriter:
 
         return result
 
-    def _write_pack_from_entries(
-        self, entries: list[PackEntry]
-    ) -> tuple[Path, Path]:
+    def _write_pack_from_entries(self, entries: list[PackEntry]) -> tuple[Path, Path]:
         """Write entries to pack file.
 
         Args:

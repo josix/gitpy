@@ -172,9 +172,7 @@ class TestPackWriterDeltification:
 
         # Create similar content
         base_content = b"This is a base file with some content that is repeated."
-        similar_content = (
-            b"This is a similar file with some content that is repeated."
-        )
+        similar_content = b"This is a similar file with some content that is repeated."
 
         blobs = [
             Blob(data=base_content),
