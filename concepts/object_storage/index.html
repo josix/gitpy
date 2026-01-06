@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../object_model/">
+      
+      
+        <link rel="next" href="../../api/objects/">
       
       
         
@@ -19,7 +23,7 @@
     
     
       
-        <title>Understanding Git's Object Storage - gitpy</title>
+        <title>Object Storage - gitpy</title>
       
     
     
@@ -96,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Understanding Git's Object Storage
+              Object Storage
             
           </span>
         </div>
@@ -240,18 +244,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -272,7 +278,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -306,6 +312,514 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Storage
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-big-picture-content-addressable-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Big Picture: Content-Addressable Storage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-gitobjects-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The .git/objects Directory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#loose-objects-the-simple-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loose Objects: The Simple Case
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Loose Objects: The Simple Case">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-objects-are-stored" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Objects Are Stored
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compression
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploring-loose-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exploring Loose Objects
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-file-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object File Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atomic-writes-preventing-corruption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atomic Writes: Preventing Corruption
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Atomic Writes: Preventing Corruption">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-idempotency-property" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Idempotency Property
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sha-1-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SHA-1 Verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#short-sha-resolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Short SHA Resolution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packfiles-efficient-storage-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Packfiles: Efficient Storage at Scale
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Packfiles: Efficient Storage at Scale">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pack-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pack Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-packing-happens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Packing Happens
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pack-format-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pack Format Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-object-database-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Object Database Interface
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#repository-initialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Repository Initialization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Repository Initialization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bare-vs-normal-repositories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bare vs Normal Repositories
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#real-world-storage-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Real-World Storage Patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Real-World Storage Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#small-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Small Repository
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#large-repository-after-git-gc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Large Repository After git gc
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Characteristics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Characteristics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#loose-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loose Objects
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#packfiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Packfiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#space-efficiency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Space Efficiency
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-in-gitpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation in gitpy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation in gitpy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#code-organization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code Organization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#looseobjectstore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LooseObjectStore
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#objectdatabase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ObjectDatabase
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Repository
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-compatibility-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git Compatibility Verification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Git Compatibility Verification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#known-hashes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known Hashes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interoperability-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interoperability Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Next?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -380,6 +894,34 @@
     
   
     Objects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Storage
   
 
     
