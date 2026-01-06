@@ -10,6 +10,7 @@ This directory contains detailed design specifications for implementing Git's co
 |-------|----------|-------------|
 | 1 | [Object Model](phase1_object_model.md) | Blob, Tree, Commit, Tag objects and SHA-1 hashing |
 | 2 | [Object Storage](phase2_object_storage.md) | Loose objects, compression, repository initialization |
+| 2b | [Pack Objects](phase2b_pack_objects.md) | Pack files, delta compression, pack index |
 | 3 | [References](phase3_references.md) | HEAD, branches, tags, reflog, revision parsing |
 | 4 | [Index](phase4_index.md) | Staging area, binary format, status tracking |
 | 5-8 | [Commands](phase5_8_commands.md) | Diff engine, plumbing/porcelain commands, merge |
@@ -38,7 +39,7 @@ This directory contains detailed design specifications for implementing Git's co
 │  tags, reflog   │  binary format  │   unified format            │
 ├─────────────────┴─────────────────┴─────────────────────────────┤
 │                      Object Database                            │
-│              loose objects │ compression │ SHA-1                │
+│         loose objects │ pack files │ compression │ SHA-1        │
 ├─────────────────────────────────────────────────────────────────┤
 │                       Object Model                              │
 │                 Blob │ Tree │ Commit │ Tag                      │

@@ -96,6 +96,48 @@ tests/
 
 ---
 
+### Agent 2b: Pack Objects Agent
+
+**Domain**: Pack files and delta compression
+
+**Responsibilities**:
+- Pack file format parsing (.pack)
+- Pack index reading/writing (.idx)
+- Delta encoding and decoding
+- OFS_DELTA and REF_DELTA resolution
+- Delta chain traversal
+- Pack file creation with delta compression
+
+**Files to Create**:
+```
+gitpy/
+└── storage/
+    ├── delta.py         # Delta encoding/decoding
+    ├── pack.py          # PackFile reader
+    ├── pack_index.py    # PackIndex
+    └── pack_writer.py   # PackWriter
+tests/
+└── storage/
+    ├── test_delta.py
+    ├── test_pack.py
+    ├── test_pack_index.py
+    └── test_pack_writer.py
+```
+
+**Dependencies**: Agent 1 (Object Model), Agent 2 (Storage)
+
+**Acceptance Criteria**:
+- [ ] Pack files can be read and objects extracted
+- [ ] Pack index enables O(1) lookup by SHA
+- [ ] OFS_DELTA and REF_DELTA objects resolved correctly
+- [ ] Delta chains of arbitrary depth handled
+- [ ] Pack files can be written with delta compression
+- [ ] Git can read gitpy pack files and vice versa
+
+**Estimated Complexity**: High
+
+---
+
 ### Agent 3: References Agent
 
 **Domain**: Branches, tags, HEAD management
@@ -363,6 +405,12 @@ Phase 2 (Core Infrastructure):
 └─────────────────────┘
           │
           ▼
+Phase 2b (Advanced Storage - Optional):
+┌─────────────────────┐
+│ Agent 2b: Pack Obj  │
+└─────────────────────┘
+          │
+          ▼
 Phase 3 (Parallel):
 ┌──────────────┐  ┌──────────────┐  ┌──────────────┐
 │ Agent 3:     │  │ Agent 4:     │  │ Agent 5:     │
@@ -396,6 +444,9 @@ Phase 5 (Verification):
 
 | Agent A | Agent B | Notes |
 |---------|---------|-------|
+| Agent 2b (Pack) | Agent 3 (Refs) | Independent after Agent 2 |
+| Agent 2b (Pack) | Agent 4 (Index) | Independent after Agent 2 |
+| Agent 2b (Pack) | Agent 5 (Diff) | Independent after Agent 2 |
 | Agent 3 (Refs) | Agent 4 (Index) | Independent subsystems |
 | Agent 3 (Refs) | Agent 5 (Diff) | No dependencies |
 | Agent 4 (Index) | Agent 5 (Diff) | No dependencies |
@@ -405,6 +456,7 @@ Phase 5 (Verification):
 | Prerequisite | Dependent | Reason |
 |--------------|-----------|--------|
 | Agent 1 | Agent 2 | Storage needs object types |
+| Agent 2 | Agent 2b | Pack needs loose object store |
 | Agent 2 | Agent 3 | Refs need object database |
 | Agent 2 | Agent 4 | Index needs object database |
 | Agents 3,4 | Agent 6 | Plumbing needs refs + index |
@@ -464,7 +516,7 @@ Each agent must pass before handoff:
 | Risk | Mitigation |
 |------|------------|
 | Index format complexity | Start with version 2 only |
-| Packfile complexity | Defer to future phase |
+| Packfile complexity | Design complete (phase2b), implement as optional Agent 2b |
 | Merge conflicts | Start with simple cases |
 | Performance | Profile after correctness |
 

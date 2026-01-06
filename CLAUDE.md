@@ -118,6 +118,7 @@ See `docs/design/` for detailed specifications:
 
 - `phase1_object_model.md` - Blob, Tree, Commit, Tag
 - `phase2_object_storage.md` - Object database, compression
+- `phase2b_pack_objects.md` - Pack files, delta compression, pack index
 - `phase3_references.md` - HEAD, branches, tags, reflog
 - `phase4_index.md` - Staging area, binary format
 - `phase5_8_commands.md` - Diff, plumbing, porcelain
@@ -132,6 +133,7 @@ The codebase is designed to be implemented by specialized agents:
 |-------|--------|--------------|
 | 1. Object Model | blob, tree, commit, tag | None |
 | 2. Storage | loose objects, compression | Agent 1 |
+| 2b. Pack Objects | pack files, delta compression | Agents 1-2 |
 | 3. References | HEAD, branches, tags | Agents 1-2 |
 | 4. Index | staging area | Agents 1-2 |
 | 5. Diff | Myers algorithm | Agents 1-2 |
