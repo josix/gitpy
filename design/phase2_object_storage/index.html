@@ -781,9 +781,9 @@
 
 <h1 id="phase-2-object-storage-design-specification">Phase 2: Object Storage - Design Specification</h1>
 <blockquote>
-<p><strong>Status</strong>: Draft
+<p><strong>Status</strong>: ✅ Implemented
 <strong>Author</strong>: Domain Expert
-<strong>Last Updated</strong>: 2026-01-05
+<strong>Last Updated</strong>: 2026-01-06
 <strong>Dependencies</strong>: Phase 1 (Object Model)</p>
 </blockquote>
 <h2 id="1-overview">1. Overview</h2>
@@ -1489,21 +1489,21 @@ class TestLooseObjectStore:
 <h2 id="7-acceptance-criteria">7. Acceptance Criteria</h2>
 <h3 id="71-functional-requirements">7.1 Functional Requirements</h3>
 <ul>
-<li>[ ] Objects are stored compressed in <code>.git/objects/XX/YYYY...</code></li>
-<li>[ ] Objects can be read back and decompressed correctly</li>
-<li>[ ] SHA-1 is verified on read</li>
-<li>[ ] Duplicate writes are safely skipped</li>
-<li>[ ] Short SHA resolution works with minimum 4 characters</li>
-<li>[ ] Ambiguous short SHA raises clear error</li>
-<li>[ ] Repository can be initialized (normal and bare)</li>
-<li>[ ] Repository can be found from subdirectory</li>
+<li>[x] Objects are stored compressed in <code>.git/objects/XX/YYYY...</code></li>
+<li>[x] Objects can be read back and decompressed correctly</li>
+<li>[x] SHA-1 is verified on read</li>
+<li>[x] Duplicate writes are safely skipped</li>
+<li>[x] Short SHA resolution works with minimum 4 characters</li>
+<li>[x] Ambiguous short SHA raises clear error</li>
+<li>[x] Repository can be initialized (normal and bare)</li>
+<li>[x] Repository can be found from subdirectory</li>
 </ul>
 <h3 id="72-non-functional-requirements">7.2 Non-Functional Requirements</h3>
 <ul>
-<li>[ ] Atomic writes (temp file + rename)</li>
-<li>[ ] Object files are read-only after creation</li>
-<li>[ ] Compatible with real Git (can read/write same format)</li>
-<li>[ ] No data loss on crash during write</li>
+<li>[x] Atomic writes (temp file + rename)</li>
+<li>[x] Object files are read-only after creation</li>
+<li>[x] Compatible with real Git (can read/write same format)</li>
+<li>[x] No data loss on crash during write</li>
 </ul>
 <h3 id="73-verification">7.3 Verification</h3>
 <pre><code class="language-bash"># Verify gitpy can read Git's objects

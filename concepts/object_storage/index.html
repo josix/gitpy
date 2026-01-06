@@ -1,0 +1,1537 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Understanding Git's Object Storage - gitpy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#understanding-gits-object-storage" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="gitpy" class="md-header__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gitpy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Understanding Git's Object Storage
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="gitpy" class="md-nav__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gitpy
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../object_model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/objects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Objects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-big-picture-content-addressable-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Big Picture: Content-Addressable Storage
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-gitobjects-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The .git/objects Directory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#loose-objects-the-simple-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loose Objects: The Simple Case
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Loose Objects: The Simple Case">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-objects-are-stored" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Objects Are Stored
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compression
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploring-loose-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exploring Loose Objects
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-file-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object File Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#atomic-writes-preventing-corruption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Atomic Writes: Preventing Corruption
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Atomic Writes: Preventing Corruption">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-idempotency-property" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Idempotency Property
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sha-1-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SHA-1 Verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#short-sha-resolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Short SHA Resolution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packfiles-efficient-storage-at-scale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Packfiles: Efficient Storage at Scale
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Packfiles: Efficient Storage at Scale">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pack-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pack Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-packing-happens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Packing Happens
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pack-format-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pack Format Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-object-database-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Object Database Interface
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#repository-initialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Repository Initialization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Repository Initialization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bare-vs-normal-repositories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bare vs Normal Repositories
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#real-world-storage-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Real-World Storage Patterns
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Real-World Storage Patterns">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#small-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Small Repository
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#large-repository-after-git-gc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Large Repository After git gc
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Characteristics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Characteristics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#loose-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Loose Objects
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#packfiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Packfiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#space-efficiency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Space Efficiency
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-in-gitpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation in gitpy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation in gitpy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#code-organization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code Organization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#looseobjectstore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LooseObjectStore
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#objectdatabase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ObjectDatabase
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Repository
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-compatibility-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git Compatibility Verification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Git Compatibility Verification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#known-hashes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Known Hashes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interoperability-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interoperability Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Next?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="understanding-gits-object-storage">Understanding Git's Object Storage</h1>
+<p>This document explains how Git stores objects on disk. If you've ever wondered what happens inside <code>.git/objects/</code> or how Git achieves its legendary performance, this guide will demystify Git's elegant storage system.</p>
+<h2 id="the-big-picture-content-addressable-storage">The Big Picture: Content-Addressable Storage</h2>
+<p>Git's object database is a <strong>content-addressable filesystem</strong>. Instead of organizing files by name or location, Git organizes them by <em>content</em>. The SHA-1 hash of an object's content becomes its "address" in the database.</p>
+<p>This has profound implications:</p>
+<ol>
+<li><strong>Automatic deduplication</strong>: Identical content is stored once</li>
+<li><strong>Integrity verification</strong>: Corruption is immediately detectable</li>
+<li><strong>Immutability</strong>: Objects never change once created</li>
+<li><strong>Efficient sharing</strong>: Same hash = same content across all repositories</li>
+</ol>
+<hr />
+<h2 id="the-gitobjects-directory">The .git/objects Directory</h2>
+<p>When you run <code>git init</code>, Git creates this structure:</p>
+<pre><code>.git/
+└── objects/
+    ├── info/           # Auxiliary information
+    ├── pack/           # Packfiles (compressed collections)
+    └── &lt;XX&gt;/           # Loose objects (2-char prefix directories)
+        └── &lt;YYY...&gt;    # Object files (38-char suffix)
+</code></pre>
+<p>Let's explore each part.</p>
+<hr />
+<h2 id="loose-objects-the-simple-case">Loose Objects: The Simple Case</h2>
+<h3 id="how-objects-are-stored">How Objects Are Stored</h3>
+<p>When Git creates a new object, it stores it as a "loose object"—an individual file named by its SHA-1 hash.</p>
+<p><strong>Path calculation:</strong></p>
+<pre><code>SHA: ce013625030ba8dba906f756967f9e9ca394464a
+     ^^
+     First 2 chars → directory name
+
+Path: .git/objects/ce/013625030ba8dba906f756967f9e9ca394464a
+                   ^^/^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                   dir        remaining 38 chars
+</code></pre>
+<p><strong>Why split the hash?</strong></p>
+<p>Filesystems become slow with too many files in one directory. By using 256 possible two-character prefixes (00-ff), Git distributes objects across subdirectories.</p>
+<h3 id="compression">Compression</h3>
+<p>All loose objects are <strong>zlib-compressed</strong>. The compression format:</p>
+<pre><code>zlib_compress(&quot;&lt;type&gt; &lt;size&gt;\0&lt;content&gt;&quot;)
+</code></pre>
+<p>For example, a blob containing <code>hello\n</code>:</p>
+<pre><code class="language-python"># What gets compressed:
+raw_data = b&quot;blob 6\0hello\n&quot;
+
+# Stored on disk:
+compressed = zlib.compress(raw_data)
+</code></pre>
+<h3 id="exploring-loose-objects">Exploring Loose Objects</h3>
+<pre><code class="language-bash"># Find an object
+$ ls .git/objects/ce/
+013625030ba8dba906f756967f9e9ca394464a
+
+# Decompress and view (Python)
+$ python3 -c &quot;
+import zlib
+data = open('.git/objects/ce/013625030ba8dba906f756967f9e9ca394464a', 'rb').read()
+print(zlib.decompress(data))
+&quot;
+b'blob 6\x00hello\n'
+
+# Or use Git's plumbing
+$ git cat-file -p ce013625
+hello
+</code></pre>
+<h3 id="object-file-format">Object File Format</h3>
+<p>Inside the compressed file:</p>
+<pre><code>┌──────────────────────────────────────┐
+│ zlib-compressed data                 │
+│ ┌──────────────────────────────────┐ │
+│ │ type SP size NUL content         │ │
+│ │ ^^^^    ^^^^     ^^^^^^^         │ │
+│ │ blob    6        hello\n         │ │
+│ └──────────────────────────────────┘ │
+└──────────────────────────────────────┘
+</code></pre>
+<ul>
+<li><strong>type</strong>: <code>blob</code>, <code>tree</code>, <code>commit</code>, or <code>tag</code></li>
+<li><strong>SP</strong>: Space character (0x20)</li>
+<li><strong>size</strong>: Decimal byte count of content</li>
+<li><strong>NUL</strong>: Null byte (0x00) separator</li>
+<li><strong>content</strong>: Raw object data</li>
+</ul>
+<hr />
+<h2 id="atomic-writes-preventing-corruption">Atomic Writes: Preventing Corruption</h2>
+<p>Git uses a critical pattern for writing objects: <strong>write to temp, then rename</strong>.</p>
+<pre><code class="language-python">def write_object(sha, data):
+    path = f&quot;.git/objects/{sha[:2]}/{sha[2:]}&quot;
+    temp_path = path + &quot;.tmp&quot;
+
+    # 1. Write to temporary file
+    with open(temp_path, &quot;wb&quot;) as f:
+        f.write(zlib.compress(data))
+
+    # 2. Atomic rename
+    os.rename(temp_path, path)
+
+    # 3. Make read-only (immutable)
+    os.chmod(path, 0o444)
+</code></pre>
+<p><strong>Why this matters:</strong></p>
+<ul>
+<li>If Git crashes during write, only the <code>.tmp</code> file is corrupted</li>
+<li>The <code>rename()</code> system call is atomic on most filesystems</li>
+<li>Either the complete object exists, or it doesn't—no partial files</li>
+</ul>
+<h3 id="the-idempotency-property">The Idempotency Property</h3>
+<p>Because objects are content-addressable:</p>
+<pre><code class="language-python"># Writing the same content twice is safe
+sha1 = write_object(data)  # Creates object
+sha2 = write_object(data)  # Skips (already exists)
+assert sha1 == sha2
+</code></pre>
+<p>Git checks if the object exists before writing. This is safe because:
+- Same content → same hash → same object
+- Object files are immutable once created</p>
+<hr />
+<h2 id="sha-1-verification">SHA-1 Verification</h2>
+<p>When reading an object, Git verifies the hash:</p>
+<pre><code class="language-python">def read_object(sha):
+    path = f&quot;.git/objects/{sha[:2]}/{sha[2:]}&quot;
+    compressed = open(path, &quot;rb&quot;).read()
+    data = zlib.decompress(compressed)
+
+    # Verify integrity
+    computed = hashlib.sha1(data).hexdigest()
+    if computed != sha:
+        raise CorruptObjectError(f&quot;Expected {sha}, got {computed}&quot;)
+
+    return data
+</code></pre>
+<p>This catches:
+- Disk corruption (bit rot)
+- Incomplete writes
+- Malicious tampering</p>
+<p>If any bit changes, the hash won't match.</p>
+<hr />
+<h2 id="short-sha-resolution">Short SHA Resolution</h2>
+<p>Git allows abbreviated SHA references:</p>
+<pre><code class="language-bash">$ git show ce01362          # 7 characters
+$ git show ce0136           # 6 characters
+$ git show ce01             # 4 characters (minimum)
+</code></pre>
+<p><strong>How it works:</strong></p>
+<pre><code class="language-python">def resolve_short_sha(prefix):
+    if len(prefix) &lt; 4:
+        raise ValueError(&quot;Minimum 4 characters required&quot;)
+
+    dir_prefix = prefix[:2]
+    file_prefix = prefix[2:]
+
+    matches = []
+    for file in os.listdir(f&quot;.git/objects/{dir_prefix}&quot;):
+        if file.startswith(file_prefix):
+            matches.append(dir_prefix + file)
+
+    if len(matches) == 0:
+        raise NotFoundError(f&quot;No object matching {prefix}&quot;)
+    if len(matches) &gt; 1:
+        raise AmbiguousError(f&quot;{prefix} matches {len(matches)} objects&quot;)
+
+    return matches[0]
+</code></pre>
+<p><strong>Ambiguity handling:</strong></p>
+<p>With enough objects, short prefixes become ambiguous. Git requires increasingly longer prefixes:</p>
+<pre><code class="language-bash">$ git show abc1
+error: short SHA1 abc1 is ambiguous
+hint: The candidates are:
+hint:   abc1234... blob
+hint:   abc1567... commit
+</code></pre>
+<hr />
+<h2 id="packfiles-efficient-storage-at-scale">Packfiles: Efficient Storage at Scale</h2>
+<p>Loose objects work well for small repositories, but become inefficient at scale:</p>
+<ul>
+<li>Many small files = filesystem overhead</li>
+<li>Similar objects stored separately (no delta compression)</li>
+<li>Slow for network transfer</li>
+</ul>
+<p><strong>Packfiles</strong> solve this by:</p>
+<ol>
+<li>Collecting many objects into one file</li>
+<li>Delta-compressing similar objects</li>
+<li>Using an index for O(1) lookups</li>
+</ol>
+<h3 id="pack-structure">Pack Structure</h3>
+<pre><code>.git/objects/pack/
+├── pack-abc123.idx    # Index (hash → offset)
+└── pack-abc123.pack   # Packed objects
+</code></pre>
+<h3 id="when-packing-happens">When Packing Happens</h3>
+<ul>
+<li><code>git gc</code> (garbage collection)</li>
+<li><code>git push</code> / <code>git fetch</code> (network transfer)</li>
+<li>Automatically when loose objects exceed threshold</li>
+</ul>
+<h3 id="pack-format-overview">Pack Format Overview</h3>
+<pre><code>┌─────────────────────────────────────────────┐
+│ PACK header (signature, version, count)     │
+├─────────────────────────────────────────────┤
+│ Object 1 (type, size, compressed data)      │
+├─────────────────────────────────────────────┤
+│ Object 2 (OFS_DELTA: offset, delta)         │  ← Delta-compressed!
+├─────────────────────────────────────────────┤
+│ Object 3 (REF_DELTA: base SHA, delta)       │  ← Delta-compressed!
+├─────────────────────────────────────────────┤
+│ ... more objects ...                        │
+├─────────────────────────────────────────────┤
+│ SHA-1 checksum of entire pack               │
+└─────────────────────────────────────────────┘
+</code></pre>
+<p><strong>Delta compression:</strong></p>
+<p>Instead of storing similar objects fully, Git stores:
+- One base object (full content)
+- Deltas (instructions to reconstruct others from base)</p>
+<p>Example: If file.txt changes slightly between commits:
+- Version 1: Full blob (1000 bytes)
+- Version 2: Delta from v1 (50 bytes of changes)</p>
+<p>This is why Git repositories are so compact!</p>
+<hr />
+<h2 id="the-object-database-interface">The Object Database Interface</h2>
+<p>Git's storage has a clean abstraction:</p>
+<pre><code>┌─────────────────────────────────────────────┐
+│            ObjectDatabase                   │
+│  - read(sha) → GitObject                    │
+│  - write(obj) → sha                         │
+│  - exists(sha) → bool                       │
+└─────────────────────────────────────────────┘
+                    │
+        ┌───────────┴───────────┐
+        ▼                       ▼
+┌───────────────┐       ┌───────────────┐
+│ LooseObjects  │       │   Packfiles   │
+│ .git/objects/ │       │ .git/objects/ │
+│   XX/YYYY...  │       │   pack/*.pack │
+└───────────────┘       └───────────────┘
+</code></pre>
+<p>When reading:
+1. Check loose objects first
+2. Then search packfiles
+3. Error if not found</p>
+<p>When writing:
+1. Always write loose objects
+2. <code>git gc</code> later converts to packfiles</p>
+<hr />
+<h2 id="repository-initialization">Repository Initialization</h2>
+<p>When you run <code>git init</code>, Git creates:</p>
+<pre><code>.git/
+├── HEAD                 # Points to current branch
+├── config               # Repository configuration
+├── description          # For GitWeb (rarely used)
+├── objects/
+│   ├── info/           # Pack information
+│   └── pack/           # Packfiles go here
+├── refs/
+│   ├── heads/          # Branch references
+│   └── tags/           # Tag references
+└── info/
+    └── exclude         # Local ignore patterns
+</code></pre>
+<p><strong>The essential parts:</strong></p>
+<ul>
+<li><code>HEAD</code>: Tells Git which branch you're on</li>
+<li><code>objects/</code>: The object database</li>
+<li><code>refs/</code>: Human-readable names for commits</li>
+</ul>
+<h3 id="bare-vs-normal-repositories">Bare vs Normal Repositories</h3>
+<p><strong>Normal repository:</strong></p>
+<pre><code>myproject/
+├── .git/               # Git metadata
+└── src/                # Working directory
+    └── main.py
+</code></pre>
+<p><strong>Bare repository:</strong></p>
+<pre><code>myproject.git/          # Just Git metadata, no working directory
+├── HEAD
+├── config
+├── objects/
+└── refs/
+</code></pre>
+<p>Bare repositories are used for:
+- Remote servers (GitHub, etc.)
+- Sharing without working directories
+- <code>git clone --bare</code></p>
+<hr />
+<h2 id="real-world-storage-patterns">Real-World Storage Patterns</h2>
+<h3 id="small-repository">Small Repository</h3>
+<pre><code>.git/objects/
+├── ce/
+│   └── 013625...       # A blob
+├── 4b/
+│   └── 825dc6...       # Empty tree
+├── e6/
+│   └── 9de29b...       # Empty blob
+└── info/
+└── pack/               # Empty (no packs yet)
+</code></pre>
+<h3 id="large-repository-after-git-gc">Large Repository After <code>git gc</code></h3>
+<pre><code>.git/objects/
+├── pack/
+│   ├── pack-abc123.idx    # ~2MB index
+│   └── pack-abc123.pack   # ~50MB packed objects
+├── info/
+│   └── packs              # Lists available packs
+└── &lt;few loose objects&gt;    # Recently created, not yet packed
+</code></pre>
+<hr />
+<h2 id="performance-characteristics">Performance Characteristics</h2>
+<h3 id="loose-objects">Loose Objects</h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Complexity</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read by SHA</td>
+<td>O(1)</td>
+<td>Direct path lookup</td>
+</tr>
+<tr>
+<td>Write</td>
+<td>O(1)</td>
+<td>Create file</td>
+</tr>
+<tr>
+<td>Exists check</td>
+<td>O(1)</td>
+<td>File exists check</td>
+</tr>
+<tr>
+<td>List all</td>
+<td>O(n)</td>
+<td>Scan all directories</td>
+</tr>
+</tbody>
+</table>
+<h3 id="packfiles">Packfiles</h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Complexity</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read by SHA</td>
+<td>O(1)</td>
+<td>Index lookup + seek</td>
+</tr>
+<tr>
+<td>Delta resolution</td>
+<td>O(chain)</td>
+<td>May need to read base objects</td>
+</tr>
+<tr>
+<td>Write</td>
+<td>N/A</td>
+<td><code>git gc</code> handles this</td>
+</tr>
+</tbody>
+</table>
+<h3 id="space-efficiency">Space Efficiency</h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Loose</th>
+<th>Packed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1000 small files</td>
+<td>~1000 inodes</td>
+<td>2 files</td>
+</tr>
+<tr>
+<td>Similar versions</td>
+<td>Full copies</td>
+<td>Delta compressed</td>
+</tr>
+<tr>
+<td>Network transfer</td>
+<td>Many requests</td>
+<td>Single stream</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="implementation-in-gitpy">Implementation in gitpy</h2>
+<h3 id="code-organization">Code Organization</h3>
+<pre><code>gitpy/
+├── storage/
+│   ├── __init__.py       # Module exports
+│   ├── compression.py    # Zlib utilities
+│   ├── loose.py          # LooseObjectStore
+│   └── database.py       # ObjectDatabase
+└── repository.py         # Repository class
+</code></pre>
+<h3 id="looseobjectstore">LooseObjectStore</h3>
+<p>Handles individual object files:</p>
+<pre><code class="language-python">class LooseObjectStore:
+    def __init__(self, git_dir: Path):
+        self.objects_dir = git_dir / &quot;objects&quot;
+
+    def _object_path(self, sha: str) -&gt; Path:
+        return self.objects_dir / sha[:2] / sha[2:]
+
+    def exists(self, sha: str) -&gt; bool:
+        return self._object_path(sha).exists()
+
+    def read(self, sha: str) -&gt; bytes:
+        path = self._object_path(sha)
+        compressed = path.read_bytes()
+        data = zlib.decompress(compressed)
+
+        # Verify integrity
+        if hashlib.sha1(data).hexdigest() != sha:
+            raise ValueError(&quot;SHA mismatch - corrupted object&quot;)
+
+        return data
+
+    def write(self, sha: str, data: bytes) -&gt; Path:
+        path = self._object_path(sha)
+        if path.exists():
+            return path  # Already exists
+
+        path.parent.mkdir(parents=True, exist_ok=True)
+
+        # Atomic write
+        temp = path.with_suffix(&quot;.tmp&quot;)
+        temp.write_bytes(zlib.compress(data))
+        temp.rename(path)
+        path.chmod(0o444)
+
+        return path
+</code></pre>
+<h3 id="objectdatabase">ObjectDatabase</h3>
+<p>High-level interface with type safety:</p>
+<pre><code class="language-python">class ObjectDatabase:
+    def __init__(self, git_dir: Path):
+        self.loose = LooseObjectStore(git_dir)
+
+    def read(self, sha: str) -&gt; GitObject:
+        data = self.loose.read(sha)
+        _, obj = parse_object(data)
+        return obj
+
+    def read_blob(self, sha: str) -&gt; Blob:
+        obj = self.read(sha)
+        if not isinstance(obj, Blob):
+            raise TypeError(f&quot;Expected blob, got {obj.type_name}&quot;)
+        return obj
+
+    def write(self, obj: GitObject) -&gt; str:
+        data = create_object_data(obj)
+        sha = hashlib.sha1(data).hexdigest()
+        self.loose.write(sha, data)
+        return sha
+</code></pre>
+<h3 id="repository">Repository</h3>
+<p>Ties everything together:</p>
+<pre><code class="language-python">class Repository:
+    def __init__(self, path: Path):
+        self.worktree = path
+        self.git_dir = path / &quot;.git&quot;
+        self.objects = ObjectDatabase(self.git_dir)
+
+    @classmethod
+    def init(cls, path: Path, bare: bool = False) -&gt; &quot;Repository&quot;:
+        git_dir = path if bare else path / &quot;.git&quot;
+
+        # Create directory structure
+        (git_dir / &quot;objects&quot; / &quot;info&quot;).mkdir(parents=True)
+        (git_dir / &quot;objects&quot; / &quot;pack&quot;).mkdir()
+        (git_dir / &quot;refs&quot; / &quot;heads&quot;).mkdir(parents=True)
+        (git_dir / &quot;refs&quot; / &quot;tags&quot;).mkdir()
+
+        # Create HEAD
+        (git_dir / &quot;HEAD&quot;).write_text(&quot;ref: refs/heads/main\n&quot;)
+
+        return cls(path)
+
+    @classmethod
+    def find(cls, start: Path = None) -&gt; &quot;Repository&quot;:
+        &quot;&quot;&quot;Walk up directory tree to find repository.&quot;&quot;&quot;
+        path = (start or Path.cwd()).resolve()
+
+        while True:
+            if (path / &quot;.git&quot;).is_dir():
+                return cls(path)
+            if path.parent == path:
+                raise ValueError(&quot;Not a git repository&quot;)
+            path = path.parent
+</code></pre>
+<hr />
+<h2 id="git-compatibility-verification">Git Compatibility Verification</h2>
+<h3 id="known-hashes">Known Hashes</h3>
+<p>These must match real Git:</p>
+<table>
+<thead>
+<tr>
+<th>Object</th>
+<th>SHA-1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Empty blob</td>
+<td><code>e69de29bb2d1d6434b8b29ae775ad8c2e48c5391</code></td>
+</tr>
+<tr>
+<td>Empty tree</td>
+<td><code>4b825dc642cb6eb9a060e54bf8d69288fbee4904</code></td>
+</tr>
+<tr>
+<td><code>hello\n</code> blob</td>
+<td><code>ce013625030ba8dba906f756967f9e9ca394464a</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="interoperability-test">Interoperability Test</h3>
+<pre><code class="language-bash"># Create object with Git, read with gitpy
+$ git init test-repo &amp;&amp; cd test-repo
+$ echo &quot;hello&quot; | git hash-object -w --stdin
+ce013625030ba8dba906f756967f9e9ca394464a
+
+$ python3 -c &quot;
+from gitpy.repository import Repository
+repo = Repository(Path('.'))
+blob = repo.objects.read_blob('ce013625')
+print(blob.data)  # b'hello\n'
+&quot;
+
+# Create object with gitpy, read with Git
+$ python3 -c &quot;
+from gitpy.repository import Repository
+from gitpy.objects import Blob
+repo = Repository(Path('.'))
+sha = repo.objects.write(Blob(data=b'gitpy wrote this\n'))
+print(sha)
+&quot;
+
+$ git cat-file -p &lt;sha&gt;
+gitpy wrote this
+</code></pre>
+<hr />
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ol>
+<li><strong>Content-addressable storage</strong> enables deduplication and integrity</li>
+<li><strong>Loose objects</strong> are simple zlib-compressed files</li>
+<li><strong>Atomic writes</strong> prevent corruption</li>
+<li><strong>SHA verification</strong> catches errors</li>
+<li><strong>Packfiles</strong> provide efficient storage at scale</li>
+<li><strong>Clean abstractions</strong> separate concerns</li>
+</ol>
+<p>The storage layer is deliberately simple—complexity comes from what you build on top. With objects stored reliably, Git can focus on commits, branches, and history without worrying about data integrity.</p>
+<hr />
+<h2 id="whats-next">What's Next?</h2>
+<p>With object storage in place, the next layers build on top:</p>
+<ul>
+<li><strong>References</strong> (<code>gitpy/refs/</code>): Human-readable names (branches, tags, HEAD)</li>
+<li><strong>Index</strong> (<code>gitpy/index/</code>): The staging area between working directory and repository</li>
+<li><strong>Commands</strong> (<code>gitpy/commands/</code>): Plumbing and porcelain operations</li>
+</ul>
+<p>All of these layers ultimately read and write objects through the storage layer we've built.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
