@@ -197,15 +197,103 @@ This tree has three entries:
 
 ### File Modes Explained
 
-| Mode | Meaning | When Git Uses It |
-|------|---------|------------------|
-| `100644` | Regular file | Most files |
-| `100755` | Executable | Scripts, binaries with +x |
-| `40000` | Directory | Subdirectories |
-| `120000` | Symbolic link | Symlinks |
-| `160000` | Gitlink | Submodules |
+These cryptic numbers like `100644` come from Unix—but Git simplifies them dramatically.
 
-Note: `40000` not `040000`—Git omits leading zeros in mode strings.
+#### Understanding the Mode Format
+
+In Unix, file modes are 6-digit octal numbers:
+
+```
+100644
+│││└┴┴─ Permission bits: 644 (rw-r--r--)
+││└──── Special bits: 0 (no setuid/setgid/sticky)
+└┴───── File type: 10 (regular file)
+```
+
+The **file type prefix** tells you what kind of entry it is:
+
+| Prefix | Type | Full Mode |
+|--------|------|-----------|
+| `10` | Regular file | `100644`, `100755` |
+| `12` | Symbolic link | `120000` |
+| `04` | Directory | `040000` (stored as `40000`) |
+| `16` | Gitlink (submodule) | `160000` |
+
+The **permission bits** are standard Unix:
+
+```
+644 = rw-r--r--  (owner read+write, others read-only)
+755 = rwxr-xr-x  (owner full access, others read+execute)
+```
+
+#### Git's Simplification
+
+Here's the key insight: **Git only tracks a handful of modes**, not the full Unix permission space.
+
+| Mode | Meaning | When Git Assigns It |
+|------|---------|---------------------|
+| `100644` | Regular file | Default for non-executable files |
+| `100755` | Executable | File has the executable bit (+x) |
+| `40000` | Directory | Tree entries pointing to other trees |
+| `120000` | Symlink | File is a symbolic link |
+| `160000` | Gitlink | Submodule reference |
+
+**Why so limited?** Three reasons:
+
+1. **Portability**: Windows doesn't have Unix permissions
+2. **Simplicity**: Git tracks content, not fine-grained metadata
+3. **Consistency**: Avoids "permission-only" changes cluttering history
+
+#### How Git Decides the Mode
+
+When you `git add` a file, Git uses this logic:
+
+```
+Is it a symbolic link?
+  → Yes: 120000
+  → No: Is the executable bit set?
+        → Yes: 100755
+        → No:  100644
+```
+
+Git ignores group permissions, setuid bits, and read/write distinctions. It only cares: *is it executable or not?*
+
+#### Changing File Modes
+
+```bash
+# Make a script executable
+$ chmod +x deploy.sh
+$ git add deploy.sh
+
+# Git notices the mode change
+$ git diff --cached
+diff --git a/deploy.sh b/deploy.sh
+old mode 100644
+new mode 100755
+```
+
+#### The Windows Problem
+
+Windows has no executable bit, so Git uses a config setting:
+
+```bash
+# Check if Git tracks executable bit
+$ git config core.fileMode
+true   # Unix (default)
+false  # Windows (default)
+
+# Manually mark a file executable on Windows
+$ git update-index --chmod=+x deploy.sh
+```
+
+#### Why 644 and 755?
+
+These are sensible Unix defaults:
+
+- **644** (`rw-r--r--`): Owner can edit, everyone can read. Safe for source files.
+- **755** (`rwxr-xr-x`): Everyone can run it, but only owner can edit. Standard for scripts.
+
+Note: Git stores `40000` not `040000`—leading zeros are omitted in mode strings.
 
 ### Tree Sorting: A Subtle Detail
 
