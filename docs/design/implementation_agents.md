@@ -46,11 +46,13 @@ tests/
 **Dependencies**: None (foundation layer)
 
 **Acceptance Criteria**:
-- [ ] All objects serialize/deserialize correctly
-- [ ] SHA-1 matches Git for identical content
-- [ ] Empty blob hash: `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391`
-- [ ] Empty tree hash: `4b825dc642cb6eb9a060e54bf8d69288fbee4904`
-- [ ] 100% test coverage
+- [x] All objects serialize/deserialize correctly
+- [x] SHA-1 matches Git for identical content
+- [x] Empty blob hash: `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391`
+- [x] Empty tree hash: `4b825dc642cb6eb9a060e54bf8d69288fbee4904`
+- [x] 100% test coverage
+
+**Status**: ✅ **COMPLETE** (Phase 1)
 
 **Estimated Complexity**: Medium
 
@@ -85,12 +87,14 @@ tests/
 **Dependencies**: Agent 1 (Object Model)
 
 **Acceptance Criteria**:
-- [ ] Objects stored in `.git/objects/XX/YYY...`
-- [ ] Zlib compression matches Git format
-- [ ] Atomic writes with temp files
-- [ ] Short SHA resolution (minimum 4 chars)
-- [ ] Repository.init() creates valid structure
-- [ ] Git can read gitpy objects and vice versa
+- [x] Objects stored in `.git/objects/XX/YYY...`
+- [x] Zlib compression matches Git format
+- [x] Atomic writes with temp files
+- [x] Short SHA resolution (minimum 4 chars)
+- [x] Repository.init() creates valid structure
+- [x] Git can read gitpy objects and vice versa
+
+**Status**: ✅ **COMPLETE** (Phase 2)
 
 **Estimated Complexity**: Medium
 
