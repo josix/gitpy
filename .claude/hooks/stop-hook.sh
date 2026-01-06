@@ -18,7 +18,7 @@ run_consistency_check() {
 # If no active loop, run checks and allow normal exit
 if [[ ! -f "$STATE_FILE" ]]; then
     run_consistency_check >&2
-    echo '{"decision": "allow"}'
+    echo '{"decision": "approve"}'
     exit 0
 fi
 
@@ -37,7 +37,7 @@ COMPLETION_PROMISE=$(parse_frontmatter "completion_promise")
 if ! [[ "$ITERATION" =~ ^[0-9]+$ ]]; then
     echo "Warning: Corrupted state file (invalid iteration). Removing..." >&2
     rm -f "$STATE_FILE"
-    echo '{"decision": "allow"}'
+    echo '{"decision": "approve"}'
     exit 0
 fi
 
@@ -60,7 +60,7 @@ if [[ -n "$COMPLETION_PROMISE" ]]; then
             echo "║ Total iterations: $ITERATION" >&2
             echo "╚════════════════════════════════════════════════════════════════╝" >&2
             rm -f "$STATE_FILE"
-            echo '{"decision": "allow"}'
+            echo '{"decision": "approve"}'
             exit 0
         fi
     fi
@@ -75,13 +75,18 @@ if [[ $NEXT_ITERATION -gt $MAX_ITERATIONS ]]; then
     echo "║ Completed $MAX_ITERATIONS iterations without completion promise" >&2
     echo "╚════════════════════════════════════════════════════════════════╝" >&2
     rm -f "$STATE_FILE"
-    echo '{"decision": "allow"}'
+    echo '{"decision": "approve"}'
     exit 0
 fi
 
-# Update iteration count in state file
-sed -i "s/^iteration: .*/iteration: $NEXT_ITERATION/" "$STATE_FILE"
-sed -i "s/Iteration: .*/Iteration: $NEXT_ITERATION \/ $MAX_ITERATIONS/" "$STATE_FILE"
+# Update iteration count in state file (use -i '' for macOS compatibility)
+if [[ "$(uname)" == "Darwin" ]]; then
+    sed -i '' "s/^iteration: .*/iteration: $NEXT_ITERATION/" "$STATE_FILE"
+    sed -i '' "s/Iteration: .*/Iteration: $NEXT_ITERATION \/ $MAX_ITERATIONS/" "$STATE_FILE"
+else
+    sed -i "s/^iteration: .*/iteration: $NEXT_ITERATION/" "$STATE_FILE"
+    sed -i "s/Iteration: .*/Iteration: $NEXT_ITERATION \/ $MAX_ITERATIONS/" "$STATE_FILE"
+fi
 
 # Block exit and feed prompt back
 echo "" >&2
@@ -111,10 +116,9 @@ SYSTEM_MSG+="Continue with:
 $PROMPT"
 
 # Output JSON to block exit and provide new prompt
-# Note: The exact format depends on Claude Code's hook API
 cat << EOF
 {
   "decision": "block",
-  "message": $(echo "$SYSTEM_MSG" | jq -Rs .)
+  "reason": $(echo "$SYSTEM_MSG" | jq -Rs .)
 }
 EOF

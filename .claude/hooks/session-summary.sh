@@ -3,7 +3,6 @@
 # Provides a quick status check of the codebase
 
 set -e
-cd /home/user/gitpy
 
 echo ""
 echo "=== gitpy Session Summary ==="

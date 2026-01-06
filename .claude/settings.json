@@ -2,26 +2,26 @@
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
     "allow": [
-      "Bash(uv *)",
-      "Bash(inv *)",
-      "Bash(pytest *)",
-      "Bash(ruff *)",
-      "Bash(mypy *)",
-      "Bash(git *)",
-      "Bash(python *)",
-      "Bash(pip *)",
-      "Bash(ls *)",
-      "Bash(mkdir *)",
-      "Bash(bash *)",
+      "Bash(uv:*)",
+      "Bash(inv:*)",
+      "Bash(pytest:*)",
+      "Bash(ruff:*)",
+      "Bash(mypy:*)",
+      "Bash(git:*)",
+      "Bash(python:*)",
+      "Bash(pip:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(bash:*)",
       "Bash(rm .claude/ralph-loop*)",
       "Bash(cat .claude/ralph-loop*)",
-      "Bash(test *)",
+      "Bash(test:*)",
       "Task(*)",
       "Skill(*)"
     ],
     "deny": [
-      "Bash(rm -rf *)",
-      "Bash(sudo *)"
+      "Bash(rm -rf:*)",
+      "Bash(sudo:*)"
     ]
   },
   "hooks": {
