@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.0 (2026-01-06)
+
+### Feat
+
+- **storage**: implement Phase 2 object storage system
+
+### Fix
+
+- resolve CI lint and type errors in test files
+
 ## 0.1.0 (2026-01-06)
 
 ### Feat
