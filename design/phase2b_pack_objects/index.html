@@ -1,0 +1,2832 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Phase 2b: Pack Objects - Design Specification - gitpy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#phase-2b-pack-objects-design-specification" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="gitpy" class="md-header__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gitpy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Phase 2b: Pack Objects - Design Specification
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="gitpy" class="md-nav__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gitpy
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/object_model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/objects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Objects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-design-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Design Goals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-storage-locations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Storage Locations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-when-pack-files-are-created" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 When Pack Files Are Created
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-pack-file-format-pack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Pack File Format (.pack)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Pack File Format (.pack)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-overall-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Overall Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-header-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Header Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-object-entry-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Object Entry Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-object-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Object Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-variable-length-integer-encoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Variable-Length Integer Encoding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-ofs_delta-base-offset-encoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 OFS_DELTA Base Offset Encoding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27-trailer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 Trailer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-pack-index-format-idx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Pack Index Format (.idx)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Pack Index Format (.idx)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-version-2-format-current-standard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Version 2 Format (Current Standard)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-fanout-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Fanout Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-index-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Index Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-delta-encoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Delta Encoding
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Delta Encoding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-delta-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Delta Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-delta-instructions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Delta Instructions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-delta-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Delta Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-pack-file-reader" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Pack File Reader
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Pack File Reader">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-pack-file-writer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Pack File Writer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Pack File Writer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-integration-with-object-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Integration with Object Database
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Integration with Object Database">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-updated-objectdatabase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Updated ObjectDatabase
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-test-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Test Cases
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Test Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-pack-header-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Pack Header Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-delta-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Delta Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-pack-index-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 Pack Index Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-integration-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 Integration Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-acceptance-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Acceptance Criteria
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Acceptance Criteria">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-functional-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 Functional Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-non-functional-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 Non-Functional Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-verification-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 Verification Commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-file-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. File Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-implementation-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Implementation Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Implementation Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-delta-base-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 Delta Base Selection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-thin-packs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 Thin Packs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-multi-pack-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 Multi-Pack Index
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#114-performance-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 Performance Considerations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="phase-2b-pack-objects-design-specification">Phase 2b: Pack Objects - Design Specification</h1>
+<blockquote>
+<p><strong>Status</strong>: Draft
+<strong>Author</strong>: Domain Expert
+<strong>Last Updated</strong>: 2026-01-06
+<strong>Dependencies</strong>: Phase 1 (Object Model), Phase 2 (Object Storage)</p>
+</blockquote>
+<h2 id="1-overview">1. Overview</h2>
+<p>Pack files are Git's mechanism for efficient object storage and transfer. While loose objects store each object as an individual compressed file, pack files combine multiple objects into a single file with delta compression, dramatically reducing storage space and improving transfer speeds.</p>
+<h3 id="11-design-goals">1.1 Design Goals</h3>
+<ul>
+<li><strong>Space Efficiency</strong>: Delta compression reduces storage by 10-100x for similar objects</li>
+<li><strong>Transfer Optimization</strong>: Single file for network transfer instead of thousands of loose objects</li>
+<li><strong>Random Access</strong>: Index file enables O(1) object lookup by SHA</li>
+<li><strong>Streaming</strong>: Objects can be read without loading entire pack into memory</li>
+<li><strong>Git Compatibility</strong>: Exact binary format compatibility with Git</li>
+</ul>
+<h3 id="12-storage-locations">1.2 Storage Locations</h3>
+<pre><code>.git/
+└── objects/
+    └── pack/
+        ├── pack-&lt;sha&gt;.pack   # Pack data file
+        ├── pack-&lt;sha&gt;.idx    # Pack index file
+        ├── pack-&lt;sha&gt;.rev    # Reverse index (optional, v2.31+)
+        └── multi-pack-index  # Multi-pack index (optional)
+</code></pre>
+<h3 id="13-when-pack-files-are-created">1.3 When Pack Files Are Created</h3>
+<ul>
+<li><code>git gc</code> - Garbage collection packs loose objects</li>
+<li><code>git repack</code> - Explicitly repack objects</li>
+<li><code>git clone</code> / <code>git fetch</code> - Received as packfile from remote</li>
+<li><code>git push</code> - Sent as packfile to remote</li>
+</ul>
+<hr />
+<h2 id="2-pack-file-format-pack">2. Pack File Format (.pack)</h2>
+<h3 id="21-overall-structure">2.1 Overall Structure</h3>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│                         Header (12 bytes)                     │
+├──────────────────────────────────────────────────────────────┤
+│                       Object Entry 1                          │
+├──────────────────────────────────────────────────────────────┤
+│                       Object Entry 2                          │
+├──────────────────────────────────────────────────────────────┤
+│                           ...                                 │
+├──────────────────────────────────────────────────────────────┤
+│                       Object Entry N                          │
+├──────────────────────────────────────────────────────────────┤
+│                    Trailer (20 bytes SHA-1)                   │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="22-header-format">2.2 Header Format</h3>
+<pre><code>┌─────────────────┬─────────────────┬─────────────────────────┐
+│   Signature     │    Version      │     Object Count        │
+│   &quot;PACK&quot;        │   (4 bytes)     │     (4 bytes)           │
+│   (4 bytes)     │   BE uint32     │     BE uint32           │
+└─────────────────┴─────────────────┴─────────────────────────┘
+</code></pre>
+<ul>
+<li><strong>Signature</strong>: ASCII "PACK" (<code>0x5041434b</code>)</li>
+<li><strong>Version</strong>: 2 (current) or 3 (with capabilities)</li>
+<li><strong>Object Count</strong>: Number of objects in pack (big-endian)</li>
+</ul>
+<pre><code class="language-python">PACK_SIGNATURE = b&quot;PACK&quot;
+PACK_VERSION = 2
+
+def read_pack_header(data: bytes) -&gt; tuple[int, int]:
+    &quot;&quot;&quot;Parse pack header, return (version, object_count).&quot;&quot;&quot;
+    if data[:4] != PACK_SIGNATURE:
+        raise ValueError(&quot;Invalid pack signature&quot;)
+
+    version = int.from_bytes(data[4:8], &quot;big&quot;)
+    object_count = int.from_bytes(data[8:12], &quot;big&quot;)
+
+    if version not in (2, 3):
+        raise ValueError(f&quot;Unsupported pack version: {version}&quot;)
+
+    return version, object_count
+</code></pre>
+<h3 id="23-object-entry-format">2.3 Object Entry Format</h3>
+<p>Each object entry consists of:</p>
+<pre><code>┌─────────────────────────────────────────────────────────────┐
+│                    Variable-length header                    │
+│              (type + uncompressed size)                      │
+├─────────────────────────────────────────────────────────────┤
+│                 Delta base reference                         │
+│         (only for OFS_DELTA or REF_DELTA types)             │
+├─────────────────────────────────────────────────────────────┤
+│                   Zlib-compressed data                       │
+│          (or delta instructions if delta type)               │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="24-object-types">2.4 Object Types</h3>
+<table>
+<thead>
+<tr>
+<th>Type Value</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>OBJ_COMMIT</td>
+<td>Commit object</td>
+</tr>
+<tr>
+<td>2</td>
+<td>OBJ_TREE</td>
+<td>Tree object</td>
+</tr>
+<tr>
+<td>3</td>
+<td>OBJ_BLOB</td>
+<td>Blob object</td>
+</tr>
+<tr>
+<td>4</td>
+<td>OBJ_TAG</td>
+<td>Annotated tag object</td>
+</tr>
+<tr>
+<td>6</td>
+<td>OBJ_OFS_DELTA</td>
+<td>Delta with offset to base</td>
+</tr>
+<tr>
+<td>7</td>
+<td>OBJ_REF_DELTA</td>
+<td>Delta with SHA reference to base</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note</strong>: Type 5 is reserved/unused.</p>
+<pre><code class="language-python">from enum import IntEnum
+
+class PackObjectType(IntEnum):
+    &quot;&quot;&quot;Object types in pack files.&quot;&quot;&quot;
+    COMMIT = 1
+    TREE = 2
+    BLOB = 3
+    TAG = 4
+    # 5 is reserved
+    OFS_DELTA = 6
+    REF_DELTA = 7
+
+    def to_object_type(self) -&gt; str:
+        &quot;&quot;&quot;Convert to string type name.&quot;&quot;&quot;
+        return {
+            self.COMMIT: &quot;commit&quot;,
+            self.TREE: &quot;tree&quot;,
+            self.BLOB: &quot;blob&quot;,
+            self.TAG: &quot;tag&quot;,
+        }.get(self, &quot;delta&quot;)
+
+    @classmethod
+    def from_object_type(cls, type_name: str) -&gt; &quot;PackObjectType&quot;:
+        &quot;&quot;&quot;Convert from string type name.&quot;&quot;&quot;
+        return {
+            &quot;commit&quot;: cls.COMMIT,
+            &quot;tree&quot;: cls.TREE,
+            &quot;blob&quot;: cls.BLOB,
+            &quot;tag&quot;: cls.TAG,
+        }[type_name]
+</code></pre>
+<h3 id="25-variable-length-integer-encoding">2.5 Variable-Length Integer Encoding</h3>
+<p>Pack files use a variable-length encoding for sizes and offsets:</p>
+<p><strong>Size/Type Header</strong> (first byte special):</p>
+<pre><code>┌───┬───┬───┬───┬───┬───┬───┬───┐
+│MSB│  type │      size         │
+│(1)│  (3)  │       (4)         │
+└───┴───┴───┴───┴───┴───┴───┴───┘
+</code></pre>
+<ul>
+<li>Bit 7 (MSB): 1 if more bytes follow</li>
+<li>Bits 4-6: Object type (for first byte only)</li>
+<li>Bits 0-3: Size bits (4 bits from first byte, 7 bits from subsequent)</li>
+</ul>
+<pre><code class="language-python">def read_pack_object_header(data: bytes, offset: int) -&gt; tuple[int, int, int]:
+    &quot;&quot;&quot;
+    Read pack object header.
+
+    Returns:
+        (object_type, uncompressed_size, bytes_consumed)
+    &quot;&quot;&quot;
+    byte = data[offset]
+    obj_type = (byte &gt;&gt; 4) &amp; 0x07  # bits 4-6
+    size = byte &amp; 0x0F  # bits 0-3
+
+    consumed = 1
+    shift = 4
+
+    # Continue while MSB is set
+    while byte &amp; 0x80:
+        byte = data[offset + consumed]
+        size |= (byte &amp; 0x7F) &lt;&lt; shift
+        shift += 7
+        consumed += 1
+
+    return obj_type, size, consumed
+
+
+def write_pack_object_header(obj_type: int, size: int) -&gt; bytes:
+    &quot;&quot;&quot;Encode pack object header.&quot;&quot;&quot;
+    # First byte: type in bits 4-6, low 4 bits of size
+    byte = (obj_type &lt;&lt; 4) | (size &amp; 0x0F)
+    size &gt;&gt;= 4
+
+    result = bytearray()
+
+    if size &gt; 0:
+        byte |= 0x80  # Set MSB to indicate more bytes
+    result.append(byte)
+
+    # Remaining size bytes
+    while size &gt; 0:
+        byte = size &amp; 0x7F
+        size &gt;&gt;= 7
+        if size &gt; 0:
+            byte |= 0x80
+        result.append(byte)
+
+    return bytes(result)
+</code></pre>
+<h3 id="26-ofs_delta-base-offset-encoding">2.6 OFS_DELTA Base Offset Encoding</h3>
+<p>For OFS_DELTA objects, the base object offset is encoded as a variable-length negative offset from the current position:</p>
+<pre><code class="language-python">def read_ofs_delta_offset(data: bytes, offset: int) -&gt; tuple[int, int]:
+    &quot;&quot;&quot;
+    Read OFS_DELTA base offset.
+
+    The offset is encoded with MSB continuation, but each byte
+    after the first adds 1 before shifting (to avoid ambiguity).
+
+    Returns:
+        (base_offset, bytes_consumed)
+    &quot;&quot;&quot;
+    byte = data[offset]
+    base_offset = byte &amp; 0x7F
+    consumed = 1
+
+    while byte &amp; 0x80:
+        byte = data[offset + consumed]
+        # Add 1 before shifting to handle the encoding
+        base_offset = ((base_offset + 1) &lt;&lt; 7) | (byte &amp; 0x7F)
+        consumed += 1
+
+    return base_offset, consumed
+
+
+def write_ofs_delta_offset(offset: int) -&gt; bytes:
+    &quot;&quot;&quot;Encode OFS_DELTA base offset.&quot;&quot;&quot;
+    # Encode in reverse order
+    result = bytearray()
+    result.append(offset &amp; 0x7F)
+    offset &gt;&gt;= 7
+
+    while offset &gt; 0:
+        offset -= 1  # Subtract 1 before encoding
+        result.append(0x80 | (offset &amp; 0x7F))
+        offset &gt;&gt;= 7
+
+    result.reverse()
+    return bytes(result)
+</code></pre>
+<h3 id="27-trailer">2.7 Trailer</h3>
+<p>The pack file ends with a 20-byte SHA-1 checksum of all preceding content (header + all object entries).</p>
+<hr />
+<h2 id="3-pack-index-format-idx">3. Pack Index Format (.idx)</h2>
+<p>The index file enables fast object lookup by SHA without scanning the entire pack.</p>
+<h3 id="31-version-2-format-current-standard">3.1 Version 2 Format (Current Standard)</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────┐
+│                    Header (8 bytes)                          │
+│            Magic: 0xff744f63  Version: 2                     │
+├─────────────────────────────────────────────────────────────┤
+│                   Fanout Table (1024 bytes)                  │
+│              256 entries × 4 bytes (BE uint32)               │
+├─────────────────────────────────────────────────────────────┤
+│                    SHA-1 Table                               │
+│               N entries × 20 bytes each                      │
+├─────────────────────────────────────────────────────────────┤
+│                    CRC32 Table                               │
+│               N entries × 4 bytes each                       │
+├─────────────────────────────────────────────────────────────┤
+│                   Offset Table (4-byte)                      │
+│               N entries × 4 bytes each                       │
+├─────────────────────────────────────────────────────────────┤
+│              Large Offset Table (8-byte, optional)           │
+│          For offsets &gt; 2GB, variable number of entries       │
+├─────────────────────────────────────────────────────────────┤
+│                  Pack File SHA-1 (20 bytes)                  │
+├─────────────────────────────────────────────────────────────┤
+│                  Index File SHA-1 (20 bytes)                 │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="32-fanout-table">3.2 Fanout Table</h3>
+<p>The fanout table enables binary search by first SHA byte:</p>
+<pre><code class="language-python">def read_fanout_table(data: bytes, offset: int) -&gt; list[int]:
+    &quot;&quot;&quot;
+    Read 256-entry fanout table.
+
+    fanout[i] = number of objects with first SHA byte &lt;= i
+    fanout[255] = total object count
+    &quot;&quot;&quot;
+    fanout = []
+    for i in range(256):
+        value = int.from_bytes(data[offset + i*4 : offset + i*4 + 4], &quot;big&quot;)
+        fanout.append(value)
+    return fanout
+
+
+def lookup_sha_range(fanout: list[int], first_byte: int) -&gt; tuple[int, int]:
+    &quot;&quot;&quot;
+    Get the range of indices for objects starting with first_byte.
+
+    Returns:
+        (start_index, end_index) - half-open range
+    &quot;&quot;&quot;
+    if first_byte == 0:
+        start = 0
+    else:
+        start = fanout[first_byte - 1]
+    end = fanout[first_byte]
+    return start, end
+</code></pre>
+<h3 id="33-index-implementation">3.3 Index Implementation</h3>
+<pre><code class="language-python"># gitpy/storage/pack_index.py
+
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Optional
+import hashlib
+import struct
+
+IDX_SIGNATURE = b&quot;\xff\x74\x4f\x63&quot;  # Magic number
+IDX_VERSION = 2
+
+@dataclass(slots=True)
+class PackIndexEntry:
+    &quot;&quot;&quot;Single entry in pack index.&quot;&quot;&quot;
+    sha: str       # 40-char hex SHA
+    offset: int    # Offset in pack file
+    crc32: int     # CRC32 of packed object data
+
+
+@dataclass
+class PackIndex:
+    &quot;&quot;&quot;
+    Pack index for fast object lookup.
+
+    Provides O(1) lookup of object offset by SHA.
+    &quot;&quot;&quot;
+
+    pack_sha: str                    # SHA of the pack file
+    entries: list[PackIndexEntry]    # Sorted by SHA
+    _fanout: list[int]              # Fanout table for binary search
+    _sha_to_idx: dict[str, int]     # SHA -&gt; entry index
+
+    def __init__(self, pack_sha: str, entries: list[PackIndexEntry]):
+        self.pack_sha = pack_sha
+        self.entries = sorted(entries, key=lambda e: e.sha)
+        self._build_fanout()
+        self._sha_to_idx = {e.sha: i for i, e in enumerate(self.entries)}
+
+    def _build_fanout(self) -&gt; None:
+        &quot;&quot;&quot;Build fanout table from entries.&quot;&quot;&quot;
+        self._fanout = [0] * 256
+        for entry in self.entries:
+            first_byte = int(entry.sha[:2], 16)
+            for i in range(first_byte, 256):
+                self._fanout[i] += 1
+
+        # Convert to cumulative counts
+        for i in range(1, 256):
+            self._fanout[i] += self._fanout[i - 1]
+
+    def find(self, sha: str) -&gt; Optional[PackIndexEntry]:
+        &quot;&quot;&quot;Look up object by SHA.&quot;&quot;&quot;
+        return self._sha_to_idx.get(sha)
+
+    def get_offset(self, sha: str) -&gt; Optional[int]:
+        &quot;&quot;&quot;Get pack file offset for SHA.&quot;&quot;&quot;
+        idx = self._sha_to_idx.get(sha)
+        if idx is not None:
+            return self.entries[idx].offset
+        return None
+
+    @property
+    def object_count(self) -&gt; int:
+        &quot;&quot;&quot;Number of objects in pack.&quot;&quot;&quot;
+        return len(self.entries)
+
+    def __contains__(self, sha: str) -&gt; bool:
+        return sha in self._sha_to_idx
+
+    @classmethod
+    def from_file(cls, path: Path) -&gt; &quot;PackIndex&quot;:
+        &quot;&quot;&quot;Load pack index from .idx file.&quot;&quot;&quot;
+        data = path.read_bytes()
+        return cls.parse(data)
+
+    @classmethod
+    def parse(cls, data: bytes) -&gt; &quot;PackIndex&quot;:
+        &quot;&quot;&quot;Parse index file data.&quot;&quot;&quot;
+        # Check header
+        if data[:4] != IDX_SIGNATURE:
+            raise ValueError(&quot;Invalid pack index signature&quot;)
+
+        version = int.from_bytes(data[4:8], &quot;big&quot;)
+        if version != IDX_VERSION:
+            raise ValueError(f&quot;Unsupported index version: {version}&quot;)
+
+        # Read fanout table
+        fanout_offset = 8
+        fanout = []
+        for i in range(256):
+            value = int.from_bytes(
+                data[fanout_offset + i*4 : fanout_offset + i*4 + 4], &quot;big&quot;
+            )
+            fanout.append(value)
+
+        object_count = fanout[255]
+
+        # Calculate section offsets
+        sha_offset = fanout_offset + 256 * 4
+        crc_offset = sha_offset + object_count * 20
+        offset_offset = crc_offset + object_count * 4
+        large_offset_offset = offset_offset + object_count * 4
+
+        # Read SHA table
+        shas = []
+        for i in range(object_count):
+            sha_bytes = data[sha_offset + i*20 : sha_offset + i*20 + 20]
+            shas.append(sha_bytes.hex())
+
+        # Read CRC32 table
+        crcs = []
+        for i in range(object_count):
+            crc = int.from_bytes(
+                data[crc_offset + i*4 : crc_offset + i*4 + 4], &quot;big&quot;
+            )
+            crcs.append(crc)
+
+        # Read offset table
+        offsets = []
+        large_offsets = []
+        for i in range(object_count):
+            offset = int.from_bytes(
+                data[offset_offset + i*4 : offset_offset + i*4 + 4], &quot;big&quot;
+            )
+            # Check if this is a large offset reference
+            if offset &amp; 0x80000000:
+                # High bit set - this is an index into large offset table
+                large_idx = offset &amp; 0x7FFFFFFF
+                large_offset = int.from_bytes(
+                    data[large_offset_offset + large_idx*8 :
+                         large_offset_offset + large_idx*8 + 8], &quot;big&quot;
+                )
+                offsets.append(large_offset)
+            else:
+                offsets.append(offset)
+
+        # Extract pack SHA (last 40 bytes before index SHA)
+        pack_sha_offset = len(data) - 40
+        pack_sha = data[pack_sha_offset : pack_sha_offset + 20].hex()
+
+        # Build entries
+        entries = [
+            PackIndexEntry(sha=shas[i], offset=offsets[i], crc32=crcs[i])
+            for i in range(object_count)
+        ]
+
+        return cls(pack_sha=pack_sha, entries=entries)
+
+    def serialize(self) -&gt; bytes:
+        &quot;&quot;&quot;Serialize to index file format.&quot;&quot;&quot;
+        result = bytearray()
+
+        # Header
+        result.extend(IDX_SIGNATURE)
+        result.extend(IDX_VERSION.to_bytes(4, &quot;big&quot;))
+
+        # Fanout table
+        for count in self._fanout:
+            result.extend(count.to_bytes(4, &quot;big&quot;))
+
+        # SHA table (sorted)
+        for entry in self.entries:
+            result.extend(bytes.fromhex(entry.sha))
+
+        # CRC32 table
+        for entry in self.entries:
+            result.extend(entry.crc32.to_bytes(4, &quot;big&quot;))
+
+        # Offset table
+        large_offsets = []
+        for entry in self.entries:
+            if entry.offset &gt;= 0x80000000:
+                # Large offset - store index with high bit set
+                large_idx = len(large_offsets)
+                large_offsets.append(entry.offset)
+                result.extend((0x80000000 | large_idx).to_bytes(4, &quot;big&quot;))
+            else:
+                result.extend(entry.offset.to_bytes(4, &quot;big&quot;))
+
+        # Large offset table
+        for offset in large_offsets:
+            result.extend(offset.to_bytes(8, &quot;big&quot;))
+
+        # Pack file SHA
+        result.extend(bytes.fromhex(self.pack_sha))
+
+        # Index file SHA (hash of everything so far)
+        index_sha = hashlib.sha1(result).digest()
+        result.extend(index_sha)
+
+        return bytes(result)
+</code></pre>
+<hr />
+<h2 id="4-delta-encoding">4. Delta Encoding</h2>
+<p>Delta compression stores objects as differences from a "base" object, dramatically reducing storage for similar content.</p>
+<h3 id="41-delta-format">4.1 Delta Format</h3>
+<pre><code>┌─────────────────────────────────────────────────────────────┐
+│              Source (base) size - varint                     │
+├─────────────────────────────────────────────────────────────┤
+│              Target (result) size - varint                   │
+├─────────────────────────────────────────────────────────────┤
+│                    Delta instructions                        │
+│            (sequence of COPY or INSERT ops)                  │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="42-delta-instructions">4.2 Delta Instructions</h3>
+<p>Two instruction types:</p>
+<p><strong>INSERT</strong> (add new data):</p>
+<pre><code>┌───┬───────────────────────────────────────┐
+│ 0 │            size (1-127)               │
+├───┴───────────────────────────────────────┤
+│          literal data (size bytes)         │
+└───────────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>First bit is 0</li>
+<li>Remaining 7 bits = number of literal bytes to insert (1-127)</li>
+<li>Followed by that many literal bytes</li>
+</ul>
+<p><strong>COPY</strong> (copy from base):</p>
+<pre><code>┌───┬───┬───┬───┬───┬───┬───┬───┐
+│ 1 │o₄ │o₃ │o₂ │o₁ │s₃ │s₂ │s₁ │  instruction byte
+├───┴───┴───┴───┴───┴───┴───┴───┤
+│  offset bytes (0-4, little-endian)  │
+├─────────────────────────────────────┤
+│   size bytes (0-3, little-endian)   │
+└─────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>First bit is 1</li>
+<li>Bits 0-3: which offset bytes are present (o₁-o₄)</li>
+<li>Bits 4-6: which size bytes are present (s₁-s₃)</li>
+<li>Offset bytes (little-endian, only present bytes)</li>
+<li>Size bytes (little-endian, only present bytes)</li>
+<li>Size of 0 means 0x10000 (65536)</li>
+</ul>
+<h3 id="43-delta-implementation">4.3 Delta Implementation</h3>
+<pre><code class="language-python"># gitpy/storage/delta.py
+
+from dataclasses import dataclass
+from typing import Iterator
+
+@dataclass(slots=True)
+class DeltaInsert:
+    &quot;&quot;&quot;Insert literal data.&quot;&quot;&quot;
+    data: bytes
+
+
+@dataclass(slots=True)
+class DeltaCopy:
+    &quot;&quot;&quot;Copy from base object.&quot;&quot;&quot;
+    offset: int
+    size: int
+
+
+type DeltaOp = DeltaInsert | DeltaCopy
+
+
+def read_delta_size(data: bytes, offset: int) -&gt; tuple[int, int]:
+    &quot;&quot;&quot;
+    Read variable-length size from delta header.
+
+    Returns:
+        (size, bytes_consumed)
+    &quot;&quot;&quot;
+    size = 0
+    shift = 0
+    consumed = 0
+
+    while True:
+        byte = data[offset + consumed]
+        size |= (byte &amp; 0x7F) &lt;&lt; shift
+        consumed += 1
+        if not (byte &amp; 0x80):
+            break
+        shift += 7
+
+    return size, consumed
+
+
+def parse_delta(data: bytes) -&gt; tuple[int, int, list[DeltaOp]]:
+    &quot;&quot;&quot;
+    Parse delta instructions.
+
+    Returns:
+        (source_size, target_size, operations)
+    &quot;&quot;&quot;
+    offset = 0
+
+    # Read source and target sizes
+    source_size, consumed = read_delta_size(data, offset)
+    offset += consumed
+
+    target_size, consumed = read_delta_size(data, offset)
+    offset += consumed
+
+    # Parse instructions
+    ops: list[DeltaOp] = []
+
+    while offset &lt; len(data):
+        cmd = data[offset]
+        offset += 1
+
+        if cmd &amp; 0x80:
+            # COPY instruction
+            copy_offset = 0
+            copy_size = 0
+
+            # Read offset bytes (little-endian)
+            if cmd &amp; 0x01:
+                copy_offset |= data[offset]
+                offset += 1
+            if cmd &amp; 0x02:
+                copy_offset |= data[offset] &lt;&lt; 8
+                offset += 1
+            if cmd &amp; 0x04:
+                copy_offset |= data[offset] &lt;&lt; 16
+                offset += 1
+            if cmd &amp; 0x08:
+                copy_offset |= data[offset] &lt;&lt; 24
+                offset += 1
+
+            # Read size bytes (little-endian)
+            if cmd &amp; 0x10:
+                copy_size |= data[offset]
+                offset += 1
+            if cmd &amp; 0x20:
+                copy_size |= data[offset] &lt;&lt; 8
+                offset += 1
+            if cmd &amp; 0x40:
+                copy_size |= data[offset] &lt;&lt; 16
+                offset += 1
+
+            # Size of 0 means 0x10000
+            if copy_size == 0:
+                copy_size = 0x10000
+
+            ops.append(DeltaCopy(offset=copy_offset, size=copy_size))
+
+        elif cmd &gt; 0:
+            # INSERT instruction - cmd is the size
+            insert_data = data[offset : offset + cmd]
+            offset += cmd
+            ops.append(DeltaInsert(data=insert_data))
+
+        else:
+            # cmd == 0 is reserved/invalid
+            raise ValueError(&quot;Invalid delta instruction: 0x00&quot;)
+
+    return source_size, target_size, ops
+
+
+def apply_delta(base: bytes, delta_ops: list[DeltaOp]) -&gt; bytes:
+    &quot;&quot;&quot;Apply delta operations to base object.&quot;&quot;&quot;
+    result = bytearray()
+
+    for op in delta_ops:
+        match op:
+            case DeltaInsert(data=data):
+                result.extend(data)
+            case DeltaCopy(offset=offset, size=size):
+                result.extend(base[offset : offset + size])
+
+    return bytes(result)
+
+
+def create_delta(source: bytes, target: bytes) -&gt; bytes:
+    &quot;&quot;&quot;
+    Create delta from source to target.
+
+    Uses a simple algorithm - production Git uses more sophisticated
+    matching (rolling hash, etc.) for better compression.
+    &quot;&quot;&quot;
+    result = bytearray()
+
+    # Write sizes
+    result.extend(_encode_delta_size(len(source)))
+    result.extend(_encode_delta_size(len(target)))
+
+    # Simple approach: find common substrings
+    # For a basic implementation, we can use a sliding window
+    ops = _compute_delta_ops(source, target)
+
+    for op in ops:
+        match op:
+            case DeltaInsert(data=data):
+                # Split into chunks of max 127 bytes
+                for i in range(0, len(data), 127):
+                    chunk = data[i : i + 127]
+                    result.append(len(chunk))
+                    result.extend(chunk)
+
+            case DeltaCopy(offset=offset, size=size):
+                result.extend(_encode_copy_instruction(offset, size))
+
+    return bytes(result)
+
+
+def _encode_delta_size(size: int) -&gt; bytes:
+    &quot;&quot;&quot;Encode size as variable-length integer.&quot;&quot;&quot;
+    result = bytearray()
+    while True:
+        byte = size &amp; 0x7F
+        size &gt;&gt;= 7
+        if size:
+            byte |= 0x80
+        result.append(byte)
+        if not size:
+            break
+    return bytes(result)
+
+
+def _encode_copy_instruction(offset: int, size: int) -&gt; bytes:
+    &quot;&quot;&quot;Encode COPY instruction.&quot;&quot;&quot;
+    result = bytearray()
+    cmd = 0x80
+    data = bytearray()
+
+    # Offset bytes
+    if offset &amp; 0xFF:
+        cmd |= 0x01
+        data.append(offset &amp; 0xFF)
+    if offset &amp; 0xFF00:
+        cmd |= 0x02
+        data.append((offset &gt;&gt; 8) &amp; 0xFF)
+    if offset &amp; 0xFF0000:
+        cmd |= 0x04
+        data.append((offset &gt;&gt; 16) &amp; 0xFF)
+    if offset &amp; 0xFF000000:
+        cmd |= 0x08
+        data.append((offset &gt;&gt; 24) &amp; 0xFF)
+
+    # Size bytes (0x10000 encoded as size=0)
+    actual_size = size if size != 0x10000 else 0
+    if actual_size &amp; 0xFF:
+        cmd |= 0x10
+        data.append(actual_size &amp; 0xFF)
+    if actual_size &amp; 0xFF00:
+        cmd |= 0x20
+        data.append((actual_size &gt;&gt; 8) &amp; 0xFF)
+    if actual_size &amp; 0xFF0000:
+        cmd |= 0x40
+        data.append((actual_size &gt;&gt; 16) &amp; 0xFF)
+
+    result.append(cmd)
+    result.extend(data)
+    return bytes(result)
+
+
+def _compute_delta_ops(source: bytes, target: bytes) -&gt; list[DeltaOp]:
+    &quot;&quot;&quot;
+    Compute delta operations from source to target.
+
+    This is a simplified algorithm. Git uses a rolling hash
+    (similar to rsync) for much better match finding.
+    &quot;&quot;&quot;
+    ops: list[DeltaOp] = []
+
+    # Build index of 16-byte chunks in source
+    chunk_size = 16
+    source_index: dict[bytes, list[int]] = {}
+    for i in range(len(source) - chunk_size + 1):
+        chunk = source[i : i + chunk_size]
+        if chunk not in source_index:
+            source_index[chunk] = []
+        source_index[chunk].append(i)
+
+    target_pos = 0
+    pending_insert = bytearray()
+
+    while target_pos &lt; len(target):
+        # Try to find a match
+        match_offset = -1
+        match_length = 0
+
+        if target_pos + chunk_size &lt;= len(target):
+            chunk = target[target_pos : target_pos + chunk_size]
+            if chunk in source_index:
+                for src_pos in source_index[chunk]:
+                    # Extend match as far as possible
+                    length = chunk_size
+                    while (target_pos + length &lt; len(target) and
+                           src_pos + length &lt; len(source) and
+                           target[target_pos + length] == source[src_pos + length]):
+                        length += 1
+
+                    if length &gt; match_length:
+                        match_offset = src_pos
+                        match_length = length
+
+        if match_length &gt;= chunk_size:
+            # Emit pending insert if any
+            if pending_insert:
+                ops.append(DeltaInsert(data=bytes(pending_insert)))
+                pending_insert = bytearray()
+
+            # Emit copy
+            ops.append(DeltaCopy(offset=match_offset, size=match_length))
+            target_pos += match_length
+        else:
+            # No good match - accumulate for insert
+            pending_insert.append(target[target_pos])
+            target_pos += 1
+
+    # Emit final pending insert
+    if pending_insert:
+        ops.append(DeltaInsert(data=bytes(pending_insert)))
+
+    return ops
+</code></pre>
+<hr />
+<h2 id="5-pack-file-reader">5. Pack File Reader</h2>
+<h3 id="51-implementation">5.1 Implementation</h3>
+<pre><code class="language-python"># gitpy/storage/pack.py
+
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Optional, Iterator
+import zlib
+import hashlib
+
+from .pack_index import PackIndex, PackIndexEntry
+from .delta import parse_delta, apply_delta, PackObjectType
+
+
+@dataclass(slots=True)
+class PackObject:
+    &quot;&quot;&quot;Object read from pack file.&quot;&quot;&quot;
+    sha: str
+    type_name: str
+    data: bytes
+    offset: int
+
+
+class PackFile:
+    &quot;&quot;&quot;
+    Reader for Git pack files.
+
+    Pack files store multiple objects efficiently using
+    zlib compression and delta encoding.
+    &quot;&quot;&quot;
+
+    def __init__(self, pack_path: Path, index: Optional[PackIndex] = None):
+        &quot;&quot;&quot;
+        Open pack file.
+
+        Args:
+            pack_path: Path to .pack file
+            index: Optional pre-loaded index (loads from .idx if not provided)
+        &quot;&quot;&quot;
+        self.pack_path = pack_path
+        self._data = pack_path.read_bytes()
+
+        # Parse header
+        self.version, self.object_count = self._read_header()
+
+        # Load or create index
+        if index:
+            self.index = index
+        else:
+            idx_path = pack_path.with_suffix(&quot;.idx&quot;)
+            if idx_path.exists():
+                self.index = PackIndex.from_file(idx_path)
+            else:
+                self.index = self._build_index()
+
+        # Cache for resolved objects (offset -&gt; (type, data))
+        self._cache: dict[int, tuple[str, bytes]] = {}
+
+    def _read_header(self) -&gt; tuple[int, int]:
+        &quot;&quot;&quot;Parse pack header.&quot;&quot;&quot;
+        if self._data[:4] != b&quot;PACK&quot;:
+            raise ValueError(&quot;Invalid pack signature&quot;)
+
+        version = int.from_bytes(self._data[4:8], &quot;big&quot;)
+        object_count = int.from_bytes(self._data[8:12], &quot;big&quot;)
+
+        return version, object_count
+
+    def _verify_checksum(self) -&gt; bool:
+        &quot;&quot;&quot;Verify pack file integrity.&quot;&quot;&quot;
+        expected_sha = self._data[-20:]
+        actual_sha = hashlib.sha1(self._data[:-20]).digest()
+        return expected_sha == actual_sha
+
+    def _read_object_at(self, offset: int) -&gt; tuple[int, int, bytes, int]:
+        &quot;&quot;&quot;
+        Read raw object data at offset.
+
+        Returns:
+            (object_type, uncompressed_size, compressed_data, next_offset)
+        &quot;&quot;&quot;
+        pos = offset
+
+        # Read type and size
+        byte = self._data[pos]
+        obj_type = (byte &gt;&gt; 4) &amp; 0x07
+        size = byte &amp; 0x0F
+        pos += 1
+
+        shift = 4
+        while byte &amp; 0x80:
+            byte = self._data[pos]
+            size |= (byte &amp; 0x7F) &lt;&lt; shift
+            shift += 7
+            pos += 1
+
+        # Handle delta base reference
+        base_offset = None
+        base_sha = None
+
+        if obj_type == PackObjectType.OFS_DELTA:
+            # Read negative offset to base
+            byte = self._data[pos]
+            base_offset_value = byte &amp; 0x7F
+            pos += 1
+
+            while byte &amp; 0x80:
+                byte = self._data[pos]
+                base_offset_value = ((base_offset_value + 1) &lt;&lt; 7) | (byte &amp; 0x7F)
+                pos += 1
+
+            base_offset = offset - base_offset_value
+
+        elif obj_type == PackObjectType.REF_DELTA:
+            # Read 20-byte SHA reference
+            base_sha = self._data[pos : pos + 20].hex()
+            pos += 20
+
+        # Decompress data
+        decompressor = zlib.decompressobj()
+        decompressed = decompressor.decompress(self._data[pos:])
+        next_offset = pos + len(self._data[pos:]) - len(decompressor.unused_data)
+
+        return obj_type, size, decompressed, next_offset, base_offset, base_sha
+
+    def read_object(self, sha: str) -&gt; Optional[PackObject]:
+        &quot;&quot;&quot;
+        Read object by SHA.
+
+        Args:
+            sha: 40-character hex SHA
+
+        Returns:
+            PackObject or None if not found
+        &quot;&quot;&quot;
+        offset = self.index.get_offset(sha)
+        if offset is None:
+            return None
+
+        type_name, data = self._resolve_object(offset)
+
+        return PackObject(
+            sha=sha,
+            type_name=type_name,
+            data=data,
+            offset=offset
+        )
+
+    def _resolve_object(self, offset: int) -&gt; tuple[str, bytes]:
+        &quot;&quot;&quot;
+        Resolve object at offset, following delta chains.
+
+        Returns:
+            (type_name, object_data)
+        &quot;&quot;&quot;
+        # Check cache
+        if offset in self._cache:
+            return self._cache[offset]
+
+        obj_type, size, data, next_offset, base_offset, base_sha = \
+            self._read_object_at(offset)
+
+        if obj_type in (PackObjectType.COMMIT, PackObjectType.TREE,
+                        PackObjectType.BLOB, PackObjectType.TAG):
+            # Non-delta object
+            type_name = PackObjectType(obj_type).to_object_type()
+            result = (type_name, data)
+
+        elif obj_type == PackObjectType.OFS_DELTA:
+            # Delta with offset reference
+            base_type, base_data = self._resolve_object(base_offset)
+            _, _, delta_ops = parse_delta(data)
+            resolved_data = apply_delta(base_data, delta_ops)
+            result = (base_type, resolved_data)
+
+        elif obj_type == PackObjectType.REF_DELTA:
+            # Delta with SHA reference
+            base_offset = self.index.get_offset(base_sha)
+            if base_offset is None:
+                raise ValueError(f&quot;Base object not found: {base_sha}&quot;)
+            base_type, base_data = self._resolve_object(base_offset)
+            _, _, delta_ops = parse_delta(data)
+            resolved_data = apply_delta(base_data, delta_ops)
+            result = (base_type, resolved_data)
+
+        else:
+            raise ValueError(f&quot;Unknown object type: {obj_type}&quot;)
+
+        # Cache result
+        self._cache[offset] = result
+        return result
+
+    def __contains__(self, sha: str) -&gt; bool:
+        return sha in self.index
+
+    def __iter__(self) -&gt; Iterator[PackObject]:
+        &quot;&quot;&quot;Iterate over all objects in pack.&quot;&quot;&quot;
+        for entry in self.index.entries:
+            obj = self.read_object(entry.sha)
+            if obj:
+                yield obj
+
+    def _build_index(self) -&gt; PackIndex:
+        &quot;&quot;&quot;Build index by scanning pack file.&quot;&quot;&quot;
+        entries = []
+        offset = 12  # After header
+
+        for _ in range(self.object_count):
+            # Read and resolve object
+            obj_type, size, data, next_offset, base_offset, base_sha = \
+                self._read_object_at(offset)
+
+            # Resolve to get final type and data
+            type_name, resolved_data = self._resolve_object(offset)
+
+            # Compute SHA
+            header = f&quot;{type_name} {len(resolved_data)}\0&quot;.encode()
+            sha = hashlib.sha1(header + resolved_data).hexdigest()
+
+            # Compute CRC32 of compressed data
+            compressed_end = next_offset
+            compressed_data = self._data[offset:compressed_end]
+            crc = zlib.crc32(compressed_data) &amp; 0xFFFFFFFF
+
+            entries.append(PackIndexEntry(sha=sha, offset=offset, crc32=crc))
+            offset = next_offset
+
+        pack_sha = self._data[-20:].hex()
+        return PackIndex(pack_sha=pack_sha, entries=entries)
+</code></pre>
+<hr />
+<h2 id="6-pack-file-writer">6. Pack File Writer</h2>
+<h3 id="61-implementation">6.1 Implementation</h3>
+<pre><code class="language-python"># gitpy/storage/pack_writer.py
+
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Iterable, Optional
+import zlib
+import hashlib
+
+from gitpy.objects import GitObject, create_object_data
+from .pack import PackObjectType
+from .pack_index import PackIndex, PackIndexEntry
+from .delta import create_delta
+
+
+@dataclass(slots=True)
+class PackEntry:
+    &quot;&quot;&quot;Object to be written to pack.&quot;&quot;&quot;
+    sha: str
+    type_name: str
+    data: bytes
+    delta_base_sha: Optional[str] = None  # If deltified
+
+
+class PackWriter:
+    &quot;&quot;&quot;
+    Writer for Git pack files.
+
+    Creates .pack and .idx files from a collection of objects.
+    &quot;&quot;&quot;
+
+    def __init__(self, objects_dir: Path):
+        &quot;&quot;&quot;
+        Initialize pack writer.
+
+        Args:
+            objects_dir: Path to .git/objects directory
+        &quot;&quot;&quot;
+        self.objects_dir = objects_dir
+        self.pack_dir = objects_dir / &quot;pack&quot;
+        self.pack_dir.mkdir(parents=True, exist_ok=True)
+
+    def write_pack(
+        self,
+        objects: Iterable[GitObject],
+        deltify: bool = True,
+        window_size: int = 10,
+    ) -&gt; tuple[Path, Path]:
+        &quot;&quot;&quot;
+        Write objects to a new pack file.
+
+        Args:
+            objects: Objects to pack
+            deltify: Whether to use delta compression
+            window_size: Number of recent objects to consider for delta base
+
+        Returns:
+            (pack_path, index_path)
+        &quot;&quot;&quot;
+        # Collect all objects
+        entries = []
+        for obj in objects:
+            data = create_object_data(obj)
+            sha = hashlib.sha1(data).hexdigest()
+            # Extract content (without header)
+            null_idx = data.index(b&quot;\0&quot;)
+            content = data[null_idx + 1:]
+            entries.append(PackEntry(
+                sha=sha,
+                type_name=obj.type_name,
+                data=content,
+            ))
+
+        # Sort by type then size (helps delta compression)
+        entries.sort(key=lambda e: (e.type_name, len(e.data)))
+
+        # Optionally deltify
+        if deltify:
+            entries = self._deltify_entries(entries, window_size)
+
+        # Write pack file
+        pack_data = self._create_pack_data(entries)
+        pack_sha = hashlib.sha1(pack_data).hexdigest()
+
+        pack_path = self.pack_dir / f&quot;pack-{pack_sha}.pack&quot;
+        pack_path.write_bytes(pack_data)
+
+        # Create and write index
+        index = self._create_index(entries, pack_data, pack_sha)
+        idx_path = self.pack_dir / f&quot;pack-{pack_sha}.idx&quot;
+        idx_path.write_bytes(index.serialize())
+
+        return pack_path, idx_path
+
+    def _deltify_entries(
+        self,
+        entries: list[PackEntry],
+        window_size: int,
+    ) -&gt; list[PackEntry]:
+        &quot;&quot;&quot;Apply delta compression to entries.&quot;&quot;&quot;
+        result = []
+        window: list[PackEntry] = []
+
+        for entry in entries:
+            best_delta = None
+            best_base = None
+            best_size = len(entry.data)
+
+            # Try to deltify against recent objects of same type
+            for base in window:
+                if base.type_name != entry.type_name:
+                    continue
+
+                delta = create_delta(base.data, entry.data)
+                if len(delta) &lt; best_size:
+                    best_delta = delta
+                    best_base = base.sha
+                    best_size = len(delta)
+
+            if best_delta and len(best_delta) &lt; len(entry.data) * 0.9:
+                # Delta is significantly smaller
+                result.append(PackEntry(
+                    sha=entry.sha,
+                    type_name=entry.type_name,
+                    data=best_delta,
+                    delta_base_sha=best_base,
+                ))
+            else:
+                # Keep as non-delta
+                result.append(entry)
+
+            # Update window
+            window.append(entry)
+            if len(window) &gt; window_size:
+                window.pop(0)
+
+        return result
+
+    def _create_pack_data(self, entries: list[PackEntry]) -&gt; bytes:
+        &quot;&quot;&quot;Create pack file content.&quot;&quot;&quot;
+        result = bytearray()
+
+        # Header
+        result.extend(b&quot;PACK&quot;)
+        result.extend((2).to_bytes(4, &quot;big&quot;))  # Version 2
+        result.extend(len(entries).to_bytes(4, &quot;big&quot;))
+
+        # Track offsets for OFS_DELTA
+        sha_to_offset: dict[str, int] = {}
+
+        for entry in entries:
+            offset = len(result)
+            sha_to_offset[entry.sha] = offset
+
+            if entry.delta_base_sha:
+                # Delta object
+                base_offset = sha_to_offset.get(entry.delta_base_sha)
+
+                if base_offset is not None:
+                    # Use OFS_DELTA (base already written)
+                    obj_type = PackObjectType.OFS_DELTA
+                    header = self._encode_header(obj_type, len(entry.data))
+                    result.extend(header)
+
+                    # Encode negative offset
+                    delta_offset = offset - base_offset
+                    result.extend(self._encode_ofs_delta_offset(delta_offset))
+                else:
+                    # Use REF_DELTA (base not in this pack)
+                    obj_type = PackObjectType.REF_DELTA
+                    header = self._encode_header(obj_type, len(entry.data))
+                    result.extend(header)
+                    result.extend(bytes.fromhex(entry.delta_base_sha))
+            else:
+                # Non-delta object
+                obj_type = PackObjectType.from_object_type(entry.type_name)
+                header = self._encode_header(obj_type, len(entry.data))
+                result.extend(header)
+
+            # Compressed data
+            compressed = zlib.compress(entry.data)
+            result.extend(compressed)
+
+        # Trailer (SHA-1 of everything)
+        sha = hashlib.sha1(result).digest()
+        result.extend(sha)
+
+        return bytes(result)
+
+    def _encode_header(self, obj_type: int, size: int) -&gt; bytes:
+        &quot;&quot;&quot;Encode pack object header.&quot;&quot;&quot;
+        result = bytearray()
+
+        # First byte: type in bits 4-6, low 4 bits of size
+        byte = (obj_type &lt;&lt; 4) | (size &amp; 0x0F)
+        size &gt;&gt;= 4
+
+        if size &gt; 0:
+            byte |= 0x80
+        result.append(byte)
+
+        # Remaining size bytes
+        while size &gt; 0:
+            byte = size &amp; 0x7F
+            size &gt;&gt;= 7
+            if size &gt; 0:
+                byte |= 0x80
+            result.append(byte)
+
+        return bytes(result)
+
+    def _encode_ofs_delta_offset(self, offset: int) -&gt; bytes:
+        &quot;&quot;&quot;Encode OFS_DELTA negative offset.&quot;&quot;&quot;
+        result = bytearray()
+        result.append(offset &amp; 0x7F)
+        offset &gt;&gt;= 7
+
+        while offset &gt; 0:
+            offset -= 1
+            result.append(0x80 | (offset &amp; 0x7F))
+            offset &gt;&gt;= 7
+
+        result.reverse()
+        return bytes(result)
+
+    def _create_index(
+        self,
+        entries: list[PackEntry],
+        pack_data: bytes,
+        pack_sha: str,
+    ) -&gt; PackIndex:
+        &quot;&quot;&quot;Create index for pack file.&quot;&quot;&quot;
+        # Calculate offsets and CRCs
+        index_entries = []
+        offset = 12  # After header
+
+        for entry in entries:
+            # Find end of this entry
+            # (We need to decompress to find boundary)
+            pos = offset
+
+            # Skip header
+            byte = pack_data[pos]
+            pos += 1
+            while byte &amp; 0x80:
+                byte = pack_data[pos]
+                pos += 1
+
+            # Skip delta base reference if present
+            if entry.delta_base_sha:
+                # Check if OFS or REF delta based on type
+                obj_type = (pack_data[offset] &gt;&gt; 4) &amp; 0x07
+                if obj_type == PackObjectType.OFS_DELTA:
+                    byte = pack_data[pos]
+                    pos += 1
+                    while byte &amp; 0x80:
+                        byte = pack_data[pos]
+                        pos += 1
+                else:
+                    pos += 20
+
+            # Find end of compressed data
+            decompressor = zlib.decompressobj()
+            decompressor.decompress(pack_data[pos:])
+            compressed_size = len(pack_data[pos:]) - len(decompressor.unused_data)
+            next_offset = pos + compressed_size
+
+            # CRC32 of entire entry
+            crc = zlib.crc32(pack_data[offset:next_offset]) &amp; 0xFFFFFFFF
+
+            index_entries.append(PackIndexEntry(
+                sha=entry.sha,
+                offset=offset,
+                crc32=crc,
+            ))
+
+            offset = next_offset
+
+        return PackIndex(pack_sha=pack_sha, entries=index_entries)
+</code></pre>
+<hr />
+<h2 id="7-integration-with-object-database">7. Integration with Object Database</h2>
+<h3 id="71-updated-objectdatabase">7.1 Updated ObjectDatabase</h3>
+<pre><code class="language-python"># Updates to gitpy/storage/database.py
+
+class ObjectDatabase:
+    &quot;&quot;&quot;Extended to support pack files.&quot;&quot;&quot;
+
+    def __init__(self, git_dir: Path):
+        self.git_dir = git_dir
+        self.loose = LooseObjectStore(git_dir)
+        self._pack_files: list[PackFile] = []
+        self._load_packs()
+
+    def _load_packs(self) -&gt; None:
+        &quot;&quot;&quot;Load all pack files from objects/pack/.&quot;&quot;&quot;
+        pack_dir = self.git_dir / &quot;objects&quot; / &quot;pack&quot;
+        if not pack_dir.exists():
+            return
+
+        for pack_path in pack_dir.glob(&quot;*.pack&quot;):
+            idx_path = pack_path.with_suffix(&quot;.idx&quot;)
+            if idx_path.exists():
+                pack = PackFile(pack_path)
+                self._pack_files.append(pack)
+
+    def exists(self, sha: str) -&gt; bool:
+        &quot;&quot;&quot;Check if object exists in loose or pack storage.&quot;&quot;&quot;
+        if len(sha) &lt; 40:
+            sha = self._resolve_short_sha(sha)
+            if sha is None:
+                return False
+
+        # Check loose objects
+        if self.loose.exists(sha):
+            return True
+
+        # Check pack files
+        for pack in self._pack_files:
+            if sha in pack:
+                return True
+
+        return False
+
+    def read_raw(self, sha: str) -&gt; bytes:
+        &quot;&quot;&quot;Read raw object data from loose or pack storage.&quot;&quot;&quot;
+        if len(sha) &lt; 40:
+            full_sha = self._resolve_short_sha(sha)
+            if full_sha is None:
+                raise FileNotFoundError(f&quot;Object not found: {sha}&quot;)
+            sha = full_sha
+
+        # Try loose first
+        if self.loose.exists(sha):
+            return self.loose.read(sha)
+
+        # Try pack files
+        for pack in self._pack_files:
+            obj = pack.read_object(sha)
+            if obj:
+                # Reconstruct full object with header
+                header = f&quot;{obj.type_name} {len(obj.data)}\0&quot;.encode()
+                return header + obj.data
+
+        raise FileNotFoundError(f&quot;Object not found: {sha}&quot;)
+
+    def repack(self, gc: bool = False) -&gt; tuple[Path, Path]:
+        &quot;&quot;&quot;
+        Repack all objects into a single pack file.
+
+        Args:
+            gc: If True, also remove loose objects that are now packed
+
+        Returns:
+            (pack_path, index_path)
+        &quot;&quot;&quot;
+        from .pack_writer import PackWriter
+
+        # Collect all objects
+        objects = list(self._iter_all_objects())
+
+        # Write new pack
+        writer = PackWriter(self.git_dir / &quot;objects&quot;)
+        pack_path, idx_path = writer.write_pack(objects)
+
+        # Reload packs
+        self._pack_files.clear()
+        self._load_packs()
+
+        if gc:
+            # Remove loose objects that are now in packs
+            for sha in list(self.loose.iter_objects()):
+                if any(sha in pack for pack in self._pack_files):
+                    self.loose.delete(sha)
+
+        return pack_path, idx_path
+
+    def _iter_all_objects(self) -&gt; Iterator[GitObject]:
+        &quot;&quot;&quot;Iterate over all objects in the database.&quot;&quot;&quot;
+        seen: set[str] = set()
+
+        # Loose objects
+        for sha in self.loose.iter_objects():
+            if sha not in seen:
+                seen.add(sha)
+                yield self.read(sha)
+
+        # Pack objects
+        for pack in self._pack_files:
+            for obj in pack:
+                if obj.sha not in seen:
+                    seen.add(obj.sha)
+                    yield self.read(obj.sha)
+</code></pre>
+<hr />
+<h2 id="8-test-cases">8. Test Cases</h2>
+<h3 id="81-pack-header-tests">8.1 Pack Header Tests</h3>
+<pre><code class="language-python">import pytest
+from gitpy.storage.pack import PackFile, PackObjectType
+
+class TestPackHeader:
+
+    def test_read_valid_header(self):
+        &quot;&quot;&quot;Parse valid pack header.&quot;&quot;&quot;
+        # PACK + version 2 + 5 objects
+        data = b&quot;PACK&quot; + (2).to_bytes(4, &quot;big&quot;) + (5).to_bytes(4, &quot;big&quot;)
+        data += b&quot;\x00&quot; * 100  # Padding for minimal valid pack
+
+        # Would need complete pack for full test
+        version, count = read_pack_header(data)
+        assert version == 2
+        assert count == 5
+
+    def test_invalid_signature(self):
+        &quot;&quot;&quot;Reject invalid signature.&quot;&quot;&quot;
+        data = b&quot;NOTPACK...&quot;
+        with pytest.raises(ValueError, match=&quot;Invalid pack signature&quot;):
+            read_pack_header(data)
+
+
+class TestVarintEncoding:
+
+    def test_encode_small_size(self):
+        &quot;&quot;&quot;Encode size that fits in 4 bits.&quot;&quot;&quot;
+        header = write_pack_object_header(PackObjectType.BLOB, 10)
+        assert header == bytes([0x30 | 10])  # type=3, size=10
+
+    def test_encode_medium_size(self):
+        &quot;&quot;&quot;Encode size requiring multiple bytes.&quot;&quot;&quot;
+        header = write_pack_object_header(PackObjectType.BLOB, 1000)
+        # First byte: type=3, low 4 bits of size, MSB set
+        # Remaining bytes encode rest of size
+        obj_type, size, _ = read_pack_object_header(header, 0)
+        assert obj_type == PackObjectType.BLOB
+        assert size == 1000
+
+    def test_roundtrip_various_sizes(self):
+        &quot;&quot;&quot;Encode/decode roundtrip for various sizes.&quot;&quot;&quot;
+        for size in [0, 1, 15, 16, 127, 128, 1000, 65535, 1_000_000]:
+            header = write_pack_object_header(PackObjectType.COMMIT, size)
+            obj_type, decoded_size, _ = read_pack_object_header(header, 0)
+            assert decoded_size == size
+</code></pre>
+<h3 id="82-delta-tests">8.2 Delta Tests</h3>
+<pre><code class="language-python">from gitpy.storage.delta import parse_delta, apply_delta, create_delta
+
+class TestDelta:
+
+    def test_parse_simple_delta(self):
+        &quot;&quot;&quot;Parse delta with copy and insert.&quot;&quot;&quot;
+        source = b&quot;Hello, World!&quot;
+        target = b&quot;Hello, Git World!&quot;
+
+        delta = create_delta(source, target)
+        source_size, target_size, ops = parse_delta(delta)
+
+        assert source_size == len(source)
+        assert target_size == len(target)
+
+    def test_apply_delta(self):
+        &quot;&quot;&quot;Apply delta to reconstruct target.&quot;&quot;&quot;
+        source = b&quot;Hello, World!&quot;
+        target = b&quot;Hello, Git World!&quot;
+
+        delta = create_delta(source, target)
+        _, _, ops = parse_delta(delta)
+        result = apply_delta(source, ops)
+
+        assert result == target
+
+    def test_delta_identical(self):
+        &quot;&quot;&quot;Delta of identical content is small.&quot;&quot;&quot;
+        data = b&quot;x&quot; * 1000
+        delta = create_delta(data, data)
+
+        # Should be much smaller than original
+        assert len(delta) &lt; len(data) // 2
+
+    def test_delta_completely_different(self):
+        &quot;&quot;&quot;Delta of completely different content.&quot;&quot;&quot;
+        source = b&quot;aaaa&quot; * 100
+        target = b&quot;bbbb&quot; * 100
+
+        delta = create_delta(source, target)
+        _, _, ops = parse_delta(delta)
+        result = apply_delta(source, ops)
+
+        assert result == target
+
+
+class TestOFSDeltaOffset:
+
+    def test_encode_decode_small(self):
+        &quot;&quot;&quot;Small offset roundtrip.&quot;&quot;&quot;
+        for offset in [1, 10, 127]:
+            encoded = write_ofs_delta_offset(offset)
+            decoded, _ = read_ofs_delta_offset(encoded, 0)
+            assert decoded == offset
+
+    def test_encode_decode_large(self):
+        &quot;&quot;&quot;Large offset roundtrip.&quot;&quot;&quot;
+        for offset in [128, 1000, 100000, 10_000_000]:
+            encoded = write_ofs_delta_offset(offset)
+            decoded, _ = read_ofs_delta_offset(encoded, 0)
+            assert decoded == offset
+</code></pre>
+<h3 id="83-pack-index-tests">8.3 Pack Index Tests</h3>
+<pre><code class="language-python">from gitpy.storage.pack_index import PackIndex, PackIndexEntry
+
+class TestPackIndex:
+
+    def test_index_roundtrip(self):
+        &quot;&quot;&quot;Serialize and parse index.&quot;&quot;&quot;
+        entries = [
+            PackIndexEntry(sha=&quot;a&quot; * 40, offset=12, crc32=0x12345678),
+            PackIndexEntry(sha=&quot;b&quot; * 40, offset=100, crc32=0xDEADBEEF),
+            PackIndexEntry(sha=&quot;f&quot; * 40, offset=500, crc32=0xCAFEBABE),
+        ]
+
+        index = PackIndex(pack_sha=&quot;c&quot; * 40, entries=entries)
+        data = index.serialize()
+        restored = PackIndex.parse(data)
+
+        assert restored.object_count == 3
+        assert restored.get_offset(&quot;a&quot; * 40) == 12
+        assert restored.get_offset(&quot;b&quot; * 40) == 100
+        assert restored.get_offset(&quot;f&quot; * 40) == 500
+
+    def test_fanout_table(self):
+        &quot;&quot;&quot;Fanout table enables fast lookup.&quot;&quot;&quot;
+        entries = [
+            PackIndexEntry(sha=&quot;00&quot; + &quot;a&quot; * 38, offset=12, crc32=0),
+            PackIndexEntry(sha=&quot;00&quot; + &quot;b&quot; * 38, offset=24, crc32=0),
+            PackIndexEntry(sha=&quot;ff&quot; + &quot;c&quot; * 38, offset=36, crc32=0),
+        ]
+
+        index = PackIndex(pack_sha=&quot;d&quot; * 40, entries=entries)
+
+        # First byte 0x00: 2 objects
+        # First byte 0xff: 3 objects total
+        assert index._fanout[0] == 2
+        assert index._fanout[255] == 3
+
+    def test_large_offset(self):
+        &quot;&quot;&quot;Handle offsets &gt; 2GB.&quot;&quot;&quot;
+        large_offset = 0x100000000  # 4GB
+
+        entries = [
+            PackIndexEntry(sha=&quot;a&quot; * 40, offset=large_offset, crc32=0),
+        ]
+
+        index = PackIndex(pack_sha=&quot;b&quot; * 40, entries=entries)
+        data = index.serialize()
+        restored = PackIndex.parse(data)
+
+        assert restored.get_offset(&quot;a&quot; * 40) == large_offset
+</code></pre>
+<h3 id="84-integration-tests">8.4 Integration Tests</h3>
+<pre><code class="language-python">class TestPackFileIntegration:
+
+    @pytest.fixture
+    def repo(self, tmp_path):
+        return Repository.init(tmp_path)
+
+    def test_write_and_read_pack(self, repo):
+        &quot;&quot;&quot;Write objects to pack and read back.&quot;&quot;&quot;
+        # Create some objects
+        blobs = [
+            Blob(data=f&quot;Content {i}&quot;.encode())
+            for i in range(10)
+        ]
+
+        for blob in blobs:
+            repo.objects.write(blob)
+
+        # Repack
+        pack_path, idx_path = repo.objects.repack()
+
+        assert pack_path.exists()
+        assert idx_path.exists()
+
+        # Read back
+        for blob in blobs:
+            restored = repo.objects.read_blob(blob.oid)
+            assert restored.data == blob.data
+
+    def test_delta_compression(self, repo):
+        &quot;&quot;&quot;Verify delta compression reduces size.&quot;&quot;&quot;
+        # Create similar blobs
+        base_content = b&quot;x&quot; * 10000
+        blobs = [
+            Blob(data=base_content),
+            Blob(data=base_content + b&quot;_modified&quot;),
+            Blob(data=b&quot;prefix_&quot; + base_content),
+        ]
+
+        for blob in blobs:
+            repo.objects.write(blob)
+
+        # Get loose size
+        loose_size = sum(
+            (repo.git_dir / &quot;objects&quot; / sha[:2] / sha[2:]).stat().st_size
+            for sha in [b.oid for b in blobs]
+        )
+
+        # Repack
+        pack_path, _ = repo.objects.repack()
+        pack_size = pack_path.stat().st_size
+
+        # Pack should be significantly smaller due to delta
+        assert pack_size &lt; loose_size * 0.5
+
+    def test_git_compatibility(self, repo, tmp_path):
+        &quot;&quot;&quot;Verify pack files are compatible with real Git.&quot;&quot;&quot;
+        import subprocess
+
+        # Create and pack objects
+        blob = Blob(data=b&quot;hello from gitpy\n&quot;)
+        sha = repo.objects.write(blob)
+        repo.objects.repack()
+
+        # Use real Git to verify
+        result = subprocess.run(
+            [&quot;git&quot;, &quot;cat-file&quot;, &quot;-p&quot;, sha],
+            cwd=repo.worktree,
+            capture_output=True,
+            text=True,
+        )
+
+        assert result.returncode == 0
+        assert result.stdout == &quot;hello from gitpy\n&quot;
+</code></pre>
+<hr />
+<h2 id="9-acceptance-criteria">9. Acceptance Criteria</h2>
+<h3 id="91-functional-requirements">9.1 Functional Requirements</h3>
+<ul>
+<li>[ ] Pack files can be read and objects extracted</li>
+<li>[ ] Pack index enables O(1) lookup by SHA</li>
+<li>[ ] OFS_DELTA objects are correctly resolved</li>
+<li>[ ] REF_DELTA objects are correctly resolved</li>
+<li>[ ] Delta chains of arbitrary depth are handled</li>
+<li>[ ] Pack files can be written from loose objects</li>
+<li>[ ] Delta compression is applied when beneficial</li>
+<li>[ ] Large offsets (&gt;2GB) are handled correctly</li>
+</ul>
+<h3 id="92-non-functional-requirements">9.2 Non-Functional Requirements</h3>
+<ul>
+<li>[ ] Compatible with Git pack format v2</li>
+<li>[ ] Pack files created by gitpy are readable by real Git</li>
+<li>[ ] Pack files created by Git are readable by gitpy</li>
+<li>[ ] Memory efficient (streaming where possible)</li>
+<li>[ ] Reasonable performance for typical repository sizes</li>
+</ul>
+<h3 id="93-verification-commands">9.3 Verification Commands</h3>
+<pre><code class="language-bash"># Create pack with real Git, read with gitpy
+git gc
+# gitpy should read objects from .git/objects/pack/*.pack
+
+# Create pack with gitpy, read with real Git
+gitpy repack
+git cat-file -p &lt;sha&gt;  # Should work
+
+# Verify pack integrity
+git verify-pack -v .git/objects/pack/*.pack
+
+# Compare delta compression
+ls -la .git/objects/pack/
+</code></pre>
+<hr />
+<h2 id="10-file-structure">10. File Structure</h2>
+<pre><code>gitpy/
+└── storage/
+    ├── __init__.py
+    ├── compression.py    # Zlib utilities
+    ├── database.py       # ObjectDatabase (updated)
+    ├── loose.py          # LooseObjectStore
+    ├── delta.py          # Delta encoding/decoding
+    ├── pack.py           # PackFile reader
+    ├── pack_index.py     # PackIndex
+    └── pack_writer.py    # PackWriter
+</code></pre>
+<hr />
+<h2 id="11-implementation-notes">11. Implementation Notes</h2>
+<h3 id="111-delta-base-selection">11.1 Delta Base Selection</h3>
+<p>Git uses sophisticated heuristics for choosing delta bases:
+- Objects of the same type
+- Similar file paths (from tree entries)
+- Similar sizes
+- Rolling hash for content similarity</p>
+<p>For initial implementation, a simpler approach (recent objects of same type) is acceptable.</p>
+<h3 id="112-thin-packs">11.2 Thin Packs</h3>
+<p>For network transfer, Git supports "thin packs" that reference base objects not in the pack itself. These are used during fetch/push and must be "thickened" before storage.</p>
+<h3 id="113-multi-pack-index">11.3 Multi-Pack Index</h3>
+<p>Git 2.28+ supports a multi-pack-index for repositories with many pack files. This is an optimization for very large repositories and can be deferred.</p>
+<h3 id="114-performance-considerations">11.4 Performance Considerations</h3>
+<ul>
+<li>Cache resolved delta objects to avoid re-resolution</li>
+<li>Use memory-mapped files for large packs</li>
+<li>Build object offset index on first access, cache for reuse</li>
+<li>Consider thread safety for concurrent access</li>
+</ul>
+<hr />
+<h2 id="12-references">12. References</h2>
+<ul>
+<li><a href="https://git-scm.com/docs/pack-format">Git Pack Format Documentation</a></li>
+<li><a href="https://git-scm.com/docs/index-format">Git Index Format</a></li>
+<li><a href="https://git-scm.com/book/en/v2/Git-Internals-Packfiles">Pro Git Book - Packfiles</a></li>
+<li><a href="https://github.com/git/git/blob/master/pack.h">Git Source: pack.h</a></li>
+<li><a href="https://github.com/git/git/blob/master/pack-objects.c">Git Source: pack-objects.c</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

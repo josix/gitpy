@@ -499,6 +499,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#agent-2b-pack-objects-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agent 2b: Pack Objects Agent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#agent-3-references-agent" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -786,6 +797,39 @@ tests/
 - [ ] Git can read gitpy objects and vice versa</p>
 <p><strong>Estimated Complexity</strong>: Medium</p>
 <hr />
+<h3 id="agent-2b-pack-objects-agent">Agent 2b: Pack Objects Agent</h3>
+<p><strong>Domain</strong>: Pack files and delta compression</p>
+<p><strong>Responsibilities</strong>:
+- Pack file format parsing (.pack)
+- Pack index reading/writing (.idx)
+- Delta encoding and decoding
+- OFS_DELTA and REF_DELTA resolution
+- Delta chain traversal
+- Pack file creation with delta compression</p>
+<p><strong>Files to Create</strong>:</p>
+<pre><code>gitpy/
+└── storage/
+    ├── delta.py         # Delta encoding/decoding
+    ├── pack.py          # PackFile reader
+    ├── pack_index.py    # PackIndex
+    └── pack_writer.py   # PackWriter
+tests/
+└── storage/
+    ├── test_delta.py
+    ├── test_pack.py
+    ├── test_pack_index.py
+    └── test_pack_writer.py
+</code></pre>
+<p><strong>Dependencies</strong>: Agent 1 (Object Model), Agent 2 (Storage)</p>
+<p><strong>Acceptance Criteria</strong>:
+- [ ] Pack files can be read and objects extracted
+- [ ] Pack index enables O(1) lookup by SHA
+- [ ] OFS_DELTA and REF_DELTA objects resolved correctly
+- [ ] Delta chains of arbitrary depth handled
+- [ ] Pack files can be written with delta compression
+- [ ] Git can read gitpy pack files and vice versa</p>
+<p><strong>Estimated Complexity</strong>: High</p>
+<hr />
 <h3 id="agent-3-references-agent">Agent 3: References Agent</h3>
 <p><strong>Domain</strong>: Branches, tags, HEAD management</p>
 <p><strong>Responsibilities</strong>:
@@ -997,6 +1041,12 @@ Phase 2 (Core Infrastructure):
 └─────────────────────┘
           │
           ▼
+Phase 2b (Advanced Storage - Optional):
+┌─────────────────────┐
+│ Agent 2b: Pack Obj  │
+└─────────────────────┘
+          │
+          ▼
 Phase 3 (Parallel):
 ┌──────────────┐  ┌──────────────┐  ┌──────────────┐
 │ Agent 3:     │  │ Agent 4:     │  │ Agent 5:     │
@@ -1034,6 +1084,21 @@ Phase 5 (Verification):
 </thead>
 <tbody>
 <tr>
+<td>Agent 2b (Pack)</td>
+<td>Agent 3 (Refs)</td>
+<td>Independent after Agent 2</td>
+</tr>
+<tr>
+<td>Agent 2b (Pack)</td>
+<td>Agent 4 (Index)</td>
+<td>Independent after Agent 2</td>
+</tr>
+<tr>
+<td>Agent 2b (Pack)</td>
+<td>Agent 5 (Diff)</td>
+<td>Independent after Agent 2</td>
+</tr>
+<tr>
 <td>Agent 3 (Refs)</td>
 <td>Agent 4 (Index)</td>
 <td>Independent subsystems</td>
@@ -1064,6 +1129,11 @@ Phase 5 (Verification):
 <td>Agent 1</td>
 <td>Agent 2</td>
 <td>Storage needs object types</td>
+</tr>
+<tr>
+<td>Agent 2</td>
+<td>Agent 2b</td>
+<td>Pack needs loose object store</td>
 </tr>
 <tr>
 <td>Agent 2</td>
@@ -1168,7 +1238,7 @@ from gitpy.objects import parse_object, create_object_data
 </tr>
 <tr>
 <td>Packfile complexity</td>
-<td>Defer to future phase</td>
+<td>Design complete (phase2b), implement as optional Agent 2b</td>
 </tr>
 <tr>
 <td>Merge conflicts</td>

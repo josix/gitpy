@@ -691,6 +691,11 @@
 <td>Loose objects, compression, repository initialization</td>
 </tr>
 <tr>
+<td>2b</td>
+<td><a href="phase2b_pack_objects/">Pack Objects</a></td>
+<td>Pack files, delta compression, pack index</td>
+</tr>
+<tr>
 <td>3</td>
 <td><a href="phase3_references/">References</a></td>
 <td>HEAD, branches, tags, reflog, revision parsing</td>
@@ -741,7 +746,7 @@
 │  tags, reflog   │  binary format  │   unified format            │
 ├─────────────────┴─────────────────┴─────────────────────────────┤
 │                      Object Database                            │
-│              loose objects │ compression │ SHA-1                │
+│         loose objects │ pack files │ compression │ SHA-1        │
 ├─────────────────────────────────────────────────────────────────┤
 │                       Object Model                              │
 │                 Blob │ Tree │ Commit │ Tag                      │
