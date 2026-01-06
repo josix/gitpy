@@ -1,0 +1,1502 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Phase 2: Object Storage - Design Specification - gitpy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#phase-2-object-storage-design-specification" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="gitpy" class="md-header__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gitpy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Phase 2: Object Storage - Design Specification
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="gitpy" class="md-nav__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gitpy
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/object_model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-design-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Design Goals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-storage-locations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Storage Locations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-loose-object-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Loose Object Storage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Loose Object Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-path-computation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Path Computation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Compression
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-object-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Object Database
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Object Database">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-repository-initialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Repository Initialization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Repository Initialization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-directory-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Directory Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-compression-utilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Compression Utilities
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Compression Utilities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-test-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Test Cases
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Test Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-loose-object-store-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Loose Object Store Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-object-database-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Object Database Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-repository-init-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Repository Init Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-acceptance-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Acceptance Criteria
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Acceptance Criteria">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-functional-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Functional Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-non-functional-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Non-Functional Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-file-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. File Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="phase-2-object-storage-design-specification">Phase 2: Object Storage - Design Specification</h1>
+<blockquote>
+<p><strong>Status</strong>: Draft
+<strong>Author</strong>: Domain Expert
+<strong>Last Updated</strong>: 2026-01-05
+<strong>Dependencies</strong>: Phase 1 (Object Model)</p>
+</blockquote>
+<h2 id="1-overview">1. Overview</h2>
+<p>The object storage system provides persistent storage for Git objects. Objects are stored in a content-addressable manner using their SHA-1 hash as the key.</p>
+<h3 id="11-design-goals">1.1 Design Goals</h3>
+<ul>
+<li><strong>Durability</strong>: Objects persist across sessions</li>
+<li><strong>Integrity</strong>: Corruption is detectable via SHA-1 verification</li>
+<li><strong>Efficiency</strong>: Compression reduces storage requirements</li>
+<li><strong>Atomicity</strong>: Object writes are atomic (no partial objects)</li>
+</ul>
+<h3 id="12-storage-locations">1.2 Storage Locations</h3>
+<pre><code>.git/
+└── objects/
+    ├── info/           # Auxiliary information
+    ├── pack/           # Packfiles (Phase 2b - advanced)
+    ├── ab/             # Loose objects with SHA starting &quot;ab&quot;
+    │   └── cdef...     # Object file (remaining 38 chars)
+    └── cd/
+        └── 1234...
+</code></pre>
+<hr />
+<h2 id="2-loose-object-storage">2. Loose Object Storage</h2>
+<h3 id="21-path-computation">2.1 Path Computation</h3>
+<p>Objects are stored using the first 2 characters of SHA as directory name:</p>
+<pre><code>.git/objects/&lt;sha[0:2]&gt;/&lt;sha[2:40]&gt;
+</code></pre>
+<p><strong>Example:</strong></p>
+<pre><code>SHA: 8ab686eafeb1f44702738c8b0f24f2567c36da6d
+Path: .git/objects/8a/b686eafeb1f44702738c8b0f24f2567c36da6d
+</code></pre>
+<h3 id="22-compression">2.2 Compression</h3>
+<p>All loose objects are zlib-compressed at default level (usually 6).</p>
+<p><strong>Storage Format:</strong></p>
+<pre><code>zlib_compress(type + &quot; &quot; + size + &quot;\0&quot; + content)
+</code></pre>
+<h3 id="23-implementation">2.3 Implementation</h3>
+<pre><code class="language-python"># gitpy/storage/loose.py
+
+import os
+import zlib
+from pathlib import Path
+from typing import Optional, Tuple
+
+class LooseObjectStore:
+    &quot;&quot;&quot;
+    Manages loose object storage in .git/objects/.
+
+    Loose objects are individual zlib-compressed files,
+    one per object, named by SHA-1 hash.
+    &quot;&quot;&quot;
+
+    def __init__(self, git_dir: Path):
+        &quot;&quot;&quot;
+        Initialize loose object store.
+
+        Args:
+            git_dir: Path to .git directory
+        &quot;&quot;&quot;
+        self.objects_dir = git_dir / &quot;objects&quot;
+
+    def _object_path(self, sha: str) -&gt; Path:
+        &quot;&quot;&quot;Compute filesystem path for object.&quot;&quot;&quot;
+        if len(sha) != 40:
+            raise ValueError(f&quot;Invalid SHA length: {len(sha)}&quot;)
+        return self.objects_dir / sha[:2] / sha[2:]
+
+    def exists(self, sha: str) -&gt; bool:
+        &quot;&quot;&quot;Check if object exists in store.&quot;&quot;&quot;
+        return self._object_path(sha).exists()
+
+    def read(self, sha: str) -&gt; bytes:
+        &quot;&quot;&quot;
+        Read and decompress object.
+
+        Args:
+            sha: 40-character hex SHA-1
+
+        Returns:
+            Decompressed object data (with header)
+
+        Raises:
+            FileNotFoundError: Object doesn't exist
+            zlib.error: Decompression failed
+        &quot;&quot;&quot;
+        path = self._object_path(sha)
+        compressed = path.read_bytes()
+        data = zlib.decompress(compressed)
+
+        # Verify SHA matches content
+        import hashlib
+        computed_sha = hashlib.sha1(data).hexdigest()
+        if computed_sha != sha:
+            raise ValueError(f&quot;SHA mismatch: expected {sha}, got {computed_sha}&quot;)
+
+        return data
+
+    def write(self, sha: str, data: bytes) -&gt; Path:
+        &quot;&quot;&quot;
+        Compress and write object atomically.
+
+        Args:
+            sha: 40-character hex SHA-1
+            data: Complete object data (with header)
+
+        Returns:
+            Path to written object
+
+        Note:
+            Write is atomic - uses temp file + rename
+        &quot;&quot;&quot;
+        path = self._object_path(sha)
+
+        # Skip if already exists (content-addressable = immutable)
+        if path.exists():
+            return path
+
+        # Ensure directory exists
+        path.parent.mkdir(parents=True, exist_ok=True)
+
+        # Compress
+        compressed = zlib.compress(data)
+
+        # Atomic write: write to temp, then rename
+        temp_path = path.with_suffix(&quot;.tmp&quot;)
+        try:
+            temp_path.write_bytes(compressed)
+            temp_path.rename(path)
+        except Exception:
+            # Clean up temp file on failure
+            temp_path.unlink(missing_ok=True)
+            raise
+
+        # Set read-only (objects are immutable)
+        path.chmod(0o444)
+
+        return path
+
+    def delete(self, sha: str) -&gt; bool:
+        &quot;&quot;&quot;
+        Delete object (for garbage collection).
+
+        Returns:
+            True if deleted, False if didn't exist
+        &quot;&quot;&quot;
+        path = self._object_path(sha)
+        if path.exists():
+            path.chmod(0o644)  # Make writable first
+            path.unlink()
+            # Clean up empty directory
+            try:
+                path.parent.rmdir()
+            except OSError:
+                pass  # Directory not empty
+            return True
+        return False
+
+    def iter_objects(self) -&gt; Iterable[str]:
+        &quot;&quot;&quot;Iterate over all object SHAs in store.&quot;&quot;&quot;
+        for subdir in self.objects_dir.iterdir():
+            if len(subdir.name) != 2 or not subdir.is_dir():
+                continue
+            if subdir.name in (&quot;info&quot;, &quot;pack&quot;):
+                continue
+            for obj_file in subdir.iterdir():
+                if len(obj_file.name) == 38:
+                    yield subdir.name + obj_file.name
+</code></pre>
+<hr />
+<h2 id="3-object-database">3. Object Database</h2>
+<h3 id="31-purpose">3.1 Purpose</h3>
+<p>High-level interface for object storage that:
+- Abstracts storage backend (loose vs packed)
+- Handles object parsing
+- Provides convenient read/write methods</p>
+<h3 id="32-implementation">3.2 Implementation</h3>
+<pre><code class="language-python"># gitpy/storage/database.py
+
+from pathlib import Path
+from typing import Optional, Union
+import hashlib
+
+from gitpy.objects import GitObject, parse_object, create_object_data
+from gitpy.objects.blob import Blob
+from gitpy.objects.tree import Tree
+from gitpy.objects.commit import Commit
+from gitpy.objects.tag import Tag
+from .loose import LooseObjectStore
+
+class ObjectDatabase:
+    &quot;&quot;&quot;
+    High-level interface to Git object storage.
+
+    Provides read/write access to Git objects with automatic
+    serialization, compression, and SHA computation.
+    &quot;&quot;&quot;
+
+    def __init__(self, git_dir: Path):
+        &quot;&quot;&quot;
+        Initialize object database.
+
+        Args:
+            git_dir: Path to .git directory
+        &quot;&quot;&quot;
+        self.git_dir = git_dir
+        self.loose = LooseObjectStore(git_dir)
+
+    def exists(self, sha: str) -&gt; bool:
+        &quot;&quot;&quot;Check if object exists.&quot;&quot;&quot;
+        # Short SHA support
+        if len(sha) &lt; 40:
+            return self._resolve_short_sha(sha) is not None
+        return self.loose.exists(sha)
+
+    def _resolve_short_sha(self, short_sha: str) -&gt; Optional[str]:
+        &quot;&quot;&quot;
+        Resolve abbreviated SHA to full SHA.
+
+        Args:
+            short_sha: Abbreviated SHA (minimum 4 chars)
+
+        Returns:
+            Full 40-char SHA or None if not found
+
+        Raises:
+            ValueError: If ambiguous (multiple matches)
+        &quot;&quot;&quot;
+        if len(short_sha) &lt; 4:
+            raise ValueError(&quot;SHA prefix too short (minimum 4)&quot;)
+
+        matches = []
+        prefix = short_sha[:2]
+        suffix_prefix = short_sha[2:]
+
+        subdir = self.loose.objects_dir / prefix
+        if subdir.exists():
+            for obj_file in subdir.iterdir():
+                if obj_file.name.startswith(suffix_prefix):
+                    matches.append(prefix + obj_file.name)
+
+        if len(matches) == 0:
+            return None
+        if len(matches) == 1:
+            return matches[0]
+        raise ValueError(f&quot;Ambiguous SHA prefix: {short_sha} matches {len(matches)} objects&quot;)
+
+    def read_raw(self, sha: str) -&gt; bytes:
+        &quot;&quot;&quot;
+        Read raw object data (decompressed, with header).
+
+        Args:
+            sha: Object SHA (full or abbreviated)
+
+        Returns:
+            Raw object bytes
+        &quot;&quot;&quot;
+        if len(sha) &lt; 40:
+            full_sha = self._resolve_short_sha(sha)
+            if full_sha is None:
+                raise FileNotFoundError(f&quot;Object not found: {sha}&quot;)
+            sha = full_sha
+
+        return self.loose.read(sha)
+
+    def read(self, sha: str) -&gt; GitObject:
+        &quot;&quot;&quot;
+        Read and parse object.
+
+        Args:
+            sha: Object SHA (full or abbreviated)
+
+        Returns:
+            Parsed GitObject (Blob, Tree, Commit, or Tag)
+        &quot;&quot;&quot;
+        data = self.read_raw(sha)
+        _, obj = parse_object(data)
+        return obj
+
+    def read_blob(self, sha: str) -&gt; Blob:
+        &quot;&quot;&quot;Read object as Blob.&quot;&quot;&quot;
+        obj = self.read(sha)
+        if not isinstance(obj, Blob):
+            raise TypeError(f&quot;Expected blob, got {obj.type_name}&quot;)
+        return obj
+
+    def read_tree(self, sha: str) -&gt; Tree:
+        &quot;&quot;&quot;Read object as Tree.&quot;&quot;&quot;
+        obj = self.read(sha)
+        if not isinstance(obj, Tree):
+            raise TypeError(f&quot;Expected tree, got {obj.type_name}&quot;)
+        return obj
+
+    def read_commit(self, sha: str) -&gt; Commit:
+        &quot;&quot;&quot;Read object as Commit.&quot;&quot;&quot;
+        obj = self.read(sha)
+        if not isinstance(obj, Commit):
+            raise TypeError(f&quot;Expected commit, got {obj.type_name}&quot;)
+        return obj
+
+    def write(self, obj: GitObject) -&gt; str:
+        &quot;&quot;&quot;
+        Write object to storage.
+
+        Args:
+            obj: GitObject to write
+
+        Returns:
+            SHA-1 of written object
+        &quot;&quot;&quot;
+        data = create_object_data(obj)
+        sha = hashlib.sha1(data).hexdigest()
+        self.loose.write(sha, data)
+        return sha
+
+    def hash_object(self, obj: GitObject, write: bool = True) -&gt; str:
+        &quot;&quot;&quot;
+        Compute SHA of object, optionally storing it.
+
+        Args:
+            obj: GitObject to hash
+            write: If True, also write to storage
+
+        Returns:
+            SHA-1 hash
+        &quot;&quot;&quot;
+        data = create_object_data(obj)
+        sha = hashlib.sha1(data).hexdigest()
+
+        if write:
+            self.loose.write(sha, data)
+
+        return sha
+
+    def get_type(self, sha: str) -&gt; str:
+        &quot;&quot;&quot;Get object type without full parse.&quot;&quot;&quot;
+        data = self.read_raw(sha)
+        null_idx = data.index(b&quot;\0&quot;)
+        header = data[:null_idx].decode(&quot;ascii&quot;)
+        type_name, _ = header.split(&quot; &quot;)
+        return type_name
+
+    def get_size(self, sha: str) -&gt; int:
+        &quot;&quot;&quot;Get object size without full parse.&quot;&quot;&quot;
+        data = self.read_raw(sha)
+        null_idx = data.index(b&quot;\0&quot;)
+        header = data[:null_idx].decode(&quot;ascii&quot;)
+        _, size_str = header.split(&quot; &quot;)
+        return int(size_str)
+</code></pre>
+<hr />
+<h2 id="4-repository-initialization">4. Repository Initialization</h2>
+<h3 id="41-directory-structure">4.1 Directory Structure</h3>
+<p>A new Git repository requires:</p>
+<pre><code>.git/
+├── HEAD                 # ref: refs/heads/main
+├── config               # Repository config
+├── description          # Repo description (for gitweb)
+├── objects/
+│   ├── info/
+│   └── pack/
+├── refs/
+│   ├── heads/
+│   └── tags/
+├── info/
+│   └── exclude          # Local gitignore
+└── hooks/               # Git hooks (optional)
+</code></pre>
+<h3 id="42-implementation">4.2 Implementation</h3>
+<pre><code class="language-python"># gitpy/repository.py
+
+from pathlib import Path
+from typing import Optional
+from .storage.database import ObjectDatabase
+
+class Repository:
+    &quot;&quot;&quot;
+    Represents a Git repository.
+
+    Provides access to all repository components:
+    objects, references, index, etc.
+    &quot;&quot;&quot;
+
+    def __init__(self, path: Path, git_dir: Optional[Path] = None):
+        &quot;&quot;&quot;
+        Open existing repository.
+
+        Args:
+            path: Working directory path
+            git_dir: .git directory (default: path/.git)
+        &quot;&quot;&quot;
+        self.worktree = path.resolve()
+        self.git_dir = git_dir or (self.worktree / &quot;.git&quot;)
+
+        if not self.git_dir.exists():
+            raise ValueError(f&quot;Not a git repository: {path}&quot;)
+
+        self.objects = ObjectDatabase(self.git_dir)
+
+    @classmethod
+    def init(cls, path: Path, bare: bool = False) -&gt; &quot;Repository&quot;:
+        &quot;&quot;&quot;
+        Initialize a new repository.
+
+        Args:
+            path: Where to create repository
+            bare: If True, create bare repository
+
+        Returns:
+            Newly created Repository
+        &quot;&quot;&quot;
+        path = Path(path).resolve()
+
+        if bare:
+            git_dir = path
+            worktree = None
+        else:
+            git_dir = path / &quot;.git&quot;
+            worktree = path
+
+        # Check not already a repo
+        if git_dir.exists():
+            raise ValueError(f&quot;Already a git repository: {path}&quot;)
+
+        # Create directory structure
+        git_dir.mkdir(parents=True, exist_ok=True)
+
+        # Create subdirectories
+        (git_dir / &quot;objects&quot; / &quot;info&quot;).mkdir(parents=True)
+        (git_dir / &quot;objects&quot; / &quot;pack&quot;).mkdir(parents=True)
+        (git_dir / &quot;refs&quot; / &quot;heads&quot;).mkdir(parents=True)
+        (git_dir / &quot;refs&quot; / &quot;tags&quot;).mkdir(parents=True)
+        (git_dir / &quot;info&quot;).mkdir(parents=True)
+
+        # Create HEAD
+        (git_dir / &quot;HEAD&quot;).write_text(&quot;ref: refs/heads/main\n&quot;)
+
+        # Create config
+        config = &quot;&quot;&quot;[core]
+\trepositoryformatversion = 0
+\tfilemode = true
+\tbare = {}
+&quot;&quot;&quot;.format(str(bare).lower())
+        (git_dir / &quot;config&quot;).write_text(config)
+
+        # Create description
+        (git_dir / &quot;description&quot;).write_text(
+            &quot;Unnamed repository; edit this file to name it.\n&quot;
+        )
+
+        # Create info/exclude
+        (git_dir / &quot;info&quot; / &quot;exclude&quot;).write_text(
+            &quot;# git ls-files --others --exclude-from=.git/info/exclude\n&quot;
+        )
+
+        return cls(path=worktree or path, git_dir=git_dir)
+
+    @classmethod
+    def find(cls, start_path: Optional[Path] = None) -&gt; &quot;Repository&quot;:
+        &quot;&quot;&quot;
+        Find repository containing path.
+
+        Searches up directory tree for .git directory.
+
+        Args:
+            start_path: Where to start search (default: cwd)
+
+        Returns:
+            Repository containing start_path
+
+        Raises:
+            ValueError: Not inside a repository
+        &quot;&quot;&quot;
+        path = Path(start_path or Path.cwd()).resolve()
+
+        while True:
+            git_dir = path / &quot;.git&quot;
+            if git_dir.is_dir():
+                return cls(path=path, git_dir=git_dir)
+
+            if git_dir.is_file():
+                # Handle git worktrees: .git is file pointing to real git dir
+                content = git_dir.read_text().strip()
+                if content.startswith(&quot;gitdir: &quot;):
+                    real_git_dir = Path(content[8:])
+                    if not real_git_dir.is_absolute():
+                        real_git_dir = path / real_git_dir
+                    return cls(path=path, git_dir=real_git_dir.resolve())
+
+            parent = path.parent
+            if parent == path:
+                raise ValueError(&quot;Not a git repository (or any parent)&quot;)
+            path = parent
+</code></pre>
+<hr />
+<h2 id="5-compression-utilities">5. Compression Utilities</h2>
+<h3 id="51-implementation">5.1 Implementation</h3>
+<pre><code class="language-python"># gitpy/storage/compression.py
+
+import zlib
+from typing import Tuple
+
+# Default compression level (matches Git)
+DEFAULT_LEVEL = zlib.Z_DEFAULT_COMPRESSION  # Usually 6
+
+def compress(data: bytes, level: int = DEFAULT_LEVEL) -&gt; bytes:
+    &quot;&quot;&quot;
+    Compress data using zlib.
+
+    Args:
+        data: Raw bytes to compress
+        level: Compression level (0-9, -1 for default)
+
+    Returns:
+        Compressed bytes
+    &quot;&quot;&quot;
+    return zlib.compress(data, level)
+
+def decompress(data: bytes) -&gt; bytes:
+    &quot;&quot;&quot;
+    Decompress zlib data.
+
+    Args:
+        data: Compressed bytes
+
+    Returns:
+        Decompressed bytes
+
+    Raises:
+        zlib.error: Invalid compressed data
+    &quot;&quot;&quot;
+    return zlib.decompress(data)
+
+def decompress_stream(data: bytes) -&gt; Tuple[bytes, bytes]:
+    &quot;&quot;&quot;
+    Decompress data, returning decompressed content and remaining bytes.
+
+    Useful for packfiles where multiple compressed streams are concatenated.
+
+    Args:
+        data: Compressed bytes (possibly with trailing data)
+
+    Returns:
+        Tuple of (decompressed_content, remaining_bytes)
+    &quot;&quot;&quot;
+    decompressor = zlib.decompressobj()
+    content = decompressor.decompress(data)
+    remaining = decompressor.unused_data
+    return content, remaining
+</code></pre>
+<hr />
+<h2 id="6-test-cases">6. Test Cases</h2>
+<h3 id="61-loose-object-store-tests">6.1 Loose Object Store Tests</h3>
+<pre><code class="language-python">import pytest
+from pathlib import Path
+import tempfile
+
+from gitpy.storage.loose import LooseObjectStore
+from gitpy.objects.blob import Blob
+from gitpy.objects import create_object_data
+
+class TestLooseObjectStore:
+
+    @pytest.fixture
+    def store(self, tmp_path):
+        git_dir = tmp_path / &quot;.git&quot;
+        git_dir.mkdir()
+        (git_dir / &quot;objects&quot;).mkdir()
+        return LooseObjectStore(git_dir)
+
+    def test_write_and_read(self, store):
+        &quot;&quot;&quot;Write object and read it back.&quot;&quot;&quot;
+        blob = Blob(data=b&quot;test content&quot;)
+        data = create_object_data(blob)
+        sha = blob.oid
+
+        store.write(sha, data)
+
+        assert store.exists(sha)
+        assert store.read(sha) == data
+
+    def test_path_computation(self, store):
+        &quot;&quot;&quot;SHA maps to correct path.&quot;&quot;&quot;
+        sha = &quot;8ab686eafeb1f44702738c8b0f24f2567c36da6d&quot;
+        path = store._object_path(sha)
+
+        assert path.parent.name == &quot;8a&quot;
+        assert path.name == &quot;b686eafeb1f44702738c8b0f24f2567c36da6d&quot;
+
+    def test_write_is_idempotent(self, store):
+        &quot;&quot;&quot;Writing same object twice is safe.&quot;&quot;&quot;
+        blob = Blob(data=b&quot;test&quot;)
+        data = create_object_data(blob)
+        sha = blob.oid
+
+        path1 = store.write(sha, data)
+        path2 = store.write(sha, data)
+
+        assert path1 == path2
+
+    def test_sha_verification(self, store):
+        &quot;&quot;&quot;Reading corrupted object raises error.&quot;&quot;&quot;
+        blob = Blob(data=b&quot;original&quot;)
+        data = create_object_data(blob)
+        sha = blob.oid
+
+        store.write(sha, data)
+
+        # Corrupt the file
+        path = store._object_path(sha)
+        path.chmod(0o644)
+        import zlib
+        corrupted = zlib.compress(b&quot;blob 8\0corrupted&quot;)
+        path.write_bytes(corrupted)
+
+        with pytest.raises(ValueError, match=&quot;SHA mismatch&quot;):
+            store.read(sha)
+
+    def test_delete(self, store):
+        &quot;&quot;&quot;Delete removes object.&quot;&quot;&quot;
+        blob = Blob(data=b&quot;delete me&quot;)
+        data = create_object_data(blob)
+        sha = blob.oid
+
+        store.write(sha, data)
+        assert store.exists(sha)
+
+        store.delete(sha)
+        assert not store.exists(sha)
+</code></pre>
+<h3 id="62-object-database-tests">6.2 Object Database Tests</h3>
+<pre><code class="language-python">class TestObjectDatabase:
+
+    @pytest.fixture
+    def db(self, tmp_path):
+        repo = Repository.init(tmp_path)
+        return repo.objects
+
+    def test_write_and_read_blob(self, db):
+        &quot;&quot;&quot;Write blob and read back.&quot;&quot;&quot;
+        blob = Blob(data=b&quot;hello world&quot;)
+        sha = db.write(blob)
+
+        result = db.read_blob(sha)
+        assert result.data == b&quot;hello world&quot;
+
+    def test_short_sha_resolution(self, db):
+        &quot;&quot;&quot;Short SHA resolves to full.&quot;&quot;&quot;
+        blob = Blob(data=b&quot;unique content 12345&quot;)
+        sha = db.write(blob)
+
+        # Read with short SHA
+        short = sha[:7]
+        result = db.read_blob(short)
+        assert result.data == b&quot;unique content 12345&quot;
+
+    def test_type_checking(self, db):
+        &quot;&quot;&quot;Reading wrong type raises TypeError.&quot;&quot;&quot;
+        blob = Blob(data=b&quot;not a tree&quot;)
+        sha = db.write(blob)
+
+        with pytest.raises(TypeError, match=&quot;Expected tree&quot;):
+            db.read_tree(sha)
+
+    def test_get_type_and_size(self, db):
+        &quot;&quot;&quot;Can get type and size without full parse.&quot;&quot;&quot;
+        blob = Blob(data=b&quot;12345&quot;)
+        sha = db.write(blob)
+
+        assert db.get_type(sha) == &quot;blob&quot;
+        assert db.get_size(sha) == 5
+</code></pre>
+<h3 id="63-repository-init-tests">6.3 Repository Init Tests</h3>
+<pre><code class="language-python">class TestRepositoryInit:
+
+    def test_init_creates_structure(self, tmp_path):
+        &quot;&quot;&quot;Init creates required directories and files.&quot;&quot;&quot;
+        repo = Repository.init(tmp_path / &quot;myrepo&quot;)
+
+        git_dir = tmp_path / &quot;myrepo&quot; / &quot;.git&quot;
+        assert git_dir.exists()
+        assert (git_dir / &quot;objects&quot;).is_dir()
+        assert (git_dir / &quot;refs&quot; / &quot;heads&quot;).is_dir()
+        assert (git_dir / &quot;HEAD&quot;).read_text() == &quot;ref: refs/heads/main\n&quot;
+
+    def test_init_bare(self, tmp_path):
+        &quot;&quot;&quot;Bare init creates repository in path itself.&quot;&quot;&quot;
+        repo = Repository.init(tmp_path / &quot;bare.git&quot;, bare=True)
+
+        assert (tmp_path / &quot;bare.git&quot; / &quot;objects&quot;).is_dir()
+        assert (tmp_path / &quot;bare.git&quot; / &quot;HEAD&quot;).exists()
+
+    def test_find_repository(self, tmp_path):
+        &quot;&quot;&quot;Find locates repository from subdirectory.&quot;&quot;&quot;
+        repo = Repository.init(tmp_path / &quot;project&quot;)
+
+        subdir = tmp_path / &quot;project&quot; / &quot;src&quot; / &quot;deep&quot;
+        subdir.mkdir(parents=True)
+
+        found = Repository.find(subdir)
+        assert found.worktree == tmp_path / &quot;project&quot;
+</code></pre>
+<hr />
+<h2 id="7-acceptance-criteria">7. Acceptance Criteria</h2>
+<h3 id="71-functional-requirements">7.1 Functional Requirements</h3>
+<ul>
+<li>[ ] Objects are stored compressed in <code>.git/objects/XX/YYYY...</code></li>
+<li>[ ] Objects can be read back and decompressed correctly</li>
+<li>[ ] SHA-1 is verified on read</li>
+<li>[ ] Duplicate writes are safely skipped</li>
+<li>[ ] Short SHA resolution works with minimum 4 characters</li>
+<li>[ ] Ambiguous short SHA raises clear error</li>
+<li>[ ] Repository can be initialized (normal and bare)</li>
+<li>[ ] Repository can be found from subdirectory</li>
+</ul>
+<h3 id="72-non-functional-requirements">7.2 Non-Functional Requirements</h3>
+<ul>
+<li>[ ] Atomic writes (temp file + rename)</li>
+<li>[ ] Object files are read-only after creation</li>
+<li>[ ] Compatible with real Git (can read/write same format)</li>
+<li>[ ] No data loss on crash during write</li>
+</ul>
+<h3 id="73-verification">7.3 Verification</h3>
+<pre><code class="language-bash"># Verify gitpy can read Git's objects
+git init test-repo &amp;&amp; cd test-repo
+echo &quot;hello&quot; | git hash-object -w --stdin
+# gitpy should read this object
+
+# Verify Git can read gitpy's objects
+# After gitpy writes an object, git cat-file should work
+git cat-file -p &lt;sha&gt;
+</code></pre>
+<hr />
+<h2 id="8-file-structure">8. File Structure</h2>
+<pre><code>gitpy/
+├── storage/
+│   ├── __init__.py
+│   ├── compression.py   # Zlib utilities
+│   ├── database.py      # ObjectDatabase
+│   └── loose.py         # LooseObjectStore
+└── repository.py        # Repository class
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

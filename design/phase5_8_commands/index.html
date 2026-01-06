@@ -1,0 +1,2126 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Phase 5-8: Commands & Advanced Features - Design Specification - gitpy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#phase-5-8-commands-advanced-features-design-specification" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="gitpy" class="md-header__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gitpy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Phase 5-8: Commands &amp; Advanced Features - Design Specification
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="gitpy" class="md-nav__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gitpy
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/object_model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#phase-5-diff-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 5: Diff Engine
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 5: Diff Engine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-myers-diff-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Myers Diff Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-unified-diff-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Unified Diff Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-tree-diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Tree Diff
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-6-plumbing-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 6: Plumbing Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 6: Plumbing Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-command-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Command Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-hash-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 hash-object
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-cat-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 cat-file
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-ls-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 ls-tree
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65-write-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 write-tree
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#66-commit-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 commit-tree
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#67-update-ref" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7 update-ref
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-7-porcelain-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 7: Porcelain Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 7: Porcelain Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-init" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 init
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 add
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 commit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#75-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 log
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#76-diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.6 diff
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#77-branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.7 branch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#78-checkout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.8 checkout
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-8-advanced-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 8: Advanced Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 8: Advanced Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-merge-three-way" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Merge (Three-Way)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-cli-entry-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 CLI Entry Point
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-pyprojecttoml-entry-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 pyproject.toml Entry Point
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-acceptance-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Acceptance Criteria
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Acceptance Criteria">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-plumbing-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 Plumbing Commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-porcelain-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 Porcelain Commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 Compatibility
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-file-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. File Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="phase-5-8-commands-advanced-features-design-specification">Phase 5-8: Commands &amp; Advanced Features - Design Specification</h1>
+<blockquote>
+<p><strong>Status</strong>: Draft
+<strong>Author</strong>: Domain Expert
+<strong>Last Updated</strong>: 2026-01-05
+<strong>Dependencies</strong>: Phases 1-4</p>
+</blockquote>
+<h2 id="phase-5-diff-engine">Phase 5: Diff Engine</h2>
+<h3 id="51-overview">5.1 Overview</h3>
+<p>The diff engine compares content and produces human-readable output showing changes.</p>
+<h3 id="52-myers-diff-algorithm">5.2 Myers Diff Algorithm</h3>
+<p>Git uses Eugene Myers' diff algorithm for optimal (shortest) edit sequences.</p>
+<pre><code class="language-python"># gitpy/diff/myers.py
+
+from typing import List, Tuple, Optional
+from dataclasses import dataclass
+from enum import Enum
+
+class EditType(Enum):
+    EQUAL = &quot;equal&quot;
+    INSERT = &quot;insert&quot;
+    DELETE = &quot;delete&quot;
+
+@dataclass
+class Edit:
+    &quot;&quot;&quot;Single edit operation.&quot;&quot;&quot;
+    type: EditType
+    old_start: int    # Line number in old (1-indexed, 0 if insert)
+    old_count: int    # Number of lines in old
+    new_start: int    # Line number in new (1-indexed, 0 if delete)
+    new_count: int    # Number of lines in new
+    old_lines: List[str]  # Lines from old file
+    new_lines: List[str]  # Lines from new file
+
+def myers_diff(old: List[str], new: List[str]) -&gt; List[Edit]:
+    &quot;&quot;&quot;
+    Compute shortest edit script using Myers algorithm.
+
+    Args:
+        old: Lines of old version
+        new: Lines of new version
+
+    Returns:
+        List of Edit operations to transform old to new
+    &quot;&quot;&quot;
+    n, m = len(old), len(new)
+
+    # Handle trivial cases
+    if n == 0:
+        if m == 0:
+            return []
+        return [Edit(EditType.INSERT, 0, 0, 1, m, [], new)]
+    if m == 0:
+        return [Edit(EditType.DELETE, 1, n, 0, 0, old, [])]
+
+    # Myers algorithm
+    max_d = n + m
+    v = {1: 0}
+    trace = []
+
+    for d in range(max_d + 1):
+        trace.append(dict(v))
+
+        for k in range(-d, d + 1, 2):
+            # Decide whether to go down or right
+            if k == -d or (k != d and v.get(k - 1, 0) &lt; v.get(k + 1, 0)):
+                x = v.get(k + 1, 0)
+            else:
+                x = v.get(k - 1, 0) + 1
+
+            y = x - k
+
+            # Follow diagonal (matching lines)
+            while x &lt; n and y &lt; m and old[x] == new[y]:
+                x += 1
+                y += 1
+
+            v[k] = x
+
+            # Check if we reached the end
+            if x &gt;= n and y &gt;= m:
+                return _backtrack(trace, old, new)
+
+    return []  # Should never reach here
+
+def _backtrack(
+    trace: List[dict],
+    old: List[str],
+    new: List[str]
+) -&gt; List[Edit]:
+    &quot;&quot;&quot;Backtrack through trace to build edit script.&quot;&quot;&quot;
+    n, m = len(old), len(new)
+    x, y = n, m
+    edits = []
+
+    for d in range(len(trace) - 1, -1, -1):
+        v = trace[d]
+        k = x - y
+
+        if k == -d or (k != d and v.get(k - 1, 0) &lt; v.get(k + 1, 0)):
+            prev_k = k + 1
+        else:
+            prev_k = k - 1
+
+        prev_x = v.get(prev_k, 0)
+        prev_y = prev_x - prev_k
+
+        # Diagonal moves (equal lines)
+        while x &gt; prev_x and y &gt; prev_y:
+            x -= 1
+            y -= 1
+            edits.append(Edit(
+                EditType.EQUAL, x + 1, 1, y + 1, 1,
+                [old[x]], [new[y]]
+            ))
+
+        if d &gt; 0:
+            if x == prev_x:
+                # Insert
+                y -= 1
+                edits.append(Edit(
+                    EditType.INSERT, x, 0, y + 1, 1,
+                    [], [new[y]]
+                ))
+            else:
+                # Delete
+                x -= 1
+                edits.append(Edit(
+                    EditType.DELETE, x + 1, 1, y, 0,
+                    [old[x]], []
+                ))
+
+    edits.reverse()
+    return _merge_edits(edits)
+
+def _merge_edits(edits: List[Edit]) -&gt; List[Edit]:
+    &quot;&quot;&quot;Merge consecutive edits of same type.&quot;&quot;&quot;
+    if not edits:
+        return []
+
+    merged = [edits[0]]
+    for edit in edits[1:]:
+        last = merged[-1]
+        if last.type == edit.type:
+            # Merge
+            merged[-1] = Edit(
+                type=last.type,
+                old_start=last.old_start,
+                old_count=last.old_count + edit.old_count,
+                new_start=last.new_start,
+                new_count=last.new_count + edit.new_count,
+                old_lines=last.old_lines + edit.old_lines,
+                new_lines=last.new_lines + edit.new_lines,
+            )
+        else:
+            merged.append(edit)
+
+    return merged
+</code></pre>
+<h3 id="53-unified-diff-format">5.3 Unified Diff Format</h3>
+<pre><code class="language-python"># gitpy/diff/unified.py
+
+from typing import List, TextIO
+import sys
+
+def format_unified_diff(
+    old_lines: List[str],
+    new_lines: List[str],
+    old_name: str = &quot;a&quot;,
+    new_name: str = &quot;b&quot;,
+    context: int = 3
+) -&gt; str:
+    &quot;&quot;&quot;
+    Format diff as unified diff.
+
+    Args:
+        old_lines: Lines of old version
+        new_lines: Lines of new version
+        old_name: Name for old file
+        new_name: Name for new file
+        context: Lines of context around changes
+
+    Returns:
+        Unified diff string
+    &quot;&quot;&quot;
+    edits = myers_diff(old_lines, new_lines)
+    if not edits:
+        return &quot;&quot;
+
+    # Filter to just changes
+    changes = [e for e in edits if e.type != EditType.EQUAL]
+    if not changes:
+        return &quot;&quot;
+
+    output = []
+
+    # Header
+    output.append(f&quot;--- {old_name}&quot;)
+    output.append(f&quot;+++ {new_name}&quot;)
+
+    # Group changes into hunks
+    hunks = _create_hunks(edits, context)
+
+    for hunk in hunks:
+        # Hunk header
+        old_start = hunk['old_start']
+        old_count = hunk['old_count']
+        new_start = hunk['new_start']
+        new_count = hunk['new_count']
+
+        output.append(f&quot;@@ -{old_start},{old_count} +{new_start},{new_count} @@&quot;)
+
+        # Hunk content
+        for line_type, line in hunk['lines']:
+            if line_type == 'context':
+                output.append(f&quot; {line}&quot;)
+            elif line_type == 'delete':
+                output.append(f&quot;-{line}&quot;)
+            elif line_type == 'insert':
+                output.append(f&quot;+{line}&quot;)
+
+    return &quot;\n&quot;.join(output) + &quot;\n&quot;
+
+def _create_hunks(edits: List[Edit], context: int) -&gt; List[dict]:
+    &quot;&quot;&quot;Group edits into hunks with context.&quot;&quot;&quot;
+    hunks = []
+    current_hunk = None
+
+    old_pos = 1
+    new_pos = 1
+
+    for edit in edits:
+        if edit.type == EditType.EQUAL:
+            if current_hunk:
+                # Add trailing context
+                for i, line in enumerate(edit.old_lines[:context]):
+                    current_hunk['lines'].append(('context', line))
+                    current_hunk['old_count'] += 1
+                    current_hunk['new_count'] += 1
+
+                if len(edit.old_lines) &gt; context * 2:
+                    # Gap too large, close hunk
+                    hunks.append(current_hunk)
+                    current_hunk = None
+
+            old_pos += edit.old_count
+            new_pos += edit.new_count
+
+        else:
+            if current_hunk is None:
+                # Start new hunk with leading context
+                current_hunk = {
+                    'old_start': max(1, old_pos - context),
+                    'new_start': max(1, new_pos - context),
+                    'old_count': 0,
+                    'new_count': 0,
+                    'lines': []
+                }
+                # Add leading context from previous equal block
+                # (simplified - full impl would track previous edits)
+
+            if edit.type == EditType.DELETE:
+                for line in edit.old_lines:
+                    current_hunk['lines'].append(('delete', line))
+                    current_hunk['old_count'] += 1
+                old_pos += edit.old_count
+
+            elif edit.type == EditType.INSERT:
+                for line in edit.new_lines:
+                    current_hunk['lines'].append(('insert', line))
+                    current_hunk['new_count'] += 1
+                new_pos += edit.new_count
+
+    if current_hunk:
+        hunks.append(current_hunk)
+
+    return hunks
+</code></pre>
+<h3 id="54-tree-diff">5.4 Tree Diff</h3>
+<pre><code class="language-python"># gitpy/diff/tree.py
+
+from dataclasses import dataclass
+from typing import List, Optional, Iterator
+from enum import Enum
+
+class DiffStatus(Enum):
+    ADDED = &quot;A&quot;
+    DELETED = &quot;D&quot;
+    MODIFIED = &quot;M&quot;
+    RENAMED = &quot;R&quot;
+    COPIED = &quot;C&quot;
+    TYPE_CHANGED = &quot;T&quot;
+
+@dataclass
+class DiffEntry:
+    &quot;&quot;&quot;Difference between two trees.&quot;&quot;&quot;
+    status: DiffStatus
+    path: str
+    old_sha: Optional[str]
+    new_sha: Optional[str]
+    old_mode: Optional[str]
+    new_mode: Optional[str]
+    old_path: Optional[str] = None  # For renames
+
+def diff_trees(
+    old_tree_sha: Optional[str],
+    new_tree_sha: Optional[str],
+    db: &quot;ObjectDatabase&quot;
+) -&gt; Iterator[DiffEntry]:
+    &quot;&quot;&quot;
+    Compare two trees and yield differences.
+
+    Args:
+        old_tree_sha: SHA of old tree (None for empty)
+        new_tree_sha: SHA of new tree (None for empty)
+        db: Object database
+
+    Yields:
+        DiffEntry for each changed path
+    &quot;&quot;&quot;
+    old_entries = {}
+    new_entries = {}
+
+    if old_tree_sha:
+        old_entries = _flatten_tree(old_tree_sha, db, &quot;&quot;)
+    if new_tree_sha:
+        new_entries = _flatten_tree(new_tree_sha, db, &quot;&quot;)
+
+    all_paths = set(old_entries.keys()) | set(new_entries.keys())
+
+    for path in sorted(all_paths):
+        old = old_entries.get(path)
+        new = new_entries.get(path)
+
+        if old and new:
+            if old['sha'] != new['sha'] or old['mode'] != new['mode']:
+                yield DiffEntry(
+                    status=DiffStatus.MODIFIED,
+                    path=path,
+                    old_sha=old['sha'],
+                    new_sha=new['sha'],
+                    old_mode=old['mode'],
+                    new_mode=new['mode'],
+                )
+        elif old:
+            yield DiffEntry(
+                status=DiffStatus.DELETED,
+                path=path,
+                old_sha=old['sha'],
+                new_sha=None,
+                old_mode=old['mode'],
+                new_mode=None,
+            )
+        else:
+            yield DiffEntry(
+                status=DiffStatus.ADDED,
+                path=path,
+                old_sha=None,
+                new_sha=new['sha'],
+                old_mode=None,
+                new_mode=new['mode'],
+            )
+
+def _flatten_tree(
+    tree_sha: str,
+    db: &quot;ObjectDatabase&quot;,
+    prefix: str
+) -&gt; dict:
+    &quot;&quot;&quot;Flatten tree to dict of path -&gt; {sha, mode}.&quot;&quot;&quot;
+    result = {}
+    tree = db.read_tree(tree_sha)
+
+    for entry in tree.entries:
+        path = f&quot;{prefix}{entry.name}&quot; if prefix else entry.name
+
+        if entry.is_tree:
+            result.update(_flatten_tree(entry.sha, db, f&quot;{path}/&quot;))
+        else:
+            result[path] = {'sha': entry.sha, 'mode': entry.mode}
+
+    return result
+</code></pre>
+<hr />
+<h2 id="phase-6-plumbing-commands">Phase 6: Plumbing Commands</h2>
+<h3 id="61-command-architecture">6.1 Command Architecture</h3>
+<pre><code class="language-python"># gitpy/commands/base.py
+
+from abc import ABC, abstractmethod
+from typing import List, Optional
+import argparse
+
+class Command(ABC):
+    &quot;&quot;&quot;Base class for git commands.&quot;&quot;&quot;
+
+    name: str
+    help: str
+
+    @abstractmethod
+    def run(self, args: List[str], repo: &quot;Repository&quot;) -&gt; int:
+        &quot;&quot;&quot;
+        Execute command.
+
+        Args:
+            args: Command arguments
+            repo: Repository instance
+
+        Returns:
+            Exit code (0 = success)
+        &quot;&quot;&quot;
+        pass
+
+    def setup_parser(self, parser: argparse.ArgumentParser) -&gt; None:
+        &quot;&quot;&quot;Configure argument parser.&quot;&quot;&quot;
+        pass
+</code></pre>
+<h3 id="62-hash-object">6.2 hash-object</h3>
+<pre><code class="language-python"># gitpy/commands/plumbing/hash_object.py
+
+class HashObjectCommand(Command):
+    &quot;&quot;&quot;
+    Compute object ID and optionally create object.
+
+    Usage:
+        gitpy hash-object [-w] [-t &lt;type&gt;] [--stdin] &lt;file&gt;...
+
+    Options:
+        -w          Write object to database
+        -t &lt;type&gt;   Object type (default: blob)
+        --stdin     Read from stdin instead of file
+    &quot;&quot;&quot;
+
+    name = &quot;hash-object&quot;
+    help = &quot;Compute object ID&quot;
+
+    def setup_parser(self, parser):
+        parser.add_argument(&quot;-w&quot;, action=&quot;store_true&quot;, help=&quot;Write object&quot;)
+        parser.add_argument(&quot;-t&quot;, default=&quot;blob&quot;, help=&quot;Object type&quot;)
+        parser.add_argument(&quot;--stdin&quot;, action=&quot;store_true&quot;)
+        parser.add_argument(&quot;files&quot;, nargs=&quot;*&quot;)
+
+    def run(self, args, repo):
+        if args.stdin:
+            data = sys.stdin.buffer.read()
+            sha = self._hash_data(data, args.t, args.w, repo)
+            print(sha)
+        else:
+            for path in args.files:
+                with open(path, &quot;rb&quot;) as f:
+                    data = f.read()
+                sha = self._hash_data(data, args.t, args.w, repo)
+                print(sha)
+        return 0
+
+    def _hash_data(self, data, type_name, write, repo):
+        from gitpy.objects.blob import Blob
+        blob = Blob(data=data)
+        if write:
+            return repo.objects.write(blob)
+        return blob.oid
+</code></pre>
+<h3 id="63-cat-file">6.3 cat-file</h3>
+<pre><code class="language-python"># gitpy/commands/plumbing/cat_file.py
+
+class CatFileCommand(Command):
+    &quot;&quot;&quot;
+    Display object contents, type, or size.
+
+    Usage:
+        gitpy cat-file &lt;type&gt; &lt;object&gt;
+        gitpy cat-file -t &lt;object&gt;
+        gitpy cat-file -s &lt;object&gt;
+        gitpy cat-file -p &lt;object&gt;
+
+    Options:
+        -t    Show object type
+        -s    Show object size
+        -p    Pretty-print object
+    &quot;&quot;&quot;
+
+    name = &quot;cat-file&quot;
+    help = &quot;Display object content&quot;
+
+    def setup_parser(self, parser):
+        parser.add_argument(&quot;-t&quot;, action=&quot;store_true&quot;, help=&quot;Show type&quot;)
+        parser.add_argument(&quot;-s&quot;, action=&quot;store_true&quot;, help=&quot;Show size&quot;)
+        parser.add_argument(&quot;-p&quot;, action=&quot;store_true&quot;, help=&quot;Pretty-print&quot;)
+        parser.add_argument(&quot;object&quot;, help=&quot;Object SHA&quot;)
+        parser.add_argument(&quot;type&quot;, nargs=&quot;?&quot;, help=&quot;Expected type&quot;)
+
+    def run(self, args, repo):
+        sha = repo.refs.resolve(args.object)
+        if not sha:
+            print(f&quot;fatal: Not a valid object name {args.object}&quot;, file=sys.stderr)
+            return 1
+
+        if args.t:
+            print(repo.objects.get_type(sha))
+        elif args.s:
+            print(repo.objects.get_size(sha))
+        elif args.p:
+            self._pretty_print(sha, repo)
+        else:
+            obj = repo.objects.read(sha)
+            if args.type and obj.type_name != args.type:
+                print(f&quot;fatal: expected {args.type}, got {obj.type_name}&quot;, file=sys.stderr)
+                return 1
+            sys.stdout.buffer.write(obj.serialize())
+
+        return 0
+
+    def _pretty_print(self, sha, repo):
+        obj = repo.objects.read(sha)
+
+        if obj.type_name == &quot;blob&quot;:
+            sys.stdout.buffer.write(obj.data)
+        elif obj.type_name == &quot;tree&quot;:
+            for entry in obj.entries:
+                type_name = &quot;tree&quot; if entry.is_tree else &quot;blob&quot;
+                print(f&quot;{entry.mode} {type_name} {entry.sha}\t{entry.name}&quot;)
+        elif obj.type_name == &quot;commit&quot;:
+            print(obj.serialize().decode())
+        elif obj.type_name == &quot;tag&quot;:
+            print(obj.serialize().decode())
+</code></pre>
+<h3 id="64-ls-tree">6.4 ls-tree</h3>
+<pre><code class="language-python"># gitpy/commands/plumbing/ls_tree.py
+
+class LsTreeCommand(Command):
+    &quot;&quot;&quot;
+    List tree contents.
+
+    Usage:
+        gitpy ls-tree [-r] [-d] [-t] &lt;tree-ish&gt;
+
+    Options:
+        -r    Recurse into subtrees
+        -d    Show only directories
+        -t    Show trees when recursing
+    &quot;&quot;&quot;
+
+    name = &quot;ls-tree&quot;
+    help = &quot;List tree contents&quot;
+
+    def run(self, args, repo):
+        sha = repo.refs.resolve(args.tree_ish)
+
+        # If it's a commit, get its tree
+        obj = repo.objects.read(sha)
+        if obj.type_name == &quot;commit&quot;:
+            sha = obj.tree_sha
+
+        self._list_tree(sha, repo, &quot;&quot;, args.recursive, args.tree_only)
+        return 0
+
+    def _list_tree(self, sha, repo, prefix, recursive, tree_only):
+        tree = repo.objects.read_tree(sha)
+
+        for entry in tree.entries:
+            path = f&quot;{prefix}{entry.name}&quot;
+            type_name = &quot;tree&quot; if entry.is_tree else &quot;blob&quot;
+
+            if not tree_only or entry.is_tree:
+                print(f&quot;{entry.mode} {type_name} {entry.sha}\t{path}&quot;)
+
+            if recursive and entry.is_tree:
+                self._list_tree(entry.sha, repo, f&quot;{path}/&quot;, True, tree_only)
+</code></pre>
+<h3 id="65-write-tree">6.5 write-tree</h3>
+<pre><code class="language-python"># gitpy/commands/plumbing/write_tree.py
+
+class WriteTreeCommand(Command):
+    &quot;&quot;&quot;
+    Create tree from index.
+
+    Usage:
+        gitpy write-tree [--prefix=&lt;prefix&gt;]
+    &quot;&quot;&quot;
+
+    name = &quot;write-tree&quot;
+    help = &quot;Create tree from index&quot;
+
+    def run(self, args, repo):
+        from gitpy.index.operations import write_tree
+
+        index = repo.index.read()
+        sha = write_tree(index, repo.objects)
+        print(sha)
+        return 0
+</code></pre>
+<h3 id="66-commit-tree">6.6 commit-tree</h3>
+<pre><code class="language-python"># gitpy/commands/plumbing/commit_tree.py
+
+class CommitTreeCommand(Command):
+    &quot;&quot;&quot;
+    Create commit object.
+
+    Usage:
+        gitpy commit-tree &lt;tree&gt; [-p &lt;parent&gt;]... [-m &lt;message&gt;]
+    &quot;&quot;&quot;
+
+    name = &quot;commit-tree&quot;
+    help = &quot;Create commit object&quot;
+
+    def setup_parser(self, parser):
+        parser.add_argument(&quot;tree&quot;, help=&quot;Tree SHA&quot;)
+        parser.add_argument(&quot;-p&quot;, action=&quot;append&quot;, dest=&quot;parents&quot;, default=[])
+        parser.add_argument(&quot;-m&quot;, dest=&quot;message&quot;, required=True)
+
+    def run(self, args, repo):
+        from gitpy.objects.commit import Commit, Identity
+
+        # Get author/committer from config or environment
+        author = Identity.now(
+            name=os.environ.get(&quot;GIT_AUTHOR_NAME&quot;, &quot;Unknown&quot;),
+            email=os.environ.get(&quot;GIT_AUTHOR_EMAIL&quot;, &quot;unknown@example.com&quot;)
+        )
+        committer = Identity.now(
+            name=os.environ.get(&quot;GIT_COMMITTER_NAME&quot;, author.name),
+            email=os.environ.get(&quot;GIT_COMMITTER_EMAIL&quot;, author.email)
+        )
+
+        commit = Commit(
+            tree_sha=args.tree,
+            parent_shas=args.parents,
+            author=author,
+            committer=committer,
+            message=args.message
+        )
+
+        sha = repo.objects.write(commit)
+        print(sha)
+        return 0
+</code></pre>
+<h3 id="67-update-ref">6.7 update-ref</h3>
+<pre><code class="language-python"># gitpy/commands/plumbing/update_ref.py
+
+class UpdateRefCommand(Command):
+    &quot;&quot;&quot;
+    Update reference value.
+
+    Usage:
+        gitpy update-ref &lt;ref&gt; &lt;newvalue&gt; [&lt;oldvalue&gt;]
+        gitpy update-ref -d &lt;ref&gt; [&lt;oldvalue&gt;]
+    &quot;&quot;&quot;
+
+    name = &quot;update-ref&quot;
+    help = &quot;Update reference&quot;
+
+    def run(self, args, repo):
+        if args.delete:
+            repo.refs.delete(args.ref)
+        else:
+            repo.refs.write(args.ref, args.newvalue)
+        return 0
+</code></pre>
+<hr />
+<h2 id="phase-7-porcelain-commands">Phase 7: Porcelain Commands</h2>
+<h3 id="71-init">7.1 init</h3>
+<pre><code class="language-python"># gitpy/commands/porcelain/init.py
+
+class InitCommand(Command):
+    &quot;&quot;&quot;
+    Initialize a new repository.
+
+    Usage:
+        gitpy init [&lt;directory&gt;]
+        gitpy init --bare [&lt;directory&gt;]
+    &quot;&quot;&quot;
+
+    name = &quot;init&quot;
+    help = &quot;Create empty repository&quot;
+
+    def setup_parser(self, parser):
+        parser.add_argument(&quot;directory&quot;, nargs=&quot;?&quot;, default=&quot;.&quot;)
+        parser.add_argument(&quot;--bare&quot;, action=&quot;store_true&quot;)
+
+    def run(self, args, repo=None):
+        from gitpy.repository import Repository
+        from pathlib import Path
+
+        path = Path(args.directory)
+        Repository.init(path, bare=args.bare)
+
+        if args.bare:
+            print(f&quot;Initialized empty Git repository in {path.resolve()}&quot;)
+        else:
+            print(f&quot;Initialized empty Git repository in {path.resolve()}/.git/&quot;)
+
+        return 0
+</code></pre>
+<h3 id="72-add">7.2 add</h3>
+<pre><code class="language-python"># gitpy/commands/porcelain/add.py
+
+class AddCommand(Command):
+    &quot;&quot;&quot;
+    Stage files for commit.
+
+    Usage:
+        gitpy add &lt;pathspec&gt;...
+        gitpy add -A
+    &quot;&quot;&quot;
+
+    name = &quot;add&quot;
+    help = &quot;Add files to index&quot;
+
+    def setup_parser(self, parser):
+        parser.add_argument(&quot;paths&quot;, nargs=&quot;*&quot;)
+        parser.add_argument(&quot;-A&quot;, &quot;--all&quot;, action=&quot;store_true&quot;)
+
+    def run(self, args, repo):
+        from gitpy.objects.blob import Blob
+        from gitpy.index.entry import IndexEntry
+
+        index = repo.index.read()
+
+        if args.all:
+            paths = list(repo.worktree.rglob(&quot;*&quot;))
+        else:
+            paths = [repo.worktree / p for p in args.paths]
+
+        for path in paths:
+            if not path.is_file():
+                continue
+            if &quot;.git&quot; in path.parts:
+                continue
+
+            rel_path = str(path.relative_to(repo.worktree))
+
+            # Create blob
+            blob = Blob.from_file(str(path))
+            sha = repo.objects.write(blob)
+
+            # Create index entry
+            entry = IndexEntry.from_path(rel_path, sha, repo.worktree)
+            index.add(entry)
+
+        repo.index.write(index)
+        return 0
+</code></pre>
+<h3 id="73-commit">7.3 commit</h3>
+<pre><code class="language-python"># gitpy/commands/porcelain/commit.py
+
+class CommitCommand(Command):
+    &quot;&quot;&quot;
+    Record changes to repository.
+
+    Usage:
+        gitpy commit -m &lt;message&gt;
+        gitpy commit --amend
+    &quot;&quot;&quot;
+
+    name = &quot;commit&quot;
+    help = &quot;Record changes&quot;
+
+    def setup_parser(self, parser):
+        parser.add_argument(&quot;-m&quot;, dest=&quot;message&quot;, required=True)
+        parser.add_argument(&quot;--amend&quot;, action=&quot;store_true&quot;)
+
+    def run(self, args, repo):
+        from gitpy.objects.commit import Commit, Identity
+        from gitpy.index.operations import write_tree
+
+        index = repo.index.read()
+
+        # Check for changes
+        if len(index) == 0:
+            print(&quot;nothing to commit&quot;, file=sys.stderr)
+            return 1
+
+        # Create tree from index
+        tree_sha = write_tree(index, repo.objects)
+
+        # Get parent(s)
+        parents = []
+        try:
+            head_sha = repo.head.resolve(repo.refs)
+            parents.append(head_sha)
+        except ValueError:
+            pass  # Initial commit
+
+        # Get author info
+        author = Identity.now(
+            name=repo.config.get(&quot;user.name&quot;, &quot;Unknown&quot;),
+            email=repo.config.get(&quot;user.email&quot;, &quot;unknown@example.com&quot;)
+        )
+
+        # Create commit
+        commit = Commit(
+            tree_sha=tree_sha,
+            parent_shas=parents,
+            author=author,
+            committer=author,
+            message=args.message
+        )
+        commit_sha = repo.objects.write(commit)
+
+        # Update HEAD
+        head = repo.head.read()
+        if head.is_detached:
+            repo.head.set_detached(commit_sha)
+        else:
+            repo.refs.write(head.target, commit_sha)
+
+        # Update reflog
+        repo.reflog.append(
+            &quot;HEAD&quot;,
+            parents[0] if parents else &quot;0&quot; * 40,
+            commit_sha,
+            author,
+            f&quot;commit: {args.message.split(chr(10))[0]}&quot;
+        )
+
+        print(f&quot;[{head.branch or 'detached'}] {commit_sha[:7]} {args.message.split(chr(10))[0]}&quot;)
+        return 0
+</code></pre>
+<h3 id="74-status">7.4 status</h3>
+<pre><code class="language-python"># gitpy/commands/porcelain/status.py
+
+class StatusCommand(Command):
+    &quot;&quot;&quot;
+    Show working tree status.
+
+    Usage:
+        gitpy status
+        gitpy status -s
+    &quot;&quot;&quot;
+
+    name = &quot;status&quot;
+    help = &quot;Show status&quot;
+
+    def setup_parser(self, parser):
+        parser.add_argument(&quot;-s&quot;, &quot;--short&quot;, action=&quot;store_true&quot;)
+
+    def run(self, args, repo):
+        from gitpy.index.operations import get_status, FileStatus
+
+        # Get HEAD tree
+        try:
+            head_sha = repo.head.resolve(repo.refs)
+            head_commit = repo.objects.read_commit(head_sha)
+            head_tree = head_commit.tree_sha
+        except ValueError:
+            head_tree = None
+
+        index = repo.index.read()
+        status = get_status(index, head_tree, repo.worktree, repo.objects)
+
+        if args.short:
+            self._print_short(status)
+        else:
+            self._print_long(status, repo)
+
+        return 0
+
+    def _print_short(self, status):
+        for entry in status:
+            idx = entry.index_status.value[0].upper() if entry.index_status != FileStatus.UNMODIFIED else &quot; &quot;
+            wt = entry.worktree_status.value[0].upper() if entry.worktree_status != FileStatus.UNMODIFIED else &quot; &quot;
+            print(f&quot;{idx}{wt} {entry.path}&quot;)
+
+    def _print_long(self, status, repo):
+        head = repo.head.read()
+        print(f&quot;On branch {head.branch or '(detached)'}&quot;)
+        print()
+
+        staged = [e for e in status if e.index_status != FileStatus.UNMODIFIED]
+        unstaged = [e for e in status if e.worktree_status not in (FileStatus.UNMODIFIED, FileStatus.UNTRACKED)]
+        untracked = [e for e in status if e.worktree_status == FileStatus.UNTRACKED]
+
+        if staged:
+            print(&quot;Changes to be committed:&quot;)
+            for e in staged:
+                print(f&quot;  {e.index_status.value}: {e.path}&quot;)
+            print()
+
+        if unstaged:
+            print(&quot;Changes not staged for commit:&quot;)
+            for e in unstaged:
+                print(f&quot;  {e.worktree_status.value}: {e.path}&quot;)
+            print()
+
+        if untracked:
+            print(&quot;Untracked files:&quot;)
+            for e in untracked:
+                print(f&quot;  {e.path}&quot;)
+            print()
+</code></pre>
+<h3 id="75-log">7.5 log</h3>
+<pre><code class="language-python"># gitpy/commands/porcelain/log.py
+
+class LogCommand(Command):
+    &quot;&quot;&quot;
+    Show commit history.
+
+    Usage:
+        gitpy log [&lt;revision&gt;]
+        gitpy log --oneline
+        gitpy log -n &lt;count&gt;
+    &quot;&quot;&quot;
+
+    name = &quot;log&quot;
+    help = &quot;Show commit log&quot;
+
+    def setup_parser(self, parser):
+        parser.add_argument(&quot;revision&quot;, nargs=&quot;?&quot;, default=&quot;HEAD&quot;)
+        parser.add_argument(&quot;--oneline&quot;, action=&quot;store_true&quot;)
+        parser.add_argument(&quot;-n&quot;, type=int, default=None)
+
+    def run(self, args, repo):
+        sha = repo.refs.resolve(args.revision)
+        if not sha:
+            print(f&quot;fatal: unknown revision {args.revision}&quot;, file=sys.stderr)
+            return 1
+
+        count = 0
+        while sha:
+            if args.n and count &gt;= args.n:
+                break
+
+            commit = repo.objects.read_commit(sha)
+
+            if args.oneline:
+                message = commit.message.split(&quot;\n&quot;)[0]
+                print(f&quot;{sha[:7]} {message}&quot;)
+            else:
+                self._print_commit(sha, commit)
+
+            sha = commit.parent_shas[0] if commit.parent_shas else None
+            count += 1
+
+        return 0
+
+    def _print_commit(self, sha, commit):
+        from datetime import datetime
+
+        print(f&quot;commit {sha}&quot;)
+        print(f&quot;Author: {commit.author.name} &lt;{commit.author.email}&gt;&quot;)
+
+        dt = datetime.fromtimestamp(commit.author.timestamp)
+        print(f&quot;Date:   {dt.strftime('%a %b %d %H:%M:%S %Y')} {commit.author.tz_offset}&quot;)
+        print()
+        for line in commit.message.split(&quot;\n&quot;):
+            print(f&quot;    {line}&quot;)
+        print()
+</code></pre>
+<h3 id="76-diff">7.6 diff</h3>
+<pre><code class="language-python"># gitpy/commands/porcelain/diff.py
+
+class DiffCommand(Command):
+    &quot;&quot;&quot;
+    Show changes.
+
+    Usage:
+        gitpy diff                  # Working tree vs index
+        gitpy diff --staged         # Index vs HEAD
+        gitpy diff &lt;commit&gt;         # Working tree vs commit
+        gitpy diff &lt;c1&gt; &lt;c2&gt;        # Commit vs commit
+    &quot;&quot;&quot;
+
+    name = &quot;diff&quot;
+    help = &quot;Show changes&quot;
+
+    def setup_parser(self, parser):
+        parser.add_argument(&quot;--staged&quot;, &quot;--cached&quot;, action=&quot;store_true&quot;)
+        parser.add_argument(&quot;commits&quot;, nargs=&quot;*&quot;)
+
+    def run(self, args, repo):
+        from gitpy.diff.tree import diff_trees
+        from gitpy.diff.unified import format_unified_diff
+
+        if args.staged:
+            # Index vs HEAD
+            head_sha = repo.head.resolve(repo.refs)
+            head_commit = repo.objects.read_commit(head_sha)
+            # Compare HEAD tree with tree from index
+            index = repo.index.read()
+            index_tree = write_tree(index, repo.objects)
+            entries = diff_trees(head_commit.tree_sha, index_tree, repo.objects)
+        elif len(args.commits) == 2:
+            # Commit vs commit
+            sha1 = repo.refs.resolve(args.commits[0])
+            sha2 = repo.refs.resolve(args.commits[1])
+            c1 = repo.objects.read_commit(sha1)
+            c2 = repo.objects.read_commit(sha2)
+            entries = diff_trees(c1.tree_sha, c2.tree_sha, repo.objects)
+        else:
+            # Working tree vs index (default)
+            # Implementation: compare each index entry with working file
+            pass
+
+        for entry in entries:
+            if entry.old_sha and entry.new_sha:
+                old_blob = repo.objects.read_blob(entry.old_sha)
+                new_blob = repo.objects.read_blob(entry.new_sha)
+                old_lines = old_blob.data.decode().splitlines()
+                new_lines = new_blob.data.decode().splitlines()
+                diff = format_unified_diff(
+                    old_lines, new_lines,
+                    f&quot;a/{entry.path}&quot;, f&quot;b/{entry.path}&quot;
+                )
+                print(diff)
+
+        return 0
+</code></pre>
+<h3 id="77-branch">7.7 branch</h3>
+<pre><code class="language-python"># gitpy/commands/porcelain/branch.py
+
+class BranchCommand(Command):
+    &quot;&quot;&quot;
+    List, create, or delete branches.
+
+    Usage:
+        gitpy branch              # List branches
+        gitpy branch &lt;name&gt;       # Create branch
+        gitpy branch -d &lt;name&gt;    # Delete branch
+        gitpy branch -m &lt;old&gt; &lt;new&gt;  # Rename
+    &quot;&quot;&quot;
+
+    name = &quot;branch&quot;
+    help = &quot;Manage branches&quot;
+
+    def run(self, args, repo):
+        if args.delete:
+            repo.branches.delete(args.name, force=args.force)
+            print(f&quot;Deleted branch {args.name}&quot;)
+        elif args.move:
+            repo.branches.rename(args.old, args.new, force=args.force)
+            print(f&quot;Renamed branch {args.old} to {args.new}&quot;)
+        elif args.name:
+            head_sha = repo.head.resolve(repo.refs)
+            repo.branches.create(args.name, head_sha)
+            print(f&quot;Created branch {args.name}&quot;)
+        else:
+            current = repo.branches.current()
+            for branch in repo.branches.list():
+                prefix = &quot;* &quot; if branch.name == current else &quot;  &quot;
+                print(f&quot;{prefix}{branch.name}&quot;)
+
+        return 0
+</code></pre>
+<h3 id="78-checkout">7.8 checkout</h3>
+<pre><code class="language-python"># gitpy/commands/porcelain/checkout.py
+
+class CheckoutCommand(Command):
+    &quot;&quot;&quot;
+    Switch branches or restore files.
+
+    Usage:
+        gitpy checkout &lt;branch&gt;
+        gitpy checkout -b &lt;new-branch&gt;
+        gitpy checkout -- &lt;file&gt;...
+    &quot;&quot;&quot;
+
+    name = &quot;checkout&quot;
+    help = &quot;Switch branches or restore files&quot;
+
+    def run(self, args, repo):
+        if args.new_branch:
+            # Create and switch
+            head_sha = repo.head.resolve(repo.refs)
+            repo.branches.create(args.new_branch, head_sha)
+            repo.head.set_branch(args.new_branch)
+            print(f&quot;Switched to a new branch '{args.new_branch}'&quot;)
+        elif args.paths:
+            # Restore files from index
+            index = repo.index.read()
+            for path in args.paths:
+                entry = index.get(path)
+                if entry:
+                    blob = repo.objects.read_blob(entry.sha)
+                    (repo.worktree / path).write_bytes(blob.data)
+        else:
+            # Switch branch
+            branch = repo.branches.get(args.branch)
+            if branch:
+                self._checkout_tree(branch.sha, repo)
+                repo.head.set_branch(args.branch)
+                print(f&quot;Switched to branch '{args.branch}'&quot;)
+            else:
+                # Detached HEAD
+                sha = repo.refs.resolve(args.branch)
+                self._checkout_tree(sha, repo)
+                repo.head.set_detached(sha)
+                print(f&quot;HEAD is now at {sha[:7]}&quot;)
+
+        return 0
+
+    def _checkout_tree(self, commit_sha, repo):
+        &quot;&quot;&quot;Update working directory and index to match commit.&quot;&quot;&quot;
+        from gitpy.index.operations import read_tree
+
+        commit = repo.objects.read_commit(commit_sha)
+
+        # Update index
+        index = Index()
+        read_tree(index, commit.tree_sha, repo.objects)
+        repo.index.write(index)
+
+        # Update working directory
+        for entry in index:
+            path = repo.worktree / entry.path
+            path.parent.mkdir(parents=True, exist_ok=True)
+            blob = repo.objects.read_blob(entry.sha)
+            path.write_bytes(blob.data)
+            if entry.mode == 0o100755:
+                path.chmod(0o755)
+</code></pre>
+<hr />
+<h2 id="phase-8-advanced-features">Phase 8: Advanced Features</h2>
+<h3 id="81-merge-three-way">8.1 Merge (Three-Way)</h3>
+<pre><code class="language-python"># gitpy/merge/three_way.py
+
+from typing import Optional, Tuple, List
+from dataclasses import dataclass
+
+@dataclass
+class MergeResult:
+    &quot;&quot;&quot;Result of a merge operation.&quot;&quot;&quot;
+    success: bool
+    tree_sha: Optional[str]
+    conflicts: List[str]
+
+def merge_trees(
+    base_sha: Optional[str],
+    ours_sha: str,
+    theirs_sha: str,
+    db: &quot;ObjectDatabase&quot;
+) -&gt; MergeResult:
+    &quot;&quot;&quot;
+    Three-way merge of trees.
+
+    Args:
+        base_sha: Common ancestor tree
+        ours_sha: Our tree (current branch)
+        theirs_sha: Their tree (branch being merged)
+        db: Object database
+
+    Returns:
+        MergeResult with merged tree or conflicts
+    &quot;&quot;&quot;
+    conflicts = []
+    merged_entries = {}
+
+    # Get all paths from all trees
+    base = _flatten_tree(base_sha, db) if base_sha else {}
+    ours = _flatten_tree(ours_sha, db)
+    theirs = _flatten_tree(theirs_sha, db)
+
+    all_paths = set(base.keys()) | set(ours.keys()) | set(theirs.keys())
+
+    for path in all_paths:
+        b = base.get(path)
+        o = ours.get(path)
+        t = theirs.get(path)
+
+        result = _merge_file(b, o, t, path, db)
+        if result.conflict:
+            conflicts.append(path)
+        if result.entry:
+            merged_entries[path] = result.entry
+
+    if conflicts:
+        return MergeResult(success=False, tree_sha=None, conflicts=conflicts)
+
+    # Build merged tree
+    tree_sha = _build_tree(merged_entries, db)
+    return MergeResult(success=True, tree_sha=tree_sha, conflicts=[])
+
+def _merge_file(base, ours, theirs, path, db):
+    &quot;&quot;&quot;Merge single file using 3-way logic.&quot;&quot;&quot;
+    # Case: same in all
+    if ours == theirs:
+        return MergeEntry(conflict=False, entry=ours)
+
+    # Case: only we changed
+    if base == theirs:
+        return MergeEntry(conflict=False, entry=ours)
+
+    # Case: only they changed
+    if base == ours:
+        return MergeEntry(conflict=False, entry=theirs)
+
+    # Case: both changed differently - conflict
+    # Could attempt content merge here
+    return MergeEntry(conflict=True, entry=None)
+</code></pre>
+<h3 id="82-cli-entry-point">8.2 CLI Entry Point</h3>
+<pre><code class="language-python"># gitpy/cli.py
+
+import sys
+import argparse
+from pathlib import Path
+
+from gitpy.repository import Repository
+from gitpy.commands import COMMANDS
+
+def main():
+    parser = argparse.ArgumentParser(
+        prog=&quot;gitpy&quot;,
+        description=&quot;Git reimplemented in Python&quot;
+    )
+    parser.add_argument(&quot;-C&quot;, dest=&quot;directory&quot;, help=&quot;Run in directory&quot;)
+
+    subparsers = parser.add_subparsers(dest=&quot;command&quot;)
+
+    # Register commands
+    for cmd_class in COMMANDS:
+        cmd = cmd_class()
+        subparser = subparsers.add_parser(cmd.name, help=cmd.help)
+        cmd.setup_parser(subparser)
+
+    args = parser.parse_args()
+
+    if not args.command:
+        parser.print_help()
+        return 1
+
+    # Find repository
+    try:
+        if args.directory:
+            repo = Repository.find(Path(args.directory))
+        elif args.command in (&quot;init&quot;, &quot;clone&quot;):
+            repo = None
+        else:
+            repo = Repository.find()
+    except ValueError as e:
+        if args.command not in (&quot;init&quot;, &quot;clone&quot;):
+            print(f&quot;fatal: {e}&quot;, file=sys.stderr)
+            return 128
+        repo = None
+
+    # Run command
+    cmd_class = next(c for c in COMMANDS if c.name == args.command)
+    cmd = cmd_class()
+    return cmd.run(args, repo)
+
+if __name__ == &quot;__main__&quot;:
+    sys.exit(main())
+</code></pre>
+<h3 id="83-pyprojecttoml-entry-point">8.3 pyproject.toml Entry Point</h3>
+<pre><code class="language-toml">[project.scripts]
+gitpy = &quot;gitpy.cli:app&quot;
+</code></pre>
+<hr />
+<h2 id="9-acceptance-criteria">9. Acceptance Criteria</h2>
+<h3 id="91-plumbing-commands">9.1 Plumbing Commands</h3>
+<ul>
+<li>[ ] <code>hash-object</code> computes SHA, optionally writes</li>
+<li>[ ] <code>cat-file</code> shows type/size/content</li>
+<li>[ ] <code>ls-tree</code> lists tree contents</li>
+<li>[ ] <code>write-tree</code> creates tree from index</li>
+<li>[ ] <code>commit-tree</code> creates commit object</li>
+<li>[ ] <code>update-ref</code> modifies references</li>
+</ul>
+<h3 id="92-porcelain-commands">9.2 Porcelain Commands</h3>
+<ul>
+<li>[ ] <code>init</code> creates repository</li>
+<li>[ ] <code>add</code> stages files</li>
+<li>[ ] <code>commit</code> creates commit and updates HEAD</li>
+<li>[ ] <code>status</code> shows working tree state</li>
+<li>[ ] <code>log</code> shows history</li>
+<li>[ ] <code>diff</code> shows changes</li>
+<li>[ ] <code>branch</code> manages branches</li>
+<li>[ ] <code>checkout</code> switches branches</li>
+</ul>
+<h3 id="93-compatibility">9.3 Compatibility</h3>
+<ul>
+<li>[ ] Can create repo usable by real Git</li>
+<li>[ ] Can work with repo created by real Git</li>
+<li>[ ] Output format matches Git where appropriate</li>
+</ul>
+<hr />
+<h2 id="10-file-structure">10. File Structure</h2>
+<pre><code>gitpy/
+├── cli.py
+├── diff/
+│   ├── __init__.py
+│   ├── myers.py
+│   ├── unified.py
+│   └── tree.py
+├── merge/
+│   ├── __init__.py
+│   └── three_way.py
+└── commands/
+    ├── __init__.py
+    ├── base.py
+    ├── plumbing/
+    │   ├── __init__.py
+    │   ├── hash_object.py
+    │   ├── cat_file.py
+    │   ├── ls_tree.py
+    │   ├── write_tree.py
+    │   ├── commit_tree.py
+    │   └── update_ref.py
+    └── porcelain/
+        ├── __init__.py
+        ├── init.py
+        ├── add.py
+        ├── commit.py
+        ├── status.py
+        ├── log.py
+        ├── diff.py
+        ├── branch.py
+        └── checkout.py
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -10,22 +10,20 @@
       
       
       
-        <link rel="next" href="concepts/object_model/">
-      
       
         
       
       
-      <link rel="icon" href="assets/images/favicon.png">
+      <link rel="icon" href="../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
     
     
       
-        <title>gitpy</title>
+        <title>gitpy Design Documentation - gitpy</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
       
       
 
@@ -44,7 +42,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -62,7 +60,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#gitpy" class="md-skip">
+        <a href="#gitpy-design-documentation" class="md-skip">
           Skip to content
         </a>
       
@@ -78,7 +76,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="gitpy" class="md-header__button md-logo" aria-label="gitpy" data-md-component="logo">
+    <a href=".." title="gitpy" class="md-header__button md-logo" aria-label="gitpy" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -98,7 +96,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              gitpy Design Documentation
             
           </span>
         </div>
@@ -188,7 +186,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="gitpy" class="md-nav__button md-logo" aria-label="gitpy" data-md-component="logo">
+    <a href=".." title="gitpy" class="md-nav__button md-logo" aria-label="gitpy" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -215,37 +213,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Home
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
         
   
   
@@ -261,87 +232,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#getting-started" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Getting Started
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Getting Started">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Prerequisites
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Usage
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#contributing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Contributing
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#authors" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Authors
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -400,7 +290,7 @@
   
   
     <li class="md-nav__item">
-      <a href="concepts/object_model/" class="md-nav__link">
+      <a href="../concepts/object_model/" class="md-nav__link">
         
   
   
@@ -435,7 +325,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contributing/" class="md-nav__link">
+      <a href="../contributing/" class="md-nav__link">
         
   
   
@@ -482,22 +372,33 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#getting-started" class="md-nav__link">
+  <a href="#document-index" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Getting Started
+        Document Index
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Getting Started">
+    <nav class="md-nav" aria-label="Document Index">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#prerequisites" class="md-nav__link">
+  <a href="#phase-specifications" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Prerequisites
+        Phase Specifications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementation-guides" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation Guides
       
     </span>
   </a>
@@ -510,10 +411,143 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#usage" class="md-nav__link">
+  <a href="#architecture-overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Usage
+        Architecture Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-priority" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation Priority
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Priority">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tier-1-foundation-must-have" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 1: Foundation (Must Have)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-2-core-commands-should-have" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 2: Core Commands (Should Have)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-3-extended-nice-to-have" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 3: Extended (Nice to Have)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-design-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Design Decisions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Key Design Decisions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-content-addressable-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Content-Addressable Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-separation-of-concerns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Separation of Concerns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-git-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Git Compatibility
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-minimal-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Minimal Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting Started
       
     </span>
   </a>
@@ -525,17 +559,6 @@
     <span class="md-ellipsis">
       
         Contributing
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#authors" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Authors
       
     </span>
   </a>
@@ -562,23 +585,146 @@
   
 
 
-<p><a href="http://makeapullrequest.com"><img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" /></a>
-<a href="https://conventionalcommits.org"><img alt="Conventional Commits" src="https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg?style=flat-square" /></a>
-<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg" /></a>
-<a href="https://github.com/josix/gitpy/wayback-machine-saver/actions/workflows/python-check.yaml"><img alt="Github Actions" src="https://github.com/josix/gitpy/actions/workflows/python-check.yaml/badge.svg" /></a></p>
-<h1 id="gitpy">gitpy</h1>
-<p>Rediscover git through re-implementing it in python</p>
-<h2 id="getting-started">Getting Started</h2>
-<h3 id="prerequisites">Prerequisites</h3>
+<h1 id="gitpy-design-documentation">gitpy Design Documentation</h1>
+<p>This directory contains detailed design specifications for implementing Git's core functionality in Python 3.12+.</p>
+<h2 id="document-index">Document Index</h2>
+<h3 id="phase-specifications">Phase Specifications</h3>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Document</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="phase1_object_model/">Object Model</a></td>
+<td>Blob, Tree, Commit, Tag objects and SHA-1 hashing</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="phase2_object_storage/">Object Storage</a></td>
+<td>Loose objects, compression, repository initialization</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="phase3_references/">References</a></td>
+<td>HEAD, branches, tags, reflog, revision parsing</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="phase4_index/">Index</a></td>
+<td>Staging area, binary format, status tracking</td>
+</tr>
+<tr>
+<td>5-8</td>
+<td><a href="phase5_8_commands/">Commands</a></td>
+<td>Diff engine, plumbing/porcelain commands, merge</td>
+</tr>
+</tbody>
+</table>
+<h3 id="implementation-guides">Implementation Guides</h3>
+<table>
+<thead>
+<tr>
+<th>Document</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="implementation_agents/">Implementation Agents</a></td>
+<td>Agent-based implementation strategy with 8 specialized agents</td>
+</tr>
+<tr>
+<td><a href="python312_features/">Python 3.12+ Features</a></td>
+<td>Modern Python features to use (type syntax, pattern matching, etc.)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="architecture-overview">Architecture Overview</h2>
+<pre><code>┌─────────────────────────────────────────────────────────────────┐
+│                        CLI (gitpy)                              │
+├─────────────────────────────────────────────────────────────────┤
+│                    Porcelain Commands                           │
+│  init │ add │ commit │ status │ log │ diff │ branch │ checkout │
+├─────────────────────────────────────────────────────────────────┤
+│                    Plumbing Commands                            │
+│  hash-object │ cat-file │ ls-tree │ write-tree │ commit-tree   │
+├─────────────────┬─────────────────┬─────────────────────────────┤
+│   References    │      Index      │         Diff Engine         │
+│  HEAD, branches │  staging area   │   Myers algorithm, hunks    │
+│  tags, reflog   │  binary format  │   unified format            │
+├─────────────────┴─────────────────┴─────────────────────────────┤
+│                      Object Database                            │
+│              loose objects │ compression │ SHA-1                │
+├─────────────────────────────────────────────────────────────────┤
+│                       Object Model                              │
+│                 Blob │ Tree │ Commit │ Tag                      │
+└─────────────────────────────────────────────────────────────────┘
+</code></pre>
+<h2 id="implementation-priority">Implementation Priority</h2>
+<h3 id="tier-1-foundation-must-have">Tier 1: Foundation (Must Have)</h3>
 <ul>
-<li><a href="https://www.python.org/downloads/">Python</a></li>
+<li>Object model (blob, tree, commit)</li>
+<li>Object storage with compression</li>
+<li>Basic references (HEAD, branches)</li>
+<li>Index read/write</li>
 </ul>
-<h2 id="usage">Usage</h2>
+<h3 id="tier-2-core-commands-should-have">Tier 2: Core Commands (Should Have)</h3>
+<ul>
+<li><code>init</code>, <code>add</code>, <code>commit</code>, <code>status</code></li>
+<li><code>log</code>, <code>diff</code></li>
+<li><code>branch</code>, <code>checkout</code></li>
+</ul>
+<h3 id="tier-3-extended-nice-to-have">Tier 3: Extended (Nice to Have)</h3>
+<ul>
+<li>Tags (annotated)</li>
+<li>Reflog</li>
+<li>Merge</li>
+<li>Remote operations</li>
+</ul>
+<h2 id="key-design-decisions">Key Design Decisions</h2>
+<h3 id="1-content-addressable-storage">1. Content-Addressable Storage</h3>
+<p>All objects are identified by SHA-1 hash of their contents, enabling:
+- Automatic deduplication
+- Integrity verification
+- Immutability guarantees</p>
+<h3 id="2-separation-of-concerns">2. Separation of Concerns</h3>
+<ul>
+<li><strong>Objects</strong>: Immutable data structures</li>
+<li><strong>References</strong>: Mutable pointers to objects</li>
+<li><strong>Index</strong>: Staging area between working directory and repository</li>
+<li><strong>Commands</strong>: Operations on the above</li>
+</ul>
+<h3 id="3-git-compatibility">3. Git Compatibility</h3>
+<p>Binary formats (index, packfiles) match Git exactly for interoperability.</p>
+<h3 id="4-minimal-dependencies">4. Minimal Dependencies</h3>
+<p>Core implementation uses Python standard library only:
+- <code>hashlib</code> for SHA-1
+- <code>zlib</code> for compression
+- <code>struct</code> for binary parsing</p>
+<h2 id="testing-strategy">Testing Strategy</h2>
+<p>Each phase includes:
+1. <strong>Unit tests</strong>: Individual component testing
+2. <strong>Integration tests</strong>: Command workflows
+3. <strong>Compatibility tests</strong>: Verify against real Git
+4. <strong>Property tests</strong>: Serialization roundtrips (hypothesis)</p>
+<h2 id="getting-started">Getting Started</h2>
+<ol>
+<li>Read Phase 1 (Object Model) first</li>
+<li>Each phase builds on previous phases</li>
+<li>Implementation code goes in <code>gitpy/</code> package</li>
+<li>Tests go in <code>tests/</code> directory</li>
+</ol>
 <h2 id="contributing">Contributing</h2>
-<p>See <a href="contributing/">Contributing</a></p>
-<h2 id="authors">Authors</h2>
-<p>Josix Wang <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#111;&#115;&#105;&#120;&#119;&#97;&#110;&#103;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#106;&#111;&#115;&#105;&#120;&#119;&#97;&#110;&#103;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a></p>
-<p>Created from <a href="https://github.com/Lee-W/cookiecutter-python-template/tree/1.1.2">Lee-W/cookiecutter-python-template</a> version 1.1.2</p>
+<p>When implementing a phase:
+1. Follow the specification exactly
+2. Write tests before or alongside code
+3. Verify compatibility with real Git
+4. Update documentation as needed</p>
 
 
 
@@ -628,10 +774,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": [], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
       
     
   </body>

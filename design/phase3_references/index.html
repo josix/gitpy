@@ -1,0 +1,2071 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Phase 3: References System - Design Specification - gitpy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#phase-3-references-system-design-specification" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="gitpy" class="md-header__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gitpy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Phase 3: References System - Design Specification
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="gitpy" class="md-nav__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gitpy
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/object_model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-design-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Design Goals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-reference-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Reference Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-reference-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Reference Format
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Reference Format">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-direct-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Direct Reference
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-symbolic-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Symbolic Reference
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-packed-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Packed References
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-head-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. HEAD Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. HEAD Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-states" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 States
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-reference-manager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Reference Manager
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Reference Manager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-core-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Core Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-resolution-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Resolution Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-branch-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Branch Operations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Branch Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-branch-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Branch Class
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-tag-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Tag Operations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Tag Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-tag-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Tag Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-reflog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Reflog
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Reflog">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-revision-parsing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Revision Parsing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Revision Parsing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-revision-expressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Revision Expressions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-test-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Test Cases
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Test Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-head-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 HEAD Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-reference-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 Reference Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-branch-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 Branch Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-acceptance-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Acceptance Criteria
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Acceptance Criteria">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-functional-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 Functional Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-non-functional-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 Non-Functional Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-file-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. File Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="phase-3-references-system-design-specification">Phase 3: References System - Design Specification</h1>
+<blockquote>
+<p><strong>Status</strong>: Draft
+<strong>Author</strong>: Domain Expert
+<strong>Last Updated</strong>: 2026-01-05
+<strong>Dependencies</strong>: Phase 1 (Object Model), Phase 2 (Storage)</p>
+</blockquote>
+<h2 id="1-overview">1. Overview</h2>
+<p>References (refs) are human-readable names that point to commit SHAs. They make Git usable by allowing us to say "main" instead of "a1b2c3d4...".</p>
+<h3 id="11-design-goals">1.1 Design Goals</h3>
+<ul>
+<li><strong>Readability</strong>: Human-friendly names for commits</li>
+<li><strong>Mutability</strong>: Unlike objects, refs can change</li>
+<li><strong>Atomicity</strong>: Ref updates are atomic</li>
+<li><strong>Hierarchy</strong>: Refs organized in namespaces</li>
+</ul>
+<h3 id="12-reference-types">1.2 Reference Types</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Location</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HEAD</td>
+<td><code>.git/HEAD</code></td>
+<td>Current branch or commit</td>
+</tr>
+<tr>
+<td>Branch</td>
+<td><code>.git/refs/heads/&lt;name&gt;</code></td>
+<td>Local branch tip</td>
+</tr>
+<tr>
+<td>Tag</td>
+<td><code>.git/refs/tags/&lt;name&gt;</code></td>
+<td>Named release point</td>
+</tr>
+<tr>
+<td>Remote</td>
+<td><code>.git/refs/remotes/&lt;remote&gt;/&lt;branch&gt;</code></td>
+<td>Remote-tracking branch</td>
+</tr>
+<tr>
+<td>Stash</td>
+<td><code>.git/refs/stash</code></td>
+<td>Stashed changes</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-reference-format">2. Reference Format</h2>
+<h3 id="21-direct-reference">2.1 Direct Reference</h3>
+<p>A direct reference contains a 40-character SHA-1 followed by newline:</p>
+<pre><code>a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2\n
+</code></pre>
+<h3 id="22-symbolic-reference">2.2 Symbolic Reference</h3>
+<p>A symbolic reference points to another reference:</p>
+<pre><code>ref: refs/heads/main\n
+</code></pre>
+<p><strong>Key Properties:</strong>
+- Only HEAD is typically symbolic
+- Symbolic refs are resolved recursively
+- Detached HEAD contains SHA directly</p>
+<h3 id="23-packed-references">2.3 Packed References</h3>
+<p>For performance, refs can be packed into <code>.git/packed-refs</code>:</p>
+<pre><code># pack-refs with: peeled fully-peeled sorted
+a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2 refs/heads/main
+b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3 refs/heads/feature
+^c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4
+</code></pre>
+<p>The <code>^</code> line is the "peeled" value for annotated tags.</p>
+<hr />
+<h2 id="3-head-management">3. HEAD Management</h2>
+<h3 id="31-states">3.1 States</h3>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Content</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Attached</td>
+<td><code>ref: refs/heads/main</code></td>
+<td>On a branch</td>
+</tr>
+<tr>
+<td>Detached</td>
+<td><code>&lt;sha&gt;</code></td>
+<td>At specific commit</td>
+</tr>
+</tbody>
+</table>
+<h3 id="32-implementation">3.2 Implementation</h3>
+<pre><code class="language-python"># gitpy/refs/head.py
+
+from pathlib import Path
+from typing import Optional, Tuple
+from dataclasses import dataclass
+from enum import Enum
+
+class HeadState(Enum):
+    ATTACHED = &quot;attached&quot;
+    DETACHED = &quot;detached&quot;
+
+@dataclass
+class Head:
+    &quot;&quot;&quot;
+    Represents the HEAD reference.
+
+    HEAD is special: it's the only commonly-used symbolic ref.
+    It indicates the current branch or commit.
+    &quot;&quot;&quot;
+
+    state: HeadState
+    target: str  # Branch name (attached) or SHA (detached)
+
+    @property
+    def is_detached(self) -&gt; bool:
+        return self.state == HeadState.DETACHED
+
+    @property
+    def branch(self) -&gt; Optional[str]:
+        &quot;&quot;&quot;Current branch name, or None if detached.&quot;&quot;&quot;
+        if self.state == HeadState.ATTACHED:
+            # Strip refs/heads/ prefix
+            if self.target.startswith(&quot;refs/heads/&quot;):
+                return self.target[11:]
+            return self.target
+        return None
+
+    @property
+    def sha(self) -&gt; Optional[str]:
+        &quot;&quot;&quot;Direct SHA if detached, None if attached.&quot;&quot;&quot;
+        if self.state == HeadState.DETACHED:
+            return self.target
+        return None
+
+class HeadManager:
+    &quot;&quot;&quot;Manages HEAD reference.&quot;&quot;&quot;
+
+    def __init__(self, git_dir: Path):
+        self.git_dir = git_dir
+        self.head_path = git_dir / &quot;HEAD&quot;
+
+    def read(self) -&gt; Head:
+        &quot;&quot;&quot;Read current HEAD state.&quot;&quot;&quot;
+        content = self.head_path.read_text().strip()
+
+        if content.startswith(&quot;ref: &quot;):
+            # Symbolic reference
+            target = content[5:]
+            return Head(state=HeadState.ATTACHED, target=target)
+        else:
+            # Direct SHA
+            return Head(state=HeadState.DETACHED, target=content)
+
+    def set_branch(self, branch: str) -&gt; None:
+        &quot;&quot;&quot;Point HEAD at a branch.&quot;&quot;&quot;
+        if not branch.startswith(&quot;refs/&quot;):
+            branch = f&quot;refs/heads/{branch}&quot;
+        self._write(f&quot;ref: {branch}\n&quot;)
+
+    def set_detached(self, sha: str) -&gt; None:
+        &quot;&quot;&quot;Point HEAD at a specific commit.&quot;&quot;&quot;
+        if len(sha) != 40:
+            raise ValueError(&quot;SHA must be 40 characters&quot;)
+        self._write(f&quot;{sha}\n&quot;)
+
+    def _write(self, content: str) -&gt; None:
+        &quot;&quot;&quot;Atomic write to HEAD.&quot;&quot;&quot;
+        temp = self.head_path.with_suffix(&quot;.lock&quot;)
+        try:
+            temp.write_text(content)
+            temp.rename(self.head_path)
+        except Exception:
+            temp.unlink(missing_ok=True)
+            raise
+
+    def resolve(self, ref_manager: &quot;RefManager&quot;) -&gt; str:
+        &quot;&quot;&quot;
+        Resolve HEAD to a commit SHA.
+
+        Args:
+            ref_manager: Reference manager for branch resolution
+
+        Returns:
+            40-character SHA
+
+        Raises:
+            ValueError: HEAD points to non-existent branch
+        &quot;&quot;&quot;
+        head = self.read()
+
+        if head.is_detached:
+            return head.target
+
+        # Resolve branch reference
+        sha = ref_manager.resolve(head.target)
+        if sha is None:
+            raise ValueError(f&quot;Branch {head.branch} does not exist&quot;)
+        return sha
+</code></pre>
+<hr />
+<h2 id="4-reference-manager">4. Reference Manager</h2>
+<h3 id="41-core-operations">4.1 Core Operations</h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>resolve(name)</code></td>
+<td>Convert ref name to SHA</td>
+</tr>
+<tr>
+<td><code>read(name)</code></td>
+<td>Read ref value (may be symbolic)</td>
+</tr>
+<tr>
+<td><code>write(name, sha)</code></td>
+<td>Update ref to point to SHA</td>
+</tr>
+<tr>
+<td><code>delete(name)</code></td>
+<td>Remove reference</td>
+</tr>
+<tr>
+<td><code>list(pattern)</code></td>
+<td>List refs matching pattern</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-resolution-rules">4.2 Resolution Rules</h3>
+<p>When resolving a reference name:</p>
+<ol>
+<li>If it's a 40-char hex string, use directly</li>
+<li>Check <code>refs/&lt;name&gt;</code></li>
+<li>Check <code>refs/tags/&lt;name&gt;</code></li>
+<li>Check <code>refs/heads/&lt;name&gt;</code></li>
+<li>Check <code>refs/remotes/&lt;name&gt;</code></li>
+<li>Check <code>refs/remotes/&lt;name&gt;/HEAD</code></li>
+</ol>
+<h3 id="43-implementation">4.3 Implementation</h3>
+<pre><code class="language-python"># gitpy/refs/manager.py
+
+from pathlib import Path
+from typing import Optional, List, Iterator, Tuple
+import fnmatch
+import re
+
+class RefManager:
+    &quot;&quot;&quot;
+    Manages Git references.
+
+    Handles reading, writing, and resolving references
+    including support for packed refs.
+    &quot;&quot;&quot;
+
+    def __init__(self, git_dir: Path):
+        self.git_dir = git_dir
+        self.refs_dir = git_dir / &quot;refs&quot;
+        self.packed_refs_path = git_dir / &quot;packed-refs&quot;
+        self._packed_refs_cache: Optional[dict] = None
+
+    # =========== Reading ===========
+
+    def read(self, name: str) -&gt; Optional[str]:
+        &quot;&quot;&quot;
+        Read reference value (SHA or symbolic target).
+
+        Args:
+            name: Reference name (e.g., &quot;refs/heads/main&quot;)
+
+        Returns:
+            SHA or &quot;ref: &lt;target&gt;&quot; for symbolic refs, None if not found
+        &quot;&quot;&quot;
+        path = self.git_dir / name
+
+        # Check loose ref first
+        if path.is_file():
+            content = path.read_text().strip()
+            return content
+
+        # Check packed refs
+        packed = self._read_packed_refs()
+        if name in packed:
+            return packed[name]
+
+        return None
+
+    def resolve(self, name: str, max_depth: int = 10) -&gt; Optional[str]:
+        &quot;&quot;&quot;
+        Resolve reference to final SHA.
+
+        Follows symbolic references recursively.
+
+        Args:
+            name: Reference name or SHA
+            max_depth: Maximum symbolic ref depth (prevent loops)
+
+        Returns:
+            40-character SHA or None if not found
+        &quot;&quot;&quot;
+        # Direct SHA
+        if self._is_sha(name):
+            return name
+
+        # Try various prefixes
+        for prefix in [&quot;&quot;, &quot;refs/&quot;, &quot;refs/tags/&quot;, &quot;refs/heads/&quot;, &quot;refs/remotes/&quot;]:
+            full_name = prefix + name if prefix else name
+            sha = self._resolve_ref(full_name, max_depth)
+            if sha:
+                return sha
+
+        return None
+
+    def _resolve_ref(self, name: str, max_depth: int) -&gt; Optional[str]:
+        &quot;&quot;&quot;Resolve a single reference path.&quot;&quot;&quot;
+        if max_depth &lt;= 0:
+            raise ValueError(f&quot;Symbolic reference loop detected at {name}&quot;)
+
+        value = self.read(name)
+        if value is None:
+            return None
+
+        # Follow symbolic reference
+        if value.startswith(&quot;ref: &quot;):
+            target = value[5:]
+            return self._resolve_ref(target, max_depth - 1)
+
+        # Direct SHA
+        if self._is_sha(value):
+            return value
+
+        return None
+
+    def _is_sha(self, value: str) -&gt; bool:
+        &quot;&quot;&quot;Check if value looks like a SHA.&quot;&quot;&quot;
+        return len(value) == 40 and all(c in &quot;0123456789abcdef&quot; for c in value)
+
+    # =========== Writing ===========
+
+    def write(self, name: str, sha: str) -&gt; None:
+        &quot;&quot;&quot;
+        Update reference to point to SHA.
+
+        Args:
+            name: Reference name
+            sha: 40-character SHA
+        &quot;&quot;&quot;
+        if not self._is_sha(sha):
+            raise ValueError(f&quot;Invalid SHA: {sha}&quot;)
+
+        path = self.git_dir / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+
+        # Atomic write
+        temp = path.with_suffix(&quot;.lock&quot;)
+        try:
+            temp.write_text(f&quot;{sha}\n&quot;)
+            temp.rename(path)
+        except Exception:
+            temp.unlink(missing_ok=True)
+            raise
+
+    def write_symbolic(self, name: str, target: str) -&gt; None:
+        &quot;&quot;&quot;
+        Create symbolic reference.
+
+        Args:
+            name: Reference name
+            target: Target reference name
+        &quot;&quot;&quot;
+        path = self.git_dir / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+
+        temp = path.with_suffix(&quot;.lock&quot;)
+        try:
+            temp.write_text(f&quot;ref: {target}\n&quot;)
+            temp.rename(path)
+        except Exception:
+            temp.unlink(missing_ok=True)
+            raise
+
+    def delete(self, name: str) -&gt; bool:
+        &quot;&quot;&quot;
+        Delete reference.
+
+        Returns:
+            True if deleted, False if didn't exist
+        &quot;&quot;&quot;
+        path = self.git_dir / name
+        if path.exists():
+            path.unlink()
+            # Clean up empty directories
+            self._cleanup_empty_dirs(path.parent)
+            return True
+        return False
+
+    def _cleanup_empty_dirs(self, path: Path) -&gt; None:
+        &quot;&quot;&quot;Remove empty parent directories up to refs/.&quot;&quot;&quot;
+        while path != self.refs_dir and path.is_dir():
+            try:
+                path.rmdir()
+                path = path.parent
+            except OSError:
+                break  # Not empty
+
+    # =========== Listing ===========
+
+    def list_refs(self, pattern: str = &quot;refs/**&quot;) -&gt; Iterator[Tuple[str, str]]:
+        &quot;&quot;&quot;
+        List references matching pattern.
+
+        Args:
+            pattern: Glob pattern (e.g., &quot;refs/heads/*&quot;)
+
+        Yields:
+            (name, sha) tuples
+        &quot;&quot;&quot;
+        seen = set()
+
+        # Loose refs
+        for ref_path in self.refs_dir.rglob(&quot;*&quot;):
+            if ref_path.is_file():
+                name = str(ref_path.relative_to(self.git_dir))
+                if fnmatch.fnmatch(name, pattern):
+                    sha = self.resolve(name)
+                    if sha:
+                        seen.add(name)
+                        yield (name, sha)
+
+        # Packed refs
+        packed = self._read_packed_refs()
+        for name, sha in packed.items():
+            if name not in seen and fnmatch.fnmatch(name, pattern):
+                yield (name, sha)
+
+    def list_branches(self) -&gt; Iterator[Tuple[str, str]]:
+        &quot;&quot;&quot;List local branches.&quot;&quot;&quot;
+        for name, sha in self.list_refs(&quot;refs/heads/*&quot;):
+            branch_name = name[11:]  # Strip refs/heads/
+            yield (branch_name, sha)
+
+    def list_tags(self) -&gt; Iterator[Tuple[str, str]]:
+        &quot;&quot;&quot;List tags.&quot;&quot;&quot;
+        for name, sha in self.list_refs(&quot;refs/tags/*&quot;):
+            tag_name = name[10:]  # Strip refs/tags/
+            yield (tag_name, sha)
+
+    # =========== Packed Refs ===========
+
+    def _read_packed_refs(self) -&gt; dict:
+        &quot;&quot;&quot;Read packed-refs file.&quot;&quot;&quot;
+        if self._packed_refs_cache is not None:
+            return self._packed_refs_cache
+
+        refs = {}
+        if not self.packed_refs_path.exists():
+            return refs
+
+        for line in self.packed_refs_path.read_text().splitlines():
+            line = line.strip()
+            if not line or line.startswith(&quot;#&quot;) or line.startswith(&quot;^&quot;):
+                continue
+
+            parts = line.split(&quot; &quot;, 1)
+            if len(parts) == 2:
+                sha, name = parts
+                refs[name] = sha
+
+        self._packed_refs_cache = refs
+        return refs
+
+    def pack_refs(self) -&gt; None:
+        &quot;&quot;&quot;Pack loose refs into packed-refs file.&quot;&quot;&quot;
+        refs = dict(self.list_refs())
+
+        lines = [&quot;# pack-refs with: peeled fully-peeled sorted\n&quot;]
+        for name in sorted(refs.keys()):
+            sha = refs[name]
+            lines.append(f&quot;{sha} {name}\n&quot;)
+
+        self.packed_refs_path.write_text(&quot;&quot;.join(lines))
+
+        # Delete loose refs (except HEAD)
+        for name in refs:
+            if name != &quot;HEAD&quot;:
+                path = self.git_dir / name
+                if path.exists():
+                    path.unlink()
+                    self._cleanup_empty_dirs(path.parent)
+
+        # Invalidate cache
+        self._packed_refs_cache = None
+</code></pre>
+<hr />
+<h2 id="5-branch-operations">5. Branch Operations</h2>
+<h3 id="51-branch-class">5.1 Branch Class</h3>
+<pre><code class="language-python"># gitpy/refs/branch.py
+
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Optional, List
+
+@dataclass
+class Branch:
+    &quot;&quot;&quot;Represents a Git branch.&quot;&quot;&quot;
+    name: str
+    sha: str
+
+    @property
+    def full_name(self) -&gt; str:
+        return f&quot;refs/heads/{self.name}&quot;
+
+    @property
+    def short_sha(self) -&gt; str:
+        return self.sha[:7]
+
+class BranchManager:
+    &quot;&quot;&quot;High-level branch operations.&quot;&quot;&quot;
+
+    def __init__(self, ref_manager: &quot;RefManager&quot;, head_manager: &quot;HeadManager&quot;):
+        self.refs = ref_manager
+        self.head = head_manager
+
+    def current(self) -&gt; Optional[str]:
+        &quot;&quot;&quot;Get current branch name, or None if detached.&quot;&quot;&quot;
+        return self.head.read().branch
+
+    def exists(self, name: str) -&gt; bool:
+        &quot;&quot;&quot;Check if branch exists.&quot;&quot;&quot;
+        return self.refs.resolve(f&quot;refs/heads/{name}&quot;) is not None
+
+    def get(self, name: str) -&gt; Optional[Branch]:
+        &quot;&quot;&quot;Get branch by name.&quot;&quot;&quot;
+        sha = self.refs.resolve(f&quot;refs/heads/{name}&quot;)
+        if sha:
+            return Branch(name=name, sha=sha)
+        return None
+
+    def create(self, name: str, sha: str, force: bool = False) -&gt; Branch:
+        &quot;&quot;&quot;
+        Create a new branch.
+
+        Args:
+            name: Branch name
+            sha: Commit SHA to point to
+            force: Overwrite if exists
+
+        Returns:
+            Created branch
+
+        Raises:
+            ValueError: Branch exists and force=False
+        &quot;&quot;&quot;
+        self._validate_name(name)
+
+        if self.exists(name) and not force:
+            raise ValueError(f&quot;Branch '{name}' already exists&quot;)
+
+        self.refs.write(f&quot;refs/heads/{name}&quot;, sha)
+        return Branch(name=name, sha=sha)
+
+    def delete(self, name: str, force: bool = False) -&gt; bool:
+        &quot;&quot;&quot;
+        Delete a branch.
+
+        Args:
+            name: Branch name
+            force: Delete even if not merged
+
+        Returns:
+            True if deleted
+
+        Raises:
+            ValueError: Trying to delete current branch
+        &quot;&quot;&quot;
+        if name == self.current():
+            raise ValueError(&quot;Cannot delete the currently checked out branch&quot;)
+
+        ref_name = f&quot;refs/heads/{name}&quot;
+        return self.refs.delete(ref_name)
+
+    def rename(self, old_name: str, new_name: str, force: bool = False) -&gt; Branch:
+        &quot;&quot;&quot;
+        Rename a branch.
+
+        Args:
+            old_name: Current name
+            new_name: New name
+            force: Overwrite if new_name exists
+        &quot;&quot;&quot;
+        self._validate_name(new_name)
+
+        old_branch = self.get(old_name)
+        if old_branch is None:
+            raise ValueError(f&quot;Branch '{old_name}' does not exist&quot;)
+
+        if self.exists(new_name) and not force:
+            raise ValueError(f&quot;Branch '{new_name}' already exists&quot;)
+
+        # Create new, delete old
+        self.refs.write(f&quot;refs/heads/{new_name}&quot;, old_branch.sha)
+        self.refs.delete(f&quot;refs/heads/{old_name}&quot;)
+
+        # Update HEAD if renaming current branch
+        if self.current() == old_name:
+            self.head.set_branch(new_name)
+
+        return Branch(name=new_name, sha=old_branch.sha)
+
+    def list(self) -&gt; List[Branch]:
+        &quot;&quot;&quot;List all branches.&quot;&quot;&quot;
+        return [
+            Branch(name=name, sha=sha)
+            for name, sha in self.refs.list_branches()
+        ]
+
+    def _validate_name(self, name: str) -&gt; None:
+        &quot;&quot;&quot;Validate branch name.&quot;&quot;&quot;
+        if not name:
+            raise ValueError(&quot;Branch name cannot be empty&quot;)
+        if name.startswith(&quot;-&quot;):
+            raise ValueError(&quot;Branch name cannot start with '-'&quot;)
+        if &quot;..&quot; in name:
+            raise ValueError(&quot;Branch name cannot contain '..'&quot;)
+        if name.endswith(&quot;.lock&quot;):
+            raise ValueError(&quot;Branch name cannot end with '.lock'&quot;)
+        if &quot;@{&quot; in name:
+            raise ValueError(&quot;Branch name cannot contain '@{'&quot;)
+
+        # Check for invalid characters
+        invalid = set(&quot; ~^:?*[\\&quot;)
+        if any(c in name for c in invalid):
+            raise ValueError(f&quot;Branch name contains invalid characters&quot;)
+</code></pre>
+<hr />
+<h2 id="6-tag-operations">6. Tag Operations</h2>
+<h3 id="61-tag-types">6.1 Tag Types</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Storage</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lightweight</td>
+<td>Reference only</td>
+<td>Points directly to commit</td>
+</tr>
+<tr>
+<td>Annotated</td>
+<td>Tag object + Reference</td>
+<td>Contains message and tagger</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62-implementation">6.2 Implementation</h3>
+<pre><code class="language-python"># gitpy/refs/tag.py
+
+from dataclasses import dataclass
+from typing import Optional, List, Union
+
+from gitpy.objects.tag import Tag as TagObject
+from gitpy.objects.commit import Identity
+from gitpy.storage.database import ObjectDatabase
+
+@dataclass
+class LightweightTag:
+    &quot;&quot;&quot;A lightweight tag (just a reference).&quot;&quot;&quot;
+    name: str
+    sha: str  # Points to commit
+
+    @property
+    def is_annotated(self) -&gt; bool:
+        return False
+
+@dataclass
+class AnnotatedTag:
+    &quot;&quot;&quot;An annotated tag (tag object + reference).&quot;&quot;&quot;
+    name: str
+    sha: str       # Tag object SHA
+    target: str    # Target commit SHA
+    message: str
+    tagger: Optional[Identity]
+
+    @property
+    def is_annotated(self) -&gt; bool:
+        return True
+
+TagType = Union[LightweightTag, AnnotatedTag]
+
+class TagManager:
+    &quot;&quot;&quot;High-level tag operations.&quot;&quot;&quot;
+
+    def __init__(self, ref_manager: &quot;RefManager&quot;, object_db: ObjectDatabase):
+        self.refs = ref_manager
+        self.objects = object_db
+
+    def get(self, name: str) -&gt; Optional[TagType]:
+        &quot;&quot;&quot;
+        Get tag by name.
+
+        Returns LightweightTag or AnnotatedTag depending on type.
+        &quot;&quot;&quot;
+        sha = self.refs.resolve(f&quot;refs/tags/{name}&quot;)
+        if sha is None:
+            return None
+
+        # Check if it's an annotated tag
+        obj_type = self.objects.get_type(sha)
+        if obj_type == &quot;tag&quot;:
+            tag_obj = self.objects.read(sha)
+            return AnnotatedTag(
+                name=name,
+                sha=sha,
+                target=tag_obj.object_sha,
+                message=tag_obj.message,
+                tagger=tag_obj.tagger
+            )
+        else:
+            return LightweightTag(name=name, sha=sha)
+
+    def create_lightweight(self, name: str, sha: str, force: bool = False) -&gt; LightweightTag:
+        &quot;&quot;&quot;Create lightweight tag.&quot;&quot;&quot;
+        if self.exists(name) and not force:
+            raise ValueError(f&quot;Tag '{name}' already exists&quot;)
+
+        self.refs.write(f&quot;refs/tags/{name}&quot;, sha)
+        return LightweightTag(name=name, sha=sha)
+
+    def create_annotated(
+        self,
+        name: str,
+        sha: str,
+        message: str,
+        tagger: Identity,
+        force: bool = False
+    ) -&gt; AnnotatedTag:
+        &quot;&quot;&quot;Create annotated tag.&quot;&quot;&quot;
+        if self.exists(name) and not force:
+            raise ValueError(f&quot;Tag '{name}' already exists&quot;)
+
+        # Create tag object
+        tag_obj = TagObject(
+            object_sha=sha,
+            object_type=&quot;commit&quot;,
+            tag_name=name,
+            tagger=tagger,
+            message=message
+        )
+        tag_sha = self.objects.write(tag_obj)
+
+        # Create reference
+        self.refs.write(f&quot;refs/tags/{name}&quot;, tag_sha)
+
+        return AnnotatedTag(
+            name=name,
+            sha=tag_sha,
+            target=sha,
+            message=message,
+            tagger=tagger
+        )
+
+    def exists(self, name: str) -&gt; bool:
+        &quot;&quot;&quot;Check if tag exists.&quot;&quot;&quot;
+        return self.refs.resolve(f&quot;refs/tags/{name}&quot;) is not None
+
+    def delete(self, name: str) -&gt; bool:
+        &quot;&quot;&quot;Delete tag.&quot;&quot;&quot;
+        return self.refs.delete(f&quot;refs/tags/{name}&quot;)
+
+    def list(self) -&gt; List[TagType]:
+        &quot;&quot;&quot;List all tags.&quot;&quot;&quot;
+        tags = []
+        for name, _ in self.refs.list_tags():
+            tag = self.get(name)
+            if tag:
+                tags.append(tag)
+        return tags
+
+    def peel(self, name: str) -&gt; Optional[str]:
+        &quot;&quot;&quot;
+        Get the commit SHA a tag points to.
+
+        For lightweight tags, returns the tag target.
+        For annotated tags, follows to the commit.
+        &quot;&quot;&quot;
+        tag = self.get(name)
+        if tag is None:
+            return None
+
+        if isinstance(tag, LightweightTag):
+            return tag.sha
+        else:
+            return tag.target
+</code></pre>
+<hr />
+<h2 id="7-reflog">7. Reflog</h2>
+<h3 id="71-purpose">7.1 Purpose</h3>
+<p>Reflog records when refs change, enabling recovery of lost commits.</p>
+<h3 id="72-format">7.2 Format</h3>
+<p><code>.git/logs/&lt;ref&gt;</code> contains log entries:</p>
+<pre><code>&lt;old-sha&gt; &lt;new-sha&gt; &lt;identity&gt; &lt;timestamp&gt; &lt;tz&gt;\t&lt;message&gt;
+</code></pre>
+<p>Example:</p>
+<pre><code>0000000000000000000000000000000000000000 a1b2c3d4... User &lt;user@example.com&gt; 1234567890 +0000   commit (initial): Initial commit
+a1b2c3d4... b2c3d4e5... User &lt;user@example.com&gt; 1234567891 +0000    commit: Add feature
+</code></pre>
+<h3 id="73-implementation">7.3 Implementation</h3>
+<pre><code class="language-python"># gitpy/refs/reflog.py
+
+from dataclasses import dataclass
+from pathlib import Path
+from typing import List, Optional
+from datetime import datetime
+
+from gitpy.objects.commit import Identity
+
+ZERO_SHA = &quot;0&quot; * 40
+
+@dataclass
+class ReflogEntry:
+    &quot;&quot;&quot;Single reflog entry.&quot;&quot;&quot;
+    old_sha: str
+    new_sha: str
+    identity: Identity
+    message: str
+
+    def format(self) -&gt; str:
+        &quot;&quot;&quot;Format as reflog line.&quot;&quot;&quot;
+        return f&quot;{self.old_sha} {self.new_sha} {self.identity}\t{self.message}\n&quot;
+
+    @classmethod
+    def parse(cls, line: str) -&gt; &quot;ReflogEntry&quot;:
+        &quot;&quot;&quot;Parse reflog line.&quot;&quot;&quot;
+        # Split on tab for message
+        parts = line.split(&quot;\t&quot;, 1)
+        header = parts[0]
+        message = parts[1] if len(parts) &gt; 1 else &quot;&quot;
+
+        # Parse header: old_sha new_sha identity
+        old_sha = header[:40]
+        new_sha = header[41:81]
+        identity_str = header[82:]
+
+        identity = Identity.parse(identity_str)
+
+        return cls(
+            old_sha=old_sha,
+            new_sha=new_sha,
+            identity=identity,
+            message=message.strip()
+        )
+
+class Reflog:
+    &quot;&quot;&quot;Manages reflog for references.&quot;&quot;&quot;
+
+    def __init__(self, git_dir: Path):
+        self.git_dir = git_dir
+        self.logs_dir = git_dir / &quot;logs&quot;
+
+    def _log_path(self, ref: str) -&gt; Path:
+        &quot;&quot;&quot;Get log file path for reference.&quot;&quot;&quot;
+        return self.logs_dir / ref
+
+    def append(
+        self,
+        ref: str,
+        old_sha: str,
+        new_sha: str,
+        identity: Identity,
+        message: str
+    ) -&gt; None:
+        &quot;&quot;&quot;
+        Append entry to reflog.
+
+        Args:
+            ref: Reference name
+            old_sha: Previous SHA (ZERO_SHA for new ref)
+            new_sha: New SHA
+            identity: Who made the change
+            message: What happened (e.g., &quot;commit: Add feature&quot;)
+        &quot;&quot;&quot;
+        path = self._log_path(ref)
+        path.parent.mkdir(parents=True, exist_ok=True)
+
+        entry = ReflogEntry(
+            old_sha=old_sha,
+            new_sha=new_sha,
+            identity=identity,
+            message=message
+        )
+
+        with open(path, &quot;a&quot;) as f:
+            f.write(entry.format())
+
+    def read(self, ref: str, limit: Optional[int] = None) -&gt; List[ReflogEntry]:
+        &quot;&quot;&quot;
+        Read reflog entries (newest first).
+
+        Args:
+            ref: Reference name
+            limit: Maximum entries to return
+        &quot;&quot;&quot;
+        path = self._log_path(ref)
+        if not path.exists():
+            return []
+
+        entries = []
+        for line in path.read_text().splitlines():
+            if line.strip():
+                entries.append(ReflogEntry.parse(line))
+
+        # Reverse for newest first
+        entries.reverse()
+
+        if limit:
+            entries = entries[:limit]
+
+        return entries
+
+    def get(self, ref: str, index: int) -&gt; Optional[ReflogEntry]:
+        &quot;&quot;&quot;
+        Get specific reflog entry.
+
+        Args:
+            ref: Reference name
+            index: Entry index (0 = most recent)
+        &quot;&quot;&quot;
+        entries = self.read(ref, limit=index + 1)
+        if index &lt; len(entries):
+            return entries[index]
+        return None
+
+    def clear(self, ref: str) -&gt; None:
+        &quot;&quot;&quot;Clear reflog for reference.&quot;&quot;&quot;
+        path = self._log_path(ref)
+        if path.exists():
+            path.unlink()
+</code></pre>
+<hr />
+<h2 id="8-revision-parsing">8. Revision Parsing</h2>
+<h3 id="81-revision-expressions">8.1 Revision Expressions</h3>
+<p>Git supports complex revision expressions:</p>
+<table>
+<thead>
+<tr>
+<th>Expression</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>HEAD</code></td>
+<td>Current commit</td>
+</tr>
+<tr>
+<td><code>main</code></td>
+<td>Branch tip</td>
+</tr>
+<tr>
+<td><code>v1.0</code></td>
+<td>Tag</td>
+</tr>
+<tr>
+<td><code>abc123</code></td>
+<td>Abbreviated SHA</td>
+</tr>
+<tr>
+<td><code>HEAD^</code></td>
+<td>First parent</td>
+</tr>
+<tr>
+<td><code>HEAD^2</code></td>
+<td>Second parent (merge)</td>
+</tr>
+<tr>
+<td><code>HEAD~3</code></td>
+<td>3rd ancestor</td>
+</tr>
+<tr>
+<td><code>HEAD@{1}</code></td>
+<td>Previous HEAD value</td>
+</tr>
+<tr>
+<td><code>main@{yesterday}</code></td>
+<td>Branch at time</td>
+</tr>
+</tbody>
+</table>
+<h3 id="82-implementation">8.2 Implementation</h3>
+<pre><code class="language-python"># gitpy/refs/revision.py
+
+import re
+from typing import Optional
+from dataclasses import dataclass
+
+@dataclass
+class RevisionParser:
+    &quot;&quot;&quot;Parses Git revision expressions.&quot;&quot;&quot;
+
+    ref_manager: &quot;RefManager&quot;
+    object_db: &quot;ObjectDatabase&quot;
+
+    def parse(self, rev: str) -&gt; Optional[str]:
+        &quot;&quot;&quot;
+        Parse revision expression to SHA.
+
+        Args:
+            rev: Revision expression
+
+        Returns:
+            40-character SHA or None
+        &quot;&quot;&quot;
+        # Handle suffixes
+        if &quot;^&quot; in rev or &quot;~&quot; in rev:
+            return self._parse_with_suffix(rev)
+
+        if &quot;@{&quot; in rev:
+            return self._parse_reflog_ref(rev)
+
+        # Direct resolution
+        return self.ref_manager.resolve(rev)
+
+    def _parse_with_suffix(self, rev: str) -&gt; Optional[str]:
+        &quot;&quot;&quot;Parse revision with ^ or ~ suffix.&quot;&quot;&quot;
+        # Split base and suffixes
+        match = re.match(r'^([^~^]+)((?:[~^]\d*)+)$', rev)
+        if not match:
+            return self.ref_manager.resolve(rev)
+
+        base, suffixes = match.groups()
+        sha = self.ref_manager.resolve(base)
+        if sha is None:
+            return None
+
+        # Process each suffix
+        pos = 0
+        while pos &lt; len(suffixes):
+            char = suffixes[pos]
+            pos += 1
+
+            # Get optional number
+            num_match = re.match(r'(\d+)', suffixes[pos:])
+            if num_match:
+                num = int(num_match.group(1))
+                pos += len(num_match.group(1))
+            else:
+                num = 1
+
+            if char == '^':
+                sha = self._get_parent(sha, num)
+            elif char == '~':
+                for _ in range(num):
+                    sha = self._get_parent(sha, 1)
+                    if sha is None:
+                        return None
+
+            if sha is None:
+                return None
+
+        return sha
+
+    def _get_parent(self, sha: str, n: int) -&gt; Optional[str]:
+        &quot;&quot;&quot;Get nth parent of commit.&quot;&quot;&quot;
+        commit = self.object_db.read_commit(sha)
+        if n &lt;= 0 or n &gt; len(commit.parent_shas):
+            return None
+        return commit.parent_shas[n - 1]
+
+    def _parse_reflog_ref(self, rev: str) -&gt; Optional[str]:
+        &quot;&quot;&quot;Parse reflog reference like HEAD@{1}.&quot;&quot;&quot;
+        match = re.match(r'^(.+)@\{(\d+)\}$', rev)
+        if not match:
+            return None
+
+        ref, index = match.groups()
+        index = int(index)
+
+        # Get from reflog
+        from .reflog import Reflog
+        reflog = Reflog(self.ref_manager.git_dir)
+        entry = reflog.get(ref, index)
+
+        if entry:
+            return entry.new_sha
+        return None
+</code></pre>
+<hr />
+<h2 id="9-test-cases">9. Test Cases</h2>
+<h3 id="91-head-tests">9.1 HEAD Tests</h3>
+<pre><code class="language-python">class TestHead:
+
+    def test_read_attached(self, repo):
+        head = repo.head.read()
+        assert head.state == HeadState.ATTACHED
+        assert head.branch == &quot;main&quot;
+
+    def test_read_detached(self, repo):
+        repo.head.set_detached(&quot;a&quot; * 40)
+        head = repo.head.read()
+        assert head.is_detached
+        assert head.sha == &quot;a&quot; * 40
+
+    def test_set_branch(self, repo):
+        repo.head.set_branch(&quot;feature&quot;)
+        head = repo.head.read()
+        assert head.branch == &quot;feature&quot;
+</code></pre>
+<h3 id="92-reference-tests">9.2 Reference Tests</h3>
+<pre><code class="language-python">class TestRefManager:
+
+    def test_resolve_branch(self, repo):
+        repo.refs.write(&quot;refs/heads/test&quot;, &quot;a&quot; * 40)
+        assert repo.refs.resolve(&quot;test&quot;) == &quot;a&quot; * 40
+        assert repo.refs.resolve(&quot;refs/heads/test&quot;) == &quot;a&quot; * 40
+
+    def test_resolve_short_sha(self, repo):
+        sha = &quot;abcdef1234567890&quot; * 2 + &quot;abcdef12&quot;
+        repo.refs.write(&quot;refs/heads/test&quot;, sha)
+        # SHA resolution is handled by object database, not refs
+</code></pre>
+<h3 id="93-branch-tests">9.3 Branch Tests</h3>
+<pre><code class="language-python">class TestBranchManager:
+
+    def test_create_branch(self, repo):
+        branch = repo.branches.create(&quot;feature&quot;, &quot;a&quot; * 40)
+        assert branch.name == &quot;feature&quot;
+        assert repo.branches.exists(&quot;feature&quot;)
+
+    def test_delete_current_branch_fails(self, repo):
+        repo.head.set_branch(&quot;main&quot;)
+        with pytest.raises(ValueError, match=&quot;currently checked out&quot;):
+            repo.branches.delete(&quot;main&quot;)
+
+    def test_rename_updates_head(self, repo):
+        repo.branches.create(&quot;old&quot;, &quot;a&quot; * 40)
+        repo.head.set_branch(&quot;old&quot;)
+        repo.branches.rename(&quot;old&quot;, &quot;new&quot;)
+        assert repo.head.read().branch == &quot;new&quot;
+</code></pre>
+<hr />
+<h2 id="10-acceptance-criteria">10. Acceptance Criteria</h2>
+<h3 id="101-functional-requirements">10.1 Functional Requirements</h3>
+<ul>
+<li>[ ] HEAD can be attached (branch) or detached (SHA)</li>
+<li>[ ] References resolve through prefix search</li>
+<li>[ ] Symbolic refs are followed recursively</li>
+<li>[ ] Packed refs are read correctly</li>
+<li>[ ] Branch create/delete/rename work</li>
+<li>[ ] Tags (lightweight and annotated) work</li>
+<li>[ ] Reflog entries are recorded</li>
+<li>[ ] Revision expressions (^, ~) parse correctly</li>
+</ul>
+<h3 id="102-non-functional-requirements">10.2 Non-Functional Requirements</h3>
+<ul>
+<li>[ ] Atomic ref updates (lock files)</li>
+<li>[ ] Compatible with real Git refs</li>
+<li>[ ] Efficient packed-refs reading</li>
+</ul>
+<hr />
+<h2 id="11-file-structure">11. File Structure</h2>
+<pre><code>gitpy/
+└── refs/
+    ├── __init__.py
+    ├── head.py        # HEAD management
+    ├── manager.py     # RefManager
+    ├── branch.py      # BranchManager
+    ├── tag.py         # TagManager
+    ├── reflog.py      # Reflog
+    └── revision.py    # RevisionParser
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

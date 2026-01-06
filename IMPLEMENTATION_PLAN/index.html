@@ -1,0 +1,1429 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Git Internals Implementation Plan - gitpy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#git-internals-implementation-plan" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="gitpy" class="md-header__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gitpy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Git Internals Implementation Plan
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="gitpy" class="md-nav__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gitpy
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/object_model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#phase-1-object-model-foundation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Object Model (Foundation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 1: Object Model (Foundation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-object-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Object Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-blob-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Blob Object
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-tree-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Tree Object
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-commit-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Commit Object
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-tag-object-annotated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Tag Object (Annotated)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-2-object-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Object Storage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 2: Object Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-object-database-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Object Database Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-loose-objects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Loose Objects
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-packfiles-advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Packfiles (Advanced)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-3-references-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3: References System
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 3: References System">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-reference-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Reference Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-reference-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Reference Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-4-index-staging-area" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4: Index (Staging Area)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 4: Index (Staging Area)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-index-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Index Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-index-entry-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Index Entry Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-index-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Index Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-5-diff-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 5: Diff Engine
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 5: Diff Engine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-diff-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Diff Components
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-diff-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Diff Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-6-plumbing-commands-low-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 6: Plumbing Commands (Low-Level)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 6: Plumbing Commands (Low-Level)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-object-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Object Commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-reference-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Reference Commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-index-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Index Commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-7-porcelain-commands-user-facing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 7: Porcelain Commands (User-Facing)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 7: Porcelain Commands (User-Facing)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-repository-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Repository Setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-basic-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Basic Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-history-inspection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 History &amp; Inspection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-branching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 Branching
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#75-remote-operations-advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Remote Operations (Advanced)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-8-advanced-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 8: Advanced Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 8: Advanced Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-merge-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Merge Engine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-rebase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Rebase
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-stash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 Stash
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-hooks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 Hooks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5 Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#suggested-implementation-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Suggested Implementation Order
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#module-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-learning-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Learning Resources
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="git-internals-implementation-plan">Git Internals Implementation Plan</h1>
+<p>This document outlines the core concepts of Git internals to be implemented in gitpy, organized in a logical learning progression.</p>
+<hr />
+<h2 id="phase-1-object-model-foundation">Phase 1: Object Model (Foundation)</h2>
+<p>The heart of Git is its content-addressable object database. Everything in Git is built on four object types.</p>
+<h3 id="11-object-basics">1.1 Object Basics</h3>
+<pre><code>gitpy/objects/
+├── __init__.py
+├── base.py          # Base GitObject class
+├── blob.py          # Blob object (file contents)
+├── tree.py          # Tree object (directory structure)
+├── commit.py        # Commit object (snapshot + metadata)
+└── tag.py           # Tag object (annotated tags)
+</code></pre>
+<p><strong>Core Concepts:</strong>
+- <strong>SHA-1 Hashing</strong>: Every object is identified by SHA-1 hash of its contents
+- <strong>Content-Addressable Storage</strong>: Objects are stored by their hash, enabling deduplication
+- <strong>Immutability</strong>: Once created, objects never change</p>
+<h3 id="12-blob-object">1.2 Blob Object</h3>
+<ul>
+<li>Stores file contents (binary data)</li>
+<li>Format: <code>blob &lt;size&gt;\0&lt;content&gt;</code></li>
+<li>No filename or metadata - just raw content</li>
+</ul>
+<h3 id="13-tree-object">1.3 Tree Object</h3>
+<ul>
+<li>Represents a directory</li>
+<li>Contains entries: <code>&lt;mode&gt; &lt;name&gt;\0&lt;sha-1&gt;</code></li>
+<li>Modes: 100644 (file), 100755 (executable), 040000 (directory), 120000 (symlink)</li>
+</ul>
+<h3 id="14-commit-object">1.4 Commit Object</h3>
+<ul>
+<li>Points to a tree (root directory snapshot)</li>
+<li>Contains: parent commit(s), author, committer, timestamp, message</li>
+<li>Format: tree, parent(s), author, committer, blank line, message</li>
+</ul>
+<h3 id="15-tag-object-annotated">1.5 Tag Object (Annotated)</h3>
+<ul>
+<li>Points to another object (usually commit)</li>
+<li>Contains: tagger, date, message, optional GPG signature</li>
+</ul>
+<hr />
+<h2 id="phase-2-object-storage">Phase 2: Object Storage</h2>
+<h3 id="21-object-database-structure">2.1 Object Database Structure</h3>
+<pre><code>.git/objects/
+├── pack/            # Packfiles (compressed objects)
+├── info/            # Additional info
+└── ab/              # Loose objects (first 2 chars of SHA)
+    └── cdef123...   # Object file (remaining 38 chars)
+</code></pre>
+<p><strong>Implementation:</strong></p>
+<pre><code>gitpy/storage/
+├── __init__.py
+├── database.py      # Object database operations
+├── loose.py         # Loose object read/write
+├── pack.py          # Packfile support (advanced)
+└── compression.py   # Zlib compression utilities
+</code></pre>
+<h3 id="22-loose-objects">2.2 Loose Objects</h3>
+<ul>
+<li>Stored as individual zlib-compressed files</li>
+<li>Path: <code>.git/objects/&lt;sha[0:2]&gt;/&lt;sha[2:]&gt;</code></li>
+<li>Operations: read, write, exists, delete</li>
+</ul>
+<h3 id="23-packfiles-advanced">2.3 Packfiles (Advanced)</h3>
+<ul>
+<li>Multiple objects compressed together</li>
+<li>Delta compression (store differences)</li>
+<li>Index file for fast lookups</li>
+</ul>
+<hr />
+<h2 id="phase-3-references-system">Phase 3: References System</h2>
+<p>References are human-readable pointers to commits.</p>
+<h3 id="31-reference-types">3.1 Reference Types</h3>
+<pre><code>.git/
+├── HEAD             # Current branch/commit
+├── refs/
+│   ├── heads/       # Local branches
+│   │   └── main
+│   ├── tags/        # Tags
+│   │   └── v1.0.0
+│   └── remotes/     # Remote-tracking branches
+│       └── origin/
+│           └── main
+</code></pre>
+<p><strong>Implementation:</strong></p>
+<pre><code>gitpy/refs/
+├── __init__.py
+├── ref.py           # Reference base class
+├── head.py          # HEAD management
+├── branch.py        # Branch operations
+└── tag.py           # Tag references
+</code></pre>
+<h3 id="32-reference-operations">3.2 Reference Operations</h3>
+<ul>
+<li>Resolve: follow references to final SHA</li>
+<li>Update: atomic reference updates</li>
+<li>Symbolic refs: references to other refs (HEAD -&gt; refs/heads/main)</li>
+<li>Reflog: history of reference changes</li>
+</ul>
+<hr />
+<h2 id="phase-4-index-staging-area">Phase 4: Index (Staging Area)</h2>
+<p>The index is the bridge between working directory and repository.</p>
+<h3 id="41-index-structure">4.1 Index Structure</h3>
+<pre><code>.git/index           # Binary file containing staged entries
+</code></pre>
+<p><strong>Implementation:</strong></p>
+<pre><code>gitpy/index/
+├── __init__.py
+├── index.py         # Index file read/write
+└── entry.py         # Index entry class
+</code></pre>
+<h3 id="42-index-entry-fields">4.2 Index Entry Fields</h3>
+<ul>
+<li>ctime, mtime (timestamps)</li>
+<li>dev, ino (device/inode)</li>
+<li>mode (file mode)</li>
+<li>uid, gid (user/group)</li>
+<li>file_size</li>
+<li>sha1 (object hash)</li>
+<li>flags (name length, stage)</li>
+<li>path (file path)</li>
+</ul>
+<h3 id="43-index-operations">4.3 Index Operations</h3>
+<ul>
+<li>Read/parse index file</li>
+<li>Write index file</li>
+<li>Add entry, remove entry</li>
+<li>Compare with working directory</li>
+<li>Compare with tree (commit)</li>
+</ul>
+<hr />
+<h2 id="phase-5-diff-engine">Phase 5: Diff Engine</h2>
+<p>Understanding and displaying changes between objects.</p>
+<h3 id="51-diff-components">5.1 Diff Components</h3>
+<pre><code>gitpy/diff/
+├── __init__.py
+├── algorithm.py     # Myers diff algorithm
+├── patch.py         # Patch generation
+└── output.py        # Unified diff format
+</code></pre>
+<h3 id="52-diff-types">5.2 Diff Types</h3>
+<ul>
+<li>Blob diff: line-by-line file comparison</li>
+<li>Tree diff: directory structure comparison</li>
+<li>Index diff: staged vs HEAD</li>
+<li>Working tree diff: working dir vs index</li>
+</ul>
+<hr />
+<h2 id="phase-6-plumbing-commands-low-level">Phase 6: Plumbing Commands (Low-Level)</h2>
+<p>These are the building blocks for higher-level commands.</p>
+<h3 id="61-object-commands">6.1 Object Commands</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hash-object</code></td>
+<td>Compute SHA and optionally store object</td>
+</tr>
+<tr>
+<td><code>cat-file</code></td>
+<td>Read object contents/type/size</td>
+</tr>
+<tr>
+<td><code>write-tree</code></td>
+<td>Create tree from index</td>
+</tr>
+<tr>
+<td><code>read-tree</code></td>
+<td>Read tree into index</td>
+</tr>
+<tr>
+<td><code>commit-tree</code></td>
+<td>Create commit from tree</td>
+</tr>
+<tr>
+<td><code>ls-tree</code></td>
+<td>List tree contents</td>
+</tr>
+<tr>
+<td><code>ls-files</code></td>
+<td>List index contents</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62-reference-commands">6.2 Reference Commands</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>update-ref</code></td>
+<td>Update reference value</td>
+</tr>
+<tr>
+<td><code>symbolic-ref</code></td>
+<td>Read/update symbolic refs</td>
+</tr>
+<tr>
+<td><code>rev-parse</code></td>
+<td>Parse revision to SHA</td>
+</tr>
+<tr>
+<td><code>for-each-ref</code></td>
+<td>Iterate over references</td>
+</tr>
+</tbody>
+</table>
+<h3 id="63-index-commands">6.3 Index Commands</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>update-index</code></td>
+<td>Modify index entries</td>
+</tr>
+<tr>
+<td><code>checkout-index</code></td>
+<td>Copy from index to working tree</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="phase-7-porcelain-commands-user-facing">Phase 7: Porcelain Commands (User-Facing)</h2>
+<p>High-level commands that users interact with.</p>
+<h3 id="71-repository-setup">7.1 Repository Setup</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>init</code></td>
+<td>Initialize new repository</td>
+</tr>
+<tr>
+<td><code>clone</code></td>
+<td>Clone repository (advanced)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="72-basic-workflow">7.2 Basic Workflow</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>add</code></td>
+<td>Stage files</td>
+</tr>
+<tr>
+<td><code>rm</code></td>
+<td>Remove files</td>
+</tr>
+<tr>
+<td><code>mv</code></td>
+<td>Move/rename files</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>Show working tree status</td>
+</tr>
+<tr>
+<td><code>commit</code></td>
+<td>Create commit</td>
+</tr>
+</tbody>
+</table>
+<h3 id="73-history-inspection">7.3 History &amp; Inspection</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>log</code></td>
+<td>Show commit history</td>
+</tr>
+<tr>
+<td><code>show</code></td>
+<td>Show object details</td>
+</tr>
+<tr>
+<td><code>diff</code></td>
+<td>Show changes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="74-branching">7.4 Branching</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>branch</code></td>
+<td>List/create/delete branches</td>
+</tr>
+<tr>
+<td><code>checkout</code></td>
+<td>Switch branches/restore files</td>
+</tr>
+<tr>
+<td><code>switch</code></td>
+<td>Switch branches (modern)</td>
+</tr>
+<tr>
+<td><code>merge</code></td>
+<td>Merge branches</td>
+</tr>
+</tbody>
+</table>
+<h3 id="75-remote-operations-advanced">7.5 Remote Operations (Advanced)</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>remote</code></td>
+<td>Manage remotes</td>
+</tr>
+<tr>
+<td><code>fetch</code></td>
+<td>Download objects/refs</td>
+</tr>
+<tr>
+<td><code>pull</code></td>
+<td>Fetch and merge</td>
+</tr>
+<tr>
+<td><code>push</code></td>
+<td>Upload objects/refs</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="phase-8-advanced-features">Phase 8: Advanced Features</h2>
+<h3 id="81-merge-engine">8.1 Merge Engine</h3>
+<ul>
+<li>Three-way merge algorithm</li>
+<li>Conflict detection and markers</li>
+<li>Merge strategies (recursive, ours, theirs)</li>
+</ul>
+<h3 id="82-rebase">8.2 Rebase</h3>
+<ul>
+<li>Replay commits on new base</li>
+<li>Interactive rebase</li>
+</ul>
+<h3 id="83-stash">8.3 Stash</h3>
+<ul>
+<li>Save/restore working directory state</li>
+</ul>
+<h3 id="84-hooks">8.4 Hooks</h3>
+<ul>
+<li>Pre-commit, post-commit, etc.</li>
+</ul>
+<h3 id="85-configuration">8.5 Configuration</h3>
+<ul>
+<li>.git/config parsing</li>
+<li>Global vs local config</li>
+</ul>
+<hr />
+<h2 id="suggested-implementation-order">Suggested Implementation Order</h2>
+<pre><code>Week 1-2: Foundation
+├── Object model (blob, tree, commit)
+├── SHA-1 hashing
+├── Object serialization
+└── Basic tests
+
+Week 3-4: Storage
+├── Loose object storage
+├── Zlib compression
+├── Object database
+└── cat-file, hash-object commands
+
+Week 5-6: References
+├── Reference system
+├── HEAD management
+├── Branch operations
+└── update-ref, symbolic-ref commands
+
+Week 7-8: Index
+├── Index file format
+├── Index read/write
+├── ls-files command
+└── update-index command
+
+Week 9-10: Basic Commands
+├── init
+├── add (using index)
+├── status
+├── commit
+└── log
+
+Week 11-12: Diff &amp; More
+├── Diff algorithm
+├── diff command
+├── branch command
+├── checkout command
+
+Beyond: Advanced
+├── Merge
+├── Remote operations
+├── Packfiles
+└── Performance optimization
+</code></pre>
+<hr />
+<h2 id="module-architecture">Module Architecture</h2>
+<pre><code>gitpy/
+├── __init__.py
+├── cli.py               # Command-line interface
+├── repository.py        # Repository class
+├── objects/
+│   ├── __init__.py
+│   ├── base.py
+│   ├── blob.py
+│   ├── tree.py
+│   ├── commit.py
+│   └── tag.py
+├── storage/
+│   ├── __init__.py
+│   ├── database.py
+│   └── loose.py
+├── refs/
+│   ├── __init__.py
+│   ├── ref.py
+│   └── head.py
+├── index/
+│   ├── __init__.py
+│   └── index.py
+├── diff/
+│   ├── __init__.py
+│   └── algorithm.py
+└── commands/
+    ├── __init__.py
+    ├── plumbing/
+    │   ├── hash_object.py
+    │   ├── cat_file.py
+    │   └── ...
+    └── porcelain/
+        ├── init.py
+        ├── add.py
+        ├── commit.py
+        └── ...
+</code></pre>
+<hr />
+<h2 id="key-learning-resources">Key Learning Resources</h2>
+<ol>
+<li><strong>Pro Git Book</strong> - Chapter 10: Git Internals</li>
+<li><strong>Git Source Code</strong> - github.com/git/git</li>
+<li><strong>Write Yourself a Git</strong> - wyag.thb.lt</li>
+<li><strong>Git from the Bottom Up</strong> - jwiegley.github.io/git-from-the-bottom-up</li>
+</ol>
+<hr />
+<h2 id="testing-strategy">Testing Strategy</h2>
+<p>Each phase should include:
+- Unit tests for individual components
+- Integration tests for command workflows
+- Property-based tests (hypothesis) for serialization
+- Comparison tests against real Git behavior</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

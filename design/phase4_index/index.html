@@ -1,0 +1,1772 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Phase 4: Index (Staging Area) - Design Specification - gitpy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#phase-4-index-staging-area-design-specification" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="gitpy" class="md-header__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gitpy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Phase 4: Index (Staging Area) - Design Specification
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="gitpy" class="md-nav__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gitpy
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/object_model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-design-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Design Goals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-index-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Index Location
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-index-file-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Index File Format
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Index File Format">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-overall-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Overall Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-header-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Header Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-entry-format-version-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Entry Format (Version 2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-flags-field" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Flags Field
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-entry-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Entry Mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-padding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Padding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27-checksum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 Checksum
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Implementation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Implementation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-index-entry-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Index Entry Class
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-index-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Index Class
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-index-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Index Operations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Index Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-building-index-from-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Building Index from Tree
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-building-tree-from-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Building Tree from Index
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-comparing-index-with-working-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Comparing Index with Working Directory
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-merge-conflicts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Merge Conflicts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Merge Conflicts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-conflict-stages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Conflict Stages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-test-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Test Cases
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Test Cases">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-index-serialization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Index Serialization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-git-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Git Compatibility
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-acceptance-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Acceptance Criteria
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Acceptance Criteria">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-functional-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Functional Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-non-functional-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Non-Functional Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-file-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. File Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="phase-4-index-staging-area-design-specification">Phase 4: Index (Staging Area) - Design Specification</h1>
+<blockquote>
+<p><strong>Status</strong>: Draft
+<strong>Author</strong>: Domain Expert
+<strong>Last Updated</strong>: 2026-01-05
+<strong>Dependencies</strong>: Phase 1-3</p>
+</blockquote>
+<h2 id="1-overview">1. Overview</h2>
+<p>The index (also called staging area or cache) is the bridge between the working directory and the repository. It holds a snapshot of the content that will go into the next commit.</p>
+<h3 id="11-design-goals">1.1 Design Goals</h3>
+<ul>
+<li><strong>Performance</strong>: Fast status checking via cached metadata</li>
+<li><strong>Atomicity</strong>: Index updates are atomic</li>
+<li><strong>Accuracy</strong>: Precise tracking of file states</li>
+<li><strong>Compatibility</strong>: Binary format matches Git</li>
+</ul>
+<h3 id="12-index-location">1.2 Index Location</h3>
+<pre><code>.git/index        # Main index file
+.git/index.lock   # Lock file during updates
+</code></pre>
+<hr />
+<h2 id="2-index-file-format">2. Index File Format</h2>
+<h3 id="21-overall-structure">2.1 Overall Structure</h3>
+<pre><code>+------------------+
+| Header (12 bytes)|
++------------------+
+| Entry 1          |
++------------------+
+| Entry 2          |
++------------------+
+| ...              |
++------------------+
+| Extensions       |
++------------------+
+| SHA-1 (20 bytes) |
++------------------+
+</code></pre>
+<h3 id="22-header-format">2.2 Header Format</h3>
+<pre><code class="language-c">struct index_header {
+    char signature[4];    // &quot;DIRC&quot; (dircache)
+    uint32_t version;     // 2, 3, or 4
+    uint32_t entries;     // Number of entries
+};
+</code></pre>
+<p>All integers are network byte order (big-endian).</p>
+<h3 id="23-entry-format-version-2">2.3 Entry Format (Version 2)</h3>
+<pre><code class="language-c">struct index_entry {
+    // File metadata (for change detection)
+    uint32_t ctime_sec;   // Creation time seconds
+    uint32_t ctime_nsec;  // Creation time nanoseconds
+    uint32_t mtime_sec;   // Modification time seconds
+    uint32_t mtime_nsec;  // Modification time nanoseconds
+    uint32_t dev;         // Device ID
+    uint32_t ino;         // Inode number
+    uint32_t mode;        // File mode
+    uint32_t uid;         // User ID
+    uint32_t gid;         // Group ID
+    uint32_t file_size;   // File size in bytes
+
+    // Object reference
+    char sha1[20];        // SHA-1 of blob content
+
+    // Flags
+    uint16_t flags;       // See below
+
+    // Path (variable length)
+    char path[];          // NUL-terminated, padded to 8-byte boundary
+};
+</code></pre>
+<h3 id="24-flags-field">2.4 Flags Field</h3>
+<pre><code>15 14 13 12 11 10  9  8  7  6  5  4  3  2  1  0
+|  |  |  |  |______________________________________|
+|  |  |  |                  |
+|  |  |  |                  +-- name length (12 bits, max 0xFFF)
+|  |  |  +-- extended flag (version 3+)
+|  |  +-- skip-worktree (sparse checkout)
+|  +-- assume-valid
++-- (reserved)
+</code></pre>
+<p>If name length &gt; 0xFFF, value is 0xFFF and actual length must be found by scanning for NUL.</p>
+<h3 id="25-entry-mode">2.5 Entry Mode</h3>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>0100644</code></td>
+<td>Regular file</td>
+</tr>
+<tr>
+<td><code>0100755</code></td>
+<td>Executable file</td>
+</tr>
+<tr>
+<td><code>0120000</code></td>
+<td>Symbolic link</td>
+</tr>
+<tr>
+<td><code>0160000</code></td>
+<td>Gitlink (submodule)</td>
+</tr>
+</tbody>
+</table>
+<p>Mode is stored as 32-bit integer: <code>(type &lt;&lt; 12) | permissions</code></p>
+<h3 id="26-padding">2.6 Padding</h3>
+<p>Each entry is padded with 1-8 NUL bytes to align to 8-byte boundary:</p>
+<pre><code>entry_length = 62 + path_length + 1 (NUL terminator)
+padding = 8 - (entry_length % 8)
+if padding == 0:
+    padding = 8
+</code></pre>
+<h3 id="27-checksum">2.7 Checksum</h3>
+<p>The final 20 bytes are SHA-1 of all preceding content.</p>
+<hr />
+<h2 id="3-implementation">3. Implementation</h2>
+<h3 id="31-index-entry-class">3.1 Index Entry Class</h3>
+<pre><code class="language-python"># gitpy/index/entry.py
+
+from dataclasses import dataclass
+from typing import Optional
+import os
+import stat as stat_module
+
+@dataclass
+class IndexEntry:
+    &quot;&quot;&quot;
+    Represents a single entry in the Git index.
+
+    Tracks a file's identity, content hash, and metadata
+    for efficient change detection.
+    &quot;&quot;&quot;
+
+    # Timestamps (for change detection)
+    ctime_s: int    # Creation time seconds
+    ctime_ns: int   # Creation time nanoseconds
+    mtime_s: int    # Modification time seconds
+    mtime_ns: int   # Modification time nanoseconds
+
+    # File identity
+    dev: int        # Device ID
+    ino: int        # Inode number
+    mode: int       # File mode (type + permissions)
+    uid: int        # User ID
+    gid: int        # Group ID
+    size: int       # File size in bytes
+
+    # Content
+    sha: str        # 40-char hex SHA-1 of blob
+
+    # Flags
+    flags: int      # Flag bits
+    path: str       # File path (relative to repo root)
+
+    # Extended flags (version 3+)
+    extended_flags: int = 0
+
+    @property
+    def stage(self) -&gt; int:
+        &quot;&quot;&quot;
+        Merge stage (0-3).
+
+        0 = normal
+        1 = base
+        2 = ours
+        3 = theirs
+        &quot;&quot;&quot;
+        return (self.flags &gt;&gt; 12) &amp; 0x3
+
+    @property
+    def name_length(self) -&gt; int:
+        &quot;&quot;&quot;Stored name length (may be truncated to 0xFFF).&quot;&quot;&quot;
+        return self.flags &amp; 0xFFF
+
+    @property
+    def assume_valid(self) -&gt; bool:
+        &quot;&quot;&quot;Skip file in status checks.&quot;&quot;&quot;
+        return bool(self.flags &amp; 0x8000)
+
+    @property
+    def is_regular_file(self) -&gt; bool:
+        return (self.mode &gt;&gt; 12) == 0o10
+
+    @property
+    def is_executable(self) -&gt; bool:
+        return self.mode == 0o100755
+
+    @property
+    def is_symlink(self) -&gt; bool:
+        return (self.mode &gt;&gt; 12) == 0o12
+
+    @classmethod
+    def from_path(
+        cls,
+        path: str,
+        sha: str,
+        worktree: &quot;Path&quot;,
+        stage: int = 0
+    ) -&gt; &quot;IndexEntry&quot;:
+        &quot;&quot;&quot;
+        Create index entry from file path.
+
+        Args:
+            path: Relative path within repository
+            sha: SHA-1 of file contents
+            worktree: Repository working directory
+            stage: Merge stage (0 for normal)
+        &quot;&quot;&quot;
+        full_path = worktree / path
+        st = full_path.stat()
+
+        # Determine mode
+        if stat_module.S_ISLNK(st.st_mode):
+            mode = 0o120000
+        elif st.st_mode &amp; stat_module.S_IXUSR:
+            mode = 0o100755
+        else:
+            mode = 0o100644
+
+        # Calculate flags
+        name_len = min(len(path), 0xFFF)
+        flags = (stage &lt;&lt; 12) | name_len
+
+        return cls(
+            ctime_s=int(st.st_ctime),
+            ctime_ns=int((st.st_ctime % 1) * 1e9),
+            mtime_s=int(st.st_mtime),
+            mtime_ns=int((st.st_mtime % 1) * 1e9),
+            dev=st.st_dev,
+            ino=st.st_ino,
+            mode=mode,
+            uid=st.st_uid,
+            gid=st.st_gid,
+            size=st.st_size,
+            sha=sha,
+            flags=flags,
+            path=path,
+        )
+
+    def matches_stat(self, st: os.stat_result) -&gt; bool:
+        &quot;&quot;&quot;
+        Check if file stat matches cached metadata.
+
+        Used for fast &quot;has file changed?&quot; check.
+        Returns True if file MIGHT be unchanged (needs content check if True).
+        Returns False if file has DEFINITELY changed.
+        &quot;&quot;&quot;
+        # Check size first (fast rejection)
+        if st.st_size != self.size:
+            return False
+
+        # Check mtime
+        mtime_s = int(st.st_mtime)
+        mtime_ns = int((st.st_mtime % 1) * 1e9)
+        if mtime_s != self.mtime_s or mtime_ns != self.mtime_ns:
+            return False
+
+        # Check inode (file replacement detection)
+        if st.st_ino != self.ino:
+            return False
+
+        # If we get here, file is probably unchanged
+        # (could still verify content hash for certainty)
+        return True
+</code></pre>
+<h3 id="32-index-class">3.2 Index Class</h3>
+<pre><code class="language-python"># gitpy/index/index.py
+
+from pathlib import Path
+from typing import Dict, List, Optional, Iterator
+import struct
+import hashlib
+
+from .entry import IndexEntry
+
+INDEX_SIGNATURE = b&quot;DIRC&quot;
+INDEX_VERSION = 2
+
+class Index:
+    &quot;&quot;&quot;
+    Represents the Git index (staging area).
+
+    The index is a flat list of file entries, sorted by path.
+    It serves as a cache between working directory and repository.
+    &quot;&quot;&quot;
+
+    def __init__(self):
+        self.entries: Dict[str, IndexEntry] = {}
+        self.version: int = INDEX_VERSION
+
+    def __len__(self) -&gt; int:
+        return len(self.entries)
+
+    def __iter__(self) -&gt; Iterator[IndexEntry]:
+        &quot;&quot;&quot;Iterate entries in sorted order.&quot;&quot;&quot;
+        for path in sorted(self.entries.keys()):
+            yield self.entries[path]
+
+    def __contains__(self, path: str) -&gt; bool:
+        return path in self.entries
+
+    def get(self, path: str) -&gt; Optional[IndexEntry]:
+        &quot;&quot;&quot;Get entry by path.&quot;&quot;&quot;
+        return self.entries.get(path)
+
+    def add(self, entry: IndexEntry) -&gt; None:
+        &quot;&quot;&quot;Add or update entry.&quot;&quot;&quot;
+        self.entries[entry.path] = entry
+
+    def remove(self, path: str) -&gt; bool:
+        &quot;&quot;&quot;Remove entry by path.&quot;&quot;&quot;
+        if path in self.entries:
+            del self.entries[path]
+            return True
+        return False
+
+    def clear(self) -&gt; None:
+        &quot;&quot;&quot;Remove all entries.&quot;&quot;&quot;
+        self.entries.clear()
+
+    # =========== Serialization ===========
+
+    def to_bytes(self) -&gt; bytes:
+        &quot;&quot;&quot;Serialize index to bytes.&quot;&quot;&quot;
+        # Sort entries by path
+        sorted_entries = sorted(self.entries.values(), key=lambda e: e.path)
+
+        # Build content
+        content = b&quot;&quot;
+
+        # Header
+        content += INDEX_SIGNATURE
+        content += struct.pack(&quot;&gt;I&quot;, self.version)
+        content += struct.pack(&quot;&gt;I&quot;, len(sorted_entries))
+
+        # Entries
+        for entry in sorted_entries:
+            content += self._serialize_entry(entry)
+
+        # Checksum
+        checksum = hashlib.sha1(content).digest()
+        content += checksum
+
+        return content
+
+    def _serialize_entry(self, entry: IndexEntry) -&gt; bytes:
+        &quot;&quot;&quot;Serialize single entry.&quot;&quot;&quot;
+        data = b&quot;&quot;
+
+        # Fixed fields (62 bytes)
+        data += struct.pack(&quot;&gt;I&quot;, entry.ctime_s)
+        data += struct.pack(&quot;&gt;I&quot;, entry.ctime_ns)
+        data += struct.pack(&quot;&gt;I&quot;, entry.mtime_s)
+        data += struct.pack(&quot;&gt;I&quot;, entry.mtime_ns)
+        data += struct.pack(&quot;&gt;I&quot;, entry.dev)
+        data += struct.pack(&quot;&gt;I&quot;, entry.ino)
+        data += struct.pack(&quot;&gt;I&quot;, entry.mode)
+        data += struct.pack(&quot;&gt;I&quot;, entry.uid)
+        data += struct.pack(&quot;&gt;I&quot;, entry.gid)
+        data += struct.pack(&quot;&gt;I&quot;, entry.size)
+        data += bytes.fromhex(entry.sha)  # 20 bytes
+        data += struct.pack(&quot;&gt;H&quot;, entry.flags)
+
+        # Path with NUL terminator
+        path_bytes = entry.path.encode(&quot;utf-8&quot;) + b&quot;\x00&quot;
+        data += path_bytes
+
+        # Padding to 8-byte boundary
+        entry_len = 62 + len(path_bytes)
+        padding = 8 - (entry_len % 8)
+        if padding == 0:
+            padding = 8
+        data += b&quot;\x00&quot; * padding
+
+        return data
+
+    @classmethod
+    def from_bytes(cls, data: bytes) -&gt; &quot;Index&quot;:
+        &quot;&quot;&quot;Parse index from bytes.&quot;&quot;&quot;
+        index = cls()
+
+        # Verify checksum
+        stored_checksum = data[-20:]
+        computed_checksum = hashlib.sha1(data[:-20]).digest()
+        if stored_checksum != computed_checksum:
+            raise ValueError(&quot;Index checksum mismatch&quot;)
+
+        # Parse header
+        if data[:4] != INDEX_SIGNATURE:
+            raise ValueError(&quot;Invalid index signature&quot;)
+
+        version = struct.unpack(&quot;&gt;I&quot;, data[4:8])[0]
+        if version not in (2, 3, 4):
+            raise ValueError(f&quot;Unsupported index version: {version}&quot;)
+
+        index.version = version
+        num_entries = struct.unpack(&quot;&gt;I&quot;, data[8:12])[0]
+
+        # Parse entries
+        pos = 12
+        for _ in range(num_entries):
+            entry, bytes_read = cls._parse_entry(data, pos, version)
+            index.add(entry)
+            pos += bytes_read
+
+        return index
+
+    @classmethod
+    def _parse_entry(cls, data: bytes, pos: int, version: int) -&gt; tuple:
+        &quot;&quot;&quot;Parse single entry, return (entry, bytes_consumed).&quot;&quot;&quot;
+        start_pos = pos
+
+        # Fixed fields
+        ctime_s = struct.unpack(&quot;&gt;I&quot;, data[pos:pos+4])[0]; pos += 4
+        ctime_ns = struct.unpack(&quot;&gt;I&quot;, data[pos:pos+4])[0]; pos += 4
+        mtime_s = struct.unpack(&quot;&gt;I&quot;, data[pos:pos+4])[0]; pos += 4
+        mtime_ns = struct.unpack(&quot;&gt;I&quot;, data[pos:pos+4])[0]; pos += 4
+        dev = struct.unpack(&quot;&gt;I&quot;, data[pos:pos+4])[0]; pos += 4
+        ino = struct.unpack(&quot;&gt;I&quot;, data[pos:pos+4])[0]; pos += 4
+        mode = struct.unpack(&quot;&gt;I&quot;, data[pos:pos+4])[0]; pos += 4
+        uid = struct.unpack(&quot;&gt;I&quot;, data[pos:pos+4])[0]; pos += 4
+        gid = struct.unpack(&quot;&gt;I&quot;, data[pos:pos+4])[0]; pos += 4
+        size = struct.unpack(&quot;&gt;I&quot;, data[pos:pos+4])[0]; pos += 4
+        sha = data[pos:pos+20].hex(); pos += 20
+        flags = struct.unpack(&quot;&gt;H&quot;, data[pos:pos+2])[0]; pos += 2
+
+        # Path (find NUL terminator)
+        nul_pos = data.index(b&quot;\x00&quot;, pos)
+        path = data[pos:nul_pos].decode(&quot;utf-8&quot;)
+        pos = nul_pos + 1
+
+        # Skip padding (align to 8 bytes)
+        entry_len = pos - start_pos
+        padding = 8 - (entry_len % 8)
+        if padding &lt; 8:
+            pos += padding
+
+        entry = IndexEntry(
+            ctime_s=ctime_s,
+            ctime_ns=ctime_ns,
+            mtime_s=mtime_s,
+            mtime_ns=mtime_ns,
+            dev=dev,
+            ino=ino,
+            mode=mode,
+            uid=uid,
+            gid=gid,
+            size=size,
+            sha=sha,
+            flags=flags,
+            path=path,
+        )
+
+        return entry, pos - start_pos
+
+
+class IndexFile:
+    &quot;&quot;&quot;Manages index file I/O with locking.&quot;&quot;&quot;
+
+    def __init__(self, git_dir: Path):
+        self.index_path = git_dir / &quot;index&quot;
+        self.lock_path = git_dir / &quot;index.lock&quot;
+
+    def read(self) -&gt; Index:
+        &quot;&quot;&quot;Read index from file.&quot;&quot;&quot;
+        if not self.index_path.exists():
+            return Index()
+        data = self.index_path.read_bytes()
+        return Index.from_bytes(data)
+
+    def write(self, index: Index) -&gt; None:
+        &quot;&quot;&quot;Write index atomically with lock.&quot;&quot;&quot;
+        data = index.to_bytes()
+
+        # Acquire lock
+        try:
+            # Exclusive create (fails if lock exists)
+            fd = os.open(
+                str(self.lock_path),
+                os.O_WRONLY | os.O_CREAT | os.O_EXCL,
+                0o644
+            )
+        except FileExistsError:
+            raise RuntimeError(&quot;Index is locked by another process&quot;)
+
+        try:
+            os.write(fd, data)
+            os.close(fd)
+            self.lock_path.rename(self.index_path)
+        except Exception:
+            os.close(fd)
+            self.lock_path.unlink(missing_ok=True)
+            raise
+
+    def exists(self) -&gt; bool:
+        &quot;&quot;&quot;Check if index file exists.&quot;&quot;&quot;
+        return self.index_path.exists()
+</code></pre>
+<hr />
+<h2 id="4-index-operations">4. Index Operations</h2>
+<h3 id="41-building-index-from-tree">4.1 Building Index from Tree</h3>
+<pre><code class="language-python"># gitpy/index/operations.py
+
+from pathlib import Path
+from typing import Set
+
+from .index import Index, IndexEntry
+from gitpy.objects.tree import Tree, TreeEntry
+from gitpy.storage.database import ObjectDatabase
+
+def read_tree(
+    index: Index,
+    tree_sha: str,
+    db: ObjectDatabase,
+    prefix: str = &quot;&quot;
+) -&gt; None:
+    &quot;&quot;&quot;
+    Populate index from a tree object.
+
+    This is the core of `git read-tree` and `git checkout`.
+
+    Args:
+        index: Index to populate
+        tree_sha: SHA of tree to read
+        db: Object database
+        prefix: Path prefix for entries
+    &quot;&quot;&quot;
+    tree = db.read_tree(tree_sha)
+
+    for entry in tree.entries:
+        path = f&quot;{prefix}{entry.name}&quot; if prefix else entry.name
+
+        if entry.is_tree:
+            # Recurse into subdirectory
+            read_tree(index, entry.sha, db, prefix=f&quot;{path}/&quot;)
+        else:
+            # Add file entry
+            # Note: We use minimal metadata since we don't have stat info
+            index_entry = IndexEntry(
+                ctime_s=0, ctime_ns=0,
+                mtime_s=0, mtime_ns=0,
+                dev=0, ino=0,
+                mode=int(entry.mode, 8),
+                uid=0, gid=0,
+                size=0,
+                sha=entry.sha,
+                flags=min(len(path), 0xFFF),
+                path=path,
+            )
+            index.add(index_entry)
+</code></pre>
+<h3 id="42-building-tree-from-index">4.2 Building Tree from Index</h3>
+<pre><code class="language-python">def write_tree(index: Index, db: ObjectDatabase) -&gt; str:
+    &quot;&quot;&quot;
+    Create tree objects from index.
+
+    This is the core of `git write-tree`.
+
+    Args:
+        index: Index to convert
+        db: Object database for writing trees
+
+    Returns:
+        SHA of root tree
+    &quot;&quot;&quot;
+    return _write_tree_recursive(index, db, &quot;&quot;)
+
+def _write_tree_recursive(
+    index: Index,
+    db: ObjectDatabase,
+    prefix: str
+) -&gt; str:
+    &quot;&quot;&quot;Recursively build tree for directory.&quot;&quot;&quot;
+    from gitpy.objects.tree import Tree, TreeEntry
+
+    entries = []
+    seen_dirs: Set[str] = set()
+
+    for index_entry in index:
+        path = index_entry.path
+
+        # Skip if not under our prefix
+        if prefix and not path.startswith(prefix):
+            continue
+
+        # Get relative path
+        rel_path = path[len(prefix):] if prefix else path
+
+        # Check if this is a direct child or in subdirectory
+        if &quot;/&quot; in rel_path:
+            # Entry is in a subdirectory
+            subdir = rel_path.split(&quot;/&quot;)[0]
+            if subdir not in seen_dirs:
+                seen_dirs.add(subdir)
+                # Recurse to build subtree
+                subtree_sha = _write_tree_recursive(
+                    index, db, f&quot;{prefix}{subdir}/&quot;
+                )
+                entries.append(TreeEntry(
+                    mode=&quot;40000&quot;,
+                    name=subdir,
+                    sha=subtree_sha
+                ))
+        else:
+            # Direct child file
+            mode = oct(index_entry.mode)[2:]  # Remove &quot;0o&quot; prefix
+            entries.append(TreeEntry(
+                mode=mode,
+                name=rel_path,
+                sha=index_entry.sha
+            ))
+
+    # Create and store tree
+    tree = Tree(entries=entries)
+    return db.write(tree)
+</code></pre>
+<h3 id="43-comparing-index-with-working-directory">4.3 Comparing Index with Working Directory</h3>
+<pre><code class="language-python">from enum import Enum
+from dataclasses import dataclass
+from typing import List, Tuple
+
+class FileStatus(Enum):
+    &quot;&quot;&quot;Status of a file in working directory.&quot;&quot;&quot;
+    UNMODIFIED = &quot;unmodified&quot;
+    MODIFIED = &quot;modified&quot;
+    DELETED = &quot;deleted&quot;
+    UNTRACKED = &quot;untracked&quot;
+    ADDED = &quot;added&quot;  # In index, not in HEAD
+
+@dataclass
+class StatusEntry:
+    &quot;&quot;&quot;Status of a single file.&quot;&quot;&quot;
+    path: str
+    index_status: FileStatus    # Index vs HEAD
+    worktree_status: FileStatus  # Worktree vs Index
+
+def get_status(
+    index: Index,
+    head_tree_sha: Optional[str],
+    worktree: Path,
+    db: ObjectDatabase
+) -&gt; List[StatusEntry]:
+    &quot;&quot;&quot;
+    Compare index and working directory.
+
+    Returns list of files with their status.
+    &quot;&quot;&quot;
+    results = []
+
+    # Build set of all paths
+    all_paths = set(index.entries.keys())
+
+    # Add paths from HEAD tree
+    head_paths = set()
+    if head_tree_sha:
+        head_index = Index()
+        read_tree(head_index, head_tree_sha, db)
+        head_paths = set(head_index.entries.keys())
+        all_paths.update(head_paths)
+
+    # Add paths from working directory
+    for path in worktree.rglob(&quot;*&quot;):
+        if path.is_file() and &quot;.git&quot; not in path.parts:
+            rel_path = str(path.relative_to(worktree))
+            all_paths.add(rel_path)
+
+    # Check each path
+    for path in sorted(all_paths):
+        index_entry = index.get(path)
+        head_entry = head_index.get(path) if head_tree_sha else None
+        worktree_path = worktree / path
+
+        # Determine index status (staged changes)
+        if index_entry and head_entry:
+            if index_entry.sha == head_entry.sha:
+                index_status = FileStatus.UNMODIFIED
+            else:
+                index_status = FileStatus.MODIFIED
+        elif index_entry and not head_entry:
+            index_status = FileStatus.ADDED
+        elif head_entry and not index_entry:
+            index_status = FileStatus.DELETED
+        else:
+            index_status = FileStatus.UNTRACKED
+
+        # Determine worktree status (unstaged changes)
+        if index_entry:
+            if not worktree_path.exists():
+                worktree_status = FileStatus.DELETED
+            elif _file_modified(index_entry, worktree_path, db):
+                worktree_status = FileStatus.MODIFIED
+            else:
+                worktree_status = FileStatus.UNMODIFIED
+        else:
+            if worktree_path.exists():
+                worktree_status = FileStatus.UNTRACKED
+            else:
+                worktree_status = FileStatus.UNMODIFIED
+
+        # Only include if something changed
+        if (index_status != FileStatus.UNMODIFIED or
+            worktree_status != FileStatus.UNMODIFIED):
+            results.append(StatusEntry(
+                path=path,
+                index_status=index_status,
+                worktree_status=worktree_status
+            ))
+
+    return results
+
+def _file_modified(entry: IndexEntry, path: Path, db: ObjectDatabase) -&gt; bool:
+    &quot;&quot;&quot;Check if file differs from index entry.&quot;&quot;&quot;
+    st = path.stat()
+
+    # Fast path: check cached stat data
+    if entry.matches_stat(st):
+        return False
+
+    # Slow path: compare content
+    from gitpy.objects.blob import Blob
+    current_blob = Blob.from_file(str(path))
+    return current_blob.oid != entry.sha
+</code></pre>
+<hr />
+<h2 id="5-merge-conflicts">5. Merge Conflicts</h2>
+<h3 id="51-conflict-stages">5.1 Conflict Stages</h3>
+<p>During a merge conflict, multiple versions of a file exist:</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Normal (no conflict)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Common ancestor (base)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Current branch (ours)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Merged branch (theirs)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="52-implementation">5.2 Implementation</h3>
+<pre><code class="language-python">def has_conflicts(index: Index) -&gt; bool:
+    &quot;&quot;&quot;Check if index has unresolved conflicts.&quot;&quot;&quot;
+    return any(e.stage != 0 for e in index)
+
+def get_conflicts(index: Index) -&gt; Dict[str, List[IndexEntry]]:
+    &quot;&quot;&quot;
+    Get conflicted entries grouped by path.
+
+    Returns dict mapping path to list of entries (stages 1-3).
+    &quot;&quot;&quot;
+    conflicts = {}
+    for entry in index:
+        if entry.stage != 0:
+            if entry.path not in conflicts:
+                conflicts[entry.path] = []
+            conflicts[entry.path].append(entry)
+    return conflicts
+
+def add_conflict(
+    index: Index,
+    path: str,
+    base: Optional[IndexEntry],
+    ours: Optional[IndexEntry],
+    theirs: Optional[IndexEntry]
+) -&gt; None:
+    &quot;&quot;&quot;Add conflict entries for a path.&quot;&quot;&quot;
+    # Remove any stage-0 entry
+    index.remove(path)
+
+    # Add conflict entries
+    if base:
+        base.flags = (base.flags &amp; 0x0FFF) | (1 &lt;&lt; 12)
+        index.add(base)
+    if ours:
+        ours.flags = (ours.flags &amp; 0x0FFF) | (2 &lt;&lt; 12)
+        index.add(ours)
+    if theirs:
+        theirs.flags = (theirs.flags &amp; 0x0FFF) | (3 &lt;&lt; 12)
+        index.add(theirs)
+
+def resolve_conflict(index: Index, path: str, sha: str, mode: int) -&gt; None:
+    &quot;&quot;&quot;Resolve conflict by setting stage-0 entry.&quot;&quot;&quot;
+    # Remove all conflict entries for this path
+    to_remove = [e.path for e in index if e.path == path and e.stage != 0]
+    for p in to_remove:
+        index.remove(p)
+
+    # Add resolved entry at stage 0
+    entry = IndexEntry(
+        ctime_s=0, ctime_ns=0, mtime_s=0, mtime_ns=0,
+        dev=0, ino=0, mode=mode, uid=0, gid=0, size=0,
+        sha=sha, flags=min(len(path), 0xFFF), path=path
+    )
+    index.add(entry)
+</code></pre>
+<hr />
+<h2 id="6-test-cases">6. Test Cases</h2>
+<h3 id="61-index-serialization">6.1 Index Serialization</h3>
+<pre><code class="language-python">class TestIndexSerialization:
+
+    def test_empty_index(self):
+        &quot;&quot;&quot;Empty index serializes correctly.&quot;&quot;&quot;
+        index = Index()
+        data = index.to_bytes()
+
+        # Verify header
+        assert data[:4] == b&quot;DIRC&quot;
+        version = struct.unpack(&quot;&gt;I&quot;, data[4:8])[0]
+        count = struct.unpack(&quot;&gt;I&quot;, data[8:12])[0]
+        assert version == 2
+        assert count == 0
+
+    def test_roundtrip(self):
+        &quot;&quot;&quot;Serialize and deserialize preserves entries.&quot;&quot;&quot;
+        index = Index()
+        entry = IndexEntry(
+            ctime_s=1234567890, ctime_ns=123456789,
+            mtime_s=1234567890, mtime_ns=123456789,
+            dev=16777220, ino=12345678,
+            mode=0o100644, uid=501, gid=20,
+            size=1234,
+            sha=&quot;a&quot; * 40,
+            flags=8,
+            path=&quot;test.txt&quot;
+        )
+        index.add(entry)
+
+        data = index.to_bytes()
+        restored = Index.from_bytes(data)
+
+        assert len(restored) == 1
+        assert &quot;test.txt&quot; in restored
+        assert restored.get(&quot;test.txt&quot;).sha == &quot;a&quot; * 40
+
+    def test_checksum_validation(self):
+        &quot;&quot;&quot;Corrupted checksum is detected.&quot;&quot;&quot;
+        index = Index()
+        index.add(IndexEntry(
+            ctime_s=0, ctime_ns=0, mtime_s=0, mtime_ns=0,
+            dev=0, ino=0, mode=0o100644, uid=0, gid=0, size=0,
+            sha=&quot;a&quot; * 40, flags=4, path=&quot;file&quot;
+        ))
+
+        data = bytearray(index.to_bytes())
+        data[-1] ^= 0xFF  # Corrupt checksum
+
+        with pytest.raises(ValueError, match=&quot;checksum&quot;):
+            Index.from_bytes(bytes(data))
+
+    def test_sorting(self):
+        &quot;&quot;&quot;Entries are sorted by path.&quot;&quot;&quot;
+        index = Index()
+        for path in [&quot;c.txt&quot;, &quot;a.txt&quot;, &quot;b.txt&quot;]:
+            index.add(IndexEntry(
+                ctime_s=0, ctime_ns=0, mtime_s=0, mtime_ns=0,
+                dev=0, ino=0, mode=0o100644, uid=0, gid=0, size=0,
+                sha=&quot;a&quot; * 40, flags=len(path), path=path
+            ))
+
+        paths = [e.path for e in index]
+        assert paths == [&quot;a.txt&quot;, &quot;b.txt&quot;, &quot;c.txt&quot;]
+</code></pre>
+<h3 id="62-git-compatibility">6.2 Git Compatibility</h3>
+<pre><code class="language-python">class TestGitCompatibility:
+
+    def test_read_git_index(self, git_repo):
+        &quot;&quot;&quot;Can read index created by Git.&quot;&quot;&quot;
+        # Create file and stage with real git
+        (git_repo / &quot;test.txt&quot;).write_text(&quot;hello&quot;)
+        subprocess.run([&quot;git&quot;, &quot;add&quot;, &quot;test.txt&quot;], cwd=git_repo)
+
+        # Read with gitpy
+        index_file = IndexFile(git_repo / &quot;.git&quot;)
+        index = index_file.read()
+
+        assert &quot;test.txt&quot; in index
+        entry = index.get(&quot;test.txt&quot;)
+        assert entry.mode == 0o100644
+
+    def test_write_git_readable(self, git_repo):
+        &quot;&quot;&quot;Git can read index created by gitpy.&quot;&quot;&quot;
+        # Create index with gitpy
+        index = Index()
+        blob = Blob(data=b&quot;hello\n&quot;)
+        sha = repo.objects.write(blob)
+
+        index.add(IndexEntry(
+            ctime_s=0, ctime_ns=0, mtime_s=0, mtime_ns=0,
+            dev=0, ino=0, mode=0o100644, uid=0, gid=0, size=6,
+            sha=sha, flags=8, path=&quot;test.txt&quot;
+        ))
+
+        index_file = IndexFile(git_repo / &quot;.git&quot;)
+        index_file.write(index)
+
+        # Verify with git
+        result = subprocess.run(
+            [&quot;git&quot;, &quot;ls-files&quot;, &quot;--stage&quot;],
+            cwd=git_repo,
+            capture_output=True,
+            text=True
+        )
+        assert &quot;test.txt&quot; in result.stdout
+</code></pre>
+<hr />
+<h2 id="7-acceptance-criteria">7. Acceptance Criteria</h2>
+<h3 id="71-functional-requirements">7.1 Functional Requirements</h3>
+<ul>
+<li>[ ] Parse Git index file (version 2)</li>
+<li>[ ] Write Git-compatible index file</li>
+<li>[ ] Checksum validation on read</li>
+<li>[ ] Atomic writes with lock file</li>
+<li>[ ] Entry metadata caching for fast status</li>
+<li>[ ] read_tree populates index from tree</li>
+<li>[ ] write_tree creates tree from index</li>
+<li>[ ] Merge conflict stages (1-3) supported</li>
+</ul>
+<h3 id="72-non-functional-requirements">7.2 Non-Functional Requirements</h3>
+<ul>
+<li>[ ] Binary compatible with Git</li>
+<li>[ ] Lock file prevents concurrent writes</li>
+<li>[ ] Efficient stat caching</li>
+</ul>
+<h3 id="73-verification">7.3 Verification</h3>
+<pre><code class="language-bash"># Verify gitpy can read Git's index
+git init test &amp;&amp; cd test
+echo &quot;test&quot; &gt; file.txt
+git add file.txt
+# gitpy should read this index
+
+# Verify Git can read gitpy's index
+# After gitpy writes index:
+git ls-files --stage
+git status
+</code></pre>
+<hr />
+<h2 id="8-file-structure">8. File Structure</h2>
+<pre><code>gitpy/
+└── index/
+    ├── __init__.py
+    ├── entry.py         # IndexEntry class
+    ├── index.py         # Index, IndexFile classes
+    └── operations.py    # read_tree, write_tree, status
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

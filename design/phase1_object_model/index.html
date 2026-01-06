@@ -1,0 +1,1614 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Phase 1: Object Model - Design Specification - gitpy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#phase-1-object-model-design-specification" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="gitpy" class="md-header__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gitpy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Phase 1: Object Model - Design Specification
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="gitpy" class="md-nav__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gitpy
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/object_model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-design-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Design Goals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-object-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Object Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-object-identification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Object Identification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Object Identification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-sha-1-hash-computation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 SHA-1 Hash Computation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-implementation-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Implementation Specification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-blob-object-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Blob Object Specification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Blob Object Specification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-test-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Test Cases
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-tree-object-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Tree Object Specification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Tree Object Specification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-file-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 File Modes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-sorting-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Sorting Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-test-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Test Cases
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-commit-object-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Commit Object Specification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Commit Object Specification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-identity-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Identity Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-test-cases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 Test Cases
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-tag-object-specification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Tag Object Specification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Tag Object Specification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-object-factory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Object Factory
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Object Factory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-purpose" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Purpose
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-acceptance-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Acceptance Criteria
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Acceptance Criteria">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-functional-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Functional Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-non-functional-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Non-Functional Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Dependencies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-file-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. File Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="phase-1-object-model-design-specification">Phase 1: Object Model - Design Specification</h1>
+<blockquote>
+<p><strong>Status</strong>: Draft
+<strong>Author</strong>: Domain Expert
+<strong>Last Updated</strong>: 2026-01-05</p>
+</blockquote>
+<h2 id="1-overview">1. Overview</h2>
+<p>The Git object model is the foundation of the entire system. Git is fundamentally a content-addressable filesystem with a VCS user interface built on top. Understanding and implementing this layer correctly is critical for all subsequent phases.</p>
+<h3 id="11-design-goals">1.1 Design Goals</h3>
+<ul>
+<li><strong>Immutability</strong>: Objects, once created, never change</li>
+<li><strong>Content-Addressability</strong>: Objects are identified by SHA-1 hash of their contents</li>
+<li><strong>Deduplication</strong>: Identical content is stored exactly once</li>
+<li><strong>Simplicity</strong>: Four object types cover all use cases</li>
+</ul>
+<h3 id="12-object-types">1.2 Object Types</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Code</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>blob</td>
+<td><code>blob</code></td>
+<td>File contents</td>
+</tr>
+<tr>
+<td>tree</td>
+<td><code>tree</code></td>
+<td>Directory listing</td>
+</tr>
+<tr>
+<td>commit</td>
+<td><code>commit</code></td>
+<td>Snapshot with metadata</td>
+</tr>
+<tr>
+<td>tag</td>
+<td><code>tag</code></td>
+<td>Annotated tag</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-object-identification">2. Object Identification</h2>
+<h3 id="21-sha-1-hash-computation">2.1 SHA-1 Hash Computation</h3>
+<p>Every Git object is identified by a 40-character hexadecimal SHA-1 hash.</p>
+<p><strong>Hash Input Format:</strong></p>
+<pre><code>&lt;type&gt; &lt;size&gt;\0&lt;content&gt;
+</code></pre>
+<p>Where:
+- <code>&lt;type&gt;</code> is one of: <code>blob</code>, <code>tree</code>, <code>commit</code>, <code>tag</code>
+- <code>&lt;size&gt;</code> is the decimal byte count of <code>&lt;content&gt;</code>
+- <code>\0</code> is a null byte (0x00)
+- <code>&lt;content&gt;</code> is the raw object content</p>
+<p><strong>Example - Blob:</strong></p>
+<pre><code class="language-python">content = b&quot;Hello, World!\n&quot;
+header = f&quot;blob {len(content)}\0&quot;.encode()
+full_object = header + content
+sha1 = hashlib.sha1(full_object).hexdigest()
+# Result: &quot;8ab686eafeb1f44702738c8b0f24f2567c36da6d&quot;
+</code></pre>
+<h3 id="22-implementation-specification">2.2 Implementation Specification</h3>
+<pre><code class="language-python"># gitpy/objects/base.py
+
+from abc import ABC, abstractmethod
+import hashlib
+from typing import Optional
+
+class GitObject(ABC):
+    &quot;&quot;&quot;Base class for all Git objects.&quot;&quot;&quot;
+
+    type_name: str  # &quot;blob&quot;, &quot;tree&quot;, &quot;commit&quot;, &quot;tag&quot;
+
+    @abstractmethod
+    def serialize(self) -&gt; bytes:
+        &quot;&quot;&quot;Serialize object content (without header).&quot;&quot;&quot;
+        pass
+
+    @classmethod
+    @abstractmethod
+    def deserialize(cls, data: bytes) -&gt; &quot;GitObject&quot;:
+        &quot;&quot;&quot;Deserialize object content (without header).&quot;&quot;&quot;
+        pass
+
+    def compute_hash(self) -&gt; str:
+        &quot;&quot;&quot;Compute SHA-1 hash of this object.&quot;&quot;&quot;
+        content = self.serialize()
+        header = f&quot;{self.type_name} {len(content)}\0&quot;.encode()
+        return hashlib.sha1(header + content).hexdigest()
+
+    @property
+    def oid(self) -&gt; str:
+        &quot;&quot;&quot;Object ID (SHA-1 hash).&quot;&quot;&quot;
+        return self.compute_hash()
+</code></pre>
+<hr />
+<h2 id="3-blob-object-specification">3. Blob Object Specification</h2>
+<h3 id="31-purpose">3.1 Purpose</h3>
+<p>A blob (binary large object) stores the contents of a single file. It contains no filename, permissions, or other metadata—just raw content.</p>
+<h3 id="32-format">3.2 Format</h3>
+<pre><code>blob &lt;size&gt;\0&lt;raw-content&gt;
+</code></pre>
+<ul>
+<li>No internal structure</li>
+<li>Binary-safe (can store any byte sequence)</li>
+<li>Filename stored in parent tree, not in blob</li>
+</ul>
+<h3 id="33-implementation">3.3 Implementation</h3>
+<pre><code class="language-python"># gitpy/objects/blob.py
+
+from dataclasses import dataclass
+from .base import GitObject
+
+@dataclass
+class Blob(GitObject):
+    &quot;&quot;&quot;Represents file contents.&quot;&quot;&quot;
+
+    type_name: str = &quot;blob&quot;
+    data: bytes = b&quot;&quot;
+
+    def serialize(self) -&gt; bytes:
+        &quot;&quot;&quot;Return raw content.&quot;&quot;&quot;
+        return self.data
+
+    @classmethod
+    def deserialize(cls, data: bytes) -&gt; &quot;Blob&quot;:
+        &quot;&quot;&quot;Create Blob from raw content.&quot;&quot;&quot;
+        return cls(data=data)
+
+    @classmethod
+    def from_file(cls, path: str) -&gt; &quot;Blob&quot;:
+        &quot;&quot;&quot;Create Blob from file path.&quot;&quot;&quot;
+        with open(path, &quot;rb&quot;) as f:
+            return cls(data=f.read())
+</code></pre>
+<h3 id="34-test-cases">3.4 Test Cases</h3>
+<pre><code class="language-python">def test_blob_hash_empty():
+    &quot;&quot;&quot;Empty blob has known hash.&quot;&quot;&quot;
+    blob = Blob(data=b&quot;&quot;)
+    assert blob.oid == &quot;e69de29bb2d1d6434b8b29ae775ad8c2e48c5391&quot;
+
+def test_blob_hash_hello():
+    &quot;&quot;&quot;'hello\\n' has known hash.&quot;&quot;&quot;
+    blob = Blob(data=b&quot;hello\n&quot;)
+    assert blob.oid == &quot;ce013625030ba8dba906f756967f9e9ca394464a&quot;
+
+def test_blob_roundtrip():
+    &quot;&quot;&quot;Serialize then deserialize preserves content.&quot;&quot;&quot;
+    original = Blob(data=b&quot;test content\nwith newlines\n&quot;)
+    restored = Blob.deserialize(original.serialize())
+    assert original.data == restored.data
+</code></pre>
+<hr />
+<h2 id="4-tree-object-specification">4. Tree Object Specification</h2>
+<h3 id="41-purpose">4.1 Purpose</h3>
+<p>A tree represents a directory. It contains entries mapping names to blobs (files) or other trees (subdirectories), along with file mode information.</p>
+<h3 id="42-format">4.2 Format</h3>
+<p>A tree is a sequence of entries, sorted by name:</p>
+<pre><code>tree &lt;size&gt;\0&lt;entry1&gt;&lt;entry2&gt;...
+</code></pre>
+<p>Each entry format:</p>
+<pre><code>&lt;mode&gt; &lt;name&gt;\0&lt;20-byte-sha&gt;
+</code></pre>
+<p>Where:
+- <code>&lt;mode&gt;</code> is the octal file mode (ASCII digits)
+- <code>&lt;name&gt;</code> is the filename (no path separators)
+- <code>\0</code> is a null byte separator
+- <code>&lt;20-byte-sha&gt;</code> is the binary SHA-1 (20 bytes, not hex)</p>
+<h3 id="43-file-modes">4.3 File Modes</h3>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>100644</code></td>
+<td>Regular file</td>
+<td><code>.py</code>, <code>.txt</code></td>
+</tr>
+<tr>
+<td><code>100755</code></td>
+<td>Executable file</td>
+<td>Scripts with <code>+x</code></td>
+</tr>
+<tr>
+<td><code>040000</code></td>
+<td>Directory (tree)</td>
+<td>Subdirectories</td>
+</tr>
+<tr>
+<td><code>120000</code></td>
+<td>Symbolic link</td>
+<td>Symlinks</td>
+</tr>
+<tr>
+<td><code>160000</code></td>
+<td>Gitlink (submodule)</td>
+<td>Submodule reference</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Note</strong>: Mode <code>040000</code> is stored as <code>40000</code> (no leading zero).</p>
+<h3 id="44-sorting-rules">4.4 Sorting Rules</h3>
+<p>Entries MUST be sorted by name with special handling:
+- Directories are sorted as if they had a trailing <code>/</code>
+- Example: <code>foo</code> &lt; <code>foo.txt</code> &lt; <code>foo/</code> (directory named "foo")</p>
+<pre><code class="language-python">def tree_entry_sort_key(name: str, is_tree: bool) -&gt; str:
+    &quot;&quot;&quot;Generate sort key for tree entry.&quot;&quot;&quot;
+    return name + &quot;/&quot; if is_tree else name
+</code></pre>
+<h3 id="45-implementation">4.5 Implementation</h3>
+<pre><code class="language-python"># gitpy/objects/tree.py
+
+from dataclasses import dataclass, field
+from typing import List, Tuple
+from .base import GitObject
+
+@dataclass
+class TreeEntry:
+    &quot;&quot;&quot;Single entry in a tree object.&quot;&quot;&quot;
+    mode: str        # &quot;100644&quot;, &quot;100755&quot;, &quot;40000&quot;, &quot;120000&quot;
+    name: str        # Filename (no slashes)
+    sha: str         # 40-char hex SHA-1
+
+    @property
+    def is_tree(self) -&gt; bool:
+        return self.mode == &quot;40000&quot;
+
+    @property
+    def is_blob(self) -&gt; bool:
+        return self.mode in (&quot;100644&quot;, &quot;100755&quot;)
+
+    def sort_key(self) -&gt; str:
+        return self.name + &quot;/&quot; if self.is_tree else self.name
+
+@dataclass
+class Tree(GitObject):
+    &quot;&quot;&quot;Represents a directory listing.&quot;&quot;&quot;
+
+    type_name: str = &quot;tree&quot;
+    entries: List[TreeEntry] = field(default_factory=list)
+
+    def serialize(self) -&gt; bytes:
+        &quot;&quot;&quot;Serialize tree to bytes.&quot;&quot;&quot;
+        # Sort entries by Git's sorting rules
+        sorted_entries = sorted(self.entries, key=lambda e: e.sort_key())
+
+        result = b&quot;&quot;
+        for entry in sorted_entries:
+            # Mode and name as ASCII, null separator, binary SHA
+            mode_name = f&quot;{entry.mode} {entry.name}\0&quot;.encode()
+            sha_binary = bytes.fromhex(entry.sha)
+            result += mode_name + sha_binary
+
+        return result
+
+    @classmethod
+    def deserialize(cls, data: bytes) -&gt; &quot;Tree&quot;:
+        &quot;&quot;&quot;Parse tree from bytes.&quot;&quot;&quot;
+        entries = []
+        pos = 0
+
+        while pos &lt; len(data):
+            # Find space after mode
+            space_idx = data.index(b&quot; &quot;, pos)
+            mode = data[pos:space_idx].decode(&quot;ascii&quot;)
+
+            # Find null after name
+            null_idx = data.index(b&quot;\0&quot;, space_idx)
+            name = data[space_idx + 1:null_idx].decode(&quot;utf-8&quot;)
+
+            # Next 20 bytes are binary SHA
+            sha_binary = data[null_idx + 1:null_idx + 21]
+            sha = sha_binary.hex()
+
+            entries.append(TreeEntry(mode=mode, name=name, sha=sha))
+            pos = null_idx + 21
+
+        return cls(entries=entries)
+
+    def add_entry(self, mode: str, name: str, sha: str) -&gt; None:
+        &quot;&quot;&quot;Add an entry to this tree.&quot;&quot;&quot;
+        if &quot;/&quot; in name:
+            raise ValueError(&quot;Tree entry name cannot contain '/'&quot;)
+        self.entries.append(TreeEntry(mode=mode, name=name, sha=sha))
+</code></pre>
+<h3 id="46-test-cases">4.6 Test Cases</h3>
+<pre><code class="language-python">def test_tree_empty():
+    &quot;&quot;&quot;Empty tree has known hash.&quot;&quot;&quot;
+    tree = Tree(entries=[])
+    assert tree.oid == &quot;4b825dc642cb6eb9a060e54bf8d69288fbee4904&quot;
+
+def test_tree_single_blob():
+    &quot;&quot;&quot;Tree with single file.&quot;&quot;&quot;
+    tree = Tree(entries=[
+        TreeEntry(mode=&quot;100644&quot;, name=&quot;hello.txt&quot;,
+                  sha=&quot;ce013625030ba8dba906f756967f9e9ca394464a&quot;)
+    ])
+    # Verify serialization/deserialization roundtrip
+    restored = Tree.deserialize(tree.serialize())
+    assert len(restored.entries) == 1
+    assert restored.entries[0].name == &quot;hello.txt&quot;
+
+def test_tree_sorting():
+    &quot;&quot;&quot;Entries are sorted correctly.&quot;&quot;&quot;
+    tree = Tree(entries=[
+        TreeEntry(mode=&quot;100644&quot;, name=&quot;b.txt&quot;, sha=&quot;a&quot; * 40),
+        TreeEntry(mode=&quot;40000&quot;, name=&quot;a&quot;, sha=&quot;b&quot; * 40),
+        TreeEntry(mode=&quot;100644&quot;, name=&quot;a.txt&quot;, sha=&quot;c&quot; * 40),
+    ])
+    data = tree.serialize()
+    restored = Tree.deserialize(data)
+    names = [e.name for e in restored.entries]
+    # &quot;a&quot; (dir as &quot;a/&quot;) &gt; &quot;a.txt&quot; but dir should come after &quot;a.txt&quot;
+    assert names == [&quot;a.txt&quot;, &quot;a&quot;, &quot;b.txt&quot;]
+</code></pre>
+<hr />
+<h2 id="5-commit-object-specification">5. Commit Object Specification</h2>
+<h3 id="51-purpose">5.1 Purpose</h3>
+<p>A commit represents a snapshot of the repository at a point in time. It points to a tree (the root directory) and contains metadata about who made the change and when.</p>
+<h3 id="52-format">5.2 Format</h3>
+<pre><code>commit &lt;size&gt;\0tree &lt;tree-sha&gt;
+parent &lt;parent-sha&gt;
+[parent &lt;parent-sha&gt;...]
+author &lt;name&gt; &lt;email&gt; &lt;timestamp&gt; &lt;timezone&gt;
+committer &lt;name&gt; &lt;email&gt; &lt;timestamp&gt; &lt;timezone&gt;
+
+&lt;commit message&gt;
+</code></pre>
+<p><strong>Fields:</strong>
+- <code>tree</code>: Required. SHA of root tree object
+- <code>parent</code>: Optional. SHA of parent commit(s). Omitted for root commit. Multiple for merges.
+- <code>author</code>: Required. Who wrote the change
+- <code>committer</code>: Required. Who committed the change
+- Blank line separates headers from message
+- Message may be multiple lines</p>
+<h3 id="53-identity-format">5.3 Identity Format</h3>
+<pre><code>Name &lt;email@example.com&gt; 1234567890 +0000
+</code></pre>
+<ul>
+<li>Name can contain spaces</li>
+<li>Email in angle brackets</li>
+<li>Unix timestamp (seconds since epoch)</li>
+<li>Timezone as <code>+HHMM</code> or <code>-HHMM</code></li>
+</ul>
+<h3 id="54-implementation">5.4 Implementation</h3>
+<pre><code class="language-python"># gitpy/objects/commit.py
+
+from dataclasses import dataclass, field
+from typing import List, Optional
+from datetime import datetime, timezone
+from .base import GitObject
+
+@dataclass
+class Identity:
+    &quot;&quot;&quot;Author or committer identity.&quot;&quot;&quot;
+    name: str
+    email: str
+    timestamp: int      # Unix timestamp
+    tz_offset: str      # &quot;+0000&quot; format
+
+    def __str__(self) -&gt; str:
+        return f&quot;{self.name} &lt;{self.email}&gt; {self.timestamp} {self.tz_offset}&quot;
+
+    @classmethod
+    def parse(cls, line: str) -&gt; &quot;Identity&quot;:
+        &quot;&quot;&quot;Parse 'Name &lt;email&gt; timestamp tz' format.&quot;&quot;&quot;
+        # Find email boundaries
+        lt = line.index(&quot;&lt;&quot;)
+        gt = line.index(&quot;&gt;&quot;)
+
+        name = line[:lt].strip()
+        email = line[lt + 1:gt]
+
+        # Parse timestamp and timezone
+        rest = line[gt + 1:].strip().split()
+        timestamp = int(rest[0])
+        tz_offset = rest[1] if len(rest) &gt; 1 else &quot;+0000&quot;
+
+        return cls(name=name, email=email, timestamp=timestamp, tz_offset=tz_offset)
+
+    @classmethod
+    def now(cls, name: str, email: str) -&gt; &quot;Identity&quot;:
+        &quot;&quot;&quot;Create identity with current timestamp.&quot;&quot;&quot;
+        now = datetime.now(timezone.utc)
+        return cls(
+            name=name,
+            email=email,
+            timestamp=int(now.timestamp()),
+            tz_offset=&quot;+0000&quot;
+        )
+
+@dataclass
+class Commit(GitObject):
+    &quot;&quot;&quot;Represents a commit object.&quot;&quot;&quot;
+
+    type_name: str = &quot;commit&quot;
+    tree_sha: str = &quot;&quot;
+    parent_shas: List[str] = field(default_factory=list)
+    author: Optional[Identity] = None
+    committer: Optional[Identity] = None
+    message: str = &quot;&quot;
+
+    def serialize(self) -&gt; bytes:
+        &quot;&quot;&quot;Serialize commit to bytes.&quot;&quot;&quot;
+        lines = []
+
+        lines.append(f&quot;tree {self.tree_sha}&quot;)
+
+        for parent in self.parent_shas:
+            lines.append(f&quot;parent {parent}&quot;)
+
+        lines.append(f&quot;author {self.author}&quot;)
+        lines.append(f&quot;committer {self.committer}&quot;)
+        lines.append(&quot;&quot;)  # Blank line
+        lines.append(self.message)
+
+        return &quot;\n&quot;.join(lines).encode(&quot;utf-8&quot;)
+
+    @classmethod
+    def deserialize(cls, data: bytes) -&gt; &quot;Commit&quot;:
+        &quot;&quot;&quot;Parse commit from bytes.&quot;&quot;&quot;
+        text = data.decode(&quot;utf-8&quot;)
+        lines = text.split(&quot;\n&quot;)
+
+        tree_sha = &quot;&quot;
+        parent_shas = []
+        author = None
+        committer = None
+        message_start = 0
+
+        for i, line in enumerate(lines):
+            if line == &quot;&quot;:
+                message_start = i + 1
+                break
+
+            if line.startswith(&quot;tree &quot;):
+                tree_sha = line[5:]
+            elif line.startswith(&quot;parent &quot;):
+                parent_shas.append(line[7:])
+            elif line.startswith(&quot;author &quot;):
+                author = Identity.parse(line[7:])
+            elif line.startswith(&quot;committer &quot;):
+                committer = Identity.parse(line[10:])
+
+        message = &quot;\n&quot;.join(lines[message_start:])
+
+        return cls(
+            tree_sha=tree_sha,
+            parent_shas=parent_shas,
+            author=author,
+            committer=committer,
+            message=message
+        )
+
+    @property
+    def is_root(self) -&gt; bool:
+        &quot;&quot;&quot;True if this is a root commit (no parents).&quot;&quot;&quot;
+        return len(self.parent_shas) == 0
+
+    @property
+    def is_merge(self) -&gt; bool:
+        &quot;&quot;&quot;True if this is a merge commit (multiple parents).&quot;&quot;&quot;
+        return len(self.parent_shas) &gt; 1
+</code></pre>
+<h3 id="55-test-cases">5.5 Test Cases</h3>
+<pre><code class="language-python">def test_commit_root():
+    &quot;&quot;&quot;Root commit has no parents.&quot;&quot;&quot;
+    author = Identity(name=&quot;Test&quot;, email=&quot;test@example.com&quot;,
+                      timestamp=0, tz_offset=&quot;+0000&quot;)
+    commit = Commit(
+        tree_sha=&quot;4b825dc642cb6eb9a060e54bf8d69288fbee4904&quot;,
+        parent_shas=[],
+        author=author,
+        committer=author,
+        message=&quot;Initial commit&quot;
+    )
+    assert commit.is_root
+    assert not commit.is_merge
+
+def test_commit_roundtrip():
+    &quot;&quot;&quot;Serialize then deserialize preserves all fields.&quot;&quot;&quot;
+    author = Identity(name=&quot;Alice&quot;, email=&quot;alice@example.com&quot;,
+                      timestamp=1234567890, tz_offset=&quot;-0700&quot;)
+    committer = Identity(name=&quot;Bob&quot;, email=&quot;bob@example.com&quot;,
+                         timestamp=1234567899, tz_offset=&quot;+0530&quot;)
+
+    original = Commit(
+        tree_sha=&quot;a&quot; * 40,
+        parent_shas=[&quot;b&quot; * 40, &quot;c&quot; * 40],
+        author=author,
+        committer=committer,
+        message=&quot;Merge feature branch\n\nDetailed description.&quot;
+    )
+
+    restored = Commit.deserialize(original.serialize())
+
+    assert restored.tree_sha == original.tree_sha
+    assert restored.parent_shas == original.parent_shas
+    assert restored.author.name == &quot;Alice&quot;
+    assert restored.committer.email == &quot;bob@example.com&quot;
+    assert restored.is_merge
+</code></pre>
+<hr />
+<h2 id="6-tag-object-specification">6. Tag Object Specification</h2>
+<h3 id="61-purpose">6.1 Purpose</h3>
+<p>An annotated tag is an object that points to another object (usually a commit) with additional metadata: tagger identity, date, and message.</p>
+<p><strong>Note</strong>: Lightweight tags are just references (Phase 3) and don't create tag objects.</p>
+<h3 id="62-format">6.2 Format</h3>
+<pre><code>tag &lt;size&gt;\0object &lt;sha&gt;
+type &lt;type&gt;
+tag &lt;tagname&gt;
+tagger &lt;identity&gt;
+
+&lt;tag message&gt;
+</code></pre>
+<p><strong>Fields:</strong>
+- <code>object</code>: SHA of the tagged object
+- <code>type</code>: Type of tagged object (<code>commit</code>, <code>tree</code>, <code>blob</code>, <code>tag</code>)
+- <code>tag</code>: Tag name
+- <code>tagger</code>: Who created the tag
+- Message after blank line</p>
+<h3 id="63-implementation">6.3 Implementation</h3>
+<pre><code class="language-python"># gitpy/objects/tag.py
+
+from dataclasses import dataclass
+from typing import Optional
+from .base import GitObject
+from .commit import Identity
+
+@dataclass
+class Tag(GitObject):
+    &quot;&quot;&quot;Represents an annotated tag object.&quot;&quot;&quot;
+
+    type_name: str = &quot;tag&quot;
+    object_sha: str = &quot;&quot;
+    object_type: str = &quot;commit&quot;
+    tag_name: str = &quot;&quot;
+    tagger: Optional[Identity] = None
+    message: str = &quot;&quot;
+
+    def serialize(self) -&gt; bytes:
+        &quot;&quot;&quot;Serialize tag to bytes.&quot;&quot;&quot;
+        lines = [
+            f&quot;object {self.object_sha}&quot;,
+            f&quot;type {self.object_type}&quot;,
+            f&quot;tag {self.tag_name}&quot;,
+            f&quot;tagger {self.tagger}&quot;,
+            &quot;&quot;,
+            self.message
+        ]
+        return &quot;\n&quot;.join(lines).encode(&quot;utf-8&quot;)
+
+    @classmethod
+    def deserialize(cls, data: bytes) -&gt; &quot;Tag&quot;:
+        &quot;&quot;&quot;Parse tag from bytes.&quot;&quot;&quot;
+        text = data.decode(&quot;utf-8&quot;)
+        lines = text.split(&quot;\n&quot;)
+
+        object_sha = &quot;&quot;
+        object_type = &quot;&quot;
+        tag_name = &quot;&quot;
+        tagger = None
+        message_start = 0
+
+        for i, line in enumerate(lines):
+            if line == &quot;&quot;:
+                message_start = i + 1
+                break
+
+            if line.startswith(&quot;object &quot;):
+                object_sha = line[7:]
+            elif line.startswith(&quot;type &quot;):
+                object_type = line[5:]
+            elif line.startswith(&quot;tag &quot;):
+                tag_name = line[4:]
+            elif line.startswith(&quot;tagger &quot;):
+                tagger = Identity.parse(line[7:])
+
+        message = &quot;\n&quot;.join(lines[message_start:])
+
+        return cls(
+            object_sha=object_sha,
+            object_type=object_type,
+            tag_name=tag_name,
+            tagger=tagger,
+            message=message
+        )
+</code></pre>
+<hr />
+<h2 id="7-object-factory">7. Object Factory</h2>
+<h3 id="71-purpose">7.1 Purpose</h3>
+<p>A factory to create the appropriate object type from raw data.</p>
+<h3 id="72-implementation">7.2 Implementation</h3>
+<pre><code class="language-python"># gitpy/objects/__init__.py
+
+from typing import Tuple
+from .base import GitObject
+from .blob import Blob
+from .tree import Tree
+from .commit import Commit
+from .tag import Tag
+
+OBJECT_TYPES = {
+    &quot;blob&quot;: Blob,
+    &quot;tree&quot;: Tree,
+    &quot;commit&quot;: Commit,
+    &quot;tag&quot;: Tag,
+}
+
+def parse_object(data: bytes) -&gt; Tuple[str, GitObject]:
+    &quot;&quot;&quot;
+    Parse a complete Git object (with header).
+
+    Returns (sha, object) tuple.
+    &quot;&quot;&quot;
+    # Find header boundary
+    null_idx = data.index(b&quot;\0&quot;)
+    header = data[:null_idx].decode(&quot;ascii&quot;)
+    content = data[null_idx + 1:]
+
+    # Parse header
+    type_name, size_str = header.split(&quot; &quot;)
+    size = int(size_str)
+
+    if len(content) != size:
+        raise ValueError(f&quot;Size mismatch: header says {size}, got {len(content)}&quot;)
+
+    # Create appropriate object
+    if type_name not in OBJECT_TYPES:
+        raise ValueError(f&quot;Unknown object type: {type_name}&quot;)
+
+    obj_class = OBJECT_TYPES[type_name]
+    obj = obj_class.deserialize(content)
+
+    # Compute and return SHA
+    import hashlib
+    sha = hashlib.sha1(data).hexdigest()
+
+    return sha, obj
+
+def create_object_data(obj: GitObject) -&gt; bytes:
+    &quot;&quot;&quot;
+    Create complete Git object data (with header) from object.
+
+    Returns bytes ready for storage.
+    &quot;&quot;&quot;
+    content = obj.serialize()
+    header = f&quot;{obj.type_name} {len(content)}\0&quot;.encode()
+    return header + content
+</code></pre>
+<hr />
+<h2 id="8-acceptance-criteria">8. Acceptance Criteria</h2>
+<h3 id="81-functional-requirements">8.1 Functional Requirements</h3>
+<ul>
+<li>[ ] All four object types can be created and serialized</li>
+<li>[ ] All four object types can be parsed from raw bytes</li>
+<li>[ ] SHA-1 hashes match Git's output for identical content</li>
+<li>[ ] Empty blob hash: <code>e69de29bb2d1d6434b8b29ae775ad8c2e48c5391</code></li>
+<li>[ ] Empty tree hash: <code>4b825dc642cb6eb9a060e54bf8d69288fbee4904</code></li>
+<li>[ ] Tree entries are correctly sorted</li>
+<li>[ ] Binary SHA-1 in tree entries is handled correctly</li>
+<li>[ ] Commit message with multiple lines is preserved</li>
+<li>[ ] Merge commits with multiple parents work correctly</li>
+</ul>
+<h3 id="82-non-functional-requirements">8.2 Non-Functional Requirements</h3>
+<ul>
+<li>[ ] 100% test coverage for object module</li>
+<li>[ ] Type hints on all public methods</li>
+<li>[ ] Docstrings on all classes and public methods</li>
+<li>[ ] No external dependencies (stdlib only)</li>
+</ul>
+<h3 id="83-verification">8.3 Verification</h3>
+<p>Compare output with real Git:</p>
+<pre><code class="language-bash"># Create test blob
+echo -n &quot;test content&quot; | git hash-object --stdin
+# Should match Blob(data=b&quot;test content&quot;).oid
+
+# Verify tree format
+git ls-tree HEAD
+git cat-file -p HEAD^{tree}
+</code></pre>
+<hr />
+<h2 id="9-dependencies">9. Dependencies</h2>
+<ul>
+<li><strong>Python</strong>: 3.7+ (dataclasses, typing)</li>
+<li><strong>hashlib</strong>: SHA-1 computation (stdlib)</li>
+<li><strong>No external packages required</strong></li>
+</ul>
+<hr />
+<h2 id="10-file-structure">10. File Structure</h2>
+<pre><code>gitpy/
+└── objects/
+    ├── __init__.py      # Exports, factory functions
+    ├── base.py          # GitObject ABC
+    ├── blob.py          # Blob implementation
+    ├── tree.py          # Tree, TreeEntry
+    ├── commit.py        # Commit, Identity
+    └── tag.py           # Tag implementation
+</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
