@@ -4,7 +4,7 @@ This document outlines the core concepts of Git internals to be implemented in g
 
 ---
 
-## Phase 1: Object Model (Foundation)
+## Phase 1: Object Model (Foundation) ✅ COMPLETE
 
 The heart of Git is its content-addressable object database. Everything in Git is built on four object types.
 
@@ -46,7 +46,7 @@ gitpy/objects/
 
 ---
 
-## Phase 2: Object Storage
+## Phase 2: Object Storage ✅ COMPLETE
 
 ### 2.1 Object Database Structure
 

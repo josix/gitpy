@@ -1,8 +1,8 @@
 # Phase 2: Object Storage - Design Specification
 
-> **Status**: Draft
+> **Status**: ✅ Implemented
 > **Author**: Domain Expert
-> **Last Updated**: 2026-01-05
+> **Last Updated**: 2026-01-06
 > **Dependencies**: Phase 1 (Object Model)
 
 ## 1. Overview
@@ -762,21 +762,21 @@ class TestRepositoryInit:
 
 ### 7.1 Functional Requirements
 
-- [ ] Objects are stored compressed in `.git/objects/XX/YYYY...`
-- [ ] Objects can be read back and decompressed correctly
-- [ ] SHA-1 is verified on read
-- [ ] Duplicate writes are safely skipped
-- [ ] Short SHA resolution works with minimum 4 characters
-- [ ] Ambiguous short SHA raises clear error
-- [ ] Repository can be initialized (normal and bare)
-- [ ] Repository can be found from subdirectory
+- [x] Objects are stored compressed in `.git/objects/XX/YYYY...`
+- [x] Objects can be read back and decompressed correctly
+- [x] SHA-1 is verified on read
+- [x] Duplicate writes are safely skipped
+- [x] Short SHA resolution works with minimum 4 characters
+- [x] Ambiguous short SHA raises clear error
+- [x] Repository can be initialized (normal and bare)
+- [x] Repository can be found from subdirectory
 
 ### 7.2 Non-Functional Requirements
 
-- [ ] Atomic writes (temp file + rename)
-- [ ] Object files are read-only after creation
-- [ ] Compatible with real Git (can read/write same format)
-- [ ] No data loss on crash during write
+- [x] Atomic writes (temp file + rename)
+- [x] Object files are read-only after creation
+- [x] Compatible with real Git (can read/write same format)
+- [x] No data loss on crash during write
 
 ### 7.3 Verification
 
