@@ -3,8 +3,10 @@ nav:
   - Home: README.md
   - Concepts:
     - Object Model: concepts/object_model.md
+    - Object Storage: concepts/object_storage.md
   - API Reference:
     - Objects: api/objects.md
+    - Storage: api/storage.md
   - Contributing: contributing.md
 theme:
   name: 'material'
