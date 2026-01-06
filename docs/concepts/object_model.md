@@ -1,559 +1,549 @@
-# Git Object Model - Concepts & Illustrations
+# Understanding Git's Object Model
 
-This document provides visual illustrations of Git's object model as implemented in gitpy.
+This document explains how Git stores data internally and how we've implemented it in gitpy. If you've ever wondered what happens when you run `git add` or `git commit`, this guide will demystify Git's elegant storage system.
 
-## Overview
+## The Big Picture: Git is a Content-Addressable Filesystem
 
-Git is fundamentally a **content-addressable filesystem**. Every piece of data is identified by a SHA-1 hash of its contents.
+Before diving into code, let's understand Git's fundamental insight: **Git is not really a version control system at its core—it's a content-addressable filesystem with a VCS built on top.**
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    GIT OBJECT MODEL                         │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐   │
-│   │   Blob   │  │   Tree   │  │  Commit  │  │   Tag    │   │
-│   │  (file)  │  │  (dir)   │  │(snapshot)│  │ (label)  │   │
-│   └──────────┘  └──────────┘  └──────────┘  └──────────┘   │
-│        │              │             │             │         │
-│        └──────────────┴─────────────┴─────────────┘         │
-│                           │                                 │
-│                    ┌──────┴──────┐                          │
-│                    │  GitObject  │                          │
-│                    │  (base ABC) │                          │
-│                    └─────────────┘                          │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+What does "content-addressable" mean? In a traditional filesystem, you access files by their path: `/home/user/project/README.md`. In Git's object store, you access data by its *content*. Specifically, Git computes a SHA-1 hash of the content, and that hash becomes the "address" of the data.
 
-## Object Identification (SHA-1 Hashing)
+This has profound implications:
 
-Every Git object is identified by a 40-character hexadecimal SHA-1 hash.
+1. **Automatic deduplication**: If two files have identical content, they're stored once
+2. **Integrity verification**: If any bit changes, the hash changes, so corruption is detectable
+3. **Immutability**: You can't modify an object without changing its address
+
+## The Four Object Types
+
+Git uses just four object types to represent an entire repository's history:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                   HASH COMPUTATION                          │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   Input:                                                    │
-│   ┌─────────────────────────────────────────────────────┐   │
-│   │  <type> <size>\0<content>                           │   │
-│   └─────────────────────────────────────────────────────┘   │
-│                          │                                  │
-│                          ▼                                  │
-│                    ┌──────────┐                             │
-│                    │  SHA-1   │                             │
-│                    │  Hash    │                             │
-│                    └──────────┘                             │
-│                          │                                  │
-│                          ▼                                  │
-│   Output:                                                   │
-│   ┌─────────────────────────────────────────────────────┐   │
-│   │  e69de29bb2d1d6434b8b29ae775ad8c2e48c5391          │   │
-│   └─────────────────────────────────────────────────────┘   │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-
-Example - "hello\n" blob:
-
-  header = "blob 6\0"           content = "hello\n"
-       │                              │
-       └──────────────┬───────────────┘
-                      │
-                      ▼
-          ┌───────────────────────┐
-          │   blob 6\0hello\n     │
-          └───────────────────────┘
-                      │
-                      ▼ SHA-1
-          ┌───────────────────────────────────────────┐
-          │  ce013625030ba8dba906f756967f9e9ca394464a │
-          └───────────────────────────────────────────┘
+┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐
+│   Blob   │  │   Tree   │  │  Commit  │  │   Tag    │
+│  (file)  │  │  (dir)   │  │(snapshot)│  │ (label)  │
+└──────────┘  └──────────┘  └──────────┘  └──────────┘
 ```
 
-## 1. Blob Object (File Contents)
+Let's explore each one and understand why Git needs them.
 
-A blob stores raw file contents with no metadata.
+---
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      BLOB OBJECT                            │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   File: hello.txt                                           │
-│   ┌─────────────────┐                                       │
-│   │ hello           │                                       │
-│   │ world           │                                       │
-│   └─────────────────┘                                       │
-│            │                                                │
-│            ▼                                                │
-│   ┌─────────────────────────────────────────────────────┐   │
-│   │  Blob                                               │   │
-│   │  ├── type_name: "blob"                              │   │
-│   │  └── data: b"hello\nworld\n"                        │   │
-│   └─────────────────────────────────────────────────────┘   │
-│            │                                                │
-│            ▼ serialize()                                    │
-│   ┌─────────────────────────────────────────────────────┐   │
-│   │  blob 12\0hello\nworld\n                            │   │
-│   └─────────────────────────────────────────────────────┘   │
-│            │                                                │
-│            ▼ SHA-1                                          │
-│   ┌─────────────────────────────────────────────────────┐   │
-│   │  OID: 94954abda49de8615a048f8d2e64b5de848e27a1      │   │
-│   └─────────────────────────────────────────────────────┘   │
-│                                                             │
-│   Note: Filename "hello.txt" is NOT stored in the blob!     │
-│         It's stored in the parent Tree object.              │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+## How Objects Are Identified: SHA-1 Hashing
 
-### Reference Blob Hashes
+Every Git object has an "Object ID" (OID)—a 40-character hexadecimal string like `ce013625030ba8dba906f756967f9e9ca394464a`. This is computed using SHA-1, but not just on the raw content. Git prepends a header:
 
 ```
-┌────────────────────────────────────────────────────────────┐
-│  Content          │  SHA-1 Hash                            │
-├───────────────────┼────────────────────────────────────────┤
-│  (empty)          │  e69de29bb2d1d6434b8b29ae775ad8c2e48c5391  │
-│  "hello\n"        │  ce013625030ba8dba906f756967f9e9ca394464a  │
-│  "Hello, World!\n"│  8ab686eafeb1f44702738c8b0f24f2567c36da6d  │
-└────────────────────────────────────────────────────────────┘
+<type> <size>\0<content>
 ```
 
-## 2. Tree Object (Directory Listing)
-
-A tree maps filenames to blobs (files) or other trees (subdirectories).
+For example, if you have a file containing `hello\n` (6 bytes), Git computes:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                      TREE OBJECT                            │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   Directory structure:                                      │
-│   ┌─────────────────────────────────────────────────────┐   │
-│   │  project/                                           │   │
-│   │  ├── README.md        (file)                        │   │
-│   │  ├── src/             (directory)                   │   │
-│   │  │   └── main.py      (file)                        │   │
-│   │  └── run.sh           (executable)                  │   │
-│   └─────────────────────────────────────────────────────┘   │
-│                          │                                  │
-│                          ▼                                  │
-│   ┌─────────────────────────────────────────────────────┐   │
-│   │  Tree (root)                                        │   │
-│   │  ├── TreeEntry(mode="100644", name="README.md",     │   │
-│   │  │             sha="abc123...")        → Blob       │   │
-│   │  ├── TreeEntry(mode="100755", name="run.sh",        │   │
-│   │  │             sha="def456...")        → Blob       │   │
-│   │  └── TreeEntry(mode="40000",  name="src",           │   │
-│   │                sha="789abc...")        → Tree       │   │
-│   └─────────────────────────────────────────────────────┘   │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+SHA-1("blob 6\0hello\n") = ce013625030ba8dba906f756967f9e9ca394464a
 ```
 
-### Tree Entry Binary Format
+### Implementation in gitpy
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                 TREE ENTRY FORMAT                           │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   Each entry:  <mode> <name>\0<20-byte-binary-SHA>          │
-│                                                             │
-│   Example entry for "hello.txt":                            │
-│                                                             │
-│   ┌────────┬───────────┬────┬─────────────────────────────┐ │
-│   │ 100644 │ hello.txt │ \0 │ [20 bytes binary SHA-1]     │ │
-│   └────────┴───────────┴────┴─────────────────────────────┘ │
-│       │         │        │              │                   │
-│       │         │        │              └── Binary SHA-1    │
-│       │         │        └── Null byte separator            │
-│       │         └── Filename (UTF-8)                        │
-│       └── File mode (ASCII)                                 │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+We implement this in the `GitObject` base class (`gitpy/objects/base.py`):
+
+```python
+def compute_hash(self) -> str:
+    content = self.serialize()
+    header = f"{self.type_name} {len(content)}\0".encode()
+    return hashlib.sha1(header + content, usedforsecurity=False).hexdigest()
 ```
 
-### File Modes
+The `usedforsecurity=False` parameter tells Python we're using SHA-1 for content addressing, not cryptographic security (which is important for security scanners like Bandit).
+
+**Why does this matter?** This hash formula is Git's contract. If our hashes don't match Git's, our objects won't be compatible. We verify this with known test vectors:
+
+| Content | Expected SHA-1 |
+|---------|---------------|
+| (empty) | `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391` |
+| `hello\n` | `ce013625030ba8dba906f756967f9e9ca394464a` |
+
+---
+
+## Blob: The Simplest Object
+
+A blob represents file contents. That's it—just raw bytes. No filename, no permissions, no timestamps. Just content.
+
+### Why separate content from metadata?
+
+This is a key insight in Git's design. Consider two files:
 
 ```
-┌──────────┬─────────────────────┬──────────────────────────┐
-│  Mode    │  Description        │  Example                 │
-├──────────┼─────────────────────┼──────────────────────────┤
-│  100644  │  Regular file       │  README.md, src/main.py  │
-│  100755  │  Executable file    │  run.sh, scripts/build   │
-│  40000   │  Directory (tree)   │  src/, docs/             │
-│  120000  │  Symbolic link      │  link -> target          │
-│  160000  │  Gitlink (submodule)│  external/lib            │
-└──────────┴─────────────────────┴──────────────────────────┘
+/src/utils.py    → contains "def helper(): pass\n"
+/lib/utils.py    → contains "def helper(): pass\n"
 ```
 
-### Tree Sorting Rules
+In a traditional system, these are two separate files. In Git, they're **one blob** referenced from two different trees. This is automatic deduplication in action.
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                   TREE SORTING                              │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   Directories are sorted as if they had a trailing "/"      │
-│                                                             │
-│   Entries:                    Sort keys:                    │
-│   ┌─────────────────┐        ┌─────────────────┐            │
-│   │ foo.txt (file)  │   →    │ "foo.txt"       │            │
-│   │ foo     (dir)   │   →    │ "foo/"          │            │
-│   │ foobar  (file)  │   →    │ "foobar"        │            │
-│   └─────────────────┘        └─────────────────┘            │
-│                                                             │
-│   Sorted order: foo.txt < foo/ < foobar                     │
-│   (because: "foo.txt" < "foo/" < "foobar")                  │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+### Implementation
+
+The `Blob` class (`gitpy/objects/blob.py`) is beautifully simple:
+
+```python
+@dataclass(slots=True)
+class Blob(GitObject):
+    data: bytes = b""
+    type_name: str = "blob"
+
+    def serialize(self) -> bytes:
+        return self.data
+
+    @classmethod
+    def deserialize(cls, data: bytes) -> Self:
+        return cls(data=data)
 ```
 
-### Reference Tree Hash
+We use `@dataclass(slots=True)` for memory efficiency—this is a Python 3.10+ feature that avoids creating a `__dict__` for each instance.
 
-```
-┌────────────────────────────────────────────────────────────┐
-│  Content      │  SHA-1 Hash                                │
-├───────────────┼────────────────────────────────────────────┤
-│  (empty tree) │  4b825dc642cb6eb9a060e54bf8d69288fbee4904  │
-└────────────────────────────────────────────────────────────┘
-```
+### Creating blobs from files
 
-## 3. Commit Object (Repository Snapshot)
+We also provide a convenience method to create blobs from files:
 
-A commit points to a tree and contains metadata.
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     COMMIT OBJECT                           │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   ┌─────────────────────────────────────────────────────┐   │
-│   │  Commit                                             │   │
-│   │  ├── tree_sha: "4b825dc..."     ─────────┐          │   │
-│   │  ├── parent_shas: ["abc123..."] ───┐     │          │   │
-│   │  ├── author: Identity             │     │          │   │
-│   │  ├── committer: Identity          │     │          │   │
-│   │  └── message: "Initial commit"    │     │          │   │
-│   └───────────────────────────────────│─────│──────────┘   │
-│                                       │     │              │
-│                                       ▼     ▼              │
-│                              ┌────────┐   ┌────────┐       │
-│                              │ Parent │   │  Tree  │       │
-│                              │ Commit │   │ (root) │       │
-│                              └────────┘   └────────┘       │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+```python
+@classmethod
+def from_file(cls, path: str | Path) -> Self:
+    with open(path, "rb") as f:
+        return cls(data=f.read())
 ```
 
-### Commit Format
+Note the `str | Path` type hint—this is Python 3.10+ union syntax, cleaner than `Union[str, Path]`.
+
+---
+
+## Tree: Representing Directories
+
+If blobs are files, how do we represent directories? That's what trees are for. A tree is a list of entries, where each entry maps a name to either a blob (file) or another tree (subdirectory).
+
+### The Tree Entry Structure
+
+Each entry in a tree contains:
+
+- **mode**: File permissions (e.g., `100644` for regular files, `100755` for executables)
+- **name**: The filename (just the name, not the full path)
+- **sha**: The OID of the referenced object (blob or tree)
+
+```python
+@dataclass(slots=True)
+class TreeEntry:
+    mode: str
+    name: str
+    sha: str
+
+    @property
+    def is_tree(self) -> bool:
+        return self.mode == "40000"
+
+    @property
+    def is_blob(self) -> bool:
+        return self.mode in ("100644", "100755")
+```
+
+### File Modes Explained
+
+Git supports several file modes:
+
+| Mode | Meaning | Example |
+|------|---------|---------|
+| `100644` | Regular file | `README.md` |
+| `100755` | Executable | `run.sh` |
+| `40000` | Directory | `src/` |
+| `120000` | Symbolic link | `link -> target` |
+
+Notice that directories use `40000`, not `040000`. Git stores modes without leading zeros.
+
+### The Tricky Part: Binary Format and Sorting
+
+Tree serialization has two subtleties that trip up many implementations:
+
+**1. Binary SHA storage**: In the serialized format, the SHA is stored as 20 raw bytes, not 40 hex characters:
+
+```python
+def serialize(self) -> bytes:
+    result = b""
+    for entry in sorted_entries:
+        mode_name = f"{entry.mode} {entry.name}\0".encode()
+        sha_binary = bytes.fromhex(entry.sha)  # Convert hex to binary!
+        result += mode_name + sha_binary
+    return result
+```
+
+**2. Directory sorting**: Entries must be sorted, but directories are sorted as if they had a trailing `/`. This ensures correct ordering:
+
+```python
+def sort_key(self) -> str:
+    return self.name + "/" if self.is_tree else self.name
+```
+
+Why? Consider these entries: `foo` (directory), `foo.txt` (file), `foobar` (file). The correct order is:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                   COMMIT FORMAT                             │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904             │
-│   parent abc123def456789...                                 │
-│   author Alice <alice@example.com> 1234567890 -0700         │
-│   committer Bob <bob@example.com> 1234567899 +0000          │
-│                                                 ← blank line│
-│   Add new feature                                           │
-│                                                             │
-│   This commit adds a fantastic new feature                  │
-│   that does amazing things.                                 │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+foo.txt   →  "foo.txt"   (1st)
+foo/      →  "foo/"      (2nd)
+foobar    →  "foobar"    (3rd)
 ```
+
+Without the trailing slash trick, `foo` would sort before `foo.txt`, which breaks Git compatibility.
+
+### Example: Visualizing a Tree
+
+```
+project/
+├── README.md        (blob: abc123...)
+├── src/             (tree: def456...)
+│   └── main.py      (blob: 789abc...)
+└── run.sh           (blob: fed987...)
+```
+
+This directory becomes a tree with three entries:
+- `TreeEntry(mode="100644", name="README.md", sha="abc123...")`
+- `TreeEntry(mode="40000", name="src", sha="def456...")`
+- `TreeEntry(mode="100755", name="run.sh", sha="fed987...")`
+
+The `src/` entry points to another tree object that contains `main.py`.
+
+---
+
+## Commit: Capturing a Snapshot
+
+A commit ties everything together. It represents a complete snapshot of your project at a point in time, plus metadata about who made the change and when.
+
+### What's in a Commit?
+
+```python
+@dataclass(slots=True)
+class Commit(GitObject):
+    tree_sha: str = ""           # The root tree (project snapshot)
+    parent_shas: list[str] = field(default_factory=list)  # Parent commits
+    author: Identity | None = None      # Who wrote the change
+    committer: Identity | None = None   # Who committed it
+    message: str = ""            # The commit message
+```
+
+**Why separate author and committer?** In open source, you might apply someone else's patch. The author is who wrote the code; the committer is who merged it.
+
+### The Identity Class
+
+Git stores author/committer information in a specific format:
+
+```
+Alice Smith <alice@example.com> 1234567890 -0700
+```
+
+We parse and generate this with the `Identity` class:
+
+```python
+@dataclass(slots=True)
+class Identity:
+    name: str
+    email: str
+    timestamp: int      # Unix timestamp
+    tz_offset: str      # "+0000" or "-0700"
+
+    def __str__(self) -> str:
+        return f"{self.name} <{self.email}> {self.timestamp} {self.tz_offset}"
+
+    @classmethod
+    def parse(cls, line: str) -> Self:
+        # Parse "Name <email> timestamp tz" format
+        lt = line.index("<")
+        gt = line.index(">")
+        name = line[:lt].strip()
+        email = line[lt + 1:gt]
+        rest = line[gt + 1:].strip().split()
+        return cls(name=name, email=email,
+                   timestamp=int(rest[0]), tz_offset=rest[1])
+```
+
+### Commit Serialization Format
+
+The serialized format is human-readable:
+
+```
+tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+parent abc123def456789...
+author Alice <alice@example.com> 1234567890 -0700
+committer Bob <bob@example.com> 1234567899 +0000
+
+This is the commit message.
+
+It can have multiple lines.
+```
+
+Key points:
+- Headers come first, one per line
+- A blank line separates headers from the message
+- Root commits have no `parent` line
+- Merge commits have multiple `parent` lines
 
 ### Commit Types
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    COMMIT TYPES                             │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   ROOT COMMIT (no parents):                                 │
-│   ┌─────────┐                                               │
-│   │ Commit  │  ← is_root = True                             │
-│   │ (root)  │    is_merge = False                           │
-│   └─────────┘                                               │
-│                                                             │
-│   REGULAR COMMIT (one parent):                              │
-│   ┌─────────┐                                               │
-│   │ Parent  │◄────┐                                         │
-│   └─────────┘     │                                         │
-│                   │                                         │
-│   ┌─────────┐     │  ← is_root = False                      │
-│   │ Commit  │─────┘    is_merge = False                     │
-│   └─────────┘                                               │
-│                                                             │
-│   MERGE COMMIT (multiple parents):                          │
-│   ┌─────────┐  ┌─────────┐                                  │
-│   │ Parent1 │  │ Parent2 │                                  │
-│   └─────────┘  └─────────┘                                  │
-│        ▲            ▲                                       │
-│        └──────┬─────┘                                       │
-│               │                                             │
-│         ┌─────────┐    ← is_root = False                    │
-│         │  Merge  │      is_merge = True                    │
-│         │ Commit  │                                         │
-│         └─────────┘                                         │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+We provide convenience properties to identify commit types:
+
+```python
+@property
+def is_root(self) -> bool:
+    """True if this is the first commit (no parents)."""
+    return len(self.parent_shas) == 0
+
+@property
+def is_merge(self) -> bool:
+    """True if this is a merge commit (multiple parents)."""
+    return len(self.parent_shas) > 1
 ```
 
-### Identity Format
+### Visualizing Commit History
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                   IDENTITY FORMAT                           │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   Format: Name <email> timestamp timezone                   │
-│                                                             │
-│   ┌───────────────────────────────────────────────────────┐ │
-│   │ Alice Smith <alice@example.com> 1234567890 -0700      │ │
-│   └───────────────────────────────────────────────────────┘ │
-│         │              │              │         │           │
-│         │              │              │         └── TZ      │
-│         │              │              └── Unix timestamp    │
-│         │              └── Email in angle brackets          │
-│         └── Name (can contain spaces)                       │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+         ┌─────────┐
+         │ Commit  │  ← is_root = True (no parents)
+         │ "Init"  │
+         └────┬────┘
+              │
+         ┌────┴────┐
+         │ Commit  │  ← Regular commit (one parent)
+         │ "Add X" │
+         └────┬────┘
+              │
+    ┌─────────┴─────────┐
+    │                   │
+┌───┴───┐          ┌────┴────┐
+│ "Fix" │          │"Feature"│  ← Branch diverges
+└───┬───┘          └────┬────┘
+    │                   │
+    └─────────┬─────────┘
+              │
+         ┌────┴────┐
+         │ "Merge" │  ← is_merge = True (two parents)
+         └─────────┘
 ```
 
-## 4. Tag Object (Annotated Tag)
+---
 
-An annotated tag points to another object with metadata.
+## Tag: Named References with Metadata
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      TAG OBJECT                             │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   ┌─────────────────────────────────────────────────────┐   │
-│   │  Tag                                                │   │
-│   │  ├── object_sha: "abc123..."   ───────────┐         │   │
-│   │  ├── object_type: "commit"                │         │   │
-│   │  ├── tag_name: "v1.0.0"                   │         │   │
-│   │  ├── tagger: Identity                     │         │   │
-│   │  └── message: "Release v1.0.0"            │         │   │
-│   └───────────────────────────────────────────│─────────┘   │
-│                                               │             │
-│                                               ▼             │
-│                                        ┌───────────┐        │
-│                                        │  Commit   │        │
-│                                        │ (tagged)  │        │
-│                                        └───────────┘        │
-│                                                             │
-│   Note: Tags can point to any object type:                  │
-│   - commit (most common)                                    │
-│   - tree                                                    │
-│   - blob                                                    │
-│   - tag (nested tags)                                       │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+Annotated tags are like commits that point to other objects instead of trees. They store who created the tag, when, and a message.
+
+### When to Use Tags vs. Branches?
+
+- **Branches** are movable pointers (they advance with new commits)
+- **Lightweight tags** are fixed pointers (just a name → SHA mapping)
+- **Annotated tags** are objects with metadata (who tagged, message, signature)
+
+For releases, annotated tags are preferred because they record *who* tagged *when* and *why*.
+
+### Tag Structure
+
+```python
+@dataclass(slots=True)
+class Tag(GitObject):
+    object_sha: str = ""       # What we're tagging
+    object_type: str = "commit"  # Usually "commit"
+    tag_name: str = ""         # e.g., "v1.0.0"
+    tagger: Identity | None = None
+    message: str = ""
 ```
 
-### Tag Format
+### Tag Serialization
+
+Similar to commits:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                     TAG FORMAT                              │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   object abc123def456789...                                 │
-│   type commit                                               │
-│   tag v1.0.0                                                │
-│   tagger Alice <alice@example.com> 1234567890 -0700         │
-│                                                 ← blank line│
-│   Release version 1.0.0                                     │
-│                                                             │
-│   This release includes:                                    │
-│   - Feature A                                               │
-│   - Bug fix B                                               │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+object abc123def456789...
+type commit
+tag v1.0.0
+tagger Alice <alice@example.com> 1234567890 -0700
+
+Release version 1.0.0
+
+This release includes many improvements.
 ```
 
-## Object Relationships
+---
+
+## Putting It All Together: The Object Graph
+
+Here's how all the objects relate to represent a repository:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│              OBJECT RELATIONSHIP DIAGRAM                    │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│                     ┌───────────┐                           │
-│                     │    Tag    │                           │
-│                     │  "v1.0"   │                           │
-│                     └─────┬─────┘                           │
-│                           │ points to                       │
-│                           ▼                                 │
-│                     ┌───────────┐                           │
-│                     │  Commit   │                           │
-│   ┌─────────────────│  "Fix X"  │                           │
-│   │ parent          └─────┬─────┘                           │
-│   │                       │ tree                            │
-│   ▼                       ▼                                 │
-│ ┌───────────┐       ┌───────────┐                           │
-│ │  Commit   │       │   Tree    │                           │
-│ │  "Add Y"  │       │  (root)   │                           │
-│ └───────────┘       └─────┬─────┘                           │
-│                           │                                 │
-│            ┌──────────────┼──────────────┐                  │
-│            │              │              │                  │
-│            ▼              ▼              ▼                  │
-│      ┌──────────┐   ┌──────────┐   ┌──────────┐             │
-│      │   Blob   │   │   Blob   │   │   Tree   │             │
-│      │ README   │   │ main.py  │   │   src/   │             │
-│      └──────────┘   └──────────┘   └────┬─────┘             │
-│                                         │                   │
-│                                         ▼                   │
-│                                   ┌──────────┐              │
-│                                   │   Blob   │              │
-│                                   │ utils.py │              │
-│                                   └──────────┘              │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+                  ┌───────────┐
+                  │    Tag    │
+                  │  "v1.0"   │
+                  └─────┬─────┘
+                        │ points to
+                        ▼
+                  ┌───────────┐
+                  │  Commit   │
+    ┌─────────────│  "Fix X"  │
+    │ parent      └─────┬─────┘
+    │                   │ tree
+    ▼                   ▼
+┌───────────┐     ┌───────────┐
+│  Commit   │     │   Tree    │
+│  "Add Y"  │     │  (root)   │
+└───────────┘     └─────┬─────┘
+                        │
+         ┌──────────────┼──────────────┐
+         │              │              │
+         ▼              ▼              ▼
+   ┌──────────┐   ┌──────────┐   ┌──────────┐
+   │   Blob   │   │   Blob   │   │   Tree   │
+   │ README   │   │ main.py  │   │   src/   │
+   └──────────┘   └──────────┘   └────┬─────┘
+                                      │
+                                      ▼
+                                ┌──────────┐
+                                │   Blob   │
+                                │ utils.py │
+                                └──────────┘
 ```
 
-## Object Factory
+This graph shows:
+- A tag pointing to a commit
+- The commit having a parent (previous commit) and a tree (snapshot)
+- The tree containing blobs (files) and another tree (subdirectory)
+- The nested tree containing another blob
 
-The factory functions handle serialization with headers.
+---
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                   OBJECT FACTORY                            │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   create_object_data(obj) → bytes                           │
-│   ┌─────────────────────────────────────────────────────┐   │
-│   │                                                     │   │
-│   │   Blob(data=b"hello\n")                             │   │
-│   │           │                                         │   │
-│   │           ▼                                         │   │
-│   │   ┌───────────────────┐                             │   │
-│   │   │ blob 6\0hello\n   │  ← Complete object data     │   │
-│   │   └───────────────────┘                             │   │
-│   │                                                     │   │
-│   └─────────────────────────────────────────────────────┘   │
-│                                                             │
-│   parse_object(data) → (sha, obj)                           │
-│   ┌─────────────────────────────────────────────────────┐   │
-│   │                                                     │   │
-│   │   b"blob 6\0hello\n"                                │   │
-│   │           │                                         │   │
-│   │           ▼                                         │   │
-│   │   ("ce013625...", Blob(data=b"hello\n"))            │   │
-│   │                                                     │   │
-│   └─────────────────────────────────────────────────────┘   │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+## The Object Factory
+
+For convenience, we provide factory functions to parse and create complete objects (with headers):
+
+### Parsing Objects
+
+```python
+def parse_object(data: bytes) -> tuple[str, GitObject]:
+    """Parse raw object data (with header) into (sha, object)."""
+    null_idx = data.index(b"\0")
+    header = data[:null_idx].decode("ascii")
+    content = data[null_idx + 1:]
+
+    type_name, size_str = header.split(" ")
+    if len(content) != int(size_str):
+        raise ValueError("Size mismatch!")
+
+    obj_class = OBJECT_TYPES[type_name]  # {"blob": Blob, "tree": Tree, ...}
+    obj = obj_class.deserialize(content)
+
+    sha = hashlib.sha1(data, usedforsecurity=False).hexdigest()
+    return sha, obj
 ```
 
-## Class Hierarchy
+### Creating Object Data
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                   CLASS HIERARCHY                           │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   gitpy/objects/                                            │
-│   │                                                         │
-│   ├── base.py                                               │
-│   │   └── GitObject (ABC)                                   │
-│   │       ├── type_name: str                                │
-│   │       ├── serialize() → bytes                           │
-│   │       ├── deserialize(bytes) → Self                     │
-│   │       ├── compute_hash() → str                          │
-│   │       └── oid: str (property)                           │
-│   │                                                         │
-│   ├── blob.py                                               │
-│   │   └── Blob(GitObject)                                   │
-│   │       ├── data: bytes                                   │
-│   │       └── from_file(path) → Self                        │
-│   │                                                         │
-│   ├── tree.py                                               │
-│   │   ├── TreeEntry                                         │
-│   │   │   ├── mode: str                                     │
-│   │   │   ├── name: str                                     │
-│   │   │   ├── sha: str                                      │
-│   │   │   ├── is_tree: bool                                 │
-│   │   │   ├── is_blob: bool                                 │
-│   │   │   └── sort_key() → str                              │
-│   │   │                                                     │
-│   │   └── Tree(GitObject)                                   │
-│   │       ├── entries: list[TreeEntry]                      │
-│   │       ├── add_entry(mode, name, sha)                    │
-│   │       └── get_entry(name) → TreeEntry | None            │
-│   │                                                         │
-│   ├── commit.py                                             │
-│   │   ├── Identity                                          │
-│   │   │   ├── name: str                                     │
-│   │   │   ├── email: str                                    │
-│   │   │   ├── timestamp: int                                │
-│   │   │   ├── tz_offset: str                                │
-│   │   │   ├── parse(str) → Self                             │
-│   │   │   └── now(name, email) → Self                       │
-│   │   │                                                     │
-│   │   └── Commit(GitObject)                                 │
-│   │       ├── tree_sha: str                                 │
-│   │       ├── parent_shas: list[str]                        │
-│   │       ├── author: Identity                              │
-│   │       ├── committer: Identity                           │
-│   │       ├── message: str                                  │
-│   │       ├── is_root: bool                                 │
-│   │       └── is_merge: bool                                │
-│   │                                                         │
-│   └── tag.py                                                │
-│       └── Tag(GitObject)                                    │
-│           ├── object_sha: str                               │
-│           ├── object_type: str                              │
-│           ├── tag_name: str                                 │
-│           ├── tagger: Identity                              │
-│           └── message: str                                  │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+```python
+def create_object_data(obj: GitObject) -> bytes:
+    """Serialize an object with its header, ready for storage."""
+    content = obj.serialize()
+    header = f"{obj.type_name} {len(content)}\0".encode()
+    return header + content
 ```
 
-## Key Properties
+---
 
-| Property | Description |
-|----------|-------------|
-| **Immutability** | Objects never change once created |
-| **Content-Addressable** | Same content → same hash → same object |
-| **Deduplication** | Identical files stored only once |
-| **Integrity** | Hash verifies data hasn't been corrupted |
+## Design Principles in Our Implementation
+
+### 1. Immutability
+
+All our objects are effectively immutable. We use `@dataclass(slots=True)` which creates fixed slots, and our methods return new instances rather than modifying existing ones.
+
+### 2. Type Safety
+
+We leverage Python 3.12+ type hints throughout:
+- `Self` for methods returning the same class type
+- `list[str]` instead of `List[str]`
+- `str | None` instead of `Optional[str]`
+
+### 3. Separation of Concerns
+
+Each object knows how to serialize/deserialize itself, but doesn't know about storage. Storage is handled separately (Phase 2), which allows us to:
+- Test objects in isolation
+- Swap storage backends
+- Keep each class focused
+
+### 4. Git Compatibility
+
+We obsessively verify against real Git:
+
+```bash
+# Our empty blob hash must match Git's
+echo -n "" | git hash-object --stdin
+# e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
+
+# Our empty tree hash must match Git's
+git hash-object -t tree /dev/null
+# 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+```
+
+---
 
 ## Usage Examples
 
-```python
-from gitpy.objects import Blob, Tree, TreeEntry, Commit, Identity
+### Creating and Hashing a Blob
 
-# Create a blob
+```python
+from gitpy.objects import Blob
+
+# From raw bytes
 blob = Blob(data=b"Hello, World!\n")
 print(blob.oid)  # 8ab686eafeb1f44702738c8b0f24f2567c36da6d
 
-# Create a tree with entries
-tree = Tree(entries=[
-    TreeEntry(mode="100644", name="hello.txt", sha=blob.oid)
-])
-print(tree.oid)
+# From a file
+blob = Blob.from_file("README.md")
+print(f"README.md hash: {blob.oid}")
+```
 
-# Create a commit
+### Building a Tree
+
+```python
+from gitpy.objects import Tree, TreeEntry, Blob
+
+# Create some blobs
+readme = Blob(data=b"# My Project\n")
+main_py = Blob(data=b"print('hello')\n")
+
+# Create a tree referencing them
+tree = Tree(entries=[
+    TreeEntry(mode="100644", name="README.md", sha=readme.oid),
+    TreeEntry(mode="100644", name="main.py", sha=main_py.oid),
+])
+
+print(f"Tree hash: {tree.oid}")
+```
+
+### Creating a Commit
+
+```python
+from gitpy.objects import Commit, Identity
+
 author = Identity.now("Alice", "alice@example.com")
+
 commit = Commit(
     tree_sha=tree.oid,
-    parent_shas=[],
+    parent_shas=[],  # First commit, no parents
     author=author,
     committer=author,
-    message="Initial commit"
+    message="Initial commit\n\nThis is the first commit."
 )
-print(commit.oid)
-print(commit.is_root)  # True
+
+print(f"Commit: {commit.oid}")
+print(f"Is root: {commit.is_root}")  # True
 ```
+
+---
+
+## What's Next?
+
+The object model is the foundation. In subsequent phases, we build on top of it:
+
+- **Phase 2: Object Storage** - Compressing and storing objects on disk
+- **Phase 3: References** - HEAD, branches, and tags pointing to objects
+- **Phase 4: Index** - The staging area for preparing commits
+- **Phase 5+: Commands** - The porcelain commands like `add`, `commit`, `log`
+
+Each phase builds on the immutable, content-addressable objects we've defined here. The elegance of Git is that everything reduces to these four simple object types.
