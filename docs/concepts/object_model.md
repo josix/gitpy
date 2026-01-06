@@ -961,9 +961,21 @@ The known hash tests are critical—they prove we're Git-compatible.
 
 The object model is the foundation. The next layers build on top:
 
-- **Object Storage**: How objects are compressed and stored on disk
+- **Object Storage** ✅ **Implemented**: How objects are compressed and stored on disk
+  - See `gitpy/storage/` for `LooseObjectStore`, `ObjectDatabase`
+  - See `gitpy/repository.py` for `Repository` class
 - **References**: How branches, tags, and HEAD point to objects
 - **Index**: The staging area between working directory and repository
 - **Commands**: The porcelain commands that orchestrate everything
 
 Every Git operation ultimately reduces to creating, reading, or referencing these four simple object types. Understanding this model unlocks a deep understanding of how Git really works.
+
+### Implementation Status
+
+| Component | Status | Module |
+|-----------|--------|--------|
+| Object Model | ✅ Complete | `gitpy/objects/` |
+| Object Storage | ✅ Complete | `gitpy/storage/`, `gitpy/repository.py` |
+| References | 🔲 Planned | `gitpy/refs/` |
+| Index | 🔲 Planned | `gitpy/index/` |
+| Commands | 🔲 Planned | `gitpy/commands/` |
