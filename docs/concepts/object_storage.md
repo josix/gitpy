@@ -616,6 +616,9 @@ The storage layer is deliberately simple—complexity comes from what you build 
 
 With object storage in place, the next layers build on top:
 
+- **[Pack Files](pack_files.md)**: Efficient storage combining many objects with delta compression
+- **[Delta Compression](delta_compression.md)**: How Git stores only differences between similar objects
+- **[Pack Index](pack_index.md)**: Fast O(1) object lookup in pack files
 - **References** (`gitpy/refs/`): Human-readable names (branches, tags, HEAD)
 - **Index** (`gitpy/index/`): The staging area between working directory and repository
 - **Commands** (`gitpy/commands/`): Plumbing and porcelain operations
