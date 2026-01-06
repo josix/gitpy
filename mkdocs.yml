@@ -4,9 +4,13 @@ nav:
   - Concepts:
     - Object Model: concepts/object_model.md
     - Object Storage: concepts/object_storage.md
+    - Pack Files: concepts/pack_files.md
+    - Delta Compression: concepts/delta_compression.md
+    - Pack Index: concepts/pack_index.md
   - API Reference:
     - Objects: api/objects.md
     - Storage: api/storage.md
+    - Pack Objects: api/pack.md
   - Contributing: contributing.md
 theme:
   name: 'material'
