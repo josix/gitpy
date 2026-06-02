@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.0 (2026-06-02)
+
+### Feat
+
+- implement Phases 3-8 (references, index, diff, plumbing & porcelain CLI)
+- **storage**: implement Phase 2b pack file support
+
+### Fix
+
+- **deps**: upgrade vulnerable transitive dependencies
+
 ## 0.2.1 (2026-01-06)
 
 ### Fix
