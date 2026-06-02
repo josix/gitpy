@@ -1,0 +1,3845 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../pack/">
+      
+      
+        <link rel="next" href="../staging/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>References - gitpy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#references-api-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="gitpy" class="md-header__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gitpy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              References
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="gitpy" class="md-nav__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gitpy
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/object_model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/object_storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/pack_files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pack Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/delta_compression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Delta Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/pack_index/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pack Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/index_staging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index & Staging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/diff/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../objects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Objects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pack Objects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#module-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#refmanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RefManager
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RefManager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#read" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        read()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        resolve()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        write()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write_symbolic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        write_symbolic()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        delete()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list_refs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list_refs()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list_branches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list_branches()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list_tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list_tags()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pack_refs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pack_refs()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#headstate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HeadState
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#head" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Head
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Head">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#is_detached" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        is_detached
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        branch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sha
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#headmanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HeadManager
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HeadManager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#read_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        read()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set_branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        set_branch()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set_detached" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        set_detached()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolve_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        resolve()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#branch_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Branch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Branch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#properties_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#full_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        full_name
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#short_sha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        short_sha
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#branchmanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BranchManager
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BranchManager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        current()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        exists()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        delete()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rename" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rename()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lightweighttag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LightweightTag
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LightweightTag">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#properties_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#is_annotated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        is_annotated
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#annotatedtag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AnnotatedTag
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AnnotatedTag">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#properties_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#is_annotated_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        is_annotated
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tagtype" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TagType
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tagmanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TagManager
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TagManager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create_lightweight" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create_lightweight()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create_annotated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create_annotated()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exists_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        exists()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        delete()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#peel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        peel()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zero_sha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ZERO_SHA
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reflogentry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ReflogEntry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ReflogEntry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        format()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        parse()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reflog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reflog
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reflog">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#append" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        append()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        read()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        clear()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#revisionparser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RevisionParser
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RevisionParser">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parse_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        parse()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git Compatibility
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../staging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../diff/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Config
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#module-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#refmanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RefManager
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RefManager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#read" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        read()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        resolve()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        write()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write_symbolic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        write_symbolic()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        delete()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list_refs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list_refs()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list_branches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list_branches()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list_tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list_tags()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pack_refs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pack_refs()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#headstate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HeadState
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#head" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Head
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Head">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#is_detached" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        is_detached
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        branch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        sha
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#headmanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HeadManager
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HeadManager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#read_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        read()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set_branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        set_branch()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#set_detached" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        set_detached()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolve_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        resolve()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#branch_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Branch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Branch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#properties_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#full_name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        full_name
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#short_sha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        short_sha
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#branchmanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        BranchManager
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="BranchManager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        current()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        exists()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        delete()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rename" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rename()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lightweighttag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LightweightTag
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="LightweightTag">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#properties_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#is_annotated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        is_annotated
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#annotatedtag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AnnotatedTag
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="AnnotatedTag">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#properties_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#is_annotated_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        is_annotated
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tagtype" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TagType
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tagmanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TagManager
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TagManager">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create_lightweight" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create_lightweight()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create_annotated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create_annotated()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exists_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        exists()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        delete()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#peel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        peel()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zero_sha" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ZERO_SHA
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reflogentry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ReflogEntry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ReflogEntry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        format()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        parse()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reflog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reflog
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reflog">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#append" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        append()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        read()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        clear()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#revisionparser" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RevisionParser
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RevisionParser">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parse_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        parse()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git Compatibility
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="references-api-reference">References API Reference</h1>
+<p>This document provides a complete API reference for the <code>gitpy.refs</code> module, which implements Git's reference management: branches, tags, HEAD, reflogs, and revision expressions.</p>
+<h2 id="module-overview">Module Overview</h2>
+<pre><code class="language-python">from gitpy.refs import (
+    RefManager,      # Low-level ref read/write/resolve
+    Head,            # HEAD state data class
+    HeadState,       # Enum: ATTACHED or DETACHED
+    HeadManager,     # Read/write HEAD
+    Branch,          # Branch data class
+    BranchManager,   # High-level branch operations
+    LightweightTag,  # Lightweight tag data class
+    AnnotatedTag,    # Annotated tag data class
+    TagType,         # Type alias: LightweightTag | AnnotatedTag
+    TagManager,      # High-level tag operations
+    Reflog,          # Reflog file manager
+    ReflogEntry,     # Single reflog entry
+    ZERO_SHA,        # &quot;0&quot; * 40 — sentinel for new refs
+    RevisionParser,  # Parse revision expressions to SHAs
+)
+</code></pre>
+<hr />
+<h2 id="refmanager">RefManager</h2>
+<p><strong>Module:</strong> <code>gitpy.refs.manager</code></p>
+<p>Manages Git references. Handles reading, writing, resolving, and listing references including support for packed-refs. All write and delete operations invalidate the packed-refs cache so subsequent reads remain consistent.</p>
+<pre><code class="language-python">class RefManager:
+    git_dir: Path            # Path to the .git directory
+    refs_dir: Path           # Path to .git/refs/
+    packed_refs_path: Path   # Path to .git/packed-refs
+</code></pre>
+<h3 id="constructor">Constructor</h3>
+<pre><code class="language-python">def __init__(self, git_dir: Path) -&gt; None
+</code></pre>
+<p><strong>Parameters:</strong>
+- <code>git_dir</code> - Path to the <code>.git</code> directory.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from pathlib import Path
+from gitpy.refs import RefManager
+
+ref_mgr = RefManager(Path(&quot;/path/to/repo/.git&quot;))
+</code></pre>
+<h3 id="methods">Methods</h3>
+<h4 id="read"><code>read()</code></h4>
+<pre><code class="language-python">def read(self, name: str) -&gt; str | None
+</code></pre>
+<p>Read a reference value (SHA or <code>"ref: &lt;target&gt;"</code> for symbolic refs). Loose refs take priority over packed refs.</p>
+<p><strong>Parameters:</strong>
+- <code>name</code> - Reference name (e.g. <code>"refs/heads/main"</code>).</p>
+<p><strong>Returns:</strong> SHA string, <code>"ref: &lt;target&gt;"</code> for symbolic refs, or <code>None</code> if the reference does not exist or the name is unsafe.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">value = ref_mgr.read(&quot;refs/heads/main&quot;)
+# Returns: &quot;abc123def456...&quot; or None
+</code></pre>
+<h4 id="resolve"><code>resolve()</code></h4>
+<pre><code class="language-python">def resolve(self, name: str, max_depth: int = 10) -&gt; str | None
+</code></pre>
+<p>Resolve a reference name or SHA to a final commit SHA. Resolution order for non-SHA names: direct name, <code>refs/&lt;name&gt;</code>, <code>refs/tags/&lt;name&gt;</code>, <code>refs/heads/&lt;name&gt;</code>, <code>refs/remotes/&lt;name&gt;</code>. Symbolic refs are followed recursively up to <code>max_depth</code> times.</p>
+<p><strong>Parameters:</strong>
+- <code>name</code> - Reference name or 40-char hex SHA.
+- <code>max_depth</code> - Maximum symbolic-ref chain depth (prevents loops).</p>
+<p><strong>Returns:</strong> 40-character hex SHA, or <code>None</code> if not found.</p>
+<p><strong>Raises:</strong>
+- <code>ValueError</code> - A symbolic reference loop was detected.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">sha = ref_mgr.resolve(&quot;main&quot;)         # short name
+sha = ref_mgr.resolve(&quot;refs/heads/main&quot;)  # full ref
+sha = ref_mgr.resolve(&quot;HEAD&quot;)         # follows symref chain
+</code></pre>
+<h4 id="write"><code>write()</code></h4>
+<pre><code class="language-python">def write(self, name: str, sha: str) -&gt; None
+</code></pre>
+<p>Update a reference to point to a SHA. Creates parent directories as needed. Uses an atomic lock-file write. Invalidates the packed-refs cache.</p>
+<p><strong>Parameters:</strong>
+- <code>name</code> - Reference name (e.g. <code>"refs/heads/main"</code>).
+- <code>sha</code> - 40-character hex SHA.</p>
+<p><strong>Raises:</strong>
+- <code>ValueError</code> - <code>sha</code> is not a valid 40-char hex SHA, or <code>name</code> is unsafe.</p>
+<h4 id="write_symbolic"><code>write_symbolic()</code></h4>
+<pre><code class="language-python">def write_symbolic(self, name: str, target: str) -&gt; None
+</code></pre>
+<p>Create a symbolic reference pointing to <code>target</code>.</p>
+<p><strong>Parameters:</strong>
+- <code>name</code> - Reference name (e.g. <code>"HEAD"</code>).
+- <code>target</code> - Target reference name (e.g. <code>"refs/heads/main"</code>).</p>
+<p><strong>Raises:</strong>
+- <code>ValueError</code> - <code>name</code> is unsafe.</p>
+<h4 id="delete"><code>delete()</code></h4>
+<pre><code class="language-python">def delete(self, name: str) -&gt; bool
+</code></pre>
+<p>Delete a loose reference. Also cleans up empty parent directories up to <code>refs/</code>. Invalidates the packed-refs cache.</p>
+<p><strong>Parameters:</strong>
+- <code>name</code> - Reference name.</p>
+<p><strong>Returns:</strong> <code>True</code> if the reference existed and was deleted, <code>False</code> otherwise.</p>
+<p><strong>Raises:</strong>
+- <code>ValueError</code> - <code>name</code> is unsafe.</p>
+<h4 id="list_refs"><code>list_refs()</code></h4>
+<pre><code class="language-python">def list_refs(self, pattern: str = &quot;refs/**&quot;) -&gt; Iterator[tuple[str, str]]
+</code></pre>
+<p>List references matching a glob pattern. Loose refs are yielded first; packed refs are yielded for any names not already seen.</p>
+<p><strong>Parameters:</strong>
+- <code>pattern</code> - Glob pattern relative to <code>git_dir</code> (e.g. <code>"refs/heads/*"</code>).</p>
+<p><strong>Yields:</strong> <code>(name, sha)</code> tuples.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">for name, sha in ref_mgr.list_refs(&quot;refs/heads/*&quot;):
+    print(name, sha)
+</code></pre>
+<h4 id="list_branches"><code>list_branches()</code></h4>
+<pre><code class="language-python">def list_branches(self) -&gt; Iterator[tuple[str, str]]
+</code></pre>
+<p>List local branches.</p>
+<p><strong>Yields:</strong> <code>(short_name, sha)</code> tuples where <code>short_name</code> has <code>"refs/heads/"</code> stripped.</p>
+<h4 id="list_tags"><code>list_tags()</code></h4>
+<pre><code class="language-python">def list_tags(self) -&gt; Iterator[tuple[str, str]]
+</code></pre>
+<p>List tags.</p>
+<p><strong>Yields:</strong> <code>(short_name, sha)</code> tuples where <code>short_name</code> has <code>"refs/tags/"</code> stripped.</p>
+<h4 id="pack_refs"><code>pack_refs()</code></h4>
+<pre><code class="language-python">def pack_refs(self) -&gt; None
+</code></pre>
+<p>Pack all loose refs into the <code>packed-refs</code> file. After packing, loose ref files are removed (except <code>HEAD</code>) and the cache is invalidated.</p>
+<hr />
+<h2 id="headstate">HeadState</h2>
+<p><strong>Module:</strong> <code>gitpy.refs.head</code></p>
+<p>Enum describing the two possible states of the HEAD reference.</p>
+<pre><code class="language-python">class HeadState(Enum):
+    ATTACHED = &quot;attached&quot;   # HEAD points to a branch ref
+    DETACHED = &quot;detached&quot;   # HEAD points directly to a commit SHA
+</code></pre>
+<hr />
+<h2 id="head">Head</h2>
+<p><strong>Module:</strong> <code>gitpy.refs.head</code></p>
+<p>Data class representing the HEAD reference state.</p>
+<pre><code class="language-python">@dataclass(slots=True)
+class Head:
+    state: HeadState   # Whether HEAD is attached or detached
+    target: str        # Branch ref (attached) or SHA (detached)
+</code></pre>
+<h3 id="attributes">Attributes</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>state</code></td>
+<td><code>HeadState</code></td>
+<td>Whether HEAD is attached to a branch or detached at a SHA</td>
+</tr>
+<tr>
+<td><code>target</code></td>
+<td><code>str</code></td>
+<td>Full ref (e.g. <code>"refs/heads/main"</code>) when attached, or 40-char SHA when detached</td>
+</tr>
+</tbody>
+</table>
+<h3 id="properties">Properties</h3>
+<h4 id="is_detached"><code>is_detached</code></h4>
+<pre><code class="language-python">@property
+def is_detached(self) -&gt; bool
+</code></pre>
+<p><code>True</code> when HEAD points directly to a commit SHA.</p>
+<h4 id="branch"><code>branch</code></h4>
+<pre><code class="language-python">@property
+def branch(self) -&gt; str | None
+</code></pre>
+<p>Current branch short name, or <code>None</code> if detached. Strips the <code>"refs/heads/"</code> prefix from <code>target</code>.</p>
+<p><strong>Returns:</strong> Short branch name (e.g. <code>"main"</code>) or <code>None</code>.</p>
+<h4 id="sha"><code>sha</code></h4>
+<pre><code class="language-python">@property
+def sha(self) -&gt; str | None
+</code></pre>
+<p>Direct SHA if detached, <code>None</code> if attached.</p>
+<p><strong>Returns:</strong> 40-char hex SHA or <code>None</code>.</p>
+<hr />
+<h2 id="headmanager">HeadManager</h2>
+<p><strong>Module:</strong> <code>gitpy.refs.head</code></p>
+<p>Manages the HEAD reference. Provides atomic read/write operations for HEAD, supporting both attached (branch-tracking) and detached (SHA-pinned) states.</p>
+<pre><code class="language-python">class HeadManager:
+    git_dir: Path       # Path to the .git directory
+    head_path: Path     # Path to .git/HEAD
+</code></pre>
+<h3 id="constructor_1">Constructor</h3>
+<pre><code class="language-python">def __init__(self, git_dir: Path) -&gt; None
+</code></pre>
+<p><strong>Parameters:</strong>
+- <code>git_dir</code> - Path to the <code>.git</code> directory.</p>
+<h3 id="methods_1">Methods</h3>
+<h4 id="read_1"><code>read()</code></h4>
+<pre><code class="language-python">def read(self) -&gt; Head
+</code></pre>
+<p>Read the current HEAD state.</p>
+<p><strong>Returns:</strong> <code>Head</code> instance reflecting current HEAD content.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">head = head_mgr.read()
+if head.is_detached:
+    print(f&quot;Detached at {head.sha}&quot;)
+else:
+    print(f&quot;On branch {head.branch}&quot;)
+</code></pre>
+<h4 id="set_branch"><code>set_branch()</code></h4>
+<pre><code class="language-python">def set_branch(self, branch: str) -&gt; None
+</code></pre>
+<p>Point HEAD at a branch. Short names are automatically prefixed with <code>"refs/heads/"</code>.</p>
+<p><strong>Parameters:</strong>
+- <code>branch</code> - Branch short name or full ref (e.g. <code>"main"</code> or <code>"refs/heads/main"</code>).</p>
+<h4 id="set_detached"><code>set_detached()</code></h4>
+<pre><code class="language-python">def set_detached(self, sha: str) -&gt; None
+</code></pre>
+<p>Point HEAD at a specific commit (detached mode).</p>
+<p><strong>Parameters:</strong>
+- <code>sha</code> - 40-character hex commit SHA.</p>
+<p><strong>Raises:</strong>
+- <code>ValueError</code> - If <code>sha</code> is not exactly 40 characters.</p>
+<h4 id="resolve_1"><code>resolve()</code></h4>
+<pre><code class="language-python">def resolve(self, ref_manager: RefManager) -&gt; str
+</code></pre>
+<p>Resolve HEAD to a commit SHA.</p>
+<p><strong>Parameters:</strong>
+- <code>ref_manager</code> - Reference manager used to resolve branch names.</p>
+<p><strong>Returns:</strong> 40-character hex SHA of the current commit.</p>
+<p><strong>Raises:</strong>
+- <code>ValueError</code> - HEAD points to a branch that does not exist yet.</p>
+<hr />
+<h2 id="branch_1">Branch</h2>
+<p><strong>Module:</strong> <code>gitpy.refs.branch</code></p>
+<p>Data class representing a Git branch.</p>
+<pre><code class="language-python">@dataclass(slots=True)
+class Branch:
+    name: str   # Short branch name (e.g. &quot;main&quot;)
+    sha: str    # Full 40-char SHA the branch currently points to
+</code></pre>
+<h3 id="attributes_1">Attributes</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td><code>str</code></td>
+<td>Short branch name (e.g. <code>"main"</code>)</td>
+</tr>
+<tr>
+<td><code>sha</code></td>
+<td><code>str</code></td>
+<td>Full 40-char SHA the branch currently points to</td>
+</tr>
+</tbody>
+</table>
+<h3 id="properties_1">Properties</h3>
+<h4 id="full_name"><code>full_name</code></h4>
+<pre><code class="language-python">@property
+def full_name(self) -&gt; str
+</code></pre>
+<p>Full ref name including namespace (e.g. <code>"refs/heads/main"</code>).</p>
+<h4 id="short_sha"><code>short_sha</code></h4>
+<pre><code class="language-python">@property
+def short_sha(self) -&gt; str
+</code></pre>
+<p>First 7 characters of the SHA.</p>
+<hr />
+<h2 id="branchmanager">BranchManager</h2>
+<p><strong>Module:</strong> <code>gitpy.refs.branch</code></p>
+<p>High-level branch operations. Delegates low-level ref I/O to <code>RefManager</code> and HEAD mutations to <code>HeadManager</code>.</p>
+<pre><code class="language-python">class BranchManager:
+    refs: RefManager    # Ref manager for this repository
+    head: HeadManager   # HEAD manager for this repository
+</code></pre>
+<h3 id="constructor_2">Constructor</h3>
+<pre><code class="language-python">def __init__(self, ref_manager: RefManager, head_manager: HeadManager) -&gt; None
+</code></pre>
+<p><strong>Parameters:</strong>
+- <code>ref_manager</code> - <code>RefManager</code> instance for this repository.
+- <code>head_manager</code> - <code>HeadManager</code> instance for this repository.</p>
+<h3 id="methods_2">Methods</h3>
+<h4 id="current"><code>current()</code></h4>
+<pre><code class="language-python">def current(self) -&gt; str | None
+</code></pre>
+<p>Return the current branch short name, or <code>None</code> if detached.</p>
+<p><strong>Returns:</strong> Branch name string, or <code>None</code> when HEAD is detached.</p>
+<h4 id="exists"><code>exists()</code></h4>
+<pre><code class="language-python">def exists(self, name: str) -&gt; bool
+</code></pre>
+<p>Check whether a branch exists.</p>
+<p><strong>Parameters:</strong>
+- <code>name</code> - Short branch name.</p>
+<p><strong>Returns:</strong> <code>True</code> if the branch ref can be resolved.</p>
+<h4 id="get"><code>get()</code></h4>
+<pre><code class="language-python">def get(self, name: str) -&gt; Branch | None
+</code></pre>
+<p>Retrieve a branch by name.</p>
+<p><strong>Parameters:</strong>
+- <code>name</code> - Short branch name.</p>
+<p><strong>Returns:</strong> <code>Branch</code> instance, or <code>None</code> if the branch does not exist.</p>
+<h4 id="create"><code>create()</code></h4>
+<pre><code class="language-python">def create(self, name: str, sha: str, force: bool = False) -&gt; Branch
+</code></pre>
+<p>Create a new branch.</p>
+<p><strong>Parameters:</strong>
+- <code>name</code> - Short branch name to create.
+- <code>sha</code> - Commit SHA the branch should point to.
+- <code>force</code> - If <code>True</code>, overwrite an existing branch.</p>
+<p><strong>Returns:</strong> Newly created <code>Branch</code>.</p>
+<p><strong>Raises:</strong>
+- <code>ValueError</code> - Branch already exists and <code>force</code> is <code>False</code>, or the name is invalid.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">branch = branch_mgr.create(&quot;feature/my-work&quot;, commit_sha)
+print(branch.full_name)  # &quot;refs/heads/feature/my-work&quot;
+</code></pre>
+<h4 id="delete_1"><code>delete()</code></h4>
+<pre><code class="language-python">def delete(self, name: str, *, force: bool = False) -&gt; bool
+</code></pre>
+<p>Delete a branch.</p>
+<p><strong>Parameters:</strong>
+- <code>name</code> - Short branch name.
+- <code>force</code> - Reserved for future merge-safety checks; currently unused.</p>
+<p><strong>Returns:</strong> <code>True</code> if the branch was deleted, <code>False</code> if it did not exist.</p>
+<p><strong>Raises:</strong>
+- <code>ValueError</code> - Attempting to delete the currently checked-out branch.</p>
+<h4 id="rename"><code>rename()</code></h4>
+<pre><code class="language-python">def rename(self, old_name: str, new_name: str, force: bool = False) -&gt; Branch
+</code></pre>
+<p>Rename a branch. If the renamed branch is currently checked out, HEAD is updated to track the new name.</p>
+<p><strong>Parameters:</strong>
+- <code>old_name</code> - Current short branch name.
+- <code>new_name</code> - New short branch name.
+- <code>force</code> - If <code>True</code>, overwrite <code>new_name</code> if it already exists.</p>
+<p><strong>Returns:</strong> Updated <code>Branch</code> with the new name.</p>
+<p><strong>Raises:</strong>
+- <code>ValueError</code> - <code>old_name</code> does not exist, <code>new_name</code> already exists and <code>force</code> is <code>False</code>, or <code>new_name</code> is invalid.</p>
+<h4 id="list"><code>list()</code></h4>
+<pre><code class="language-python">def list(self) -&gt; list[Branch]
+</code></pre>
+<p>List all local branches.</p>
+<p><strong>Returns:</strong> List of <code>Branch</code> instances.</p>
+<hr />
+<h2 id="lightweighttag">LightweightTag</h2>
+<p><strong>Module:</strong> <code>gitpy.refs.tag</code></p>
+<p>A lightweight tag — just a reference, no tag object.</p>
+<pre><code class="language-python">@dataclass(slots=True)
+class LightweightTag:
+    name: str   # Short tag name
+    sha: str    # SHA the tag points to (usually a commit)
+</code></pre>
+<h3 id="attributes_2">Attributes</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td><code>str</code></td>
+<td>Short tag name</td>
+</tr>
+<tr>
+<td><code>sha</code></td>
+<td><code>str</code></td>
+<td>SHA the tag points to (usually a commit)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="properties_2">Properties</h3>
+<h4 id="is_annotated"><code>is_annotated</code></h4>
+<pre><code class="language-python">@property
+def is_annotated(self) -&gt; bool
+</code></pre>
+<p>Always <code>False</code> for lightweight tags.</p>
+<hr />
+<h2 id="annotatedtag">AnnotatedTag</h2>
+<p><strong>Module:</strong> <code>gitpy.refs.tag</code></p>
+<p>An annotated tag — a tag object stored in the object database plus a reference.</p>
+<pre><code class="language-python">@dataclass(slots=True)
+class AnnotatedTag:
+    name: str               # Short tag name
+    sha: str                # SHA of the tag object
+    target: str             # SHA of the tagged commit (or other object)
+    message: str            # Tag message
+    tagger: Identity | None # Identity who created the tag, or None
+</code></pre>
+<h3 id="attributes_3">Attributes</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td><code>str</code></td>
+<td>Short tag name</td>
+</tr>
+<tr>
+<td><code>sha</code></td>
+<td><code>str</code></td>
+<td>SHA of the tag <em>object</em></td>
+</tr>
+<tr>
+<td><code>target</code></td>
+<td><code>str</code></td>
+<td>SHA of the tagged commit (or other object)</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td><code>str</code></td>
+<td>Tag message</td>
+</tr>
+<tr>
+<td><code>tagger</code></td>
+<td><code>Identity \| None</code></td>
+<td>Identity who created the tag, or <code>None</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="properties_3">Properties</h3>
+<h4 id="is_annotated_1"><code>is_annotated</code></h4>
+<pre><code class="language-python">@property
+def is_annotated(self) -&gt; bool
+</code></pre>
+<p>Always <code>True</code> for annotated tags.</p>
+<hr />
+<h2 id="tagtype">TagType</h2>
+<p><strong>Module:</strong> <code>gitpy.refs.tag</code></p>
+<p>Type alias for tag union.</p>
+<pre><code class="language-python">type TagType = LightweightTag | AnnotatedTag
+</code></pre>
+<hr />
+<h2 id="tagmanager">TagManager</h2>
+<p><strong>Module:</strong> <code>gitpy.refs.tag</code></p>
+<p>High-level tag operations.</p>
+<pre><code class="language-python">class TagManager:
+    refs: RefManager         # Ref manager for this repository
+    objects: ObjectDatabase  # Object database for this repository
+</code></pre>
+<h3 id="constructor_3">Constructor</h3>
+<pre><code class="language-python">def __init__(self, ref_manager: RefManager, object_db: ObjectDatabase) -&gt; None
+</code></pre>
+<p><strong>Parameters:</strong>
+- <code>ref_manager</code> - <code>RefManager</code> instance for this repository.
+- <code>object_db</code> - <code>ObjectDatabase</code> instance for this repository.</p>
+<h3 id="methods_3">Methods</h3>
+<h4 id="get_1"><code>get()</code></h4>
+<pre><code class="language-python">def get(self, name: str) -&gt; TagType | None
+</code></pre>
+<p>Get a tag by name, distinguishing lightweight from annotated.</p>
+<p><strong>Parameters:</strong>
+- <code>name</code> - Short tag name.</p>
+<p><strong>Returns:</strong> <code>LightweightTag</code> or <code>AnnotatedTag</code>, or <code>None</code> if not found.</p>
+<h4 id="create_lightweight"><code>create_lightweight()</code></h4>
+<pre><code class="language-python">def create_lightweight(self, name: str, sha: str, force: bool = False) -&gt; LightweightTag
+</code></pre>
+<p>Create a lightweight tag.</p>
+<p><strong>Parameters:</strong>
+- <code>name</code> - Short tag name.
+- <code>sha</code> - SHA to tag (usually a commit).
+- <code>force</code> - If <code>True</code>, overwrite existing tag.</p>
+<p><strong>Returns:</strong> Created <code>LightweightTag</code>.</p>
+<p><strong>Raises:</strong>
+- <code>ValueError</code> - Tag already exists and <code>force</code> is <code>False</code>.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">tag = tag_mgr.create_lightweight(&quot;v1.0.0&quot;, commit_sha)
+</code></pre>
+<h4 id="create_annotated"><code>create_annotated()</code></h4>
+<pre><code class="language-python">def create_annotated(
+    self,
+    name: str,
+    sha: str,
+    message: str,
+    tagger: Identity,
+    force: bool = False,
+) -&gt; AnnotatedTag
+</code></pre>
+<p>Create an annotated tag. Writes a tag object to the object database and creates a ref pointing to that object.</p>
+<p><strong>Parameters:</strong>
+- <code>name</code> - Short tag name.
+- <code>sha</code> - SHA of the object being tagged (usually a commit).
+- <code>message</code> - Tag message.
+- <code>tagger</code> - Identity of the person creating the tag.
+- <code>force</code> - If <code>True</code>, overwrite existing tag.</p>
+<p><strong>Returns:</strong> Created <code>AnnotatedTag</code>.</p>
+<p><strong>Raises:</strong>
+- <code>ValueError</code> - Tag already exists and <code>force</code> is <code>False</code>.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from gitpy.objects import Identity
+
+tagger = Identity.now(&quot;Alice&quot;, &quot;alice@example.com&quot;)
+tag = tag_mgr.create_annotated(&quot;v1.0.0&quot;, commit_sha, &quot;Release 1.0&quot;, tagger)
+</code></pre>
+<h4 id="exists_1"><code>exists()</code></h4>
+<pre><code class="language-python">def exists(self, name: str) -&gt; bool
+</code></pre>
+<p>Check whether a tag exists.</p>
+<p><strong>Parameters:</strong>
+- <code>name</code> - Short tag name.</p>
+<p><strong>Returns:</strong> <code>True</code> if the tag ref resolves.</p>
+<h4 id="delete_2"><code>delete()</code></h4>
+<pre><code class="language-python">def delete(self, name: str) -&gt; bool
+</code></pre>
+<p>Delete a tag.</p>
+<p><strong>Parameters:</strong>
+- <code>name</code> - Short tag name.</p>
+<p><strong>Returns:</strong> <code>True</code> if deleted, <code>False</code> if it did not exist.</p>
+<h4 id="list_1"><code>list()</code></h4>
+<pre><code class="language-python">def list(self) -&gt; list[TagType]
+</code></pre>
+<p>List all tags.</p>
+<p><strong>Returns:</strong> List of <code>LightweightTag</code> or <code>AnnotatedTag</code> instances.</p>
+<h4 id="peel"><code>peel()</code></h4>
+<pre><code class="language-python">def peel(self, name: str) -&gt; str | None
+</code></pre>
+<p>Resolve a tag to the underlying commit SHA. For lightweight tags this is the <code>sha</code> itself; for annotated tags this follows the tag object to its target.</p>
+<p><strong>Parameters:</strong>
+- <code>name</code> - Short tag name.</p>
+<p><strong>Returns:</strong> Commit SHA, or <code>None</code> if the tag does not exist.</p>
+<hr />
+<h2 id="zero_sha">ZERO_SHA</h2>
+<p><strong>Module:</strong> <code>gitpy.refs.reflog</code></p>
+<pre><code class="language-python">ZERO_SHA: str = &quot;0&quot; * 40
+</code></pre>
+<p>Sentinel SHA used to represent the absence of a previous value when a ref is newly created.</p>
+<hr />
+<h2 id="reflogentry">ReflogEntry</h2>
+<p><strong>Module:</strong> <code>gitpy.refs.reflog</code></p>
+<p>A single reflog entry.</p>
+<pre><code class="language-python">@dataclass(slots=True)
+class ReflogEntry:
+    old_sha: str        # Previous SHA (ZERO_SHA for a newly created ref)
+    new_sha: str        # SHA after the change
+    identity: Identity  # Who made the change
+    message: str        # Short description of what happened
+</code></pre>
+<h3 id="attributes_4">Attributes</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>old_sha</code></td>
+<td><code>str</code></td>
+<td>Previous SHA (<code>ZERO_SHA</code> for a newly created ref)</td>
+</tr>
+<tr>
+<td><code>new_sha</code></td>
+<td><code>str</code></td>
+<td>SHA after the change</td>
+</tr>
+<tr>
+<td><code>identity</code></td>
+<td><code>Identity</code></td>
+<td>Who made the change</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td><code>str</code></td>
+<td>Short description of what happened</td>
+</tr>
+</tbody>
+</table>
+<h3 id="methods_4">Methods</h3>
+<h4 id="format"><code>format()</code></h4>
+<pre><code class="language-python">def format(self) -&gt; str
+</code></pre>
+<p>Serialise as a reflog line (including trailing newline).</p>
+<p><strong>Returns:</strong> String in the form <code>"&lt;old&gt; &lt;new&gt; &lt;identity&gt;\t&lt;message&gt;\n"</code>.</p>
+<h4 id="parse"><code>parse()</code></h4>
+<pre><code class="language-python">@classmethod
+def parse(cls, line: str) -&gt; Self
+</code></pre>
+<p>Parse a single reflog line.</p>
+<p><strong>Parameters:</strong>
+- <code>line</code> - Raw line from a reflog file (trailing newline stripped).</p>
+<p><strong>Returns:</strong> A new <code>ReflogEntry</code> instance.</p>
+<hr />
+<h2 id="reflog">Reflog</h2>
+<p><strong>Module:</strong> <code>gitpy.refs.reflog</code></p>
+<p>Manages reflog files for references. Reflog files are stored under <code>.git/logs/&lt;ref-name&gt;</code>.</p>
+<pre><code class="language-python">class Reflog:
+    git_dir: Path   # Path to the .git directory
+    logs_dir: Path  # Path to .git/logs/
+</code></pre>
+<h3 id="constructor_4">Constructor</h3>
+<pre><code class="language-python">def __init__(self, git_dir: Path) -&gt; None
+</code></pre>
+<p><strong>Parameters:</strong>
+- <code>git_dir</code> - Path to the <code>.git</code> directory.</p>
+<h3 id="methods_5">Methods</h3>
+<h4 id="append"><code>append()</code></h4>
+<pre><code class="language-python">def append(
+    self,
+    ref: str,
+    old_sha: str,
+    new_sha: str,
+    identity: Identity,
+    message: str,
+) -&gt; None
+</code></pre>
+<p>Append an entry to the reflog. Creates parent directories if they do not exist.</p>
+<p><strong>Parameters:</strong>
+- <code>ref</code> - Reference name (e.g. <code>"HEAD"</code>).
+- <code>old_sha</code> - Previous SHA (use <code>ZERO_SHA</code> for new refs).
+- <code>new_sha</code> - New SHA after the change.
+- <code>identity</code> - Who made the change.
+- <code>message</code> - Human-readable description (e.g. <code>"commit: initial commit"</code>).</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from gitpy.refs import ZERO_SHA
+from gitpy.objects import Identity
+
+reflog.append(&quot;HEAD&quot;, ZERO_SHA, commit_sha, author, &quot;commit: initial commit&quot;)
+</code></pre>
+<h4 id="read_2"><code>read()</code></h4>
+<pre><code class="language-python">def read(self, ref: str, limit: int | None = None) -&gt; list[ReflogEntry]
+</code></pre>
+<p>Read reflog entries, newest first.</p>
+<p><strong>Parameters:</strong>
+- <code>ref</code> - Reference name.
+- <code>limit</code> - Maximum number of entries to return.</p>
+<p><strong>Returns:</strong> List of <code>ReflogEntry</code> instances, most recent first.</p>
+<h4 id="get_2"><code>get()</code></h4>
+<pre><code class="language-python">def get(self, ref: str, index: int) -&gt; ReflogEntry | None
+</code></pre>
+<p>Retrieve a specific reflog entry by index.</p>
+<p><strong>Parameters:</strong>
+- <code>ref</code> - Reference name.
+- <code>index</code> - 0-based index where <code>0</code> is the most recent entry.</p>
+<p><strong>Returns:</strong> <code>ReflogEntry</code> at <code>index</code>, or <code>None</code> if not enough entries.</p>
+<h4 id="clear"><code>clear()</code></h4>
+<pre><code class="language-python">def clear(self, ref: str) -&gt; None
+</code></pre>
+<p>Delete the reflog for <code>ref</code>.</p>
+<p><strong>Parameters:</strong>
+- <code>ref</code> - Reference name.</p>
+<hr />
+<h2 id="revisionparser">RevisionParser</h2>
+<p><strong>Module:</strong> <code>gitpy.refs.revision</code></p>
+<p>Parses Git revision expressions into commit SHAs.</p>
+<p>Supported expressions:
+- Plain names: <code>HEAD</code>, <code>main</code>, <code>v1.0</code>, <code>abc123</code> (abbreviated SHA)
+- Parent: <code>HEAD^</code>, <code>HEAD^2</code> (second parent of a merge commit)
+- Ancestor: <code>HEAD~3</code> (three steps up the first-parent chain)
+- Reflog: <code>HEAD@{1}</code> (previous value of HEAD)</p>
+<pre><code class="language-python">class RevisionParser:
+    ref_manager: RefManager    # Ref manager for resolving branch/tag names
+    object_db: ObjectDatabase  # Object database for reading commit objects
+</code></pre>
+<h3 id="constructor_5">Constructor</h3>
+<pre><code class="language-python">def __init__(self, ref_manager: RefManager, object_db: ObjectDatabase) -&gt; None
+</code></pre>
+<p><strong>Parameters:</strong>
+- <code>ref_manager</code> - <code>RefManager</code> for resolving branch/tag names.
+- <code>object_db</code> - <code>ObjectDatabase</code> for reading commit objects.</p>
+<h3 id="methods_6">Methods</h3>
+<h4 id="parse_1"><code>parse()</code></h4>
+<pre><code class="language-python">def parse(self, rev: str) -&gt; str | None
+</code></pre>
+<p>Parse a revision expression and return a 40-char SHA.</p>
+<p><strong>Parameters:</strong>
+- <code>rev</code> - Revision expression string.</p>
+<p><strong>Returns:</strong> 40-character hex SHA, or <code>None</code> if the expression cannot be resolved.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">parser = RevisionParser(ref_mgr, db)
+
+sha = parser.parse(&quot;HEAD&quot;)       # current commit
+sha = parser.parse(&quot;HEAD^&quot;)      # parent of HEAD
+sha = parser.parse(&quot;HEAD~3&quot;)     # three ancestors back
+sha = parser.parse(&quot;HEAD^2&quot;)     # second parent (merge commit)
+sha = parser.parse(&quot;HEAD@{1}&quot;)   # previous HEAD value
+sha = parser.parse(&quot;main&quot;)       # branch tip
+sha = parser.parse(&quot;v1.0&quot;)       # tag
+sha = parser.parse(&quot;abc1234&quot;)    # abbreviated SHA
+</code></pre>
+<hr />
+<h2 id="complete-example">Complete Example</h2>
+<pre><code class="language-python">from pathlib import Path
+from gitpy.refs import (
+    RefManager, HeadManager, BranchManager, TagManager,
+    Reflog, RevisionParser, ZERO_SHA,
+)
+from gitpy.storage import ObjectDatabase
+from gitpy.objects import Identity
+
+git_dir = Path(&quot;/path/to/repo/.git&quot;)
+ref_mgr = RefManager(git_dir)
+head_mgr = HeadManager(git_dir)
+db = ObjectDatabase(git_dir)
+
+branch_mgr = BranchManager(ref_mgr, head_mgr)
+tag_mgr = TagManager(ref_mgr, db)
+reflog = Reflog(git_dir)
+parser = RevisionParser(ref_mgr, db)
+
+# Create a branch and check HEAD
+branch = branch_mgr.create(&quot;feature/my-work&quot;, some_sha)
+head_mgr.set_branch(&quot;feature/my-work&quot;)
+head = head_mgr.read()
+print(head.branch)  # &quot;feature/my-work&quot;
+
+# Create a lightweight tag
+tag_mgr.create_lightweight(&quot;v0.1&quot;, some_sha)
+
+# Record in reflog
+identity = Identity.now(&quot;Alice&quot;, &quot;alice@example.com&quot;)
+reflog.append(&quot;HEAD&quot;, ZERO_SHA, some_sha, identity, &quot;commit: initial&quot;)
+
+# Parse revision expressions
+sha = parser.parse(&quot;HEAD~1&quot;)
+sha = parser.parse(&quot;HEAD@{0}&quot;)
+
+# Pack all loose refs
+ref_mgr.pack_refs()
+</code></pre>
+<hr />
+<h2 id="git-compatibility">Git Compatibility</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Loose refs</td>
+<td>Stored as <code>refs/heads/&lt;name&gt;</code>, <code>refs/tags/&lt;name&gt;</code></td>
+</tr>
+<tr>
+<td>Packed refs</td>
+<td>Parsed and written in Git's <code>packed-refs</code> format</td>
+</tr>
+<tr>
+<td>Symbolic refs</td>
+<td><code>"ref: &lt;target&gt;"</code> format, followed recursively</td>
+</tr>
+<tr>
+<td>Reflog</td>
+<td>Appended to <code>.git/logs/&lt;ref&gt;</code> in Git wire format</td>
+</tr>
+<tr>
+<td>Revision expressions</td>
+<td><code>HEAD</code>, <code>HEAD^</code>, <code>HEAD~N</code>, <code>HEAD^2</code>, <code>HEAD@{N}</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><strong><a href="../storage/">Storage API</a></strong>: Object database used by <code>TagManager</code> and <code>RevisionParser</code></li>
+<li><strong><a href="../objects/">Object Model API</a></strong>: <code>Identity</code> class used in tag and reflog entries</li>
+<li><strong><a href="../staging/">Staging API</a></strong>: Index operations that consume ref resolution</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

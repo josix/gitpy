@@ -9,10 +9,10 @@
       
       
       
-        <link rel="prev" href="../../concepts/diff/">
+        <link rel="prev" href="../storage/">
       
       
-        <link rel="next" href="../storage/">
+        <link rel="next" href="../refs/">
       
       
         
@@ -23,7 +23,7 @@
     
     
       
-        <title>Objects - gitpy</title>
+        <title>Pack Objects - gitpy</title>
       
     
     
@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#object-model-api-reference" class="md-skip">
+        <a href="#pack-objects-api-reference" class="md-skip">
           Skip to content
         </a>
       
@@ -100,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Objects
+              Pack Objects
             
           </span>
         </div>
@@ -653,37 +653,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Objects
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../objects/" class="md-nav__link">
         
   
   
@@ -699,849 +672,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#module-overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Module Overview
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#gitobject" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GitObject
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="GitObject">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#properties" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Properties
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Properties">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#oid" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        oid
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#methods" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Methods
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#serialize" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        serialize()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#deserialize" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        deserialize()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#compute_hash" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        compute_hash()
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#comparison-and-hashing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Comparison and Hashing
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#blob" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Blob
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Blob">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#attributes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Attributes
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#constructor" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Constructor
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#methods_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Methods
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#serialize_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        serialize()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#deserialize_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        deserialize()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#from_file" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        from_file()
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#well-known-hashes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Well-Known Hashes
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#treeentry" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        TreeEntry
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="TreeEntry">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#attributes_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Attributes
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#constructor_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Constructor
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#properties_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Properties
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Properties">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#is_tree" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        is_tree
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#is_blob" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        is_blob
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#is_symlink" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        is_symlink
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#is_executable" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        is_executable
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#methods_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Methods
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#sort_key" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        sort_key()
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#file-modes-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        File Modes Reference
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tree" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Tree
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Tree">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#attributes_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Attributes
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#constructor_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Constructor
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#methods_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Methods
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#serialize_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        serialize()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#deserialize_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        deserialize()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#add_entry" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        add_entry()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get_entry" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        get_entry()
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#well-known-hashes_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Well-Known Hashes
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#identity" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Identity
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Identity">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#attributes_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Attributes
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#constructor_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Constructor
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#methods_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Methods
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#__str__" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        __str__()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#parse" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        parse()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#now" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        now()
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#commit" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Commit
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Commit">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#attributes_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Attributes
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#constructor_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Constructor
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#properties_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Properties
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Properties">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#is_root" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        is_root
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#is_merge" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        is_merge
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#methods_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Methods
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#serialize_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        serialize()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#deserialize_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        deserialize()
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tag" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Tag
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Tag">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#attributes_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Attributes
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#constructor_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Constructor
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#methods_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Methods
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#serialize_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        serialize()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#deserialize_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        deserialize()
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#module-level-functions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Module-Level Functions
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Module-Level Functions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#parse_object" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        parse_object()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#create_object_data" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        create_object_data()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#object_types" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        OBJECT_TYPES
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#type-hints" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Type Hints
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#complete-example" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Complete Example
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1579,10 +709,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../pack/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pack Objects
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1598,6 +755,777 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#module-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packobjecttype" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PackObjectType
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PackObjectType">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Values
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#to_object_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        to_object_type()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from_object_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        from_object_type()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is_delta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        is_delta()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packobject" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PackObject
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PackObject">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PackFile
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PackFile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#read_object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        read_object()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#__contains__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __contains__()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#__iter__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __iter__()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify_checksum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        verify_checksum()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packindexentry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PackIndexEntry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PackIndexEntry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packindex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PackIndex
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PackIndex">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#object_count" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        object_count
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#find" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        find()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_offset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_offset()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#__contains___1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __contains__()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        from_file()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        parse()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serialize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        serialize()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packentry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PackEntry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PackEntry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packwriter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PackWriter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PackWriter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#write_pack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        write_pack()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write_pack_from_entries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        write_pack_from_entries()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delta-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delta Types
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Delta Types">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deltainsert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DeltaInsert
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deltacopy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DeltaCopy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deltaop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DeltaOp
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delta-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delta Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Delta Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parse_delta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        parse_delta()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apply_delta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        apply_delta()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create_delta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create_delta()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read_delta_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        read_delta_size()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variable-length-integer-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variable-Length Integer Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Variable-Length Integer Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#read_pack_object_header" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        read_pack_object_header()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write_pack_object_header" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        write_pack_object_header()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read_ofs_delta_offset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        read_ofs_delta_offset()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write_ofs_delta_offset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        write_ofs_delta_offset()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constants
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Constants">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pack-file-constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pack File Constants
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index-file-constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index File Constants
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git Compatibility
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lookup-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lookup Complexity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1787,42 +1715,25 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#gitobject" class="md-nav__link">
+  <a href="#packobjecttype" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GitObject
+        PackObjectType
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="GitObject">
+    <nav class="md-nav" aria-label="PackObjectType">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#properties" class="md-nav__link">
+  <a href="#values" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Properties
+        Values
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Properties">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#oid" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        oid
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -1839,10 +1750,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#serialize" class="md-nav__link">
+  <a href="#to_object_type" class="md-nav__link">
     <span class="md-ellipsis">
       
-        serialize()
+        to_object_type()
       
     </span>
   </a>
@@ -1850,10 +1761,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#deserialize" class="md-nav__link">
+  <a href="#from_object_type" class="md-nav__link">
     <span class="md-ellipsis">
       
-        deserialize()
+        from_object_type()
       
     </span>
   </a>
@@ -1861,10 +1772,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#compute_hash" class="md-nav__link">
+  <a href="#is_delta" class="md-nav__link">
     <span class="md-ellipsis">
       
-        compute_hash()
+        is_delta()
       
     </span>
   </a>
@@ -1873,17 +1784,6 @@
         
       </ul>
     </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#comparison-and-hashing" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Comparison and Hashing
-      
-    </span>
-  </a>
   
 </li>
         
@@ -1893,15 +1793,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#blob" class="md-nav__link">
+  <a href="#packobject" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Blob
+        PackObject
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Blob">
+    <nav class="md-nav" aria-label="PackObject">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1914,6 +1814,23 @@
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PackFile
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PackFile">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#constructor" class="md-nav__link">
@@ -1939,10 +1856,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#serialize_1" class="md-nav__link">
+  <a href="#read_object" class="md-nav__link">
     <span class="md-ellipsis">
       
-        serialize()
+        read_object()
       
     </span>
   </a>
@@ -1950,10 +1867,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#deserialize_1" class="md-nav__link">
+  <a href="#__contains__" class="md-nav__link">
     <span class="md-ellipsis">
       
-        deserialize()
+        __contains__()
       
     </span>
   </a>
@@ -1961,10 +1878,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#from_file" class="md-nav__link">
+  <a href="#__iter__" class="md-nav__link">
     <span class="md-ellipsis">
       
-        from_file()
+        __iter__()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verify_checksum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        verify_checksum()
       
     </span>
   </a>
@@ -1973,17 +1901,6 @@
         
       </ul>
     </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#well-known-hashes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Well-Known Hashes
-      
-    </span>
-  </a>
   
 </li>
         
@@ -1993,15 +1910,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#treeentry" class="md-nav__link">
+  <a href="#packindexentry" class="md-nav__link">
     <span class="md-ellipsis">
       
-        TreeEntry
+        PackIndexEntry
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="TreeEntry">
+    <nav class="md-nav" aria-label="PackIndexEntry">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2015,6 +1932,23 @@
   
 </li>
         
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packindex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PackIndex
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PackIndex">
+      <ul class="md-nav__list">
+        
           <li class="md-nav__item">
   <a href="#constructor_1" class="md-nav__link">
     <span class="md-ellipsis">
@@ -2027,7 +1961,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#properties_1" class="md-nav__link">
+  <a href="#properties" class="md-nav__link">
     <span class="md-ellipsis">
       
         Properties
@@ -2039,43 +1973,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#is_tree" class="md-nav__link">
+  <a href="#object_count" class="md-nav__link">
     <span class="md-ellipsis">
       
-        is_tree
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#is_blob" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        is_blob
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#is_symlink" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        is_symlink
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#is_executable" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        is_executable
+        object_count
       
     </span>
   </a>
@@ -2100,10 +2001,65 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#sort_key" class="md-nav__link">
+  <a href="#find" class="md-nav__link">
     <span class="md-ellipsis">
       
-        sort_key()
+        find()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_offset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_offset()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#__contains___1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __contains__()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        from_file()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        parse()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#serialize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        serialize()
       
     </span>
   </a>
@@ -2112,17 +2068,6 @@
         
       </ul>
     </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#file-modes-reference" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        File Modes Reference
-      
-    </span>
-  </a>
   
 </li>
         
@@ -2132,15 +2077,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#tree" class="md-nav__link">
+  <a href="#packentry" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tree
+        PackEntry
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Tree">
+    <nav class="md-nav" aria-label="PackEntry">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2153,6 +2098,23 @@
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#packwriter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PackWriter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PackWriter">
+      <ul class="md-nav__list">
         
           <li class="md-nav__item">
   <a href="#constructor_2" class="md-nav__link">
@@ -2178,10 +2140,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#serialize_2" class="md-nav__link">
+  <a href="#write_pack" class="md-nav__link">
     <span class="md-ellipsis">
       
-        serialize()
+        write_pack()
       
     </span>
   </a>
@@ -2189,132 +2151,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#deserialize_2" class="md-nav__link">
+  <a href="#write_pack_from_entries" class="md-nav__link">
     <span class="md-ellipsis">
       
-        deserialize()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#add_entry" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        add_entry()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get_entry" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        get_entry()
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#well-known-hashes_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Well-Known Hashes
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#identity" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Identity
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Identity">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#attributes_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Attributes
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#constructor_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Constructor
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#methods_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Methods
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#__str__" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        __str__()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#parse" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        parse()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#now" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        now()
+        write_pack_from_entries()
       
     </span>
   </a>
@@ -2332,22 +2172,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#commit" class="md-nav__link">
+  <a href="#delta-types" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Commit
+        Delta Types
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Commit">
+    <nav class="md-nav" aria-label="Delta Types">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#attributes_4" class="md-nav__link">
+  <a href="#deltainsert" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Attributes
+        DeltaInsert
       
     </span>
   </a>
@@ -2355,10 +2195,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#constructor_4" class="md-nav__link">
+  <a href="#deltacopy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Constructor
+        DeltaCopy
       
     </span>
   </a>
@@ -2366,205 +2206,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#properties_2" class="md-nav__link">
+  <a href="#deltaop" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Properties
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Properties">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#is_root" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        is_root
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#is_merge" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        is_merge
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#methods_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Methods
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#serialize_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        serialize()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#deserialize_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        deserialize()
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#tag" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Tag
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Tag">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#attributes_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Attributes
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#constructor_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Constructor
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#methods_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Methods
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Methods">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#serialize_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        serialize()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#deserialize_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        deserialize()
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#module-level-functions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Module-Level Functions
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Module-Level Functions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#parse_object" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        parse_object()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#create_object_data" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        create_object_data()
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#object_types" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        OBJECT_TYPES
+        DeltaOp
       
     </span>
   </a>
@@ -2577,13 +2222,163 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#type-hints" class="md-nav__link">
+  <a href="#delta-functions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Type Hints
+        Delta Functions
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Delta Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parse_delta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        parse_delta()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apply_delta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        apply_delta()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create_delta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create_delta()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read_delta_size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        read_delta_size()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variable-length-integer-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variable-Length Integer Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Variable-Length Integer Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#read_pack_object_header" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        read_pack_object_header()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write_pack_object_header" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        write_pack_object_header()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#read_ofs_delta_offset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        read_ofs_delta_offset()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write_ofs_delta_offset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        write_ofs_delta_offset()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constants
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Constants">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pack-file-constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pack File Constants
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index-file-constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index File Constants
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2595,6 +2390,67 @@
       
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git Compatibility
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-notes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Notes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Notes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lookup-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lookup Complexity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#memory-usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2618,73 +2474,135 @@
   
 
 
-<h1 id="object-model-api-reference">Object Model API Reference</h1>
-<p>This document provides a complete API reference for the <code>gitpy.objects</code> module, which implements Git's four core object types.</p>
+<h1 id="pack-objects-api-reference">Pack Objects API Reference</h1>
+<p>This document provides a complete API reference for the <code>gitpy.storage.pack</code>, <code>gitpy.storage.pack_index</code>, <code>gitpy.storage.pack_writer</code>, and <code>gitpy.storage.delta</code> modules, which implement Git's pack file format.</p>
 <h2 id="module-overview">Module Overview</h2>
-<pre><code class="language-python">from gitpy.objects import (
-    GitObject,      # Abstract base class
-    Blob,           # File contents
-    Tree,           # Directory structure
-    TreeEntry,      # Single tree entry
-    Commit,         # Repository snapshot
-    Identity,       # Author/committer info
-    Tag,            # Annotated tag
-    parse_object,   # Parse object with header
-    create_object_data,  # Create object with header
-    OBJECT_TYPES,   # Type registry
+<pre><code class="language-python">from gitpy.storage.pack import (
+    PackFile,           # Pack file reader
+    PackObject,         # Object read from pack
+    PackObjectType,     # Object type enum
+    PACK_SIGNATURE,     # Magic bytes b&quot;PACK&quot;
+    PACK_VERSION,       # Version number (2)
+)
+
+from gitpy.storage.pack_index import (
+    PackIndex,          # Pack index for fast lookup
+    PackIndexEntry,     # Single index entry
+    IDX_SIGNATURE,      # Magic bytes for index
+    IDX_VERSION,        # Index version (2)
+)
+
+from gitpy.storage.pack_writer import (
+    PackWriter,         # Pack file writer
+    PackEntry,          # Object to be packed
+)
+
+from gitpy.storage.delta import (
+    DeltaInsert,        # Insert instruction
+    DeltaCopy,          # Copy instruction
+    DeltaOp,            # Union type for operations
+    parse_delta,        # Parse delta instructions
+    apply_delta,        # Apply delta to base
+    create_delta,       # Create delta between objects
 )
 </code></pre>
 <hr />
-<h2 id="gitobject">GitObject</h2>
-<p><strong>Module:</strong> <code>gitpy.objects.base</code></p>
-<p>Abstract base class for all Git objects. Git objects are immutable, content-addressable entities identified by a SHA-1 hash of their contents.</p>
-<pre><code class="language-python">class GitObject(ABC):
-    type_name: str  # &quot;blob&quot;, &quot;tree&quot;, &quot;commit&quot;, or &quot;tag&quot;
+<h2 id="packobjecttype">PackObjectType</h2>
+<p><strong>Module:</strong> <code>gitpy.storage.pack</code></p>
+<p>Enumeration of object types in pack files.</p>
+<pre><code class="language-python">class PackObjectType(IntEnum):
+    &quot;&quot;&quot;Object types stored in pack files.&quot;&quot;&quot;
+    COMMIT = 1
+    TREE = 2
+    BLOB = 3
+    TAG = 4
+    # 5 is reserved
+    OFS_DELTA = 6
+    REF_DELTA = 7
 </code></pre>
-<h3 id="properties">Properties</h3>
-<h4 id="oid"><code>oid</code></h4>
-<pre><code class="language-python">@property
-def oid(self) -&gt; str
-</code></pre>
-<p>Object ID (SHA-1 hash). Returns a 40-character hexadecimal SHA-1 hash identifying this object.</p>
-<p><strong>Example:</strong></p>
-<pre><code class="language-python">blob = Blob(data=b&quot;hello\n&quot;)
-print(blob.oid)  # &quot;ce013625030ba8dba906f756967f9e9ca394464a&quot;
-</code></pre>
+<h3 id="values">Values</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>COMMIT</code></td>
+<td>1</td>
+<td>Commit object</td>
+</tr>
+<tr>
+<td><code>TREE</code></td>
+<td>2</td>
+<td>Tree object</td>
+</tr>
+<tr>
+<td><code>BLOB</code></td>
+<td>3</td>
+<td>Blob object</td>
+</tr>
+<tr>
+<td><code>TAG</code></td>
+<td>4</td>
+<td>Annotated tag object</td>
+</tr>
+<tr>
+<td><code>OFS_DELTA</code></td>
+<td>6</td>
+<td>Delta with offset reference to base</td>
+</tr>
+<tr>
+<td><code>REF_DELTA</code></td>
+<td>7</td>
+<td>Delta with SHA-1 reference to base</td>
+</tr>
+</tbody>
+</table>
 <h3 id="methods">Methods</h3>
-<h4 id="serialize"><code>serialize()</code></h4>
-<pre><code class="language-python">@abstractmethod
-def serialize(self) -&gt; bytes
+<h4 id="to_object_type"><code>to_object_type()</code></h4>
+<pre><code class="language-python">def to_object_type(self) -&gt; str
 </code></pre>
-<p>Serialize object content (without header).</p>
-<p><strong>Returns:</strong> The raw bytes representing this object's content.</p>
-<h4 id="deserialize"><code>deserialize()</code></h4>
+<p>Convert to string type name.</p>
+<p><strong>Returns:</strong> <code>"commit"</code>, <code>"tree"</code>, <code>"blob"</code>, <code>"tag"</code>, or <code>"delta"</code>.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">obj_type = PackObjectType.BLOB
+print(obj_type.to_object_type())  # &quot;blob&quot;
+</code></pre>
+<h4 id="from_object_type"><code>from_object_type()</code></h4>
 <pre><code class="language-python">@classmethod
-@abstractmethod
-def deserialize(cls, data: bytes) -&gt; Self
+def from_object_type(cls, type_name: str) -&gt; &quot;PackObjectType&quot;
 </code></pre>
-<p>Deserialize object content (without header).</p>
+<p>Convert from string type name.</p>
 <p><strong>Parameters:</strong>
-- <code>data</code> - Raw bytes of the object content.</p>
-<p><strong>Returns:</strong> A new instance of the object.</p>
-<h4 id="compute_hash"><code>compute_hash()</code></h4>
-<pre><code class="language-python">def compute_hash(self) -&gt; str
+- <code>type_name</code> - Object type string (<code>"commit"</code>, <code>"tree"</code>, <code>"blob"</code>, <code>"tag"</code>).</p>
+<p><strong>Returns:</strong> Corresponding <code>PackObjectType</code> enum value.</p>
+<p><strong>Raises:</strong>
+- <code>KeyError</code> - Unknown type name.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">obj_type = PackObjectType.from_object_type(&quot;blob&quot;)
+print(obj_type)  # PackObjectType.BLOB
 </code></pre>
-<p>Compute SHA-1 hash of this object. The hash is computed over the full object data including the header: <code>&lt;type&gt; &lt;size&gt;\0&lt;content&gt;</code>.</p>
-<p><strong>Returns:</strong> 40-character hexadecimal SHA-1 hash.</p>
-<h3 id="comparison-and-hashing">Comparison and Hashing</h3>
-<pre><code class="language-python">def __eq__(self, other: object) -&gt; bool
-def __hash__(self) -&gt; int
+<h4 id="is_delta"><code>is_delta()</code></h4>
+<pre><code class="language-python">@property
+def is_delta(self) -&gt; bool
 </code></pre>
-<p>Two objects are equal if they have the same OID. Objects are hashable and can be used in sets and dicts.</p>
+<p>Check if this is a delta type.</p>
+<p><strong>Returns:</strong> <code>True</code> if <code>OFS_DELTA</code> or <code>REF_DELTA</code>, <code>False</code> otherwise.</p>
 <hr />
-<h2 id="blob">Blob</h2>
-<p><strong>Module:</strong> <code>gitpy.objects.blob</code></p>
-<p>Represents file contents in Git. A blob stores the raw contents of a single file with no filename, permissions, or other metadata.</p>
+<h2 id="packobject">PackObject</h2>
+<p><strong>Module:</strong> <code>gitpy.storage.pack</code></p>
+<p>Represents an object read from a pack file.</p>
 <pre><code class="language-python">@dataclass(slots=True)
-class Blob(GitObject):
-    data: bytes = b&quot;&quot;
-    type_name: str = &quot;blob&quot;
+class PackObject:
+    &quot;&quot;&quot;Object read from pack file.&quot;&quot;&quot;
+    sha: str        # 40-character hex SHA
+    type_name: str  # &quot;blob&quot;, &quot;tree&quot;, &quot;commit&quot;, or &quot;tag&quot;
+    data: bytes     # Uncompressed object content
+    offset: int     # Offset in pack file
 </code></pre>
 <h3 id="attributes">Attributes</h3>
 <table>
@@ -2692,91 +2610,117 @@ class Blob(GitObject):
 <tr>
 <th>Name</th>
 <th>Type</th>
-<th>Default</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>data</code></td>
-<td><code>bytes</code></td>
-<td><code>b""</code></td>
-<td>Raw file contents</td>
+<td><code>sha</code></td>
+<td><code>str</code></td>
+<td>40-character hex SHA-1 hash</td>
 </tr>
 <tr>
 <td><code>type_name</code></td>
 <td><code>str</code></td>
-<td><code>"blob"</code></td>
-<td>Object type identifier</td>
-</tr>
-</tbody>
-</table>
-<h3 id="constructor">Constructor</h3>
-<pre><code class="language-python">def __init__(self, data: bytes = b&quot;&quot;) -&gt; None
-</code></pre>
-<p><strong>Parameters:</strong>
-- <code>data</code> - Raw file contents as bytes.</p>
-<p><strong>Example:</strong></p>
-<pre><code class="language-python"># Create from bytes
-blob = Blob(data=b&quot;Hello, World!\n&quot;)
-
-# Empty blob
-empty_blob = Blob()
-</code></pre>
-<h3 id="methods_1">Methods</h3>
-<h4 id="serialize_1"><code>serialize()</code></h4>
-<pre><code class="language-python">def serialize(self) -&gt; bytes
-</code></pre>
-<p>Return raw content.</p>
-<p><strong>Returns:</strong> The raw file contents.</p>
-<h4 id="deserialize_1"><code>deserialize()</code></h4>
-<pre><code class="language-python">@classmethod
-def deserialize(cls, data: bytes) -&gt; Self
-</code></pre>
-<p>Create Blob from raw content.</p>
-<p><strong>Parameters:</strong>
-- <code>data</code> - Raw bytes of the file contents.</p>
-<p><strong>Returns:</strong> A new Blob instance.</p>
-<h4 id="from_file"><code>from_file()</code></h4>
-<pre><code class="language-python">@classmethod
-def from_file(cls, path: str | Path) -&gt; Self
-</code></pre>
-<p>Create Blob from file path.</p>
-<p><strong>Parameters:</strong>
-- <code>path</code> - Path to the file to read.</p>
-<p><strong>Returns:</strong> A new Blob instance with the file's contents.</p>
-<p><strong>Example:</strong></p>
-<pre><code class="language-python">blob = Blob.from_file(&quot;README.md&quot;)
-print(blob.oid)
-</code></pre>
-<h3 id="well-known-hashes">Well-Known Hashes</h3>
-<table>
-<thead>
-<tr>
-<th>Content</th>
-<th>OID</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Empty (<code>b""</code>)</td>
-<td><code>e69de29bb2d1d6434b8b29ae775ad8c2e48c5391</code></td>
+<td>Object type (<code>"blob"</code>, <code>"tree"</code>, <code>"commit"</code>, <code>"tag"</code>)</td>
 </tr>
 <tr>
-<td><code>b"hello\n"</code></td>
-<td><code>ce013625030ba8dba906f756967f9e9ca394464a</code></td>
+<td><code>data</code></td>
+<td><code>bytes</code></td>
+<td>Decompressed, fully resolved object content</td>
+</tr>
+<tr>
+<td><code>offset</code></td>
+<td><code>int</code></td>
+<td>Byte offset in pack file</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="treeentry">TreeEntry</h2>
-<p><strong>Module:</strong> <code>gitpy.objects.tree</code></p>
-<p>A single entry in a tree object, representing a file or subdirectory.</p>
+<h2 id="packfile">PackFile</h2>
+<p><strong>Module:</strong> <code>gitpy.storage.pack</code></p>
+<p>Reader for Git pack files. Provides random access to objects using the pack index.</p>
+<pre><code class="language-python">class PackFile:
+    pack_path: Path          # Path to .pack file
+    version: int             # Pack format version
+    object_count: int        # Number of objects in pack
+    index: PackIndex         # Associated index
+</code></pre>
+<h3 id="constructor">Constructor</h3>
+<pre><code class="language-python">def __init__(
+    self,
+    pack_path: Path,
+    index: PackIndex | None = None
+) -&gt; None
+</code></pre>
+<p>Open a pack file.</p>
+<p><strong>Parameters:</strong>
+- <code>pack_path</code> - Path to <code>.pack</code> file.
+- <code>index</code> - Optional pre-loaded index. If not provided, loads from <code>.idx</code> file or builds from pack.</p>
+<p><strong>Raises:</strong>
+- <code>ValueError</code> - Invalid pack signature or unsupported version.
+- <code>FileNotFoundError</code> - Pack file doesn't exist.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from pathlib import Path
+from gitpy.storage.pack import PackFile
+
+pack = PackFile(Path(&quot;.git/objects/pack/pack-abc123.pack&quot;))
+print(f&quot;Pack version: {pack.version}&quot;)
+print(f&quot;Object count: {pack.object_count}&quot;)
+</code></pre>
+<h3 id="methods_1">Methods</h3>
+<h4 id="read_object"><code>read_object()</code></h4>
+<pre><code class="language-python">def read_object(self, sha: str) -&gt; PackObject | None
+</code></pre>
+<p>Read object by SHA.</p>
+<p><strong>Parameters:</strong>
+- <code>sha</code> - 40-character hex SHA-1.</p>
+<p><strong>Returns:</strong> <code>PackObject</code> if found, <code>None</code> if not in this pack.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">obj = pack.read_object(&quot;ce013625030ba8dba906f756967f9e9ca394464a&quot;)
+if obj:
+    print(f&quot;Type: {obj.type_name}&quot;)
+    print(f&quot;Size: {len(obj.data)}&quot;)
+</code></pre>
+<h4 id="__contains__"><code>__contains__()</code></h4>
+<pre><code class="language-python">def __contains__(self, sha: str) -&gt; bool
+</code></pre>
+<p>Check if object exists in pack.</p>
+<p><strong>Parameters:</strong>
+- <code>sha</code> - 40-character hex SHA-1.</p>
+<p><strong>Returns:</strong> <code>True</code> if object is in this pack.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">if &quot;ce013625...&quot; in pack:
+    print(&quot;Object found!&quot;)
+</code></pre>
+<h4 id="__iter__"><code>__iter__()</code></h4>
+<pre><code class="language-python">def __iter__(self) -&gt; Iterator[PackObject]
+</code></pre>
+<p>Iterate over all objects in pack.</p>
+<p><strong>Yields:</strong> <code>PackObject</code> for each object in the pack.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">for obj in pack:
+    print(f&quot;{obj.sha} {obj.type_name} {len(obj.data)}&quot;)
+</code></pre>
+<h4 id="verify_checksum"><code>verify_checksum()</code></h4>
+<pre><code class="language-python">def verify_checksum(self) -&gt; bool
+</code></pre>
+<p>Verify pack file integrity.</p>
+<p><strong>Returns:</strong> <code>True</code> if checksum matches, <code>False</code> if corrupted.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">if not pack.verify_checksum():
+    raise ValueError(&quot;Pack file corrupted!&quot;)
+</code></pre>
+<hr />
+<h2 id="packindexentry">PackIndexEntry</h2>
+<p><strong>Module:</strong> <code>gitpy.storage.pack_index</code></p>
+<p>A single entry in a pack index.</p>
 <pre><code class="language-python">@dataclass(slots=True)
-class TreeEntry:
-    mode: str
-    name: str
-    sha: str
+class PackIndexEntry:
+    &quot;&quot;&quot;Single entry in pack index.&quot;&quot;&quot;
+    sha: str       # 40-character hex SHA
+    offset: int    # Offset in pack file
+    crc32: int     # CRC32 of packed object data
 </code></pre>
 <h3 id="attributes_1">Attributes</h3>
 <table>
@@ -2789,102 +2733,134 @@ class TreeEntry:
 </thead>
 <tbody>
 <tr>
-<td><code>mode</code></td>
-<td><code>str</code></td>
-<td>File mode (<code>"100644"</code>, <code>"100755"</code>, <code>"40000"</code>, <code>"120000"</code>)</td>
-</tr>
-<tr>
-<td><code>name</code></td>
-<td><code>str</code></td>
-<td>Filename without path separators</td>
-</tr>
-<tr>
 <td><code>sha</code></td>
 <td><code>str</code></td>
-<td>40-character hexadecimal SHA-1 hash</td>
-</tr>
-</tbody>
-</table>
-<h3 id="constructor_1">Constructor</h3>
-<pre><code class="language-python">def __init__(self, mode: str, name: str, sha: str) -&gt; None
-</code></pre>
-<p><strong>Parameters:</strong>
-- <code>mode</code> - File mode string.
-- <code>name</code> - Filename (must not contain <code>/</code>).
-- <code>sha</code> - 40-character SHA-1 hash.</p>
-<p><strong>Example:</strong></p>
-<pre><code class="language-python">entry = TreeEntry(
-    mode=&quot;100644&quot;,
-    name=&quot;README.md&quot;,
-    sha=&quot;ce013625030ba8dba906f756967f9e9ca394464a&quot;
-)
-</code></pre>
-<h3 id="properties_1">Properties</h3>
-<h4 id="is_tree"><code>is_tree</code></h4>
-<pre><code class="language-python">@property
-def is_tree(self) -&gt; bool
-</code></pre>
-<p>Returns <code>True</code> if this entry points to a tree (directory).</p>
-<h4 id="is_blob"><code>is_blob</code></h4>
-<pre><code class="language-python">@property
-def is_blob(self) -&gt; bool
-</code></pre>
-<p>Returns <code>True</code> if this entry points to a blob (regular file).</p>
-<h4 id="is_symlink"><code>is_symlink</code></h4>
-<pre><code class="language-python">@property
-def is_symlink(self) -&gt; bool
-</code></pre>
-<p>Returns <code>True</code> if this entry is a symbolic link.</p>
-<h4 id="is_executable"><code>is_executable</code></h4>
-<pre><code class="language-python">@property
-def is_executable(self) -&gt; bool
-</code></pre>
-<p>Returns <code>True</code> if this entry is an executable file.</p>
-<h3 id="methods_2">Methods</h3>
-<h4 id="sort_key"><code>sort_key()</code></h4>
-<pre><code class="language-python">def sort_key(self) -&gt; str
-</code></pre>
-<p>Generate sort key for tree entry ordering. Git sorts tree entries by name, but directories are sorted as if they had a trailing <code>/</code>.</p>
-<p><strong>Returns:</strong> Sort key string.</p>
-<h3 id="file-modes-reference">File Modes Reference</h3>
-<table>
-<thead>
-<tr>
-<th>Mode</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>100644</code></td>
-<td>Regular file (non-executable)</td>
+<td>40-character hex SHA-1 hash</td>
 </tr>
 <tr>
-<td><code>100755</code></td>
-<td>Executable file</td>
+<td><code>offset</code></td>
+<td><code>int</code></td>
+<td>Byte offset in pack file</td>
 </tr>
 <tr>
-<td><code>40000</code></td>
-<td>Directory (tree)</td>
-</tr>
-<tr>
-<td><code>120000</code></td>
-<td>Symbolic link</td>
-</tr>
-<tr>
-<td><code>160000</code></td>
-<td>Gitlink (submodule)</td>
+<td><code>crc32</code></td>
+<td><code>int</code></td>
+<td>CRC32 checksum of compressed data</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="tree">Tree</h2>
-<p><strong>Module:</strong> <code>gitpy.objects.tree</code></p>
-<p>Represents a directory listing in Git. A tree contains entries mapping names to blobs (files) or other trees (subdirectories).</p>
+<h2 id="packindex">PackIndex</h2>
+<p><strong>Module:</strong> <code>gitpy.storage.pack_index</code></p>
+<p>Pack index for fast object lookup. Provides O(log n) SHA to offset lookup.</p>
+<pre><code class="language-python">class PackIndex:
+    pack_sha: str                    # SHA of associated pack file
+    entries: list[PackIndexEntry]    # Sorted by SHA
+    object_count: int                # Number of objects
+</code></pre>
+<h3 id="constructor_1">Constructor</h3>
+<pre><code class="language-python">def __init__(
+    self,
+    pack_sha: str,
+    entries: list[PackIndexEntry]
+) -&gt; None
+</code></pre>
+<p>Create pack index from entries.</p>
+<p><strong>Parameters:</strong>
+- <code>pack_sha</code> - 40-character hex SHA of the pack file.
+- <code>entries</code> - List of <code>PackIndexEntry</code> objects (will be sorted).</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from gitpy.storage.pack_index import PackIndex, PackIndexEntry
+
+entries = [
+    PackIndexEntry(sha=&quot;a&quot; * 40, offset=12, crc32=0x12345678),
+    PackIndexEntry(sha=&quot;b&quot; * 40, offset=500, crc32=0xdeadbeef),
+]
+index = PackIndex(pack_sha=&quot;c&quot; * 40, entries=entries)
+</code></pre>
+<h3 id="properties">Properties</h3>
+<h4 id="object_count"><code>object_count</code></h4>
+<pre><code class="language-python">@property
+def object_count(self) -&gt; int
+</code></pre>
+<p>Number of objects in pack.</p>
+<p><strong>Returns:</strong> Total object count.</p>
+<h3 id="methods_2">Methods</h3>
+<h4 id="find"><code>find()</code></h4>
+<pre><code class="language-python">def find(self, sha: str) -&gt; PackIndexEntry | None
+</code></pre>
+<p>Look up entry by SHA.</p>
+<p><strong>Parameters:</strong>
+- <code>sha</code> - 40-character hex SHA-1.</p>
+<p><strong>Returns:</strong> <code>PackIndexEntry</code> if found, <code>None</code> otherwise.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">entry = index.find(&quot;ce013625030ba8dba906f756967f9e9ca394464a&quot;)
+if entry:
+    print(f&quot;Offset: {entry.offset}&quot;)
+    print(f&quot;CRC32: {entry.crc32:08x}&quot;)
+</code></pre>
+<h4 id="get_offset"><code>get_offset()</code></h4>
+<pre><code class="language-python">def get_offset(self, sha: str) -&gt; int | None
+</code></pre>
+<p>Get pack file offset for SHA.</p>
+<p><strong>Parameters:</strong>
+- <code>sha</code> - 40-character hex SHA-1.</p>
+<p><strong>Returns:</strong> Byte offset if found, <code>None</code> otherwise.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">offset = index.get_offset(&quot;ce013625...&quot;)
+if offset is not None:
+    print(f&quot;Object at offset {offset}&quot;)
+</code></pre>
+<h4 id="__contains___1"><code>__contains__()</code></h4>
+<pre><code class="language-python">def __contains__(self, sha: str) -&gt; bool
+</code></pre>
+<p>Check if SHA is in index.</p>
+<p><strong>Parameters:</strong>
+- <code>sha</code> - 40-character hex SHA-1.</p>
+<p><strong>Returns:</strong> <code>True</code> if found.</p>
+<h4 id="from_file"><code>from_file()</code></h4>
+<pre><code class="language-python">@classmethod
+def from_file(cls, path: Path) -&gt; &quot;PackIndex&quot;
+</code></pre>
+<p>Load index from <code>.idx</code> file.</p>
+<p><strong>Parameters:</strong>
+- <code>path</code> - Path to index file.</p>
+<p><strong>Returns:</strong> Parsed <code>PackIndex</code>.</p>
+<p><strong>Raises:</strong>
+- <code>ValueError</code> - Invalid index format or version.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">index = PackIndex.from_file(Path(&quot;.git/objects/pack/pack-abc123.idx&quot;))
+</code></pre>
+<h4 id="parse"><code>parse()</code></h4>
+<pre><code class="language-python">@classmethod
+def parse(cls, data: bytes) -&gt; &quot;PackIndex&quot;
+</code></pre>
+<p>Parse index from raw bytes.</p>
+<p><strong>Parameters:</strong>
+- <code>data</code> - Raw index file content.</p>
+<p><strong>Returns:</strong> Parsed <code>PackIndex</code>.</p>
+<p><strong>Raises:</strong>
+- <code>ValueError</code> - Invalid signature or version.</p>
+<h4 id="serialize"><code>serialize()</code></h4>
+<pre><code class="language-python">def serialize(self) -&gt; bytes
+</code></pre>
+<p>Serialize to version 2 index format.</p>
+<p><strong>Returns:</strong> Raw bytes ready to write to <code>.idx</code> file.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">data = index.serialize()
+Path(&quot;pack-abc123.idx&quot;).write_bytes(data)
+</code></pre>
+<hr />
+<h2 id="packentry">PackEntry</h2>
+<p><strong>Module:</strong> <code>gitpy.storage.pack_writer</code></p>
+<p>Object to be written to a pack file.</p>
 <pre><code class="language-python">@dataclass(slots=True)
-class Tree(GitObject):
-    entries: list[TreeEntry] = field(default_factory=list)
-    type_name: str = &quot;tree&quot;
+class PackEntry:
+    &quot;&quot;&quot;Object to be written to pack.&quot;&quot;&quot;
+    sha: str                          # 40-character hex SHA
+    type_name: str                    # Object type
+    data: bytes                       # Object content (or delta)
+    delta_base_sha: str | None = None # Base SHA if deltified
 </code></pre>
 <h3 id="attributes_2">Attributes</h3>
 <table>
@@ -2892,479 +2868,387 @@ class Tree(GitObject):
 <tr>
 <th>Name</th>
 <th>Type</th>
-<th>Default</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>entries</code></td>
-<td><code>list[TreeEntry]</code></td>
-<td><code>[]</code></td>
-<td>List of TreeEntry objects</td>
+<td><code>sha</code></td>
+<td><code>str</code></td>
+<td>40-character hex SHA-1</td>
 </tr>
 <tr>
 <td><code>type_name</code></td>
 <td><code>str</code></td>
-<td><code>"tree"</code></td>
-<td>Object type identifier</td>
+<td>Object type (<code>"blob"</code>, <code>"tree"</code>, etc.)</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td><code>bytes</code></td>
+<td>Object content or delta instructions</td>
+</tr>
+<tr>
+<td><code>delta_base_sha</code></td>
+<td><code>str \| None</code></td>
+<td>If deltified, SHA of base object</td>
 </tr>
 </tbody>
 </table>
-<h3 id="constructor_2">Constructor</h3>
-<pre><code class="language-python">def __init__(self, entries: list[TreeEntry] | None = None) -&gt; None
+<hr />
+<h2 id="packwriter">PackWriter</h2>
+<p><strong>Module:</strong> <code>gitpy.storage.pack_writer</code></p>
+<p>Writer for Git pack files. Creates <code>.pack</code> and <code>.idx</code> files from objects.</p>
+<pre><code class="language-python">class PackWriter:
+    objects_dir: Path    # .git/objects directory
+    pack_dir: Path       # .git/objects/pack directory
 </code></pre>
+<h3 id="constructor_2">Constructor</h3>
+<pre><code class="language-python">def __init__(self, objects_dir: Path) -&gt; None
+</code></pre>
+<p>Initialize pack writer.</p>
 <p><strong>Parameters:</strong>
-- <code>entries</code> - List of TreeEntry objects (optional).</p>
+- <code>objects_dir</code> - Path to <code>.git/objects</code> directory.</p>
 <p><strong>Example:</strong></p>
-<pre><code class="language-python">tree = Tree(entries=[
-    TreeEntry(&quot;100644&quot;, &quot;README.md&quot;, &quot;ce01362...&quot;),
-    TreeEntry(&quot;40000&quot;, &quot;src&quot;, &quot;7a8b9c0...&quot;),
-])
+<pre><code class="language-python">from gitpy.storage.pack_writer import PackWriter
+from pathlib import Path
+
+writer = PackWriter(Path(&quot;.git/objects&quot;))
 </code></pre>
 <h3 id="methods_3">Methods</h3>
-<h4 id="serialize_2"><code>serialize()</code></h4>
-<pre><code class="language-python">def serialize(self) -&gt; bytes
-</code></pre>
-<p>Serialize tree to bytes.</p>
-<p><strong>Format:</strong> Sequence of entries, each as <code>&lt;mode&gt; &lt;name&gt;\0&lt;20-byte-sha&gt;</code>. Entries are sorted by Git's sorting rules.</p>
-<p><strong>Returns:</strong> Binary representation of the tree.</p>
-<h4 id="deserialize_2"><code>deserialize()</code></h4>
-<pre><code class="language-python">@classmethod
-def deserialize(cls, data: bytes) -&gt; Self
-</code></pre>
-<p>Parse tree from bytes.</p>
-<p><strong>Parameters:</strong>
-- <code>data</code> - Binary tree data (without header).</p>
-<p><strong>Returns:</strong> A new Tree instance.</p>
-<h4 id="add_entry"><code>add_entry()</code></h4>
-<pre><code class="language-python">def add_entry(self, mode: str, name: str, sha: str) -&gt; None
-</code></pre>
-<p>Add an entry to this tree.</p>
-<p><strong>Parameters:</strong>
-- <code>mode</code> - File mode string.
-- <code>name</code> - Filename (must not contain <code>/</code>).
-- <code>sha</code> - 40-character SHA-1 hash.</p>
-<p><strong>Raises:</strong>
-- <code>ValueError</code> - If name contains <code>/</code>.</p>
-<p><strong>Example:</strong></p>
-<pre><code class="language-python">tree = Tree()
-tree.add_entry(&quot;100644&quot;, &quot;file.txt&quot;, &quot;abc123...&quot;)
-tree.add_entry(&quot;40000&quot;, &quot;subdir&quot;, &quot;def456...&quot;)
-</code></pre>
-<h4 id="get_entry"><code>get_entry()</code></h4>
-<pre><code class="language-python">def get_entry(self, name: str) -&gt; TreeEntry | None
-</code></pre>
-<p>Get entry by name.</p>
-<p><strong>Parameters:</strong>
-- <code>name</code> - Filename to look up.</p>
-<p><strong>Returns:</strong> The TreeEntry if found, <code>None</code> otherwise.</p>
-<p><strong>Example:</strong></p>
-<pre><code class="language-python">entry = tree.get_entry(&quot;README.md&quot;)
-if entry:
-    print(entry.sha)
-</code></pre>
-<h3 id="well-known-hashes_1">Well-Known Hashes</h3>
-<table>
-<thead>
-<tr>
-<th>Content</th>
-<th>OID</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Empty tree</td>
-<td><code>4b825dc642cb6eb9a060e54bf8d69288fbee4904</code></td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="identity">Identity</h2>
-<p><strong>Module:</strong> <code>gitpy.objects.commit</code></p>
-<p>Author or committer identity. Represents a person's identity in Git commits and tags.</p>
-<pre><code class="language-python">@dataclass(slots=True)
-class Identity:
-    name: str
-    email: str
-    timestamp: int
-    tz_offset: str
-</code></pre>
-<h3 id="attributes_3">Attributes</h3>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>name</code></td>
-<td><code>str</code></td>
-<td>Person's name (can contain spaces)</td>
-</tr>
-<tr>
-<td><code>email</code></td>
-<td><code>str</code></td>
-<td>Email address</td>
-</tr>
-<tr>
-<td><code>timestamp</code></td>
-<td><code>int</code></td>
-<td>Unix timestamp (seconds since epoch)</td>
-</tr>
-<tr>
-<td><code>tz_offset</code></td>
-<td><code>str</code></td>
-<td>Timezone offset as <code>"+HHMM"</code> or <code>"-HHMM"</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="constructor_3">Constructor</h3>
-<pre><code class="language-python">def __init__(self, name: str, email: str, timestamp: int, tz_offset: str) -&gt; None
-</code></pre>
-<p><strong>Example:</strong></p>
-<pre><code class="language-python">author = Identity(
-    name=&quot;Alice Smith&quot;,
-    email=&quot;alice@example.com&quot;,
-    timestamp=1699900000,
-    tz_offset=&quot;-0700&quot;
-)
-</code></pre>
-<h3 id="methods_4">Methods</h3>
-<h4 id="__str__"><code>__str__()</code></h4>
-<pre><code class="language-python">def __str__(self) -&gt; str
-</code></pre>
-<p>Format as Git identity string.</p>
-<p><strong>Returns:</strong> String in format <code>"Name &lt;email&gt; timestamp tz_offset"</code>.</p>
-<p><strong>Example:</strong></p>
-<pre><code class="language-python">print(str(author))  # &quot;Alice Smith &lt;alice@example.com&gt; 1699900000 -0700&quot;
-</code></pre>
-<h4 id="parse"><code>parse()</code></h4>
-<pre><code class="language-python">@classmethod
-def parse(cls, line: str) -&gt; Self
-</code></pre>
-<p>Parse <code>"Name &lt;email&gt; timestamp tz"</code> format.</p>
-<p><strong>Parameters:</strong>
-- <code>line</code> - Identity string from Git object.</p>
-<p><strong>Returns:</strong> A new Identity instance.</p>
-<p><strong>Example:</strong></p>
-<pre><code class="language-python">identity = Identity.parse(&quot;Alice &lt;alice@example.com&gt; 1699900000 -0700&quot;)
-</code></pre>
-<h4 id="now"><code>now()</code></h4>
-<pre><code class="language-python">@classmethod
-def now(cls, name: str, email: str, tz_offset: str = &quot;+0000&quot;) -&gt; Self
-</code></pre>
-<p>Create identity with current timestamp.</p>
-<p><strong>Parameters:</strong>
-- <code>name</code> - Person's name.
-- <code>email</code> - Email address.
-- <code>tz_offset</code> - Timezone offset (default: <code>"+0000"</code> for UTC).</p>
-<p><strong>Returns:</strong> A new Identity instance with current time.</p>
-<p><strong>Example:</strong></p>
-<pre><code class="language-python">me = Identity.now(&quot;Bob&quot;, &quot;bob@example.com&quot;, &quot;-0800&quot;)
-</code></pre>
-<hr />
-<h2 id="commit">Commit</h2>
-<p><strong>Module:</strong> <code>gitpy.objects.commit</code></p>
-<p>Represents a commit object in Git. A commit is a snapshot of the repository at a point in time.</p>
-<pre><code class="language-python">@dataclass(slots=True)
-class Commit(GitObject):
-    tree_sha: str = &quot;&quot;
-    parent_shas: list[str] = field(default_factory=list)
-    author: Identity | None = None
-    committer: Identity | None = None
-    message: str = &quot;&quot;
-    type_name: str = &quot;commit&quot;
-</code></pre>
-<h3 id="attributes_4">Attributes</h3>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>tree_sha</code></td>
-<td><code>str</code></td>
-<td><code>""</code></td>
-<td>SHA-1 hash of the root tree object</td>
-</tr>
-<tr>
-<td><code>parent_shas</code></td>
-<td><code>list[str]</code></td>
-<td><code>[]</code></td>
-<td>List of parent commit SHAs</td>
-</tr>
-<tr>
-<td><code>author</code></td>
-<td><code>Identity \| None</code></td>
-<td><code>None</code></td>
-<td>Identity of who wrote the change</td>
-</tr>
-<tr>
-<td><code>committer</code></td>
-<td><code>Identity \| None</code></td>
-<td><code>None</code></td>
-<td>Identity of who committed the change</td>
-</tr>
-<tr>
-<td><code>message</code></td>
-<td><code>str</code></td>
-<td><code>""</code></td>
-<td>Commit message (can be multi-line)</td>
-</tr>
-<tr>
-<td><code>type_name</code></td>
-<td><code>str</code></td>
-<td><code>"commit"</code></td>
-<td>Object type identifier</td>
-</tr>
-</tbody>
-</table>
-<h3 id="constructor_4">Constructor</h3>
-<pre><code class="language-python">def __init__(
+<h4 id="write_pack"><code>write_pack()</code></h4>
+<pre><code class="language-python">def write_pack(
     self,
-    tree_sha: str = &quot;&quot;,
-    parent_shas: list[str] | None = None,
-    author: Identity | None = None,
-    committer: Identity | None = None,
-    message: str = &quot;&quot;,
-) -&gt; None
+    objects: Iterable[GitObject],
+    *,
+    deltify: bool = True,
+    window_size: int = 10,
+) -&gt; tuple[Path, Path]
 </code></pre>
-<p><strong>Example:</strong></p>
-<pre><code class="language-python">author = Identity.now(&quot;Alice&quot;, &quot;alice@example.com&quot;)
-commit = Commit(
-    tree_sha=&quot;4b825dc642cb6eb9a060e54bf8d69288fbee4904&quot;,
-    parent_shas=[&quot;abc123...&quot;],
-    author=author,
-    committer=author,
-    message=&quot;Initial commit\n\nAdd project structure.&quot;
-)
-</code></pre>
-<h3 id="properties_2">Properties</h3>
-<h4 id="is_root"><code>is_root</code></h4>
-<pre><code class="language-python">@property
-def is_root(self) -&gt; bool
-</code></pre>
-<p>Returns <code>True</code> if this is a root commit (no parents).</p>
-<h4 id="is_merge"><code>is_merge</code></h4>
-<pre><code class="language-python">@property
-def is_merge(self) -&gt; bool
-</code></pre>
-<p>Returns <code>True</code> if this is a merge commit (multiple parents).</p>
-<h3 id="methods_5">Methods</h3>
-<h4 id="serialize_3"><code>serialize()</code></h4>
-<pre><code class="language-python">def serialize(self) -&gt; bytes
-</code></pre>
-<p>Serialize commit to bytes.</p>
-<p><strong>Returns:</strong> Binary representation of the commit.</p>
-<h4 id="deserialize_3"><code>deserialize()</code></h4>
-<pre><code class="language-python">@classmethod
-def deserialize(cls, data: bytes) -&gt; Self
-</code></pre>
-<p>Parse commit from bytes.</p>
+<p>Write objects to a new pack file.</p>
 <p><strong>Parameters:</strong>
-- <code>data</code> - Binary commit data (without header).</p>
-<p><strong>Returns:</strong> A new Commit instance.</p>
-<hr />
-<h2 id="tag">Tag</h2>
-<p><strong>Module:</strong> <code>gitpy.objects.tag</code></p>
-<p>Represents an annotated tag object in Git. An annotated tag points to another object (usually a commit) with additional metadata.</p>
-<pre><code class="language-python">@dataclass(slots=True)
-class Tag(GitObject):
-    object_sha: str = &quot;&quot;
-    object_type: str = &quot;commit&quot;
-    tag_name: str = &quot;&quot;
-    tagger: Identity | None = None
-    message: str = &quot;&quot;
-    type_name: str = &quot;tag&quot;
-</code></pre>
-<h3 id="attributes_5">Attributes</h3>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>object_sha</code></td>
-<td><code>str</code></td>
-<td><code>""</code></td>
-<td>SHA-1 hash of the tagged object</td>
-</tr>
-<tr>
-<td><code>object_type</code></td>
-<td><code>str</code></td>
-<td><code>"commit"</code></td>
-<td>Type of tagged object</td>
-</tr>
-<tr>
-<td><code>tag_name</code></td>
-<td><code>str</code></td>
-<td><code>""</code></td>
-<td>Name of the tag</td>
-</tr>
-<tr>
-<td><code>tagger</code></td>
-<td><code>Identity \| None</code></td>
-<td><code>None</code></td>
-<td>Identity of who created the tag</td>
-</tr>
-<tr>
-<td><code>message</code></td>
-<td><code>str</code></td>
-<td><code>""</code></td>
-<td>Tag message (can be multi-line)</td>
-</tr>
-<tr>
-<td><code>type_name</code></td>
-<td><code>str</code></td>
-<td><code>"tag"</code></td>
-<td>Object type identifier</td>
-</tr>
-</tbody>
-</table>
-<h3 id="constructor_5">Constructor</h3>
-<pre><code class="language-python">def __init__(
-    self,
-    object_sha: str = &quot;&quot;,
-    object_type: str = &quot;commit&quot;,
-    tag_name: str = &quot;&quot;,
-    tagger: Identity | None = None,
-    message: str = &quot;&quot;,
-) -&gt; None
-</code></pre>
+- <code>objects</code> - Iterable of <code>GitObject</code> instances to pack.
+- <code>deltify</code> - If <code>True</code>, apply delta compression (default: <code>True</code>).
+- <code>window_size</code> - Number of recent objects to consider as delta bases (default: 10).</p>
+<p><strong>Returns:</strong> Tuple of <code>(pack_path, index_path)</code>.</p>
 <p><strong>Example:</strong></p>
-<pre><code class="language-python">tagger = Identity.now(&quot;Alice&quot;, &quot;alice@example.com&quot;)
-tag = Tag(
-    object_sha=&quot;abc123...&quot;,
-    object_type=&quot;commit&quot;,
-    tag_name=&quot;v1.0.0&quot;,
-    tagger=tagger,
-    message=&quot;Version 1.0.0 - First stable release&quot;
-)
-</code></pre>
-<h3 id="methods_6">Methods</h3>
-<h4 id="serialize_4"><code>serialize()</code></h4>
-<pre><code class="language-python">def serialize(self) -&gt; bytes
-</code></pre>
-<p>Serialize tag to bytes.</p>
-<p><strong>Returns:</strong> Binary representation of the tag.</p>
-<h4 id="deserialize_4"><code>deserialize()</code></h4>
-<pre><code class="language-python">@classmethod
-def deserialize(cls, data: bytes) -&gt; Self
-</code></pre>
-<p>Parse tag from bytes.</p>
-<p><strong>Parameters:</strong>
-- <code>data</code> - Binary tag data (without header).</p>
-<p><strong>Returns:</strong> A new Tag instance.</p>
-<hr />
-<h2 id="module-level-functions">Module-Level Functions</h2>
-<h3 id="parse_object"><code>parse_object()</code></h3>
-<pre><code class="language-python">def parse_object(data: bytes) -&gt; tuple[str, GitObject]
-</code></pre>
-<p>Parse a complete Git object (with header).</p>
-<p>Takes raw object data including the header and returns the SHA-1 hash and deserialized object.</p>
-<p><strong>Parameters:</strong>
-- <code>data</code> - Complete object data with header: <code>&lt;type&gt; &lt;size&gt;\0&lt;content&gt;</code></p>
-<p><strong>Returns:</strong> Tuple of <code>(sha, object)</code> where sha is the 40-char hex hash.</p>
-<p><strong>Raises:</strong>
-- <code>ValueError</code> - If object type is unknown or size mismatches.</p>
-<p><strong>Example:</strong></p>
-<pre><code class="language-python"># Read raw object data from disk
-raw_data = b&quot;blob 6\x00hello\n&quot;
-sha, obj = parse_object(raw_data)
-print(sha)  # &quot;ce013625030ba8dba906f756967f9e9ca394464a&quot;
-print(obj.data)  # b&quot;hello\n&quot;
-</code></pre>
-<h3 id="create_object_data"><code>create_object_data()</code></h3>
-<pre><code class="language-python">def create_object_data(obj: GitObject) -&gt; bytes
-</code></pre>
-<p>Create complete Git object data (with header) from object.</p>
-<p><strong>Parameters:</strong>
-- <code>obj</code> - A GitObject instance to serialize.</p>
-<p><strong>Returns:</strong> Complete object data ready for storage: <code>&lt;type&gt; &lt;size&gt;\0&lt;content&gt;</code></p>
-<p><strong>Example:</strong></p>
-<pre><code class="language-python">blob = Blob(data=b&quot;hello\n&quot;)
-data = create_object_data(blob)
-print(data)  # b&quot;blob 6\x00hello\n&quot;
-</code></pre>
-<h3 id="object_types"><code>OBJECT_TYPES</code></h3>
-<pre><code class="language-python">OBJECT_TYPES: dict[str, type[GitObject]] = {
-    &quot;blob&quot;: Blob,
-    &quot;tree&quot;: Tree,
-    &quot;commit&quot;: Commit,
-    &quot;tag&quot;: Tag,
-}
-</code></pre>
-<p>Registry mapping type names to their classes.</p>
-<p><strong>Example:</strong></p>
-<pre><code class="language-python">obj_class = OBJECT_TYPES[&quot;blob&quot;]
-blob = obj_class.deserialize(b&quot;content&quot;)
-</code></pre>
-<hr />
-<h2 id="type-hints">Type Hints</h2>
-<p>The module uses Python 3.12+ type hints:</p>
-<pre><code class="language-python">from typing import Self
+<pre><code class="language-python">from gitpy.objects import Blob
 
-# Type alias (PEP 695)
-type SHA = str  # 40-character hex string
-type RefName = str  # Reference name like &quot;refs/heads/main&quot;
+objects = [
+    Blob(data=b&quot;content 1&quot;),
+    Blob(data=b&quot;content 2&quot;),
+    Blob(data=b&quot;content 3&quot;),
+]
+
+pack_path, idx_path = writer.write_pack(objects)
+print(f&quot;Pack: {pack_path}&quot;)
+print(f&quot;Index: {idx_path}&quot;)
+</code></pre>
+<h4 id="write_pack_from_entries"><code>write_pack_from_entries()</code></h4>
+<pre><code class="language-python">def write_pack_from_entries(
+    self,
+    entries: list[PackEntry],
+) -&gt; tuple[Path, Path]
+</code></pre>
+<p>Write pre-prepared entries to pack.</p>
+<p><strong>Parameters:</strong>
+- <code>entries</code> - List of <code>PackEntry</code> objects (may include deltas).</p>
+<p><strong>Returns:</strong> Tuple of <code>(pack_path, index_path)</code>.</p>
+<hr />
+<h2 id="delta-types">Delta Types</h2>
+<p><strong>Module:</strong> <code>gitpy.storage.delta</code></p>
+<h3 id="deltainsert">DeltaInsert</h3>
+<p>Instruction to insert literal data.</p>
+<pre><code class="language-python">@dataclass(slots=True)
+class DeltaInsert:
+    &quot;&quot;&quot;Insert literal data into result.&quot;&quot;&quot;
+    data: bytes
+</code></pre>
+<h3 id="deltacopy">DeltaCopy</h3>
+<p>Instruction to copy from base object.</p>
+<pre><code class="language-python">@dataclass(slots=True)
+class DeltaCopy:
+    &quot;&quot;&quot;Copy bytes from base object.&quot;&quot;&quot;
+    offset: int  # Byte offset in base
+    size: int    # Number of bytes to copy
+</code></pre>
+<h3 id="deltaop">DeltaOp</h3>
+<p>Union type for delta operations.</p>
+<pre><code class="language-python">type DeltaOp = DeltaInsert | DeltaCopy
+</code></pre>
+<hr />
+<h2 id="delta-functions">Delta Functions</h2>
+<p><strong>Module:</strong> <code>gitpy.storage.delta</code></p>
+<h3 id="parse_delta"><code>parse_delta()</code></h3>
+<pre><code class="language-python">def parse_delta(data: bytes) -&gt; tuple[int, int, list[DeltaOp]]
+</code></pre>
+<p>Parse delta instructions.</p>
+<p><strong>Parameters:</strong>
+- <code>data</code> - Raw delta bytes.</p>
+<p><strong>Returns:</strong> Tuple of <code>(source_size, target_size, operations)</code>.</p>
+<p><strong>Raises:</strong>
+- <code>ValueError</code> - Invalid delta instruction (e.g., 0x00 byte).</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from gitpy.storage.delta import parse_delta
+
+source_size, target_size, ops = parse_delta(delta_bytes)
+print(f&quot;Base size: {source_size}&quot;)
+print(f&quot;Result size: {target_size}&quot;)
+for op in ops:
+    print(op)
+</code></pre>
+<h3 id="apply_delta"><code>apply_delta()</code></h3>
+<pre><code class="language-python">def apply_delta(base: bytes, delta_data: bytes) -&gt; bytes
+</code></pre>
+<p>Apply delta to reconstruct target.</p>
+<p><strong>Parameters:</strong>
+- <code>base</code> - Source/base object data.
+- <code>delta_data</code> - Raw delta bytes.</p>
+<p><strong>Returns:</strong> Reconstructed target data.</p>
+<p><strong>Raises:</strong>
+- <code>ValueError</code> - Size mismatch or invalid delta.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from gitpy.storage.delta import apply_delta
+
+base = b&quot;Hello, World!&quot;
+result = apply_delta(base, delta_bytes)
+print(result)  # b&quot;Hello, Git World!&quot;
+</code></pre>
+<h3 id="create_delta"><code>create_delta()</code></h3>
+<pre><code class="language-python">def create_delta(source: bytes, target: bytes) -&gt; bytes
+</code></pre>
+<p>Create delta from source to target.</p>
+<p><strong>Parameters:</strong>
+- <code>source</code> - Base object data.
+- <code>target</code> - Target object data.</p>
+<p><strong>Returns:</strong> Delta bytes that transform source into target.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from gitpy.storage.delta import create_delta
+
+source = b&quot;Hello, World!&quot;
+target = b&quot;Hello, Git World!&quot;
+
+delta = create_delta(source, target)
+print(f&quot;Delta size: {len(delta)} (vs {len(target)} for full)&quot;)
+</code></pre>
+<h3 id="read_delta_size"><code>read_delta_size()</code></h3>
+<pre><code class="language-python">def read_delta_size(data: bytes, offset: int) -&gt; tuple[int, int]
+</code></pre>
+<p>Read variable-length size from delta header.</p>
+<p><strong>Parameters:</strong>
+- <code>data</code> - Delta data bytes.
+- <code>offset</code> - Starting position.</p>
+<p><strong>Returns:</strong> Tuple of <code>(size, bytes_consumed)</code>.</p>
+<hr />
+<h2 id="variable-length-integer-functions">Variable-Length Integer Functions</h2>
+<p><strong>Module:</strong> <code>gitpy.storage.pack</code></p>
+<h3 id="read_pack_object_header"><code>read_pack_object_header()</code></h3>
+<pre><code class="language-python">def read_pack_object_header(
+    data: bytes,
+    offset: int
+) -&gt; tuple[int, int, int]
+</code></pre>
+<p>Read pack object header.</p>
+<p><strong>Parameters:</strong>
+- <code>data</code> - Pack file data.
+- <code>offset</code> - Byte offset to start reading.</p>
+<p><strong>Returns:</strong> Tuple of <code>(object_type, uncompressed_size, bytes_consumed)</code>.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">obj_type, size, consumed = read_pack_object_header(pack_data, offset)
+print(f&quot;Type: {PackObjectType(obj_type).to_object_type()}&quot;)
+print(f&quot;Size: {size}&quot;)
+</code></pre>
+<h3 id="write_pack_object_header"><code>write_pack_object_header()</code></h3>
+<pre><code class="language-python">def write_pack_object_header(obj_type: int, size: int) -&gt; bytes
+</code></pre>
+<p>Encode pack object header.</p>
+<p><strong>Parameters:</strong>
+- <code>obj_type</code> - Object type value (1-4, 6-7).
+- <code>size</code> - Uncompressed object size.</p>
+<p><strong>Returns:</strong> Encoded header bytes.</p>
+<h3 id="read_ofs_delta_offset"><code>read_ofs_delta_offset()</code></h3>
+<pre><code class="language-python">def read_ofs_delta_offset(
+    data: bytes,
+    offset: int
+) -&gt; tuple[int, int]
+</code></pre>
+<p>Read OFS_DELTA negative offset.</p>
+<p><strong>Parameters:</strong>
+- <code>data</code> - Pack data.
+- <code>offset</code> - Starting position.</p>
+<p><strong>Returns:</strong> Tuple of <code>(base_offset, bytes_consumed)</code>.</p>
+<h3 id="write_ofs_delta_offset"><code>write_ofs_delta_offset()</code></h3>
+<pre><code class="language-python">def write_ofs_delta_offset(offset: int) -&gt; bytes
+</code></pre>
+<p>Encode OFS_DELTA negative offset.</p>
+<p><strong>Parameters:</strong>
+- <code>offset</code> - Positive offset value to encode.</p>
+<p><strong>Returns:</strong> Encoded offset bytes.</p>
+<hr />
+<h2 id="constants">Constants</h2>
+<h3 id="pack-file-constants">Pack File Constants</h3>
+<pre><code class="language-python">PACK_SIGNATURE = b&quot;PACK&quot;  # Magic bytes at start of pack
+PACK_VERSION = 2          # Current pack format version
+</code></pre>
+<h3 id="index-file-constants">Index File Constants</h3>
+<pre><code class="language-python">IDX_SIGNATURE = b&quot;\xff\x74\x4f\x63&quot;  # Magic: 0xff744f63
+IDX_VERSION = 2                       # Current index format version
 </code></pre>
 <hr />
 <h2 id="complete-example">Complete Example</h2>
-<pre><code class="language-python">from gitpy.objects import (
-    Blob, Tree, TreeEntry, Commit, Tag, Identity,
-    create_object_data, parse_object
-)
+<pre><code class="language-python">from pathlib import Path
+from gitpy.repository import Repository
+from gitpy.objects import Blob
+from gitpy.storage.pack import PackFile
+from gitpy.storage.pack_writer import PackWriter
+from gitpy.storage.delta import create_delta, apply_delta
 
-# Create a blob from file contents
-blob = Blob(data=b&quot;print('Hello, World!')\n&quot;)
-print(f&quot;Blob OID: {blob.oid}&quot;)
+# Initialize repository
+repo = Repository.init(Path(&quot;/tmp/pack-demo&quot;))
 
-# Create a tree with the blob
-tree = Tree()
-tree.add_entry(&quot;100755&quot;, &quot;hello.py&quot;, blob.oid)
-print(f&quot;Tree OID: {tree.oid}&quot;)
+# Create some similar blobs
+base_content = b&quot;Hello, World!\n&quot; * 100
+blobs = [
+    Blob(data=base_content),
+    Blob(data=base_content + b&quot;Line 2\n&quot;),
+    Blob(data=base_content + b&quot;Line 2\nLine 3\n&quot;),
+]
 
-# Create a commit
-author = Identity.now(&quot;Alice&quot;, &quot;alice@example.com&quot;, &quot;-0700&quot;)
-commit = Commit(
-    tree_sha=tree.oid,
-    parent_shas=[],  # Root commit
-    author=author,
-    committer=author,
-    message=&quot;Initial commit&quot;
-)
-print(f&quot;Commit OID: {commit.oid}&quot;)
-print(f&quot;Is root commit: {commit.is_root}&quot;)
+# Write as loose objects first
+for blob in blobs:
+    repo.objects.write(blob)
 
-# Create an annotated tag
-tag = Tag(
-    object_sha=commit.oid,
-    object_type=&quot;commit&quot;,
-    tag_name=&quot;v1.0.0&quot;,
-    tagger=author,
-    message=&quot;First release&quot;
-)
-print(f&quot;Tag OID: {tag.oid}&quot;)
+# Create pack from objects
+writer = PackWriter(repo.git_dir / &quot;objects&quot;)
+pack_path, idx_path = writer.write_pack(blobs, deltify=True)
 
-# Serialize and parse roundtrip
-data = create_object_data(blob)
-sha, restored = parse_object(data)
-assert sha == blob.oid
-assert restored.data == blob.data
+print(f&quot;Pack created: {pack_path}&quot;)
+print(f&quot;Index created: {idx_path}&quot;)
+print(f&quot;Pack size: {pack_path.stat().st_size} bytes&quot;)
+
+# Read back from pack
+pack = PackFile(pack_path)
+print(f&quot;Objects in pack: {pack.object_count}&quot;)
+
+for obj in pack:
+    print(f&quot;  {obj.sha[:8]} {obj.type_name:6} {len(obj.data):5} bytes&quot;)
+
+# Verify object can be read
+first_blob = blobs[0]
+restored = pack.read_object(first_blob.oid)
+assert restored is not None
+assert restored.data == first_blob.data
+print(&quot;Pack verification passed!&quot;)
+
+# Delta compression demo
+source = b&quot;The quick brown fox jumps over the lazy dog&quot;
+target = b&quot;The quick brown cat jumps over the lazy dog&quot;
+
+delta = create_delta(source, target)
+print(f&quot;\nDelta compression:&quot;)
+print(f&quot;  Source: {len(source)} bytes&quot;)
+print(f&quot;  Target: {len(target)} bytes&quot;)
+print(f&quot;  Delta:  {len(delta)} bytes ({len(delta)/len(target)*100:.1f}%)&quot;)
+
+restored = apply_delta(source, delta)
+assert restored == target
+print(&quot;Delta verification passed!&quot;)
+</code></pre>
+<hr />
+<h2 id="git-compatibility">Git Compatibility</h2>
+<p>The pack modules are fully compatible with Git:</p>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gitpy reads Git-created packs</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Git reads gitpy-created packs</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><code>git verify-pack</code> validates gitpy packs</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Delta chains resolve correctly</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Large offsets (&gt;2GB) supported</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Verification:</strong></p>
+<pre><code class="language-bash"># Create pack with gitpy, verify with Git
+python3 -c &quot;
+from gitpy import Repository
+repo = Repository.find()
+repo.objects.repack()
+&quot;
+git verify-pack -v .git/objects/pack/*.pack
+
+# Create pack with Git, read with gitpy
+git gc
+python3 -c &quot;
+from gitpy import Repository
+repo = Repository.find()
+# gitpy can read all objects from Git's pack
+&quot;
+</code></pre>
+<hr />
+<h2 id="performance-notes">Performance Notes</h2>
+<h3 id="lookup-complexity">Lookup Complexity</h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Time Complexity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Find by SHA (with index)</td>
+<td>O(log n)</td>
+</tr>
+<tr>
+<td>Read undeltified object</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Read deltified object</td>
+<td>O(depth)</td>
+</tr>
+<tr>
+<td>Iterate all objects</td>
+<td>O(n)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="memory-usage">Memory Usage</h3>
+<ul>
+<li><strong>PackFile</strong>: Memory-maps pack data, ~constant overhead</li>
+<li><strong>PackIndex</strong>: ~28 bytes per object in memory</li>
+<li><strong>Delta resolution</strong>: Caches resolved objects to avoid re-resolution</li>
+</ul>
+<h3 id="best-practices">Best Practices</h3>
+<pre><code class="language-python"># Reuse PackFile instances (don't reopen repeatedly)
+pack = PackFile(path)
+for sha in shas_to_read:
+    obj = pack.read_object(sha)
+
+# Use deltify=True for similar objects
+writer.write_pack(similar_objects, deltify=True)
+
+# Use larger window for better compression (slower)
+writer.write_pack(objects, deltify=True, window_size=50)
 </code></pre>
 
 

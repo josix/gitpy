@@ -1,0 +1,1781 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../staging/">
+      
+      
+        <link rel="next" href="../config/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Diff - gitpy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#diff-api-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="gitpy" class="md-header__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gitpy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Diff
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="gitpy" class="md-nav__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gitpy
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/object_model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/object_storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/pack_files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pack Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/delta_compression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Delta Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/pack_index/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pack Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/index_staging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index & Staging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/diff/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../objects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Objects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pack Objects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../refs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../staging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diff
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#module-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edittype" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EditType
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Edit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#myers_diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        myers_diff()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#format_unified_diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        format_unified_diff()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diffstatus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DiffStatus
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diffentry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DiffEntry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DiffEntry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diff_trees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        diff_trees()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flatten_tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        flatten_tree()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#is_binary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        is_binary()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#format_binary_diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        format_binary_diff()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git Compatibility
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Config
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#module-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edittype" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EditType
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Edit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Edit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#myers_diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        myers_diff()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#format_unified_diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        format_unified_diff()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diffstatus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DiffStatus
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diffentry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DiffEntry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="DiffEntry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#diff_trees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        diff_trees()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flatten_tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        flatten_tree()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#is_binary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        is_binary()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#format_binary_diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        format_binary_diff()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git Compatibility
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="diff-api-reference">Diff API Reference</h1>
+<p>This document provides a complete API reference for the <code>gitpy.diff</code> module, which implements the Myers diff algorithm, unified diff formatting, and tree-level diffing.</p>
+<h2 id="module-overview">Module Overview</h2>
+<pre><code class="language-python">from gitpy.diff import (
+    EditType,             # Enum: EQUAL, INSERT, DELETE
+    Edit,                 # Single edit operation
+    myers_diff,           # Compute shortest edit script
+    format_unified_diff,  # Format a unified diff string
+    DiffStatus,           # Enum: ADDED, DELETED, MODIFIED, RENAMED
+    DiffEntry,            # Difference for a single path between two trees
+    diff_trees,           # Compare two Git trees
+    flatten_tree,         # Recursively flatten a tree to a path mapping
+    is_binary,            # Heuristically detect binary content
+    format_binary_diff,   # Return the Git binary-diff message
+)
+</code></pre>
+<hr />
+<h2 id="edittype">EditType</h2>
+<p><strong>Module:</strong> <code>gitpy.diff.myers</code></p>
+<p>Enum describing the type of a single edit operation.</p>
+<pre><code class="language-python">class EditType(Enum):
+    EQUAL  = &quot;equal&quot;   # Lines present in both old and new
+    INSERT = &quot;insert&quot;  # Lines added in new
+    DELETE = &quot;delete&quot;  # Lines removed from old
+</code></pre>
+<hr />
+<h2 id="edit">Edit</h2>
+<p><strong>Module:</strong> <code>gitpy.diff.myers</code></p>
+<p>Single edit operation in a diff script.</p>
+<pre><code class="language-python">@dataclass(slots=True)
+class Edit:
+    type: EditType      # Kind of edit (EQUAL, INSERT, DELETE)
+    old_start: int      # 1-based line number in old file (0 for pure inserts)
+    old_count: int      # Number of lines consumed from old file
+    new_start: int      # 1-based line number in new file (0 for pure deletes)
+    new_count: int      # Number of lines consumed from new file
+    old_lines: list[str]  # Lines from old file involved in this edit
+    new_lines: list[str]  # Lines from new file involved in this edit
+</code></pre>
+<h3 id="attributes">Attributes</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>type</code></td>
+<td><code>EditType</code></td>
+<td>Kind of edit</td>
+</tr>
+<tr>
+<td><code>old_start</code></td>
+<td><code>int</code></td>
+<td>1-based line number in old file (<code>0</code> for pure inserts)</td>
+</tr>
+<tr>
+<td><code>old_count</code></td>
+<td><code>int</code></td>
+<td>Number of lines consumed from old file</td>
+</tr>
+<tr>
+<td><code>new_start</code></td>
+<td><code>int</code></td>
+<td>1-based line number in new file (<code>0</code> for pure deletes)</td>
+</tr>
+<tr>
+<td><code>new_count</code></td>
+<td><code>int</code></td>
+<td>Number of lines consumed from new file</td>
+</tr>
+<tr>
+<td><code>old_lines</code></td>
+<td><code>list[str]</code></td>
+<td>Lines from old file involved in this edit</td>
+</tr>
+<tr>
+<td><code>new_lines</code></td>
+<td><code>list[str]</code></td>
+<td>Lines from new file involved in this edit</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="myers_diff"><code>myers_diff()</code></h2>
+<p><strong>Module:</strong> <code>gitpy.diff.myers</code></p>
+<pre><code class="language-python">def myers_diff(old: list[str], new: list[str]) -&gt; list[Edit]
+</code></pre>
+<p>Compute the shortest edit script using the Myers O(ND) algorithm. Produces a minimal edit script: the total number of insertions and deletions is the edit distance D between the two sequences. Consecutive edits of the same type are merged into a single <code>Edit</code>.</p>
+<p><strong>Parameters:</strong>
+- <code>old</code> - Lines of the old version.
+- <code>new</code> - Lines of the new version.</p>
+<p><strong>Returns:</strong> List of <code>Edit</code> operations that transform <code>old</code> into <code>new</code>.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from gitpy.diff import myers_diff, EditType
+
+old = [&quot;line 1&quot;, &quot;line 2&quot;, &quot;line 3&quot;]
+new = [&quot;line 1&quot;, &quot;line 2 modified&quot;, &quot;line 3&quot;, &quot;line 4&quot;]
+
+edits = myers_diff(old, new)
+for edit in edits:
+    print(edit.type, edit.old_lines, edit.new_lines)
+</code></pre>
+<hr />
+<h2 id="format_unified_diff"><code>format_unified_diff()</code></h2>
+<p><strong>Module:</strong> <code>gitpy.diff.unified</code></p>
+<pre><code class="language-python">def format_unified_diff(
+    old_lines: list[str],
+    new_lines: list[str],
+    old_name: str = &quot;a&quot;,
+    new_name: str = &quot;b&quot;,
+    context: int = 3,
+) -&gt; str
+</code></pre>
+<p>Format a pair of line lists as a unified diff string.</p>
+<p><strong>Parameters:</strong>
+- <code>old_lines</code> - Lines of the old version (without trailing newlines).
+- <code>new_lines</code> - Lines of the new version (without trailing newlines).
+- <code>old_name</code> - Label for the old file shown in the <code>---</code> header.
+- <code>new_name</code> - Label for the new file shown in the <code>+++</code> header.
+- <code>context</code> - Number of unchanged context lines around each change.</p>
+<p><strong>Returns:</strong> Unified diff string (including a trailing newline), or an empty string if the two inputs are identical.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from gitpy.diff import format_unified_diff
+
+old = [&quot;hello&quot;, &quot;world&quot;]
+new = [&quot;hello&quot;, &quot;everyone&quot;]
+
+diff = format_unified_diff(
+    old, new,
+    old_name=&quot;a/greeting.txt&quot;,
+    new_name=&quot;b/greeting.txt&quot;,
+)
+print(diff)
+# --- a/greeting.txt
+# +++ b/greeting.txt
+# @@ -1,2 +1,2 @@
+#  hello
+# -world
+# +everyone
+</code></pre>
+<hr />
+<h2 id="diffstatus">DiffStatus</h2>
+<p><strong>Module:</strong> <code>gitpy.diff.tree</code></p>
+<p>Enum describing how a path changed between two trees.</p>
+<pre><code class="language-python">class DiffStatus(Enum):
+    ADDED    = &quot;A&quot;  # Path exists only in new tree
+    DELETED  = &quot;D&quot;  # Path exists only in old tree
+    MODIFIED = &quot;M&quot;  # Path exists in both trees but SHA or mode changed
+    RENAMED  = &quot;R&quot;  # Path was renamed (not yet emitted by diff_trees)
+</code></pre>
+<hr />
+<h2 id="diffentry">DiffEntry</h2>
+<p><strong>Module:</strong> <code>gitpy.diff.tree</code></p>
+<p>Difference for a single path between two trees.</p>
+<pre><code class="language-python">@dataclass(slots=True)
+class DiffEntry:
+    status: DiffStatus       # How the path changed
+    path: str                # Repository-relative path (forward slashes)
+    old_sha: str | None      # SHA of the old blob, or None if added
+    new_sha: str | None      # SHA of the new blob, or None if deleted
+    old_mode: str | None     # Mode string of the old entry, or None if added
+    new_mode: str | None     # Mode string of the new entry, or None if deleted
+    old_path: str | None     # Original path for renames (None otherwise)
+</code></pre>
+<h3 id="attributes_1">Attributes</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>status</code></td>
+<td><code>DiffStatus</code></td>
+<td>How the path changed</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td><code>str</code></td>
+<td>Repository-relative path using forward slashes</td>
+</tr>
+<tr>
+<td><code>old_sha</code></td>
+<td><code>str \| None</code></td>
+<td>SHA of the old blob, or <code>None</code> if added</td>
+</tr>
+<tr>
+<td><code>new_sha</code></td>
+<td><code>str \| None</code></td>
+<td>SHA of the new blob, or <code>None</code> if deleted</td>
+</tr>
+<tr>
+<td><code>old_mode</code></td>
+<td><code>str \| None</code></td>
+<td>Mode string of the old entry, or <code>None</code> if added</td>
+</tr>
+<tr>
+<td><code>new_mode</code></td>
+<td><code>str \| None</code></td>
+<td>Mode string of the new entry, or <code>None</code> if deleted</td>
+</tr>
+<tr>
+<td><code>old_path</code></td>
+<td><code>str \| None</code></td>
+<td>Original path for renames (<code>None</code> otherwise)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="diff_trees"><code>diff_trees()</code></h2>
+<p><strong>Module:</strong> <code>gitpy.diff.tree</code></p>
+<pre><code class="language-python">def diff_trees(
+    old_tree_sha: str | None,
+    new_tree_sha: str | None,
+    db: ObjectDatabase,
+) -&gt; Iterator[DiffEntry]
+</code></pre>
+<p>Compare two trees and yield differences for each changed path. Handles <code>None</code> on either side to represent an empty tree — useful for diffing the initial commit or a complete deletion.</p>
+<p><strong>Parameters:</strong>
+- <code>old_tree_sha</code> - SHA of the old tree, or <code>None</code> for an empty tree.
+- <code>new_tree_sha</code> - SHA of the new tree, or <code>None</code> for an empty tree.
+- <code>db</code> - Object database used to read tree and blob objects.</p>
+<p><strong>Yields:</strong> <code>DiffEntry</code> for each path that differs between the two trees.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from gitpy.diff import diff_trees, DiffStatus
+from gitpy.storage import ObjectDatabase
+
+db = ObjectDatabase(git_dir)
+
+for entry in diff_trees(old_tree_sha, new_tree_sha, db):
+    if entry.status == DiffStatus.MODIFIED:
+        print(f&quot;M {entry.path}&quot;)
+    elif entry.status == DiffStatus.ADDED:
+        print(f&quot;A {entry.path}&quot;)
+    elif entry.status == DiffStatus.DELETED:
+        print(f&quot;D {entry.path}&quot;)
+</code></pre>
+<hr />
+<h2 id="flatten_tree"><code>flatten_tree()</code></h2>
+<p><strong>Module:</strong> <code>gitpy.diff.tree</code></p>
+<pre><code class="language-python">def flatten_tree(
+    tree_sha: str,
+    db: ObjectDatabase,
+    prefix: str,
+) -&gt; dict[str, dict[str, str]]
+</code></pre>
+<p>Recursively flatten a tree into a mapping of path to <code>{"sha": ..., "mode": ...}</code>.</p>
+<p><strong>Parameters:</strong>
+- <code>tree_sha</code> - SHA of the tree to flatten.
+- <code>db</code> - Object database.
+- <code>prefix</code> - Path prefix accumulated during recursion (empty string <code>""</code> at the root).</p>
+<p><strong>Returns:</strong> Dict mapping repository-relative paths to <code>{"sha": ..., "mode": ...}</code>.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from gitpy.diff import flatten_tree
+
+files = flatten_tree(tree_sha, db, &quot;&quot;)
+for path, info in sorted(files.items()):
+    print(info[&quot;mode&quot;], info[&quot;sha&quot;], path)
+</code></pre>
+<hr />
+<h2 id="is_binary"><code>is_binary()</code></h2>
+<p><strong>Module:</strong> <code>gitpy.diff.tree</code></p>
+<pre><code class="language-python">def is_binary(data: bytes, sample: int = 8000) -&gt; bool
+</code></pre>
+<p>Heuristically detect binary content. Checks for a NUL byte in the first <code>sample</code> bytes, which is the same heuristic used by Git.</p>
+<p><strong>Parameters:</strong>
+- <code>data</code> - Raw blob bytes.
+- <code>sample</code> - Number of bytes to inspect.</p>
+<p><strong>Returns:</strong> <code>True</code> if the content appears to be binary.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from gitpy.diff import is_binary
+
+blob_data = db.read_blob(sha).data
+if is_binary(blob_data):
+    print(&quot;Binary file&quot;)
+</code></pre>
+<hr />
+<h2 id="format_binary_diff"><code>format_binary_diff()</code></h2>
+<p><strong>Module:</strong> <code>gitpy.diff.tree</code></p>
+<pre><code class="language-python">def format_binary_diff(path: str) -&gt; str
+</code></pre>
+<p>Return the standard Git message for a binary file diff.</p>
+<p><strong>Parameters:</strong>
+- <code>path</code> - Repository-relative path of the binary file.</p>
+<p><strong>Returns:</strong> Human-readable string matching Git's binary-diff output.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from gitpy.diff import format_binary_diff
+
+msg = format_binary_diff(&quot;images/logo.png&quot;)
+# &quot;Binary files a/images/logo.png and b/images/logo.png differ&quot;
+</code></pre>
+<hr />
+<h2 id="complete-example">Complete Example</h2>
+<pre><code class="language-python">from pathlib import Path
+from gitpy.diff import (
+    myers_diff, format_unified_diff,
+    diff_trees, DiffStatus,
+    is_binary, format_binary_diff,
+)
+from gitpy.storage import ObjectDatabase
+
+git_dir = Path(&quot;/path/to/repo/.git&quot;)
+db = ObjectDatabase(git_dir)
+
+# ---- Line-level diff between two text blobs ----
+old_blob = db.read_blob(old_sha)
+new_blob = db.read_blob(new_sha)
+
+old_lines = old_blob.data.decode().splitlines()
+new_lines = new_blob.data.decode().splitlines()
+
+diff_str = format_unified_diff(
+    old_lines, new_lines,
+    old_name=&quot;a/src/main.py&quot;,
+    new_name=&quot;b/src/main.py&quot;,
+)
+print(diff_str)
+
+# ---- Tree-level diff between two commits ----
+for entry in diff_trees(old_tree_sha, new_tree_sha, db):
+    blob_data = (db.read_blob(entry.new_sha or entry.old_sha).data
+                 if entry.new_sha or entry.old_sha else b&quot;&quot;)
+    if is_binary(blob_data):
+        print(format_binary_diff(entry.path))
+    else:
+        prefix = {&quot;A&quot;: &quot;+&quot;, &quot;D&quot;: &quot;-&quot;, &quot;M&quot;: &quot;~&quot;}.get(entry.status.value, &quot;?&quot;)
+        print(f&quot;{prefix} {entry.path}&quot;)
+</code></pre>
+<hr />
+<h2 id="git-compatibility">Git Compatibility</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Myers algorithm</td>
+<td>Produces the same minimal edit distance as Git's diff engine</td>
+</tr>
+<tr>
+<td>Unified diff headers</td>
+<td><code>--- a/&lt;path&gt;</code> / <code>+++ b/&lt;path&gt;</code> with <code>@@ -l,s +l,s @@</code> hunks</td>
+</tr>
+<tr>
+<td>Context lines</td>
+<td>Default 3, matching <code>git diff</code></td>
+</tr>
+<tr>
+<td>Binary detection</td>
+<td>NUL-byte heuristic, same as Git</td>
+</tr>
+<tr>
+<td>Binary message</td>
+<td><code>"Binary files a/&lt;path&gt; and b/&lt;path&gt; differ"</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><strong><a href="../objects/">Object Model API</a></strong>: <code>Blob</code>, <code>Tree</code>, <code>TreeEntry</code> used in tree diffs</li>
+<li><strong><a href="../storage/">Storage API</a></strong>: <code>ObjectDatabase</code> required by <code>diff_trees</code> and <code>flatten_tree</code></li>
+<li><strong><a href="../staging/">Staging API</a></strong>: <code>get_status</code> uses <code>diff_trees</code> internally to compare index vs HEAD</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -9,6 +9,10 @@
       
       
       
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../../concepts/object_model/">
       
       
         
@@ -19,7 +23,7 @@
     
     
       
-        <title>Python 3.12+ Features for gitpy - gitpy</title>
+        <title>CLI Reference - gitpy</title>
       
     
     
@@ -60,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#python-312-features-for-gitpy" class="md-skip">
+        <a href="#gitpy-cli-reference" class="md-skip">
           Skip to content
         </a>
       
@@ -96,7 +100,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Python 3.12+ Features for gitpy
+              CLI Reference
             
           </span>
         </div>
@@ -240,18 +244,20 @@
       
   
   
+    
   
   
+  
     
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
         
           
           <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
@@ -272,7 +278,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -287,10 +293,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../usage/cli/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -306,6 +339,242 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Installation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#global-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Global options
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#porcelain-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Porcelain Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Porcelain Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#init" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        init
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        status
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        add
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        commit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        log
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        diff
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        branch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checkout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        checkout
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plumbing-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plumbing Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Plumbing Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hash-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hash-object
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cat-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cat-file
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ls-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ls-tree
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        write-tree
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commit-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        commit-tree
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-ref" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        update-ref
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -900,132 +1169,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#required-python-version" class="md-nav__link">
+  <a href="#installation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Required Python Version
+        Installation
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#key-features-to-use" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Key Features to Use
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Key Features to Use">
+    <nav class="md-nav" aria-label="Installation">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-type-parameter-syntax-pep-695" class="md-nav__link">
+  <a href="#global-options" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. Type Parameter Syntax (PEP 695)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-self-type-pep-673" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        2. Self Type (PEP 673)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-pattern-matching-matchcase" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. Pattern Matching (match/case)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-dataclasses-with-slots-and-kw_only" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4. Dataclasses with slots and kw_only
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#5-built-in-generic-types" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        5. Built-in Generic Types
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#6-typealias-and-type-statement" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6. TypeAlias and type Statement
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#7-exception-groups-and-except" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7. Exception Groups and except*
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#8-improved-f-strings-312" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        8. Improved f-strings (3.12)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#9-buffer-protocol-pep-688" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        9. Buffer Protocol (PEP 688)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#10-tomllib-311-stdlib" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        10. tomllib (3.11+ stdlib)
+        Global options
       
     </span>
   </a>
@@ -1038,22 +1197,22 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#updated-code-examples" class="md-nav__link">
+  <a href="#porcelain-commands" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Updated Code Examples
+        Porcelain Commands
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Updated Code Examples">
+    <nav class="md-nav" aria-label="Porcelain Commands">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#object-base-class-modern" class="md-nav__link">
+  <a href="#init" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Object Base Class (Modern)
+        init
       
     </span>
   </a>
@@ -1061,10 +1220,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#blob-modern" class="md-nav__link">
+  <a href="#status" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Blob (Modern)
+        status
       
     </span>
   </a>
@@ -1072,10 +1231,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#tree-entry-with-pattern-matching" class="md-nav__link">
+  <a href="#add" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Tree Entry with Pattern Matching
+        add
       
     </span>
   </a>
@@ -1083,10 +1242,54 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#command-dispatch-with-pattern-matching" class="md-nav__link">
+  <a href="#commit" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Command Dispatch with Pattern Matching
+        commit
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        log
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        diff
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        branch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checkout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        checkout
       
     </span>
   </a>
@@ -1099,24 +1302,85 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#type-hints-summary" class="md-nav__link">
+  <a href="#plumbing-commands" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Type Hints Summary
+        Plumbing Commands
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Plumbing Commands">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hash-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        hash-object
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#migration-checklist" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#cat-file" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Migration Checklist
+        cat-file
       
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ls-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ls-tree
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        write-tree
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commit-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        commit-tree
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#update-ref" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        update-ref
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1140,353 +1404,511 @@
   
 
 
-<h1 id="python-312-features-for-gitpy">Python 3.12+ Features for gitpy</h1>
-<p>This document outlines modern Python 3.12+ features to leverage in the implementation.</p>
-<h2 id="required-python-version">Required Python Version</h2>
-<pre><code class="language-toml">[project]
-requires-python = &quot;&gt;=3.12&quot;
+<h1 id="gitpy-cli-reference">gitpy CLI Reference</h1>
+<p>gitpy is a Python reimplementation of Git's core internals. Its command-line
+interface mirrors real Git so you can use it as a learning tool alongside the
+real thing.</p>
+<h2 id="installation">Installation</h2>
+<p>gitpy is managed with <a href="https://docs.astral.sh/uv/">uv</a>. After cloning the
+repository and running <code>uv sync --group dev</code> you can invoke it with:</p>
+<pre><code class="language-sh">uv run gitpy &lt;command&gt; [options]
 </code></pre>
-<h2 id="key-features-to-use">Key Features to Use</h2>
-<h3 id="1-type-parameter-syntax-pep-695">1. Type Parameter Syntax (PEP 695)</h3>
-<p><strong>Old style:</strong></p>
-<pre><code class="language-python">from typing import TypeVar, Generic
-
-T = TypeVar(&quot;T&quot;)
-
-class Repository(Generic[T]):
-    def get(self, key: str) -&gt; T: ...
-</code></pre>
-<p><strong>New style (3.12+):</strong></p>
-<pre><code class="language-python">class Repository[T]:
-    def get(self, key: str) -&gt; T: ...
-
-def parse[T: GitObject](data: bytes, cls: type[T]) -&gt; T: ...
-</code></pre>
-<h3 id="2-self-type-pep-673">2. Self Type (PEP 673)</h3>
-<pre><code class="language-python">from typing import Self
-
-class GitObject:
-    @classmethod
-    def deserialize(cls, data: bytes) -&gt; Self:
-        &quot;&quot;&quot;Returns instance of the actual subclass.&quot;&quot;&quot;
-        ...
-
-    def with_updated(self, **kwargs) -&gt; Self:
-        &quot;&quot;&quot;Returns same type as self.&quot;&quot;&quot;
-        ...
-</code></pre>
-<h3 id="3-pattern-matching-matchcase">3. Pattern Matching (match/case)</h3>
-<pre><code class="language-python">def parse_revision(rev: str) -&gt; str:
-    &quot;&quot;&quot;Parse Git revision expression.&quot;&quot;&quot;
-    match rev.split(&quot;^&quot;):
-        case [base]:
-            return resolve_ref(base)
-        case [base, &quot;&quot;]:
-            return get_parent(resolve_ref(base), 1)
-        case [base, n] if n.isdigit():
-            return get_parent(resolve_ref(base), int(n))
-        case _:
-            raise ValueError(f&quot;Invalid revision: {rev}&quot;)
-
-def get_object_type(obj: GitObject) -&gt; str:
-    match obj:
-        case Blob():
-            return &quot;blob&quot;
-        case Tree():
-            return &quot;tree&quot;
-        case Commit():
-            return &quot;commit&quot;
-        case Tag():
-            return &quot;tag&quot;
-</code></pre>
-<h3 id="4-dataclasses-with-slots-and-kw_only">4. Dataclasses with slots and kw_only</h3>
-<pre><code class="language-python">from dataclasses import dataclass, field
-
-@dataclass(slots=True, frozen=True)
-class TreeEntry:
-    &quot;&quot;&quot;Immutable tree entry with memory-efficient slots.&quot;&quot;&quot;
-    mode: str
-    name: str
-    sha: str
-
-@dataclass(slots=True, kw_only=True)
-class Commit:
-    &quot;&quot;&quot;Commit with keyword-only arguments for clarity.&quot;&quot;&quot;
-    tree_sha: str
-    parent_shas: list[str] = field(default_factory=list)
-    author: Identity
-    committer: Identity
-    message: str
-</code></pre>
-<h3 id="5-built-in-generic-types">5. Built-in Generic Types</h3>
-<p><strong>No imports needed for basic generics:</strong></p>
-<pre><code class="language-python"># Old style
-from typing import List, Dict, Optional, Tuple
-
-def process(items: List[str]) -&gt; Dict[str, int]: ...
-
-# New style (3.9+, preferred in 3.12+)
-def process(items: list[str]) -&gt; dict[str, int]: ...
-
-def get_entry(path: str) -&gt; TreeEntry | None: ...  # Instead of Optional
-
-def parse(data: bytes) -&gt; tuple[str, GitObject]: ...
-</code></pre>
-<h3 id="6-typealias-and-type-statement">6. TypeAlias and type Statement</h3>
-<pre><code class="language-python"># New type alias syntax (3.12+)
-type SHA = str
-type ObjectData = bytes
-type RefName = str
-
-type TreeEntries = list[TreeEntry]
-type RefMap = dict[RefName, SHA]
-
-# Generic type aliases
-type Result[T] = tuple[T, bytes]
-type Parser[T] = Callable[[bytes], T]
-</code></pre>
-<h3 id="7-exception-groups-and-except">7. Exception Groups and except*</h3>
-<pre><code class="language-python">async def validate_objects(shas: list[str]) -&gt; None:
-    &quot;&quot;&quot;Validate multiple objects, collecting all errors.&quot;&quot;&quot;
-    errors: list[Exception] = []
-
-    for sha in shas:
-        try:
-            validate_sha(sha)
-        except ValidationError as e:
-            errors.append(e)
-
-    if errors:
-        raise ExceptionGroup(&quot;validation failed&quot;, errors)
-
-# Handling
-try:
-    validate_objects(shas)
-except* ValidationError as eg:
-    for error in eg.exceptions:
-        print(f&quot;Invalid: {error}&quot;)
-</code></pre>
-<h3 id="8-improved-f-strings-312">8. Improved f-strings (3.12)</h3>
-<pre><code class="language-python"># Can now use quotes and backslashes freely
-sha = &quot;abc123&quot;
-message = f&quot;Commit {sha!r} by {author[&quot;name&quot;]}&quot;
-
-# Multiline expressions
-result = f&quot;&quot;&quot;
-Tree: {tree_sha}
-Parents: {&quot;, &quot;.join(parent_shas)}
-Author: {author.name} &lt;{author.email}&gt;
-&quot;&quot;&quot;
-</code></pre>
-<h3 id="9-buffer-protocol-pep-688">9. Buffer Protocol (PEP 688)</h3>
-<pre><code class="language-python">from collections.abc import Buffer
-
-def write_object(data: Buffer) -&gt; str:
-    &quot;&quot;&quot;Accept any buffer-like object.&quot;&quot;&quot;
-    view = memoryview(data)
-    return hashlib.sha1(view).hexdigest()
-</code></pre>
-<h3 id="10-tomllib-311-stdlib">10. tomllib (3.11+ stdlib)</h3>
-<pre><code class="language-python">import tomllib
-
-def read_config(path: Path) -&gt; dict:
-    &quot;&quot;&quot;Read Git config in TOML-like format.&quot;&quot;&quot;
-    with open(path, &quot;rb&quot;) as f:
-        return tomllib.load(f)
-</code></pre>
-<hr />
-<h2 id="updated-code-examples">Updated Code Examples</h2>
-<h3 id="object-base-class-modern">Object Base Class (Modern)</h3>
-<pre><code class="language-python"># gitpy/objects/base.py
-
-from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from typing import Self
-import hashlib
-
-type SHA = str
-type ObjectData = bytes
-
-class GitObject(ABC):
-    &quot;&quot;&quot;Base class for all Git objects.&quot;&quot;&quot;
-
-    type_name: str
-
-    @abstractmethod
-    def serialize(self) -&gt; bytes:
-        &quot;&quot;&quot;Serialize object content (without header).&quot;&quot;&quot;
-        ...
-
-    @classmethod
-    @abstractmethod
-    def deserialize(cls, data: bytes) -&gt; Self:
-        &quot;&quot;&quot;Deserialize object content.&quot;&quot;&quot;
-        ...
-
-    def compute_hash(self) -&gt; SHA:
-        &quot;&quot;&quot;Compute SHA-1 hash of this object.&quot;&quot;&quot;
-        content = self.serialize()
-        header = f&quot;{self.type_name} {len(content)}\0&quot;.encode()
-        return hashlib.sha1(header + content).hexdigest()
-
-    @property
-    def oid(self) -&gt; SHA:
-        &quot;&quot;&quot;Object ID (SHA-1 hash).&quot;&quot;&quot;
-        return self.compute_hash()
-</code></pre>
-<h3 id="blob-modern">Blob (Modern)</h3>
-<pre><code class="language-python"># gitpy/objects/blob.py
-
-from dataclasses import dataclass
-from pathlib import Path
-from typing import Self
-
-from .base import GitObject
-
-@dataclass(slots=True)
-class Blob(GitObject):
-    &quot;&quot;&quot;Represents file contents.&quot;&quot;&quot;
-
-    type_name: str = &quot;blob&quot;
-    data: bytes = b&quot;&quot;
-
-    def serialize(self) -&gt; bytes:
-        return self.data
-
-    @classmethod
-    def deserialize(cls, data: bytes) -&gt; Self:
-        return cls(data=data)
-
-    @classmethod
-    def from_file(cls, path: Path | str) -&gt; Self:
-        &quot;&quot;&quot;Create Blob from file path.&quot;&quot;&quot;
-        return cls(data=Path(path).read_bytes())
-</code></pre>
-<h3 id="tree-entry-with-pattern-matching">Tree Entry with Pattern Matching</h3>
-<pre><code class="language-python"># gitpy/objects/tree.py
-
-from dataclasses import dataclass
-from typing import Self
-
-@dataclass(slots=True, frozen=True)
-class TreeEntry:
-    &quot;&quot;&quot;Single entry in a tree object.&quot;&quot;&quot;
-    mode: str
-    name: str
-    sha: str
-
-    @property
-    def entry_type(self) -&gt; str:
-        match self.mode:
-            case &quot;40000&quot;:
-                return &quot;tree&quot;
-            case &quot;100644&quot; | &quot;100755&quot;:
-                return &quot;blob&quot;
-            case &quot;120000&quot;:
-                return &quot;symlink&quot;
-            case &quot;160000&quot;:
-                return &quot;gitlink&quot;
-            case _:
-                return &quot;unknown&quot;
-
-    @property
-    def is_tree(self) -&gt; bool:
-        return self.mode == &quot;40000&quot;
-
-    @property
-    def is_executable(self) -&gt; bool:
-        return self.mode == &quot;100755&quot;
-</code></pre>
-<h3 id="command-dispatch-with-pattern-matching">Command Dispatch with Pattern Matching</h3>
-<pre><code class="language-python"># gitpy/cli.py
-
-def dispatch_command(args: list[str]) -&gt; int:
-    match args:
-        case [&quot;init&quot;, *rest]:
-            return cmd_init(rest)
-        case [&quot;add&quot;, *paths] if paths:
-            return cmd_add(paths)
-        case [&quot;commit&quot;, &quot;-m&quot;, message]:
-            return cmd_commit(message)
-        case [&quot;commit&quot;, &quot;-m&quot;, message, &quot;--amend&quot;]:
-            return cmd_commit(message, amend=True)
-        case [&quot;log&quot;, &quot;--oneline&quot;]:
-            return cmd_log(oneline=True)
-        case [&quot;log&quot;, &quot;-n&quot;, n] if n.isdigit():
-            return cmd_log(limit=int(n))
-        case [&quot;status&quot;]:
-            return cmd_status()
-        case [cmd, *_]:
-            print(f&quot;Unknown command: {cmd}&quot;)
-            return 1
-        case []:
-            print_usage()
-            return 0
-</code></pre>
-<hr />
-<h2 id="type-hints-summary">Type Hints Summary</h2>
+<h3 id="global-options">Global options</h3>
 <table>
 <thead>
 <tr>
-<th>Feature</th>
-<th>Python Version</th>
-<th>Example</th>
+<th>Flag</th>
+<th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>list[T]</code> instead of <code>List[T]</code></td>
-<td>3.9+</td>
-<td><code>list[str]</code></td>
+<td><code>-v</code>, <code>--version</code></td>
+<td>Print the version number and exit</td>
 </tr>
 <tr>
-<td><code>dict[K, V]</code></td>
-<td>3.9+</td>
-<td><code>dict[str, int]</code></td>
-</tr>
-<tr>
-<td><code>T \| None</code> instead of <code>Optional[T]</code></td>
-<td>3.10+</td>
-<td><code>str \| None</code></td>
-</tr>
-<tr>
-<td><code>match/case</code></td>
-<td>3.10+</td>
-<td>Pattern matching</td>
-</tr>
-<tr>
-<td><code>Self</code></td>
-<td>3.11+</td>
-<td>Return type for methods</td>
-</tr>
-<tr>
-<td><code>type X = ...</code></td>
-<td>3.12+</td>
-<td>Type alias</td>
-</tr>
-<tr>
-<td><code>class Foo[T]:</code></td>
-<td>3.12+</td>
-<td>Generic class</td>
-</tr>
-<tr>
-<td><code>def foo[T]():</code></td>
-<td>3.12+</td>
-<td>Generic function</td>
+<td><code>--help</code></td>
+<td>Show help for any command</td>
 </tr>
 </tbody>
 </table>
 <hr />
-<h2 id="migration-checklist">Migration Checklist</h2>
-<ul>
-<li>[ ] Update all <code>from typing import List, Dict, ...</code> to built-in generics</li>
-<li>[ ] Replace <code>Optional[X]</code> with <code>X | None</code></li>
-<li>[ ] Use <code>Self</code> for return types in class methods</li>
-<li>[ ] Add <code>slots=True</code> to dataclasses for memory efficiency</li>
-<li>[ ] Use pattern matching where appropriate (parsing, dispatch)</li>
-<li>[ ] Define type aliases with <code>type</code> statement</li>
-<li>[ ] Use f-string improvements for cleaner formatting</li>
-</ul>
+<h2 id="porcelain-commands">Porcelain Commands</h2>
+<p>Porcelain commands are the high-level, user-facing operations you use every day.</p>
+<hr />
+<h3 id="init">init</h3>
+<p>Initialize a new Git repository.</p>
+<pre><code>gitpy init [DIRECTORY] [--bare]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Argument / Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DIRECTORY</code></td>
+<td>Directory to initialize (default: current directory)</td>
+</tr>
+<tr>
+<td><code>--bare</code></td>
+<td>Create a bare repository (no working tree)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<pre><code class="language-sh">$ mkdir myproject &amp;&amp; gitpy init myproject
+Initialized empty Git repository in myproject/.git
+</code></pre>
+<hr />
+<h3 id="status">status</h3>
+<p>Show the working tree status — which files are staged, modified, or untracked.</p>
+<pre><code>gitpy status [-s]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-s</code>, <code>--short</code></td>
+<td>Short (machine-readable) output format</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<pre><code class="language-sh">$ gitpy status
+On branch main
+Untracked files:
+  hello.txt
+</code></pre>
+<hr />
+<h3 id="add">add</h3>
+<p>Stage file contents to the index (staging area).</p>
+<pre><code>gitpy add [PATHS]... [-A]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Argument / Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PATHS</code></td>
+<td>One or more files to stage</td>
+</tr>
+<tr>
+<td><code>-A</code>, <code>--all</code></td>
+<td>Stage all changes (new, modified, deleted)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<pre><code class="language-sh">$ printf 'hello\n' &gt; hello.txt
+$ gitpy add hello.txt
+</code></pre>
+<hr />
+<h3 id="commit">commit</h3>
+<p>Record staged changes as a new commit.</p>
+<pre><code>gitpy commit -m &lt;message&gt; [--amend]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-m</code>, <code>--message</code></td>
+<td>Commit message (required)</td>
+</tr>
+<tr>
+<td><code>--amend</code></td>
+<td>Replace the most recent commit with a new one</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<pre><code class="language-sh">$ gitpy commit -m &quot;Add hello.txt&quot;
+[main (root-commit) ce01362] Add hello.txt
+</code></pre>
+<hr />
+<h3 id="log">log</h3>
+<p>Show the commit history starting from a given revision.</p>
+<pre><code>gitpy log [REVISION] [--oneline] [-n N]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Argument / Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>REVISION</code></td>
+<td>Starting commit or branch (default: <code>HEAD</code>)</td>
+</tr>
+<tr>
+<td><code>--oneline</code></td>
+<td>Compact single-line output per commit</td>
+</tr>
+<tr>
+<td><code>-n N</code></td>
+<td>Limit output to N commits</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<pre><code class="language-sh">$ gitpy log --oneline -n 3
+a1b2c3d Add feature
+4e5f6a7 Fix typo
+8b9c0d1 Initial commit
+</code></pre>
+<hr />
+<h3 id="diff">diff</h3>
+<p>Show changes between commits, or between the working tree and index.</p>
+<pre><code>gitpy diff [COMMITS]... [--staged]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Argument / Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>COMMITS</code></td>
+<td>Zero, one, or two commit SHAs to compare</td>
+</tr>
+<tr>
+<td><code>--staged</code>, <code>--cached</code></td>
+<td>Compare the index against HEAD</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<pre><code class="language-sh"># Show unstaged changes
+$ gitpy diff
+
+# Show what is staged for the next commit
+$ gitpy diff --staged
+</code></pre>
+<hr />
+<h3 id="branch">branch</h3>
+<p>List, create, delete, or rename branches.</p>
+<pre><code>gitpy branch [NAME] [-d] [-m] [--old OLD] [--new NEW] [-f]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Argument / Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NAME</code></td>
+<td>Branch name to create or operate on</td>
+</tr>
+<tr>
+<td><code>-d</code>, <code>--delete</code></td>
+<td>Delete the named branch</td>
+</tr>
+<tr>
+<td><code>-m</code>, <code>--move</code></td>
+<td>Rename a branch (use with <code>--old</code> and <code>--new</code>)</td>
+</tr>
+<tr>
+<td><code>--old OLD</code></td>
+<td>Old branch name (used with <code>--move</code>)</td>
+</tr>
+<tr>
+<td><code>--new NEW</code></td>
+<td>New branch name (used with <code>--move</code>)</td>
+</tr>
+<tr>
+<td><code>-f</code>, <code>--force</code></td>
+<td>Force the operation</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-sh"># List all branches
+$ gitpy branch
+
+# Create a new branch
+$ gitpy branch feature-login
+
+# Delete a branch
+$ gitpy branch -d feature-login
+
+# Rename a branch
+$ gitpy branch -m --old old-name --new new-name
+</code></pre>
+<hr />
+<h3 id="checkout">checkout</h3>
+<p>Switch branches or restore working-tree files.</p>
+<pre><code>gitpy checkout [TARGET] [-b &lt;new-branch&gt;] [--path &lt;path&gt;]...
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Argument / Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TARGET</code></td>
+<td>Branch name or commit to switch to</td>
+</tr>
+<tr>
+<td><code>-b NEW</code></td>
+<td>Create a new branch named <code>NEW</code> and switch to it</td>
+</tr>
+<tr>
+<td><code>--path PATH</code></td>
+<td>Restore the given path from the target; repeatable to restore multiple paths</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Examples:</strong></p>
+<pre><code class="language-sh"># Switch to an existing branch
+$ gitpy checkout main
+
+# Create and switch to a new branch
+$ gitpy checkout -b feature-login
+</code></pre>
+<hr />
+<h2 id="plumbing-commands">Plumbing Commands</h2>
+<p>Plumbing commands expose Git's low-level internals. They are composable
+building blocks for scripting and for understanding how Git works internally.</p>
+<hr />
+<h3 id="hash-object">hash-object</h3>
+<p>Compute the SHA-1 hash of a file and optionally write it to the object store.</p>
+<pre><code>gitpy hash-object &lt;path&gt; [-t &lt;type&gt;] [-w]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Argument / Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>path</code></td>
+<td>Path to the file to hash (required)</td>
+</tr>
+<tr>
+<td><code>-t</code>, <code>--type</code></td>
+<td>Object type to use as header (default: <code>blob</code>)</td>
+</tr>
+<tr>
+<td><code>-w</code>, <code>--write</code></td>
+<td>Write the object to the repository's object store</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<pre><code class="language-sh">$ printf 'hello\n' &gt; hello.txt
+
+# Hash without storing
+$ gitpy hash-object hello.txt
+ce013625030ba8dba906f756967f9e9ca394464a
+
+# Hash and store
+$ gitpy hash-object -w hello.txt
+ce013625030ba8dba906f756967f9e9ca394464a
+</code></pre>
+<p>The hash <code>ce013625030ba8dba906f756967f9e9ca394464a</code> is the universal SHA-1 for
+<code>hello\n</code> — you will get the same value from real Git.</p>
+<hr />
+<h3 id="cat-file">cat-file</h3>
+<p>Display the content, type, or size of an object in the repository.</p>
+<pre><code>gitpy cat-file &lt;obj&gt; [-t] [-s] [-p]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Argument / Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>obj</code></td>
+<td>Object SHA-1 (or prefix) to inspect (required)</td>
+</tr>
+<tr>
+<td><code>-t</code></td>
+<td>Print the object type</td>
+</tr>
+<tr>
+<td><code>-s</code></td>
+<td>Print the object size in bytes</td>
+</tr>
+<tr>
+<td><code>-p</code></td>
+<td>Pretty-print the object content</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<pre><code class="language-sh"># After storing hello.txt with hash-object -w
+$ gitpy cat-file -t ce013625030ba8dba906f756967f9e9ca394464a
+blob
+
+$ gitpy cat-file -s ce013625030ba8dba906f756967f9e9ca394464a
+6
+
+$ gitpy cat-file -p ce013625030ba8dba906f756967f9e9ca394464a
+hello
+</code></pre>
+<p>The well-known reference SHA-1 values are:</p>
+<table>
+<thead>
+<tr>
+<th>Content</th>
+<th>SHA-1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Empty blob</td>
+<td><code>e69de29bb2d1d6434b8b29ae775ad8c2e48c5391</code></td>
+</tr>
+<tr>
+<td>Empty tree</td>
+<td><code>4b825dc642cb6eb9a060e54bf8d69288fbee4904</code></td>
+</tr>
+<tr>
+<td><code>hello\n</code> blob</td>
+<td><code>ce013625030ba8dba906f756967f9e9ca394464a</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="ls-tree">ls-tree</h3>
+<p>List the contents of a tree object.</p>
+<pre><code>gitpy ls-tree &lt;tree-ish&gt; [-r]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Argument / Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tree-ish</code></td>
+<td>Tree SHA-1, branch, or <code>HEAD^{tree}</code> (required)</td>
+</tr>
+<tr>
+<td><code>-r</code></td>
+<td>Recurse into sub-trees</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<pre><code class="language-sh">$ gitpy write-tree
+aaa96ced2d9a1c8e72c56b253a0e2fe78393feb7
+
+$ gitpy ls-tree aaa96ced2d9a1c8e72c56b253a0e2fe78393feb7
+100644 blob ce013625030ba8dba906f756967f9e9ca394464a    hello.txt
+</code></pre>
+<hr />
+<h3 id="write-tree">write-tree</h3>
+<p>Create a tree object from the current index (staging area).</p>
+<pre><code>gitpy write-tree
+</code></pre>
+<p>No arguments. Writes every staged entry as a tree and prints the resulting
+tree SHA-1.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-sh">$ gitpy add hello.txt
+$ gitpy write-tree
+aaa96ced2d9a1c8e72c56b253a0e2fe78393feb7
+</code></pre>
+<hr />
+<h3 id="commit-tree">commit-tree</h3>
+<p>Create a commit object directly from a tree SHA-1, bypassing the index.
+Useful for scripting and for understanding what <code>gitpy commit</code> does internally.</p>
+<pre><code>gitpy commit-tree &lt;tree&gt; -m &lt;message&gt; [-p &lt;parent&gt;]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Argument / Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tree</code></td>
+<td>SHA-1 of the tree to commit (required)</td>
+</tr>
+<tr>
+<td><code>-m</code>, <code>--message</code></td>
+<td>Commit message (required)</td>
+</tr>
+<tr>
+<td><code>-p</code>, <code>--parent</code></td>
+<td>Parent commit SHA-1 (may be repeated for merges)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<pre><code class="language-sh">$ TREE=$(gitpy write-tree)
+$ gitpy commit-tree &quot;$TREE&quot; -m &quot;Initial commit&quot;
+7f3d9e2a1b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e
+</code></pre>
+<hr />
+<h3 id="update-ref">update-ref</h3>
+<p>Update or delete a reference (branch pointer).</p>
+<pre><code>gitpy update-ref &lt;ref&gt; [newvalue] [-d]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Argument / Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ref</code></td>
+<td>Fully-qualified reference name, e.g. <code>refs/heads/main</code> (required)</td>
+</tr>
+<tr>
+<td><code>newvalue</code></td>
+<td>New SHA-1 to point the reference at</td>
+</tr>
+<tr>
+<td><code>-d</code>, <code>--delete</code></td>
+<td>Delete the reference</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example:</strong></p>
+<pre><code class="language-sh"># Point a branch at a specific commit
+$ COMMIT=$(gitpy commit-tree &quot;$TREE&quot; -m &quot;Initial commit&quot;)
+$ gitpy update-ref refs/heads/main &quot;$COMMIT&quot;
+
+# Delete a reference
+$ gitpy update-ref -d refs/heads/old-branch
+</code></pre>
 
 
 

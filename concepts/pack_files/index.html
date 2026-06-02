@@ -1,0 +1,3160 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../object_storage/">
+      
+      
+        <link rel="next" href="../delta_compression/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Pack Files - gitpy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#understanding-gits-pack-files" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="gitpy" class="md-header__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gitpy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Pack Files
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="gitpy" class="md-nav__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gitpy
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../object_model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../object_storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pack Files
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pack Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-big-picture-from-loose-to-packed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Big Picture: From Loose to Packed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-pack-files-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Pack Files Matter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why Pack Files Matter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#space-savings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Space Savings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-transfer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network Transfer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-pack-files-are-created" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Pack Files Are Created
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="When Pack Files Are Created">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automatic-triggers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automatic Triggers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manual-packing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual Packing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pack-file-anatomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pack File Anatomy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pack File Anatomy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overall-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overall Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-header" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Header
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-types-in-packs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object Types in Packs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-entry-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object Entry Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delta-base-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delta Base References
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variable-length-integer-encoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variable-Length Integer Encoding
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Variable-Length Integer Encoding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#size-encoding-in-headers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Size Encoding (in headers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ofs_delta-offset-encoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OFS_DELTA Offset Encoding
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploring-pack-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exploring Pack Files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exploring Pack Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#command-line-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Command-Line Tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-verify-pack-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding verify-pack Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-pack-files-with-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading Pack Files with Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delta-compression-deep-dive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delta Compression Deep Dive
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Delta Compression Deep Dive">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-basic-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Basic Idea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delta-instruction-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delta Instruction Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delta-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delta Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-applying-a-delta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: Applying a Delta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delta-chains" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delta Chains
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-pack-index-idx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Pack Index (.idx)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Pack Index (.idx)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#index-structure-version-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index Structure (Version 2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-fanout-table-trick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Fanout Table Trick
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#large-pack-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Large Pack Support
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-pack-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating Pack Files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating Pack Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-packing-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Packing Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-selection-for-delta-bases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object Selection for Delta Bases
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-sliding-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Sliding Window
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pack-file-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pack File Verification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pack File Verification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#integrity-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integrity Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#whats-verified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Verified
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#self-healing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Healing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-transfer-thin-packs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network Transfer: Thin Packs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Network Transfer: Thin Packs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#normal-pack-vs-thin-pack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Normal Pack vs Thin Pack
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pack-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pack Protocol
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Characteristics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Characteristics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lookup-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lookup Performance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#space-efficiency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Space Efficiency
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tuning-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tuning Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-in-gitpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation in gitpy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation in gitpy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#module-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Classes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integration-with-objectdatabase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integration with ObjectDatabase
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git Compatibility
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Git Compatibility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reference-hashes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference Hashes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interoperability-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interoperability Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Next?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../delta_compression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Delta Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pack_index/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pack Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index_staging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index & Staging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../diff/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/objects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Objects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/pack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pack Objects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/refs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/staging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/diff/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Config
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-big-picture-from-loose-to-packed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Big Picture: From Loose to Packed
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-pack-files-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Pack Files Matter
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why Pack Files Matter">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#space-savings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Space Savings
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#network-transfer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network Transfer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-pack-files-are-created" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When Pack Files Are Created
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="When Pack Files Are Created">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automatic-triggers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Automatic Triggers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manual-packing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual Packing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pack-file-anatomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pack File Anatomy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pack File Anatomy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overall-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overall Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-header" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Header
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-types-in-packs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object Types in Packs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-entry-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object Entry Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delta-base-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delta Base References
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variable-length-integer-encoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variable-Length Integer Encoding
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Variable-Length Integer Encoding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#size-encoding-in-headers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Size Encoding (in headers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ofs_delta-offset-encoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OFS_DELTA Offset Encoding
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exploring-pack-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exploring Pack Files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exploring Pack Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#command-line-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Command-Line Tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#understanding-verify-pack-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Understanding verify-pack Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-pack-files-with-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading Pack Files with Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delta-compression-deep-dive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delta Compression Deep Dive
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Delta Compression Deep Dive">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-basic-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Basic Idea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delta-instruction-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delta Instruction Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delta-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delta Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-applying-a-delta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: Applying a Delta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delta-chains" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Delta Chains
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-pack-index-idx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Pack Index (.idx)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Pack Index (.idx)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#index-structure-version-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index Structure (Version 2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-fanout-table-trick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Fanout Table Trick
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#large-pack-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Large Pack Support
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-pack-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating Pack Files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating Pack Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-packing-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Packing Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#object-selection-for-delta-bases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object Selection for Delta Bases
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-sliding-window" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Sliding Window
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pack-file-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pack File Verification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pack File Verification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#integrity-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integrity Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#whats-verified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Verified
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#self-healing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Self-Healing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#network-transfer-thin-packs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Network Transfer: Thin Packs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Network Transfer: Thin Packs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#normal-pack-vs-thin-pack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Normal Pack vs Thin Pack
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pack-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pack Protocol
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Characteristics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Characteristics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lookup-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lookup Performance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#space-efficiency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Space Efficiency
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tuning-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tuning Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-in-gitpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation in gitpy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation in gitpy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#module-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Classes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integration-with-objectdatabase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integration with ObjectDatabase
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git Compatibility
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Git Compatibility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reference-hashes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reference Hashes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interoperability-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interoperability Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Next?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="understanding-gits-pack-files">Understanding Git's Pack Files</h1>
+<p>This document explains how Git efficiently stores objects using pack files. If you've ever wondered why Git repositories are so compact or what happens during <code>git gc</code>, this guide will reveal Git's impressive compression techniques.</p>
+<h2 id="the-big-picture-from-loose-to-packed">The Big Picture: From Loose to Packed</h2>
+<p>In our previous exploration of <a href="../object_storage/">object storage</a>, we learned that Git stores objects as individual compressed files called "loose objects." While this works well for small repositories, it becomes inefficient at scale:</p>
+<ul>
+<li><strong>Filesystem overhead</strong>: Thousands of small files strain the filesystem</li>
+<li><strong>No delta compression</strong>: Similar files are stored separately</li>
+<li><strong>Network inefficiency</strong>: Transferring many files is slow</li>
+</ul>
+<p><strong>Pack files</strong> solve all of these by combining many objects into a single file with sophisticated delta compression.</p>
+<pre><code>Before: .git/objects/
+├── 00/a1b2c3...  # loose object
+├── 01/d4e5f6...  # loose object
+├── 02/g7h8i9...  # loose object
+├── ... (thousands more)
+
+After: .git/objects/pack/
+├── pack-abc123.idx   # ~200KB index
+└── pack-abc123.pack  # ~5MB packed data (was 50MB loose!)
+</code></pre>
+<hr />
+<h2 id="why-pack-files-matter">Why Pack Files Matter</h2>
+<h3 id="space-savings">Space Savings</h3>
+<p>Consider a source file that changes slightly between commits. With loose objects:</p>
+<pre><code>commit 1: utils.py (10KB) → 10KB stored
+commit 2: utils.py (10.1KB) → 10.1KB stored
+commit 3: utils.py (10.2KB) → 10.2KB stored
+...
+100 commits: ~1GB stored
+</code></pre>
+<p>With pack files and delta compression:</p>
+<pre><code>commit 1: utils.py (10KB) → 10KB base
+commit 2: utils.py delta → ~100 bytes
+commit 3: utils.py delta → ~150 bytes
+...
+100 commits: ~20KB stored!
+</code></pre>
+<p>Delta compression stores only the <em>differences</em> between similar objects, not complete copies.</p>
+<h3 id="network-transfer">Network Transfer</h3>
+<p>When you <code>git clone</code> or <code>git fetch</code>:</p>
+<pre><code>Without packs:
+- Client: &quot;I need objects a, b, c, d, e...&quot;
+- Server: Sends 1000 individual HTTP requests
+- Time: Minutes to hours
+
+With packs:
+- Client: &quot;I need these refs&quot;
+- Server: Creates single packfile with all needed objects
+- Time: Seconds to minutes
+</code></pre>
+<p>Git was designed for the Linux kernel—millions of files, decades of history. Pack files make this manageable.</p>
+<hr />
+<h2 id="when-pack-files-are-created">When Pack Files Are Created</h2>
+<h3 id="automatic-triggers">Automatic Triggers</h3>
+<ol>
+<li><strong><code>git gc</code></strong> (garbage collection):
+   ```bash
+   # Explicit gc
+   $ git gc</li>
+</ol>
+<p># Auto gc (triggered by git periodically)
+   $ git gc --auto
+   ```</p>
+<ol>
+<li><strong><code>git push</code> / <code>git fetch</code></strong>:</li>
+<li>Objects sent over the network are always packed</li>
+<li>
+<p>The server creates a pack on-the-fly</p>
+</li>
+<li>
+<p><strong>Automatic thresholds</strong>:
+   <code>bash
+   # Git auto-packs when:
+   # - Loose objects exceed gc.auto (default: 6700)
+   # - Packs exceed gc.autoPackLimit (default: 50)</code></p>
+</li>
+</ol>
+<h3 id="manual-packing">Manual Packing</h3>
+<pre><code class="language-bash"># Create new pack from all loose objects
+$ git repack -a -d
+
+# Aggressive repacking (better compression, slower)
+$ git repack -a -d -f --depth=50 --window=250
+</code></pre>
+<hr />
+<h2 id="pack-file-anatomy">Pack File Anatomy</h2>
+<h3 id="overall-structure">Overall Structure</h3>
+<p>A pack file (<code>.pack</code>) has three sections:</p>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│                      HEADER (12 bytes)                        │
+│   Signature: &quot;PACK&quot;  │  Version: 2  │  Object Count: N       │
+├──────────────────────────────────────────────────────────────┤
+│                                                               │
+│                      OBJECT ENTRIES                           │
+│                                                               │
+│   Entry 1: [header] [data]                                   │
+│   Entry 2: [header] [delta-base-ref] [delta]                 │
+│   Entry 3: [header] [data]                                   │
+│   ...                                                         │
+│   Entry N: [header] [data]                                   │
+│                                                               │
+├──────────────────────────────────────────────────────────────┤
+│                      TRAILER (20 bytes)                       │
+│                   SHA-1 of all above content                  │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="the-header">The Header</h3>
+<pre><code>Bytes 0-3:  &quot;PACK&quot; (magic signature)
+Bytes 4-7:  Version number (2 = current standard)
+Bytes 8-11: Number of objects in pack (big-endian)
+</code></pre>
+<pre><code class="language-python"># Reading the header
+PACK_SIGNATURE = b&quot;PACK&quot;
+
+def read_pack_header(data: bytes) -&gt; tuple[int, int]:
+    &quot;&quot;&quot;Parse pack header.&quot;&quot;&quot;
+    if data[:4] != PACK_SIGNATURE:
+        raise ValueError(&quot;Invalid pack signature&quot;)
+
+    version = int.from_bytes(data[4:8], &quot;big&quot;)
+    object_count = int.from_bytes(data[8:12], &quot;big&quot;)
+
+    return version, object_count
+</code></pre>
+<h3 id="object-types-in-packs">Object Types in Packs</h3>
+<p>Packs store six types of entries:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OBJ_COMMIT</code></td>
+<td>1</td>
+<td>Commit object</td>
+</tr>
+<tr>
+<td><code>OBJ_TREE</code></td>
+<td>2</td>
+<td>Tree object</td>
+</tr>
+<tr>
+<td><code>OBJ_BLOB</code></td>
+<td>3</td>
+<td>Blob object</td>
+</tr>
+<tr>
+<td><code>OBJ_TAG</code></td>
+<td>4</td>
+<td>Annotated tag</td>
+</tr>
+<tr>
+<td><code>OBJ_OFS_DELTA</code></td>
+<td>6</td>
+<td>Delta with offset reference</td>
+</tr>
+<tr>
+<td><code>OBJ_REF_DELTA</code></td>
+<td>7</td>
+<td>Delta with SHA reference</td>
+</tr>
+</tbody>
+</table>
+<p>Types 1-4 are "undeltified"—stored in full (but still compressed). Types 6-7 are deltas that reference a base object.</p>
+<p><strong>Note</strong>: Type 5 is reserved and unused.</p>
+<h3 id="object-entry-format">Object Entry Format</h3>
+<p>Each entry begins with a variable-length header:</p>
+<pre><code>┌───────────────────────────────────────────────────────────┐
+│                    First byte                             │
+│  ┌───┬───────┬───────────────────────────────────────┐   │
+│  │MSB│ type  │         size (bits 0-3)               │   │
+│  │(1)│  (3)  │              (4)                      │   │
+│  └───┴───────┴───────────────────────────────────────┘   │
+├───────────────────────────────────────────────────────────┤
+│                 Continuation bytes                        │
+│  ┌───┬───────────────────────────────────────────────┐   │
+│  │MSB│              size (bits 4-10, 11-17, ...)     │   │
+│  │(1)│                      (7)                      │   │
+│  └───┴───────────────────────────────────────────────┘   │
+│              (repeat while MSB=1)                         │
+└───────────────────────────────────────────────────────────┘
+</code></pre>
+<p>The variable-length encoding allows arbitrary sizes without wasting bytes on small objects.</p>
+<pre><code class="language-python">def read_pack_object_header(data: bytes, offset: int) -&gt; tuple[int, int, int]:
+    &quot;&quot;&quot;
+    Read pack object header.
+
+    Returns: (object_type, uncompressed_size, bytes_consumed)
+    &quot;&quot;&quot;
+    byte = data[offset]
+    obj_type = (byte &gt;&gt; 4) &amp; 0x07  # Bits 4-6
+    size = byte &amp; 0x0F             # Bits 0-3
+
+    consumed = 1
+    shift = 4
+
+    # Continue while MSB is set
+    while byte &amp; 0x80:
+        byte = data[offset + consumed]
+        size |= (byte &amp; 0x7F) &lt;&lt; shift
+        shift += 7
+        consumed += 1
+
+    return obj_type, size, consumed
+</code></pre>
+<h3 id="delta-base-references">Delta Base References</h3>
+<p>For delta objects (types 6 and 7), an additional reference follows the header:</p>
+<p><strong>OFS_DELTA (type 6)</strong>: Negative offset to base object in same pack</p>
+<pre><code>[header] [variable-length offset] [compressed delta]
+</code></pre>
+<p><strong>REF_DELTA (type 7)</strong>: SHA-1 of base object (may be in another pack)</p>
+<pre><code>[header] [20-byte SHA] [compressed delta]
+</code></pre>
+<p>OFS_DELTA is more common in stored packs (faster to resolve). REF_DELTA is used in network transfers where the base might already exist on the receiver.</p>
+<hr />
+<h2 id="variable-length-integer-encoding">Variable-Length Integer Encoding</h2>
+<p>Git uses clever encodings to minimize bytes:</p>
+<h3 id="size-encoding-in-headers">Size Encoding (in headers)</h3>
+<pre><code>Size 0-15:     1 byte  (4 bits in first byte)
+Size 16-2047:  2 bytes (4 + 7 bits)
+Size up to ~2M: 3 bytes (4 + 7 + 7 bits)
+...
+</code></pre>
+<h3 id="ofs_delta-offset-encoding">OFS_DELTA Offset Encoding</h3>
+<p>This encoding is particularly clever—it handles arbitrary offsets with minimal bytes:</p>
+<pre><code class="language-python">def read_ofs_delta_offset(data: bytes, offset: int) -&gt; tuple[int, int]:
+    &quot;&quot;&quot;
+    Read OFS_DELTA negative offset.
+
+    The encoding adds 1 to each continuation byte to eliminate
+    ambiguity in the representation.
+    &quot;&quot;&quot;
+    byte = data[offset]
+    result = byte &amp; 0x7F
+    consumed = 1
+
+    while byte &amp; 0x80:
+        byte = data[offset + consumed]
+        # The +1 is crucial: it makes the encoding unambiguous
+        result = ((result + 1) &lt;&lt; 7) | (byte &amp; 0x7F)
+        consumed += 1
+
+    return result, consumed
+</code></pre>
+<p>Why the <code>+1</code>? Without it, there would be multiple ways to encode the same number. The <code>+1</code> ensures each value has exactly one encoding.</p>
+<hr />
+<h2 id="exploring-pack-files">Exploring Pack Files</h2>
+<h3 id="command-line-tools">Command-Line Tools</h3>
+<pre><code class="language-bash"># List all pack files
+$ ls .git/objects/pack/
+pack-abc123def456.idx
+pack-abc123def456.pack
+
+# Verify pack integrity
+$ git verify-pack -v .git/objects/pack/*.pack
+
+# Show pack statistics
+$ git verify-pack -s .git/objects/pack/*.pack
+statistics:
+  objects: 1234
+  total: 5MB
+  delta: 890 (72%)
+
+# List objects in a pack
+$ git verify-pack -v .git/objects/pack/*.pack | head -20
+abc123... commit 234  456  0
+def456... tree   890  123  1
+789abc... blob   45   67   2 \  # Delta chain start
+012def... blob   12   34   3 789abc...  # Deltified against 789abc
+</code></pre>
+<h3 id="understanding-verify-pack-output">Understanding verify-pack Output</h3>
+<pre><code>SHA          type  size  compressed-size  offset  [base-SHA depth]
+abc123def... blob  1000  350             12
+456789abc... blob  50    30              400     abc123def... 1
+</code></pre>
+<ul>
+<li><strong>size</strong>: Uncompressed size of the resolved object</li>
+<li><strong>compressed-size</strong>: Bytes in pack file</li>
+<li><strong>offset</strong>: Position in pack file</li>
+<li><strong>base-SHA</strong>: For deltas, the base object</li>
+<li><strong>depth</strong>: Delta chain depth (1 = direct delta, 2 = delta of delta, etc.)</li>
+</ul>
+<h3 id="reading-pack-files-with-python">Reading Pack Files with Python</h3>
+<pre><code class="language-python">import zlib
+from pathlib import Path
+
+def explore_pack(pack_path: Path):
+    &quot;&quot;&quot;Quick pack file exploration.&quot;&quot;&quot;
+    data = pack_path.read_bytes()
+
+    # Check header
+    assert data[:4] == b&quot;PACK&quot;, &quot;Not a pack file&quot;
+    version = int.from_bytes(data[4:8], &quot;big&quot;)
+    count = int.from_bytes(data[8:12], &quot;big&quot;)
+
+    print(f&quot;Pack version: {version}&quot;)
+    print(f&quot;Object count: {count}&quot;)
+
+    # Parse first few objects
+    offset = 12
+    for i in range(min(5, count)):
+        obj_type, size, header_len = read_pack_object_header(data, offset)
+        print(f&quot;Object {i}: type={obj_type}, size={size}&quot;)
+        offset += header_len
+        # Skip compressed data (would need to decompress to find end)
+        break  # Simplified - real parsing is more complex
+</code></pre>
+<hr />
+<h2 id="delta-compression-deep-dive">Delta Compression Deep Dive</h2>
+<p>Delta compression is the key to Git's storage efficiency. Let's understand how it works.</p>
+<h3 id="the-basic-idea">The Basic Idea</h3>
+<p>Instead of storing complete copies of similar content:</p>
+<pre><code>Version 1: &quot;Hello, World!\nThis is line 2.\nThis is line 3.\n&quot;
+Version 2: &quot;Hello, Git World!\nThis is line 2.\nThis is line 3.\n&quot;
+</code></pre>
+<p>Store the first version, then instructions to transform it:</p>
+<pre><code>Base: &quot;Hello, World!\nThis is line 2.\nThis is line 3.\n&quot;
+Delta: &quot;Copy bytes 0-6, Insert 'Git ', Copy bytes 7-end&quot;
+</code></pre>
+<h3 id="delta-instruction-format">Delta Instruction Format</h3>
+<p>Deltas consist of two instruction types:</p>
+<p><strong>INSERT</strong>: Add literal bytes</p>
+<pre><code>┌─────────────────────────────────────────┐
+│ 0xxxxxxx │ literal data (x bytes)       │
+└─────────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>First bit is 0</li>
+<li>Remaining 7 bits = length (1-127)</li>
+<li>Followed by that many literal bytes</li>
+</ul>
+<p><strong>COPY</strong>: Copy from base object</p>
+<pre><code>┌─────────────────────────────────────────┐
+│ 1oooosss │ offset bytes │ size bytes    │
+└─────────────────────────────────────────┘
+</code></pre>
+<ul>
+<li>First bit is 1</li>
+<li>Next 4 bits indicate which offset bytes are present</li>
+<li>Next 3 bits indicate which size bytes are present</li>
+<li>Offset and size are little-endian</li>
+</ul>
+<h3 id="delta-structure">Delta Structure</h3>
+<pre><code>┌──────────────────────────────────────────┐
+│     Source (base) size - varint          │
+├──────────────────────────────────────────┤
+│     Target (result) size - varint        │
+├──────────────────────────────────────────┤
+│     Delta instructions                    │
+│     [COPY] [INSERT] [COPY] ...           │
+└──────────────────────────────────────────┘
+</code></pre>
+<h3 id="example-applying-a-delta">Example: Applying a Delta</h3>
+<pre><code class="language-python">def apply_delta(base: bytes, delta_data: bytes) -&gt; bytes:
+    &quot;&quot;&quot;Reconstruct target from base + delta.&quot;&quot;&quot;
+    offset = 0
+
+    # Read expected sizes (for verification)
+    source_size, consumed = read_varint(delta_data, offset)
+    offset += consumed
+    target_size, consumed = read_varint(delta_data, offset)
+    offset += consumed
+
+    assert len(base) == source_size, &quot;Base size mismatch&quot;
+
+    result = bytearray()
+
+    while offset &lt; len(delta_data):
+        cmd = delta_data[offset]
+        offset += 1
+
+        if cmd &amp; 0x80:
+            # COPY instruction
+            copy_offset, copy_size = parse_copy_instruction(cmd, delta_data, offset)
+            result.extend(base[copy_offset : copy_offset + copy_size])
+            offset += bytes_consumed_by_copy(cmd)
+
+        elif cmd &gt; 0:
+            # INSERT instruction
+            result.extend(delta_data[offset : offset + cmd])
+            offset += cmd
+
+        else:
+            raise ValueError(&quot;Invalid delta instruction: 0x00&quot;)
+
+    assert len(result) == target_size, &quot;Target size mismatch&quot;
+    return bytes(result)
+</code></pre>
+<h3 id="delta-chains">Delta Chains</h3>
+<p>Deltas can be chained: Object A is a delta of B, which is a delta of C, which is stored in full.</p>
+<pre><code>Object A (newest) → delta of B
+                     ↓
+Object B          → delta of C
+                     ↓
+Object C (oldest) → stored in full
+</code></pre>
+<p>To read Object A:
+1. Read C (decompress)
+2. Apply delta to get B
+3. Apply delta to get A</p>
+<p>Git limits chain depth (default: 50) to balance compression vs. read speed.</p>
+<hr />
+<h2 id="the-pack-index-idx">The Pack Index (.idx)</h2>
+<p>Pack files alone would require scanning the entire file to find an object. The index provides O(1) lookup.</p>
+<h3 id="index-structure-version-2">Index Structure (Version 2)</h3>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│                    HEADER (8 bytes)                          │
+│           Magic: 0xff744f63  │  Version: 2                   │
+├──────────────────────────────────────────────────────────────┤
+│                   FANOUT TABLE (1024 bytes)                  │
+│                 256 entries × 4 bytes each                   │
+│                                                              │
+│  fanout[0x00] = count of objects with SHA starting ≤ 0x00   │
+│  fanout[0x01] = count of objects with SHA starting ≤ 0x01   │
+│  ...                                                         │
+│  fanout[0xff] = total object count                          │
+├──────────────────────────────────────────────────────────────┤
+│                    SHA TABLE                                 │
+│              N × 20-byte SHA-1 hashes                        │
+│                   (sorted order)                             │
+├──────────────────────────────────────────────────────────────┤
+│                    CRC32 TABLE                               │
+│              N × 4-byte CRC32 values                         │
+│           (of compressed data in pack)                       │
+├──────────────────────────────────────────────────────────────┤
+│                   OFFSET TABLE                               │
+│              N × 4-byte pack offsets                         │
+│         (high bit set → use large offset table)              │
+├──────────────────────────────────────────────────────────────┤
+│               LARGE OFFSET TABLE (optional)                  │
+│              8-byte offsets for packs &gt; 2GB                  │
+├──────────────────────────────────────────────────────────────┤
+│                  PACK SHA (20 bytes)                         │
+│                  INDEX SHA (20 bytes)                        │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<h3 id="the-fanout-table-trick">The Fanout Table Trick</h3>
+<p>The fanout table enables fast binary search:</p>
+<pre><code class="language-python">def find_object(index: PackIndex, sha: str) -&gt; int | None:
+    &quot;&quot;&quot;Find object offset in pack using index.&quot;&quot;&quot;
+    sha_bytes = bytes.fromhex(sha)
+    first_byte = sha_bytes[0]
+
+    # Use fanout to narrow search range
+    if first_byte == 0:
+        start = 0
+    else:
+        start = index.fanout[first_byte - 1]
+    end = index.fanout[first_byte]
+
+    # Binary search within the range
+    while start &lt; end:
+        mid = (start + end) // 2
+        mid_sha = index.shas[mid]
+
+        if mid_sha == sha_bytes:
+            return index.offsets[mid]
+        elif mid_sha &lt; sha_bytes:
+            start = mid + 1
+        else:
+            end = mid
+
+    return None  # Not found
+</code></pre>
+<p>For an object starting with <code>0xab</code>:
+1. Look up <code>fanout[0xaa]</code> and <code>fanout[0xab]</code>
+2. Binary search only between those indices
+3. Typically reduces search space by 256x</p>
+<h3 id="large-pack-support">Large Pack Support</h3>
+<p>For packs larger than 2GB, 4-byte offsets aren't enough. The index handles this elegantly:</p>
+<pre><code>If offset[i] has high bit set:
+    actual_offset = large_offsets[offset[i] &amp; 0x7fffffff]
+</code></pre>
+<p>This allows seamless support for packs up to 16 exabytes while keeping the common case (&lt; 2GB) efficient.</p>
+<hr />
+<h2 id="creating-pack-files">Creating Pack Files</h2>
+<h3 id="the-packing-algorithm">The Packing Algorithm</h3>
+<ol>
+<li><strong>Collect objects</strong>: Gather all objects to pack</li>
+<li><strong>Sort</strong>: Group similar objects together (by type, path hints, size)</li>
+<li><strong>Find delta bases</strong>: For each object, find good candidates for deltification</li>
+<li><strong>Compute deltas</strong>: Create deltas that provide good compression</li>
+<li><strong>Write pack</strong>: Output header, objects (deltified or not), trailer</li>
+<li><strong>Write index</strong>: Create <code>.idx</code> file for fast lookup</li>
+</ol>
+<h3 id="object-selection-for-delta-bases">Object Selection for Delta Bases</h3>
+<p>Git uses heuristics to find good delta bases:</p>
+<pre><code class="language-python">def find_delta_base(obj, candidates: list) -&gt; GitObject | None:
+    &quot;&quot;&quot;Find best delta base for object.&quot;&quot;&quot;
+    best_delta = None
+    best_size = len(obj.data)
+
+    for candidate in candidates:
+        # Must be same type
+        if candidate.type_name != obj.type_name:
+            continue
+
+        # Must be similar size (within factor of 10)
+        if len(candidate.data) * 10 &lt; len(obj.data):
+            continue
+        if len(candidate.data) &gt; len(obj.data) * 10:
+            continue
+
+        # Compute delta
+        delta = create_delta(candidate.data, obj.data)
+
+        if len(delta) &lt; best_size:
+            best_delta = candidate
+            best_size = len(delta)
+
+    # Only use delta if it saves significant space
+    if best_delta and best_size &lt; len(obj.data) * 0.9:
+        return best_delta
+    return None
+</code></pre>
+<h3 id="the-sliding-window">The Sliding Window</h3>
+<p>Git uses a "sliding window" approach:</p>
+<pre><code class="language-python">def pack_objects(objects: list[GitObject], window_size: int = 10):
+    &quot;&quot;&quot;Pack objects with delta compression.&quot;&quot;&quot;
+    # Sort by type, then by filename hint, then by size
+    sorted_objects = sort_for_packing(objects)
+
+    window: list[GitObject] = []
+
+    for obj in sorted_objects:
+        # Try to deltify against objects in window
+        base = find_delta_base(obj, window)
+
+        if base:
+            write_delta_object(obj, base)
+        else:
+            write_full_object(obj)
+
+        # Update window
+        window.append(obj)
+        if len(window) &gt; window_size:
+            window.pop(0)
+</code></pre>
+<p>Objects are sorted so that similar objects (same file across versions) are adjacent, maximizing delta opportunities.</p>
+<hr />
+<h2 id="pack-file-verification">Pack File Verification</h2>
+<p>Git provides robust verification:</p>
+<h3 id="integrity-checks">Integrity Checks</h3>
+<pre><code class="language-bash"># Verify pack file integrity
+$ git verify-pack .git/objects/pack/*.pack
+
+# Verbose output shows any issues
+$ git verify-pack -v .git/objects/pack/*.pack 2&gt;&amp;1 | grep -i error
+</code></pre>
+<h3 id="whats-verified">What's Verified</h3>
+<ol>
+<li><strong>Pack checksum</strong>: SHA-1 of pack file content matches trailer</li>
+<li><strong>Index checksum</strong>: SHA-1 of index content matches trailer</li>
+<li><strong>Object checksums</strong>: Each object's SHA-1 matches after reconstruction</li>
+<li><strong>Delta chain validity</strong>: All delta bases exist and resolve correctly</li>
+<li><strong>CRC32 values</strong>: Compressed data hasn't been corrupted</li>
+</ol>
+<h3 id="self-healing">Self-Healing</h3>
+<p>If verification fails, Git can often recover:</p>
+<pre><code class="language-bash"># Remove corrupted pack and re-fetch
+$ rm .git/objects/pack/pack-corrupted.*
+$ git fetch --all
+
+# Or re-clone
+$ git clone --mirror &lt;url&gt;
+</code></pre>
+<hr />
+<h2 id="network-transfer-thin-packs">Network Transfer: Thin Packs</h2>
+<p>During <code>git fetch</code>/<code>git push</code>, Git uses "thin packs"—packs that reference objects the receiver already has.</p>
+<h3 id="normal-pack-vs-thin-pack">Normal Pack vs Thin Pack</h3>
+<p><strong>Normal pack</strong>: All delta bases are included in the pack</p>
+<pre><code>Object A (delta of B) ← B is in this pack
+Object B (full)
+</code></pre>
+<p><strong>Thin pack</strong>: Delta bases may be external</p>
+<pre><code>Object A (delta of B) ← B is NOT in this pack
+                        (receiver already has B)
+</code></pre>
+<h3 id="pack-protocol">Pack Protocol</h3>
+<pre><code>Client: &quot;I have commits X, Y, Z. Send me everything else.&quot;
+Server: Creates thin pack with just the new objects
+        Uses client's existing objects as delta bases
+Client: Receives pack, &quot;thickens&quot; it by resolving deltas
+</code></pre>
+<p>This minimizes network transfer—why send objects the client already has?</p>
+<hr />
+<h2 id="performance-characteristics">Performance Characteristics</h2>
+<h3 id="lookup-performance">Lookup Performance</h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Complexity</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Find by SHA (with index)</td>
+<td>O(log n)</td>
+<td>Binary search in fanout-limited range</td>
+</tr>
+<tr>
+<td>Read undeltified object</td>
+<td>O(1)</td>
+<td>Direct seek + decompress</td>
+</tr>
+<tr>
+<td>Read deltified object</td>
+<td>O(d)</td>
+<td>d = delta chain depth</td>
+</tr>
+<tr>
+<td>Scan all objects</td>
+<td>O(n)</td>
+<td>Linear traversal</td>
+</tr>
+</tbody>
+</table>
+<h3 id="space-efficiency">Space Efficiency</h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Loose Objects</th>
+<th>Packed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux kernel (1M objects)</td>
+<td>~2GB</td>
+<td>~200MB</td>
+</tr>
+<tr>
+<td>Typical project (10K objects)</td>
+<td>~100MB</td>
+<td>~10MB</td>
+</tr>
+<tr>
+<td>Similar files (100 versions)</td>
+<td>100 × size</td>
+<td>~1 × size</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tuning-parameters">Tuning Parameters</h3>
+<pre><code class="language-bash"># Delta chain depth (default: 50)
+$ git config pack.depth 50
+
+# Delta window size (default: 10)
+$ git config pack.window 10
+
+# Pack size threshold (default: 2GB)
+$ git config pack.packSizeLimit 2g
+
+# Aggressive packing
+$ git repack -a -d --depth=250 --window=250
+</code></pre>
+<hr />
+<h2 id="implementation-in-gitpy">Implementation in gitpy</h2>
+<h3 id="module-structure">Module Structure</h3>
+<pre><code>gitpy/storage/
+├── __init__.py       # Module exports
+├── compression.py    # Zlib utilities
+├── loose.py          # Loose object store
+├── database.py       # Object database (updated for packs)
+├── delta.py          # Delta encoding/decoding
+├── pack.py           # Pack file reader
+├── pack_index.py     # Pack index
+└── pack_writer.py    # Pack file writer
+</code></pre>
+<h3 id="key-classes">Key Classes</h3>
+<p><strong>PackFile</strong>: Reads objects from pack files</p>
+<pre><code class="language-python">class PackFile:
+    def __init__(self, pack_path: Path): ...
+    def read_object(self, sha: str) -&gt; PackObject | None: ...
+    def __contains__(self, sha: str) -&gt; bool: ...
+    def __iter__(self) -&gt; Iterator[PackObject]: ...
+</code></pre>
+<p><strong>PackIndex</strong>: Fast SHA → offset lookup</p>
+<pre><code class="language-python">class PackIndex:
+    def get_offset(self, sha: str) -&gt; int | None: ...
+    def __contains__(self, sha: str) -&gt; bool: ...
+
+    @classmethod
+    def from_file(cls, path: Path) -&gt; PackIndex: ...
+    def serialize(self) -&gt; bytes: ...
+</code></pre>
+<p><strong>Delta functions</strong>: Encode and decode deltas</p>
+<pre><code class="language-python">def parse_delta(data: bytes) -&gt; tuple[int, int, list[DeltaOp]]: ...
+def apply_delta(base: bytes, delta_ops: list[DeltaOp]) -&gt; bytes: ...
+def create_delta(source: bytes, target: bytes) -&gt; bytes: ...
+</code></pre>
+<h3 id="integration-with-objectdatabase">Integration with ObjectDatabase</h3>
+<pre><code class="language-python">class ObjectDatabase:
+    def __init__(self, git_dir: Path):
+        self.loose = LooseObjectStore(git_dir)
+        self._pack_files: list[PackFile] = []
+        self._load_packs()
+
+    def read_raw(self, sha: str) -&gt; bytes:
+        # Try loose first (faster for recent objects)
+        if self.loose.exists(sha):
+            return self.loose.read(sha)
+
+        # Search pack files
+        for pack in self._pack_files:
+            obj = pack.read_object(sha)
+            if obj:
+                # Reconstruct with header
+                header = f&quot;{obj.type_name} {len(obj.data)}\0&quot;.encode()
+                return header + obj.data
+
+        raise FileNotFoundError(f&quot;Object not found: {sha}&quot;)
+</code></pre>
+<hr />
+<h2 id="git-compatibility">Git Compatibility</h2>
+<h3 id="reference-hashes">Reference Hashes</h3>
+<p>These hashes must match real Git:</p>
+<table>
+<thead>
+<tr>
+<th>Object</th>
+<th>SHA-1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Empty blob</td>
+<td><code>e69de29bb2d1d6434b8b29ae775ad8c2e48c5391</code></td>
+</tr>
+<tr>
+<td>Empty tree</td>
+<td><code>4b825dc642cb6eb9a060e54bf8d69288fbee4904</code></td>
+</tr>
+<tr>
+<td><code>hello\n</code> blob</td>
+<td><code>ce013625030ba8dba906f756967f9e9ca394464a</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="interoperability-tests">Interoperability Tests</h3>
+<pre><code class="language-bash"># Create pack with Git, read with gitpy
+$ git gc
+$ python3 -c &quot;
+from gitpy import Repository
+repo = Repository(Path('.'))
+blob = repo.objects.read_blob('ce013625')  # From pack
+print(blob.data)  # b'hello\n'
+&quot;
+
+# Create pack with gitpy, verify with Git
+$ python3 -c &quot;
+from gitpy import Repository
+repo = Repository(Path('.'))
+repo.objects.repack()
+&quot;
+$ git verify-pack -v .git/objects/pack/*.pack  # Should succeed
+</code></pre>
+<hr />
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ol>
+<li><strong>Pack files combine many objects</strong> into single files for efficiency</li>
+<li><strong>Delta compression</strong> stores differences instead of full copies</li>
+<li><strong>The pack index</strong> enables O(1) lookup by SHA</li>
+<li><strong>Variable-length encoding</strong> minimizes overhead</li>
+<li><strong>Thin packs</strong> optimize network transfer</li>
+<li><strong>Delta chains</strong> are limited to balance compression vs. read speed</li>
+<li><strong>All formats are Git-compatible</strong> for interoperability</li>
+</ol>
+<p>Pack files transform Git from a simple content store into an incredibly efficient version control system. Understanding them reveals how Git can handle massive repositories like the Linux kernel while keeping operations fast.</p>
+<hr />
+<h2 id="whats-next">What's Next?</h2>
+<p>With pack files understood, explore related topics:</p>
+<ul>
+<li><strong><a href="../delta_compression/">Delta Compression</a></strong>: Deep dive into delta algorithms</li>
+<li><strong><a href="../pack_index/">Pack Index</a></strong>: Index format details</li>
+<li><strong>References</strong> (<code>gitpy/refs/</code>): How branches and tags point to commits</li>
+<li><strong>Garbage Collection</strong>: How Git cleans up unreachable objects</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

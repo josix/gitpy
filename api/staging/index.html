@@ -1,0 +1,2728 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../refs/">
+      
+      
+        <link rel="next" href="../diff/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Index - gitpy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#staging-index-api-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="gitpy" class="md-header__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gitpy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Index
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="gitpy" class="md-nav__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gitpy
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/object_model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/object_storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/pack_files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pack Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/delta_compression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Delta Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/pack_index/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pack Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/index_staging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index & Staging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/diff/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../objects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Objects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pack Objects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../refs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#module-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#indexentry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IndexEntry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IndexEntry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        stage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#name_length" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        name_length
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assume_valid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        assume_valid
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is_regular_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        is_regular_file
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is_executable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        is_executable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is_symlink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        is_symlink
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Class Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Class Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from_path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        from_path()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matches_stat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        matches_stat()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Index">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#collection-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Collection Protocol
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Collection Protocol">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#__len__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __len__()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#__iter__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __iter__()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#__contains__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __contains__()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        add()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        remove()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        clear()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#to_bytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        to_bytes()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from_bytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        from_bytes()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#indexfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IndexFile
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IndexFile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#read" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        read()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        write()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        exists()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#read_tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        read_tree()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#write_tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        write_tree()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filestatus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FileStatus
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statusentry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        StatusEntry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="StatusEntry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_status()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#has_conflicts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        has_conflicts()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get_conflicts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_conflicts()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add_conflict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        add_conflict()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resolve_conflict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        resolve_conflict()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git Compatibility
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../diff/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Config
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#module-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#indexentry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IndexEntry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IndexEntry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        stage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#name_length" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        name_length
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#assume_valid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        assume_valid
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is_regular_file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        is_regular_file
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is_executable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        is_executable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#is_symlink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        is_symlink
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Class Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Class Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#from_path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        from_path()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matches_stat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        matches_stat()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Index">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#collection-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Collection Protocol
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Collection Protocol">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#__len__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __len__()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#__iter__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __iter__()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#__contains__" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        __contains__()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        add()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        remove()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        clear()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#to_bytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        to_bytes()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from_bytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        from_bytes()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#indexfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IndexFile
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="IndexFile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constructor_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constructor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#methods_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#read" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        read()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#write" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        write()
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        exists()
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#read_tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        read_tree()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#write_tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        write_tree()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#filestatus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FileStatus
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statusentry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        StatusEntry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="StatusEntry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attributes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get_status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_status()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#has_conflicts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        has_conflicts()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#get_conflicts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_conflicts()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#add_conflict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        add_conflict()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resolve_conflict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        resolve_conflict()
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complete-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete Example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git Compatibility
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="staging-index-api-reference">Staging (Index) API Reference</h1>
+<p>This document provides a complete API reference for the <code>gitpy.index</code> module, which implements Git's staging area (the index).</p>
+<h2 id="module-overview">Module Overview</h2>
+<pre><code class="language-python">from gitpy.index import (
+    IndexEntry,       # A single staged-file record
+    Index,            # In-memory staging area
+    IndexFile,        # Read/write .git/index with atomic writes
+    read_tree,        # Populate index from a tree object
+    write_tree,       # Create tree objects from the index
+    FileStatus,       # Enum: UNMODIFIED, MODIFIED, DELETED, UNTRACKED, ADDED
+    StatusEntry,      # Per-file status (index vs HEAD, worktree vs index)
+    get_status,       # Compare index and worktree against HEAD
+    has_conflicts,    # Check for unresolved merge conflicts
+    get_conflicts,    # Retrieve conflicted entries grouped by path
+    add_conflict,     # Record a merge conflict in the index
+    resolve_conflict, # Resolve a conflict by writing a stage-0 entry
+)
+</code></pre>
+<hr />
+<h2 id="indexentry">IndexEntry</h2>
+<p><strong>Module:</strong> <code>gitpy.index.entry</code></p>
+<p>A single entry in the Git index. Tracks a file's identity, content hash, and stat metadata for efficient change detection.</p>
+<pre><code class="language-python">@dataclass(slots=True)
+class IndexEntry:
+    ctime_s: int
+    ctime_ns: int
+    mtime_s: int
+    mtime_ns: int
+    dev: int
+    ino: int
+    mode: int
+    uid: int
+    gid: int
+    size: int
+    sha: str
+    flags: int
+    path: str
+    extended_flags: int  # default 0
+</code></pre>
+<h3 id="attributes">Attributes</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ctime_s</code></td>
+<td><code>int</code></td>
+<td>Creation time seconds</td>
+</tr>
+<tr>
+<td><code>ctime_ns</code></td>
+<td><code>int</code></td>
+<td>Creation time nanoseconds (sub-second part only)</td>
+</tr>
+<tr>
+<td><code>mtime_s</code></td>
+<td><code>int</code></td>
+<td>Modification time seconds</td>
+</tr>
+<tr>
+<td><code>mtime_ns</code></td>
+<td><code>int</code></td>
+<td>Modification time nanoseconds (sub-second part only)</td>
+</tr>
+<tr>
+<td><code>dev</code></td>
+<td><code>int</code></td>
+<td>Device ID (masked to 32 bits)</td>
+</tr>
+<tr>
+<td><code>ino</code></td>
+<td><code>int</code></td>
+<td>Inode number (masked to 32 bits)</td>
+</tr>
+<tr>
+<td><code>mode</code></td>
+<td><code>int</code></td>
+<td>File mode as integer (e.g. <code>0o100644</code>)</td>
+</tr>
+<tr>
+<td><code>uid</code></td>
+<td><code>int</code></td>
+<td>User ID (masked to 32 bits)</td>
+</tr>
+<tr>
+<td><code>gid</code></td>
+<td><code>int</code></td>
+<td>Group ID (masked to 32 bits)</td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td><code>int</code></td>
+<td>File size in bytes</td>
+</tr>
+<tr>
+<td><code>sha</code></td>
+<td><code>str</code></td>
+<td>40-character hex SHA-1 of the blob</td>
+</tr>
+<tr>
+<td><code>flags</code></td>
+<td><code>int</code></td>
+<td>Packed flags (stage | name_length)</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td><code>str</code></td>
+<td>Relative path within the repository</td>
+</tr>
+<tr>
+<td><code>extended_flags</code></td>
+<td><code>int</code></td>
+<td>Extended flags (version 3+, default <code>0</code>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="properties">Properties</h3>
+<h4 id="stage"><code>stage</code></h4>
+<pre><code class="language-python">@property
+def stage(self) -&gt; int
+</code></pre>
+<p>Merge stage: <code>0</code> = normal, <code>1</code> = base, <code>2</code> = ours, <code>3</code> = theirs.</p>
+<h4 id="name_length"><code>name_length</code></h4>
+<pre><code class="language-python">@property
+def name_length(self) -&gt; int
+</code></pre>
+<p>Stored name length (truncated to <code>0xFFF</code> for long paths).</p>
+<h4 id="assume_valid"><code>assume_valid</code></h4>
+<pre><code class="language-python">@property
+def assume_valid(self) -&gt; bool
+</code></pre>
+<p><code>True</code> when the assume-valid flag is set (skip in status checks).</p>
+<h4 id="is_regular_file"><code>is_regular_file</code></h4>
+<pre><code class="language-python">@property
+def is_regular_file(self) -&gt; bool
+</code></pre>
+<p><code>True</code> when the entry represents a regular file.</p>
+<h4 id="is_executable"><code>is_executable</code></h4>
+<pre><code class="language-python">@property
+def is_executable(self) -&gt; bool
+</code></pre>
+<p><code>True</code> when the entry is an executable file (mode <code>0o100755</code>).</p>
+<h4 id="is_symlink"><code>is_symlink</code></h4>
+<pre><code class="language-python">@property
+def is_symlink(self) -&gt; bool
+</code></pre>
+<p><code>True</code> when the entry represents a symbolic link (mode <code>0o120000</code>).</p>
+<h3 id="class-methods">Class Methods</h3>
+<h4 id="from_path"><code>from_path()</code></h4>
+<pre><code class="language-python">@classmethod
+def from_path(
+    cls,
+    path: str,
+    sha: str,
+    worktree: Path,
+    stage: int = 0,
+) -&gt; Self
+</code></pre>
+<p>Create an <code>IndexEntry</code> by stat-ing a file in the working tree. Uses nanosecond timestamps directly from <code>st_ctime_ns</code> / <code>st_mtime_ns</code> to avoid floating-point precision loss.</p>
+<p><strong>Parameters:</strong>
+- <code>path</code> - Repository-relative path of the file.
+- <code>sha</code> - 40-character hex SHA-1 of the file's blob.
+- <code>worktree</code> - Absolute path to the repository working directory.
+- <code>stage</code> - Merge stage (0 for normal files).</p>
+<p><strong>Returns:</strong> A new <code>IndexEntry</code> populated from the file's stat.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from pathlib import Path
+from gitpy.index import IndexEntry
+
+entry = IndexEntry.from_path(&quot;src/main.py&quot;, blob_sha, Path(&quot;/repo&quot;))
+</code></pre>
+<h3 id="methods">Methods</h3>
+<h4 id="matches_stat"><code>matches_stat()</code></h4>
+<pre><code class="language-python">def matches_stat(self, st: os.stat_result) -&gt; bool
+</code></pre>
+<p>Check whether a file's stat still matches the cached metadata. Returns <code>True</code> when the file is probably unchanged (fast path). Returns <code>False</code> when the file has definitely changed. Checks size, mtime, inode, ctime, and file mode (exec-bit / type).</p>
+<p><strong>Parameters:</strong>
+- <code>st</code> - Result of <code>os.stat()</code> on the file.</p>
+<p><strong>Returns:</strong> <code>True</code> if the cached metadata still matches <code>st</code>.</p>
+<hr />
+<h2 id="index">Index</h2>
+<p><strong>Module:</strong> <code>gitpy.index.index</code></p>
+<p>The Git index (staging area). Entries are stored in a dict keyed by <code>(path, stage)</code> to support merge conflict stages (<code>0</code> = normal, <code>1</code>–<code>3</code> = conflict stages). Iteration yields all entries sorted by path then stage, matching Git's wire format.</p>
+<pre><code class="language-python">class Index:
+    entries: dict[tuple[str, int], IndexEntry]  # Keyed by (path, stage)
+    version: int                                 # Index format version (2)
+</code></pre>
+<h3 id="constructor">Constructor</h3>
+<pre><code class="language-python">def __init__(self) -&gt; None
+</code></pre>
+<p>Create an empty index at version 2.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from gitpy.index import Index
+
+index = Index()
+</code></pre>
+<h3 id="collection-protocol">Collection Protocol</h3>
+<h4 id="__len__"><code>__len__()</code></h4>
+<pre><code class="language-python">def __len__(self) -&gt; int
+</code></pre>
+<p>Return the number of staged entries.</p>
+<h4 id="__iter__"><code>__iter__()</code></h4>
+<pre><code class="language-python">def __iter__(self) -&gt; Iterator[IndexEntry]
+</code></pre>
+<p>Yield entries sorted by path then stage (Git-canonical order).</p>
+<h4 id="__contains__"><code>__contains__()</code></h4>
+<pre><code class="language-python">def __contains__(self, path: object) -&gt; bool
+</code></pre>
+<p>Return <code>True</code> when any entry for <code>path</code> (stage 0) is in the index.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">if &quot;README.md&quot; in index:
+    print(&quot;staged&quot;)
+</code></pre>
+<h3 id="methods_1">Methods</h3>
+<h4 id="get"><code>get()</code></h4>
+<pre><code class="language-python">def get(self, path: str, stage: int = 0) -&gt; IndexEntry | None
+</code></pre>
+<p>Return the entry for <code>(path, stage)</code>, or <code>None</code> if absent.</p>
+<p><strong>Parameters:</strong>
+- <code>path</code> - Repository-relative file path.
+- <code>stage</code> - Merge stage (default <code>0</code>).</p>
+<h4 id="add"><code>add()</code></h4>
+<pre><code class="language-python">def add(self, entry: IndexEntry) -&gt; None
+</code></pre>
+<p>Add or replace the entry keyed by <code>(entry.path, entry.stage)</code>.</p>
+<p><strong>Parameters:</strong>
+- <code>entry</code> - The <code>IndexEntry</code> to add.</p>
+<h4 id="remove"><code>remove()</code></h4>
+<pre><code class="language-python">def remove(self, path: str, stage: int | None = None) -&gt; bool
+</code></pre>
+<p>Remove entries for <code>path</code>. When <code>stage</code> is given, only that specific stage is removed. When <code>stage</code> is <code>None</code>, all stages for <code>path</code> are removed.</p>
+<p><strong>Parameters:</strong>
+- <code>path</code> - Repository-relative file path.
+- <code>stage</code> - Specific stage to remove, or <code>None</code> to remove all stages.</p>
+<p><strong>Returns:</strong> <code>True</code> if at least one entry was removed.</p>
+<h4 id="clear"><code>clear()</code></h4>
+<pre><code class="language-python">def clear(self) -&gt; None
+</code></pre>
+<p>Remove all entries.</p>
+<h4 id="to_bytes"><code>to_bytes()</code></h4>
+<pre><code class="language-python">def to_bytes(self) -&gt; bytes
+</code></pre>
+<p>Serialise the index to a Git-compatible byte string.</p>
+<p><strong>Returns:</strong> Bytes containing header, entries, and trailing SHA-1 checksum.</p>
+<h4 id="from_bytes"><code>from_bytes()</code></h4>
+<pre><code class="language-python">@classmethod
+def from_bytes(cls, data: bytes) -&gt; Self
+</code></pre>
+<p>Parse an index from raw bytes.</p>
+<p><strong>Parameters:</strong>
+- <code>data</code> - Full contents of a <code>.git/index</code> file.</p>
+<p><strong>Returns:</strong> A populated <code>Index</code> instance.</p>
+<p><strong>Raises:</strong>
+- <code>ValueError</code> - If the checksum is wrong, the signature is invalid, or the version is unsupported.</p>
+<hr />
+<h2 id="indexfile">IndexFile</h2>
+<p><strong>Module:</strong> <code>gitpy.index.index</code></p>
+<p>Manages <code>.git/index</code> with atomic write semantics. Writes use an exclusive-create lock file that is then renamed over the real index, so a crash during write never leaves a partial file.</p>
+<pre><code class="language-python">class IndexFile:
+    index_path: Path  # Path to .git/index
+    lock_path: Path   # Path to .git/index.lock
+</code></pre>
+<h3 id="constructor_1">Constructor</h3>
+<pre><code class="language-python">def __init__(self, git_dir: Path) -&gt; None
+</code></pre>
+<p><strong>Parameters:</strong>
+- <code>git_dir</code> - Absolute path to the <code>.git</code> directory.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from pathlib import Path
+from gitpy.index import IndexFile
+
+idx_file = IndexFile(Path(&quot;/path/to/repo/.git&quot;))
+</code></pre>
+<h3 id="methods_2">Methods</h3>
+<h4 id="read"><code>read()</code></h4>
+<pre><code class="language-python">def read(self) -&gt; Index
+</code></pre>
+<p>Read and parse the index file. Returns an empty <code>Index</code> if the file does not exist yet.</p>
+<p><strong>Returns:</strong> Parsed <code>Index</code>.</p>
+<p><strong>Raises:</strong>
+- <code>ValueError</code> - If the on-disk file is corrupt.</p>
+<h4 id="write"><code>write()</code></h4>
+<pre><code class="language-python">def write(self, index: Index) -&gt; None
+</code></pre>
+<p>Write <code>index</code> atomically using a lock file.</p>
+<p><strong>Parameters:</strong>
+- <code>index</code> - <code>Index</code> to persist.</p>
+<p><strong>Raises:</strong>
+- <code>RuntimeError</code> - If a lock file already exists (concurrent write).</p>
+<h4 id="exists"><code>exists()</code></h4>
+<pre><code class="language-python">def exists(self) -&gt; bool
+</code></pre>
+<p>Return <code>True</code> when the <code>.git/index</code> file exists.</p>
+<hr />
+<h2 id="read_tree"><code>read_tree()</code></h2>
+<p><strong>Module:</strong> <code>gitpy.index.operations</code></p>
+<pre><code class="language-python">def read_tree(
+    index: Index,
+    tree_sha: str,
+    db: ObjectDatabase,
+    prefix: str = &quot;&quot;,
+) -&gt; None
+</code></pre>
+<p>Populate <code>index</code> from a tree object (recursive). This is the core of <code>git read-tree</code>. Existing entries for paths under <code>prefix</code> are replaced; entries outside <code>prefix</code> are untouched.</p>
+<p><strong>Parameters:</strong>
+- <code>index</code> - Index to populate.
+- <code>tree_sha</code> - SHA-1 of the root tree to read.
+- <code>db</code> - Object database.
+- <code>prefix</code> - Path prefix prepended to every entry name.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from gitpy.index import Index, read_tree
+from gitpy.storage import ObjectDatabase
+
+db = ObjectDatabase(git_dir)
+index = Index()
+read_tree(index, tree_sha, db)
+</code></pre>
+<hr />
+<h2 id="write_tree"><code>write_tree()</code></h2>
+<p><strong>Module:</strong> <code>gitpy.index.operations</code></p>
+<pre><code class="language-python">def write_tree(index: Index, db: ObjectDatabase) -&gt; str
+</code></pre>
+<p>Create tree objects from the index. This is the core of <code>git write-tree</code>.</p>
+<p><strong>Parameters:</strong>
+- <code>index</code> - Index to convert.
+- <code>db</code> - Object database to write trees into.</p>
+<p><strong>Returns:</strong> SHA-1 of the root tree object.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from gitpy.index import write_tree
+
+tree_sha = write_tree(index, db)
+print(tree_sha)  # 40-char hex SHA
+</code></pre>
+<hr />
+<h2 id="filestatus">FileStatus</h2>
+<p><strong>Module:</strong> <code>gitpy.index.operations</code></p>
+<p>Enum describing the status of a file relative to the index or HEAD.</p>
+<pre><code class="language-python">class FileStatus(Enum):
+    UNMODIFIED = &quot;unmodified&quot;
+    MODIFIED   = &quot;modified&quot;
+    DELETED    = &quot;deleted&quot;
+    UNTRACKED  = &quot;untracked&quot;
+    ADDED      = &quot;added&quot;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>UNMODIFIED</code></td>
+<td>File is unchanged</td>
+</tr>
+<tr>
+<td><code>MODIFIED</code></td>
+<td>File has been changed</td>
+</tr>
+<tr>
+<td><code>DELETED</code></td>
+<td>File has been removed</td>
+</tr>
+<tr>
+<td><code>UNTRACKED</code></td>
+<td>File is not tracked by Git</td>
+</tr>
+<tr>
+<td><code>ADDED</code></td>
+<td>File is newly staged</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="statusentry">StatusEntry</h2>
+<p><strong>Module:</strong> <code>gitpy.index.operations</code></p>
+<p>Status of a single file path.</p>
+<pre><code class="language-python">@dataclass(slots=True)
+class StatusEntry:
+    path: str                      # Repository-relative file path
+    index_status: FileStatus       # Comparison of index vs HEAD (staged changes)
+    worktree_status: FileStatus    # Comparison of working directory vs index
+</code></pre>
+<h3 id="attributes_1">Attributes</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>path</code></td>
+<td><code>str</code></td>
+<td>Repository-relative file path</td>
+</tr>
+<tr>
+<td><code>index_status</code></td>
+<td><code>FileStatus</code></td>
+<td>Comparison of index vs HEAD (staged changes)</td>
+</tr>
+<tr>
+<td><code>worktree_status</code></td>
+<td><code>FileStatus</code></td>
+<td>Comparison of working directory vs index (unstaged changes)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="get_status"><code>get_status()</code></h2>
+<p><strong>Module:</strong> <code>gitpy.index.operations</code></p>
+<pre><code class="language-python">def get_status(
+    index: Index,
+    head_tree_sha: str | None,
+    worktree: Path,
+    db: ObjectDatabase,
+) -&gt; list[StatusEntry]
+</code></pre>
+<p>Compare index and working directory against HEAD.</p>
+<p><strong>Parameters:</strong>
+- <code>index</code> - Current index.
+- <code>head_tree_sha</code> - SHA-1 of the HEAD commit's tree, or <code>None</code> for a new repo with no commits.
+- <code>worktree</code> - Absolute path to the working directory.
+- <code>db</code> - Object database.</p>
+<p><strong>Returns:</strong> List of <code>StatusEntry</code> for every path that is not fully unmodified.</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from gitpy.index import get_status
+
+entries = get_status(index, head_tree_sha, worktree, db)
+for e in entries:
+    print(e.path, e.index_status, e.worktree_status)
+</code></pre>
+<hr />
+<h2 id="has_conflicts"><code>has_conflicts()</code></h2>
+<p><strong>Module:</strong> <code>gitpy.index.operations</code></p>
+<pre><code class="language-python">def has_conflicts(index: Index) -&gt; bool
+</code></pre>
+<p>Return <code>True</code> when any entry in <code>index</code> has a non-zero merge stage.</p>
+<p><strong>Parameters:</strong>
+- <code>index</code> - Index to inspect.</p>
+<p><strong>Returns:</strong> <code>True</code> if there is at least one conflicted entry.</p>
+<hr />
+<h2 id="get_conflicts"><code>get_conflicts()</code></h2>
+<p><strong>Module:</strong> <code>gitpy.index.operations</code></p>
+<pre><code class="language-python">def get_conflicts(index: Index) -&gt; dict[str, list[IndexEntry]]
+</code></pre>
+<p>Return conflicted entries grouped by path.</p>
+<p><strong>Parameters:</strong>
+- <code>index</code> - Index to inspect.</p>
+<p><strong>Returns:</strong> Mapping from path to list of <code>IndexEntry</code> objects (stages 1–3).</p>
+<p><strong>Example:</strong></p>
+<pre><code class="language-python">from gitpy.index import get_conflicts
+
+conflicts = get_conflicts(index)
+for path, entries in conflicts.items():
+    stages = [e.stage for e in entries]
+    print(f&quot;{path}: stages {stages}&quot;)
+</code></pre>
+<hr />
+<h2 id="add_conflict"><code>add_conflict()</code></h2>
+<p><strong>Module:</strong> <code>gitpy.index.operations</code></p>
+<pre><code class="language-python">def add_conflict(
+    index: Index,
+    path: str,
+    base: IndexEntry | None,
+    ours: IndexEntry | None,
+    theirs: IndexEntry | None,
+) -&gt; None
+</code></pre>
+<p>Record a merge conflict for <code>path</code> in the index. Removes any stage-0 entry for <code>path</code> and adds the three conflict stages.</p>
+<p><strong>Parameters:</strong>
+- <code>index</code> - Index to modify.
+- <code>path</code> - Conflicted file path.
+- <code>base</code> - Stage-1 (common ancestor) entry, or <code>None</code>.
+- <code>ours</code> - Stage-2 (current branch) entry, or <code>None</code>.
+- <code>theirs</code> - Stage-3 (incoming branch) entry, or <code>None</code>.</p>
+<hr />
+<h2 id="resolve_conflict"><code>resolve_conflict()</code></h2>
+<p><strong>Module:</strong> <code>gitpy.index.operations</code></p>
+<pre><code class="language-python">def resolve_conflict(index: Index, path: str, sha: str, mode: int) -&gt; None
+</code></pre>
+<p>Resolve a merge conflict by creating a stage-0 entry. Removes all staged conflict entries for <code>path</code> and adds a clean stage-0 entry.</p>
+<p><strong>Parameters:</strong>
+- <code>index</code> - Index to modify.
+- <code>path</code> - Conflicted file path to resolve.
+- <code>sha</code> - 40-character hex SHA-1 of the resolved blob.
+- <code>mode</code> - File mode integer (e.g. <code>0o100644</code>).</p>
+<hr />
+<h2 id="complete-example">Complete Example</h2>
+<pre><code class="language-python">from pathlib import Path
+from gitpy.index import Index, IndexFile, IndexEntry, read_tree, write_tree, get_status
+from gitpy.storage import ObjectDatabase
+from gitpy.objects import Blob
+
+git_dir = Path(&quot;/path/to/repo/.git&quot;)
+worktree = Path(&quot;/path/to/repo&quot;)
+db = ObjectDatabase(git_dir)
+idx_file = IndexFile(git_dir)
+
+# Read the existing index (or start fresh)
+index = idx_file.read()
+
+# Stage a file
+blob = Blob.from_file(str(worktree / &quot;README.md&quot;))
+blob_sha = db.write(blob)
+entry = IndexEntry.from_path(&quot;README.md&quot;, blob_sha, worktree)
+index.add(entry)
+
+# Check status
+statuses = get_status(index, head_tree_sha, worktree, db)
+for s in statuses:
+    print(f&quot;{s.index_status.value:12} {s.worktree_status.value:12} {s.path}&quot;)
+
+# Write to a tree object
+tree_sha = write_tree(index, db)
+print(f&quot;Tree: {tree_sha}&quot;)
+
+# Persist
+idx_file.write(index)
+</code></pre>
+<hr />
+<h2 id="git-compatibility">Git Compatibility</h2>
+<p>The binary index format is Git version 2 compatible:</p>
+<table>
+<thead>
+<tr>
+<th>Detail</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Signature</td>
+<td><code>DIRC</code></td>
+</tr>
+<tr>
+<td>Version</td>
+<td><code>2</code></td>
+</tr>
+<tr>
+<td>Entry size</td>
+<td><code>62</code> fixed bytes + NUL-terminated path, padded to 8-byte boundary</td>
+</tr>
+<tr>
+<td>Checksum</td>
+<td>SHA-1 over header + all entries</td>
+</tr>
+</tbody>
+</table>
+<p>Git 2.x can read and write index files produced by gitpy, and vice versa.</p>
+<hr />
+<h2 id="see-also">See Also</h2>
+<ul>
+<li><strong><a href="../objects/">Object Model API</a></strong>: <code>Blob</code>, <code>Tree</code>, <code>TreeEntry</code> used by index operations</li>
+<li><strong><a href="../storage/">Storage API</a></strong>: <code>ObjectDatabase</code> used by <code>read_tree</code>, <code>write_tree</code>, <code>get_status</code></li>
+<li><strong><a href="../refs/">References API</a></strong>: Resolving HEAD to obtain the <code>head_tree_sha</code> for <code>get_status</code></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

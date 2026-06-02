@@ -1,0 +1,2391 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../delta_compression/">
+      
+      
+        <link rel="next" href="../references/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Pack Index - gitpy</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#understanding-gits-pack-index" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="gitpy" class="md-header__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            gitpy
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Pack Index
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="gitpy" class="md-nav__button md-logo" aria-label="gitpy" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    gitpy
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/josix/gitpy" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Usage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Usage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../object_model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../object_storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Object Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pack_files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pack Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../delta_compression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Delta Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pack Index
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pack Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-problem-finding-objects-in-packs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem: Finding Objects in Packs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index-file-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index File Location
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index-format-evolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index Format Evolution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-2-index-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version 2 Index Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-fanout-table-fast-search-narrowing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Fanout Table: Fast Search Narrowing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Fanout Table: Fast Search Narrowing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-the-fanout-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using the Fanout Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#object-lookup-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object Lookup Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crc32-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CRC32 Verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#large-pack-support-2gb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Large Pack Support (&gt;2GB)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Large Pack Support (&gt;2GB)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#large-offset-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Large Offset Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-5gb-pack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: 5GB Pack
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-an-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building an Index
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serializing-the-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Serializing the Index
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parsing-an-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parsing an Index
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index Verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Analysis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lookup-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lookup Complexity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#space-overhead" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Space Overhead
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-pack-index-midx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-Pack Index (MIDX)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-line-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Command-Line Tools
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Command-Line Tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inspect-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspect Index
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index-statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-in-gitpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation in gitpy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation in gitpy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#module-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-index-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Index Code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Next?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../index_staging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index & Staging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../diff/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/objects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Objects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/pack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pack Objects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/refs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/staging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/diff/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Diff
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Config
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-problem-finding-objects-in-packs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Problem: Finding Objects in Packs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index-file-location" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index File Location
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index-format-evolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index Format Evolution
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-2-index-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version 2 Index Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-fanout-table-fast-search-narrowing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Fanout Table: Fast Search Narrowing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The Fanout Table: Fast Search Narrowing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-the-fanout-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using the Fanout Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#object-lookup-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Object Lookup Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crc32-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CRC32 Verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#large-pack-support-2gb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Large Pack Support (&gt;2GB)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Large Pack Support (&gt;2GB)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#large-offset-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Large Offset Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#example-5gb-pack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: 5GB Pack
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#building-an-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Building an Index
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#serializing-the-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Serializing the Index
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parsing-an-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parsing an Index
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#index-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index Verification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Analysis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#lookup-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lookup Complexity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#space-overhead" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Space Overhead
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-pack-index-midx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-Pack Index (MIDX)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#command-line-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Command-Line Tools
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Command-Line Tools">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#inspect-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspect Index
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index-statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-in-gitpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation in gitpy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation in gitpy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#module-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-index-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Index Code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-takeaways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Takeaways
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What's Next?
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="understanding-gits-pack-index">Understanding Git's Pack Index</h1>
+<p>This document explains how Git enables fast object lookup in pack files through index files. If you've ever wondered how Git finds objects instantly among millions, this guide reveals the elegant data structure that makes it possible.</p>
+<h2 id="the-problem-finding-objects-in-packs">The Problem: Finding Objects in Packs</h2>
+<p>Pack files combine thousands or millions of objects into a single file. Without an index, finding an object would require scanning the entire pack:</p>
+<pre><code>Without index:
+  Find object abc123...
+  → Scan from start: 1MB... 10MB... 100MB... found at 150MB!
+  → Time: O(pack size) = seconds to minutes
+
+With index:
+  Find object abc123...
+  → Binary search in index: abc123 → offset 157,286,400
+  → Seek directly to offset
+  → Time: O(log n) = milliseconds
+</code></pre>
+<p>The pack index (<code>.idx</code> file) provides O(1) amortized lookup time regardless of pack size.</p>
+<hr />
+<h2 id="index-file-location">Index File Location</h2>
+<p>For every <code>.pack</code> file, there's a corresponding <code>.idx</code> file:</p>
+<pre><code>.git/objects/pack/
+├── pack-abc123def456.pack   # Object data (50MB)
+├── pack-abc123def456.idx    # Index (~2MB)
+├── pack-789abc012def.pack
+└── pack-789abc012def.idx
+</code></pre>
+<p>The filenames match—same SHA identifies both files.</p>
+<hr />
+<h2 id="index-format-evolution">Index Format Evolution</h2>
+<p>Git has used two index formats:</p>
+<table>
+<thead>
+<tr>
+<th>Version</th>
+<th>Introduced</th>
+<th>Features</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Original</td>
+<td>Simple but limited to 2GB packs</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Git 1.6+</td>
+<td>Current standard, supports &gt;2GB packs</td>
+</tr>
+</tbody>
+</table>
+<p>Version 2 is the standard. Version 1 is obsolete but still parseable.</p>
+<hr />
+<h2 id="version-2-index-structure">Version 2 Index Structure</h2>
+<p>The index has a carefully designed layout:</p>
+<pre><code>┌────────────────────────────────────────────────────────────────┐
+│                        HEADER (8 bytes)                        │
+│     Magic: 0xff 0x74 0x4f 0x63  │  Version: 0x00000002        │
+├────────────────────────────────────────────────────────────────┤
+│                     FANOUT TABLE (1024 bytes)                  │
+│                    256 × 4-byte entries                        │
+│                                                                 │
+│  fanout[0x00] = count of objects with first SHA byte ≤ 0x00   │
+│  fanout[0x01] = count of objects with first SHA byte ≤ 0x01   │
+│  ...                                                           │
+│  fanout[0xff] = total object count in pack                    │
+├────────────────────────────────────────────────────────────────┤
+│                      SHA TABLE (N × 20 bytes)                  │
+│                     Objects sorted by SHA-1                    │
+├────────────────────────────────────────────────────────────────┤
+│                     CRC32 TABLE (N × 4 bytes)                  │
+│               CRC32 of each object's packed data               │
+├────────────────────────────────────────────────────────────────┤
+│                    OFFSET TABLE (N × 4 bytes)                  │
+│                  Pack file offset for each object              │
+│            (high bit set → use large offset table)             │
+├────────────────────────────────────────────────────────────────┤
+│               LARGE OFFSET TABLE (variable)                    │
+│            8-byte offsets for objects beyond 2GB               │
+│                  (only if pack &gt; 2GB)                          │
+├────────────────────────────────────────────────────────────────┤
+│                    PACK SHA (20 bytes)                         │
+│               SHA-1 of the pack file content                   │
+├────────────────────────────────────────────────────────────────┤
+│                   INDEX SHA (20 bytes)                         │
+│                  SHA-1 of all above content                    │
+└────────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2 id="the-fanout-table-fast-search-narrowing">The Fanout Table: Fast Search Narrowing</h2>
+<p>The fanout table is the key innovation. It's a 256-entry array where:</p>
+<pre><code>fanout[i] = number of objects with first SHA byte ≤ i
+</code></pre>
+<p>This creates a cumulative histogram:</p>
+<pre><code>Example with 1000 objects:
+fanout[0x00] = 3     # 3 objects start with 00
+fanout[0x01] = 7     # 7 objects start with ≤ 01
+fanout[0x02] = 12    # 12 objects start with ≤ 02
+...
+fanout[0x80] = 512   # ~half start with ≤ 80 (expected)
+...
+fanout[0xfe] = 996   # 996 objects start with ≤ fe
+fanout[0xff] = 1000  # 1000 total objects
+</code></pre>
+<h3 id="using-the-fanout-table">Using the Fanout Table</h3>
+<p>To find objects starting with byte <code>0xab</code>:</p>
+<pre><code class="language-python">def get_search_range(fanout: list[int], first_byte: int) -&gt; tuple[int, int]:
+    &quot;&quot;&quot;Get range of indices for objects with given first byte.&quot;&quot;&quot;
+    if first_byte == 0:
+        start = 0
+    else:
+        start = fanout[first_byte - 1]
+    end = fanout[first_byte]
+    return start, end
+
+# Example: Find objects starting with 0xab
+start, end = get_search_range(fanout, 0xab)
+# start = fanout[0xaa] = 670
+# end = fanout[0xab] = 674
+# Only 4 objects to binary search!
+</code></pre>
+<p>This reduces search space by ~256x on average.</p>
+<hr />
+<h2 id="object-lookup-algorithm">Object Lookup Algorithm</h2>
+<p>Here's the complete lookup process:</p>
+<pre><code class="language-python">def find_object_offset(index: bytes, sha: str) -&gt; int | None:
+    &quot;&quot;&quot;
+    Find object's pack file offset using the index.
+
+    Returns offset or None if not found.
+    &quot;&quot;&quot;
+    sha_bytes = bytes.fromhex(sha)
+    first_byte = sha_bytes[0]
+
+    # Step 1: Read fanout to narrow search range
+    fanout_base = 8  # After header
+    if first_byte == 0:
+        start = 0
+    else:
+        start = int.from_bytes(
+            index[fanout_base + (first_byte - 1) * 4 :
+                  fanout_base + first_byte * 4],
+            &quot;big&quot;
+        )
+    end = int.from_bytes(
+        index[fanout_base + first_byte * 4 :
+              fanout_base + (first_byte + 1) * 4],
+        &quot;big&quot;
+    )
+
+    # Get total object count
+    total_objects = int.from_bytes(
+        index[fanout_base + 255 * 4 : fanout_base + 256 * 4],
+        &quot;big&quot;
+    )
+
+    # Calculate section offsets
+    sha_table_base = fanout_base + 256 * 4
+    crc_table_base = sha_table_base + total_objects * 20
+    offset_table_base = crc_table_base + total_objects * 4
+
+    # Step 2: Binary search in SHA table
+    while start &lt; end:
+        mid = (start + end) // 2
+        mid_sha = index[sha_table_base + mid * 20 :
+                       sha_table_base + (mid + 1) * 20]
+
+        if mid_sha == sha_bytes:
+            # Found! Read offset
+            offset_bytes = index[offset_table_base + mid * 4 :
+                                offset_table_base + (mid + 1) * 4]
+            offset = int.from_bytes(offset_bytes, &quot;big&quot;)
+
+            # Check for large offset
+            if offset &amp; 0x80000000:
+                # High bit set - look up in large offset table
+                large_idx = offset &amp; 0x7fffffff
+                large_base = offset_table_base + total_objects * 4
+                offset = int.from_bytes(
+                    index[large_base + large_idx * 8 :
+                          large_base + (large_idx + 1) * 8],
+                    &quot;big&quot;
+                )
+
+            return offset
+
+        elif mid_sha &lt; sha_bytes:
+            start = mid + 1
+        else:
+            end = mid
+
+    return None  # Not found
+</code></pre>
+<hr />
+<h2 id="crc32-verification">CRC32 Verification</h2>
+<p>Each object has a CRC32 checksum of its packed data:</p>
+<pre><code>Object at offset 1000, ends at offset 1500
+CRC32 = crc32(pack_data[1000:1500])
+</code></pre>
+<p>This enables:
+- <strong>Fast corruption detection</strong>: No need to decompress
+- <strong>Partial pack verification</strong>: Check specific objects
+- <strong>Network transfer verification</strong>: Verify without unpacking</p>
+<pre><code class="language-python">import zlib
+
+def verify_object_crc(pack_data: bytes, index: PackIndex, sha: str) -&gt; bool:
+    &quot;&quot;&quot;Verify object hasn't been corrupted.&quot;&quot;&quot;
+    entry = index.find(sha)
+    if entry is None:
+        return False
+
+    # Get object boundaries
+    obj_start = entry.offset
+    obj_end = find_object_end(pack_data, obj_start)
+
+    # Compute CRC32
+    actual_crc = zlib.crc32(pack_data[obj_start:obj_end]) &amp; 0xffffffff
+
+    return actual_crc == entry.crc32
+</code></pre>
+<hr />
+<h2 id="large-pack-support-2gb">Large Pack Support (&gt;2GB)</h2>
+<p>Standard 4-byte offsets can only address up to ~2GB. For larger packs:</p>
+<pre><code>Offset table entry interpretation:
+  - If high bit (0x80000000) is clear: value is the offset
+  - If high bit is set: remaining bits are index into large offset table
+</code></pre>
+<h3 id="large-offset-table">Large Offset Table</h3>
+<pre><code>┌───────────────────────────────────────────────────────────┐
+│  Entry 0: 8-byte offset for first large object           │
+│  Entry 1: 8-byte offset for second large object          │
+│  ...                                                      │
+└───────────────────────────────────────────────────────────┘
+</code></pre>
+<p>This allows packs up to 16 exabytes while keeping the common case (&lt; 2GB) efficient.</p>
+<h3 id="example-5gb-pack">Example: 5GB Pack</h3>
+<pre><code>Objects:
+  sha_001: offset 100         → offset table: 0x00000064
+  sha_002: offset 2,500,000   → offset table: 0x002625A0
+  sha_003: offset 3,000,000,000 (3GB) → offset table: 0x80000000
+                               → large_offset[0] = 0x00000000B2D05E00
+
+First two objects use direct 4-byte offsets.
+Third object uses large offset table.
+</code></pre>
+<hr />
+<h2 id="building-an-index">Building an Index</h2>
+<p>When creating a new pack file, the index is built simultaneously:</p>
+<pre><code class="language-python">from dataclasses import dataclass
+from typing import NamedTuple
+
+@dataclass(slots=True)
+class PackIndexEntry:
+    &quot;&quot;&quot;Single entry in pack index.&quot;&quot;&quot;
+    sha: str      # 40-char hex
+    offset: int   # Position in pack
+    crc32: int    # CRC32 of packed data
+
+
+class PackIndex:
+    &quot;&quot;&quot;Pack file index for fast object lookup.&quot;&quot;&quot;
+
+    def __init__(self, pack_sha: str, entries: list[PackIndexEntry]):
+        # Sort entries by SHA (required for binary search)
+        self.entries = sorted(entries, key=lambda e: e.sha)
+        self.pack_sha = pack_sha
+        self._build_fanout()
+        self._sha_to_idx = {e.sha: i for i, e in enumerate(self.entries)}
+
+    def _build_fanout(self) -&gt; None:
+        &quot;&quot;&quot;Build fanout table from sorted entries.&quot;&quot;&quot;
+        self._fanout = [0] * 256
+
+        for entry in self.entries:
+            first_byte = int(entry.sha[:2], 16)
+            # Increment counts for this byte and all higher bytes
+            for i in range(first_byte, 256):
+                self._fanout[i] += 1
+
+    def get_offset(self, sha: str) -&gt; int | None:
+        &quot;&quot;&quot;Look up offset by SHA.&quot;&quot;&quot;
+        idx = self._sha_to_idx.get(sha)
+        if idx is not None:
+            return self.entries[idx].offset
+        return None
+
+    def __contains__(self, sha: str) -&gt; bool:
+        return sha in self._sha_to_idx
+
+    @property
+    def object_count(self) -&gt; int:
+        return len(self.entries)
+</code></pre>
+<hr />
+<h2 id="serializing-the-index">Serializing the Index</h2>
+<p>Writing an index file:</p>
+<pre><code class="language-python">import hashlib
+
+IDX_MAGIC = b&quot;\xff\x74\x4f\x63&quot;  # 0xff744f63
+IDX_VERSION = 2
+
+
+def serialize_index(index: PackIndex) -&gt; bytes:
+    &quot;&quot;&quot;Serialize index to version 2 format.&quot;&quot;&quot;
+    result = bytearray()
+
+    # Header
+    result.extend(IDX_MAGIC)
+    result.extend(IDX_VERSION.to_bytes(4, &quot;big&quot;))
+
+    # Fanout table
+    for count in index._fanout:
+        result.extend(count.to_bytes(4, &quot;big&quot;))
+
+    # SHA table (sorted)
+    for entry in index.entries:
+        result.extend(bytes.fromhex(entry.sha))
+
+    # CRC32 table
+    for entry in index.entries:
+        result.extend(entry.crc32.to_bytes(4, &quot;big&quot;))
+
+    # Offset table (with large offset handling)
+    large_offsets: list[int] = []
+    for entry in index.entries:
+        if entry.offset &gt;= 0x80000000:  # Needs large offset
+            large_idx = len(large_offsets)
+            large_offsets.append(entry.offset)
+            result.extend((0x80000000 | large_idx).to_bytes(4, &quot;big&quot;))
+        else:
+            result.extend(entry.offset.to_bytes(4, &quot;big&quot;))
+
+    # Large offset table
+    for offset in large_offsets:
+        result.extend(offset.to_bytes(8, &quot;big&quot;))
+
+    # Pack SHA
+    result.extend(bytes.fromhex(index.pack_sha))
+
+    # Index SHA (hash of everything so far)
+    index_sha = hashlib.sha1(result).digest()
+    result.extend(index_sha)
+
+    return bytes(result)
+</code></pre>
+<hr />
+<h2 id="parsing-an-index">Parsing an Index</h2>
+<p>Reading an existing index file:</p>
+<pre><code class="language-python">def parse_index(data: bytes) -&gt; PackIndex:
+    &quot;&quot;&quot;Parse version 2 index file.&quot;&quot;&quot;
+    # Verify header
+    if data[:4] != IDX_MAGIC:
+        raise ValueError(&quot;Invalid index magic&quot;)
+
+    version = int.from_bytes(data[4:8], &quot;big&quot;)
+    if version != 2:
+        raise ValueError(f&quot;Unsupported index version: {version}&quot;)
+
+    # Read fanout table
+    fanout_start = 8
+    fanout = []
+    for i in range(256):
+        count = int.from_bytes(
+            data[fanout_start + i * 4 : fanout_start + (i + 1) * 4],
+            &quot;big&quot;
+        )
+        fanout.append(count)
+
+    object_count = fanout[255]
+
+    # Calculate section offsets
+    sha_start = fanout_start + 256 * 4
+    crc_start = sha_start + object_count * 20
+    offset_start = crc_start + object_count * 4
+    large_offset_start = offset_start + object_count * 4
+
+    # Read tables
+    entries = []
+    for i in range(object_count):
+        # SHA
+        sha = data[sha_start + i * 20 : sha_start + (i + 1) * 20].hex()
+
+        # CRC32
+        crc32 = int.from_bytes(
+            data[crc_start + i * 4 : crc_start + (i + 1) * 4],
+            &quot;big&quot;
+        )
+
+        # Offset
+        offset = int.from_bytes(
+            data[offset_start + i * 4 : offset_start + (i + 1) * 4],
+            &quot;big&quot;
+        )
+        if offset &amp; 0x80000000:
+            # Large offset
+            large_idx = offset &amp; 0x7fffffff
+            offset = int.from_bytes(
+                data[large_offset_start + large_idx * 8 :
+                     large_offset_start + (large_idx + 1) * 8],
+                &quot;big&quot;
+            )
+
+        entries.append(PackIndexEntry(sha=sha, offset=offset, crc32=crc32))
+
+    # Extract pack SHA
+    pack_sha_offset = len(data) - 40
+    pack_sha = data[pack_sha_offset : pack_sha_offset + 20].hex()
+
+    return PackIndex(pack_sha=pack_sha, entries=entries)
+</code></pre>
+<hr />
+<h2 id="index-verification">Index Verification</h2>
+<p>The index has multiple integrity checks:</p>
+<pre><code class="language-python">def verify_index(index_data: bytes) -&gt; bool:
+    &quot;&quot;&quot;Verify index file integrity.&quot;&quot;&quot;
+    # 1. Check header
+    if index_data[:4] != IDX_MAGIC:
+        return False
+
+    version = int.from_bytes(index_data[4:8], &quot;big&quot;)
+    if version != 2:
+        return False
+
+    # 2. Verify index SHA (last 20 bytes)
+    expected_sha = index_data[-20:]
+    computed_sha = hashlib.sha1(index_data[:-20]).digest()
+    if expected_sha != computed_sha:
+        return False
+
+    # 3. Verify fanout is monotonically increasing
+    fanout_start = 8
+    prev = 0
+    for i in range(256):
+        count = int.from_bytes(
+            index_data[fanout_start + i * 4 : fanout_start + (i + 1) * 4],
+            &quot;big&quot;
+        )
+        if count &lt; prev:
+            return False
+        prev = count
+
+    # 4. Verify SHAs are sorted
+    object_count = prev
+    sha_start = fanout_start + 256 * 4
+    prev_sha = b&quot;\x00&quot; * 20
+    for i in range(object_count):
+        sha = index_data[sha_start + i * 20 : sha_start + (i + 1) * 20]
+        if sha &lt;= prev_sha:
+            return False
+        prev_sha = sha
+
+    return True
+</code></pre>
+<hr />
+<h2 id="performance-analysis">Performance Analysis</h2>
+<h3 id="lookup-complexity">Lookup Complexity</h3>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Time</th>
+<th>Space</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Find by SHA</td>
+<td>O(log n)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>Fanout lookup</td>
+<td>O(1)</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Binary search</td>
+<td>O(log(n/256))</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Overall</td>
+<td>O(log n) ≈ O(1)</td>
+<td>O(1)</td>
+</tr>
+</tbody>
+</table>
+<p>For practical purposes, lookup is effectively O(1) because:
+- Fanout reduces search space by 256x
+- Log₂(n/256) is small even for millions of objects
+- Memory access patterns are cache-friendly</p>
+<h3 id="space-overhead">Space Overhead</h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Size per Object</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SHA</td>
+<td>20 bytes</td>
+</tr>
+<tr>
+<td>CRC32</td>
+<td>4 bytes</td>
+</tr>
+<tr>
+<td>Offset</td>
+<td>4 bytes (+ 8 for large)</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td>~28 bytes</td>
+</tr>
+</tbody>
+</table>
+<p>For a pack with 100,000 objects: ~2.8MB index</p>
+<hr />
+<h2 id="multi-pack-index-midx">Multi-Pack Index (MIDX)</h2>
+<p>Git 2.28+ supports a "multi-pack index" for repositories with many packs:</p>
+<pre><code>.git/objects/pack/
+├── pack-aaa.pack
+├── pack-aaa.idx
+├── pack-bbb.pack
+├── pack-bbb.idx
+├── pack-ccc.pack
+├── pack-ccc.idx
+└── multi-pack-index   # Single index spanning all packs
+</code></pre>
+<p>Benefits:
+- Single lookup across all packs
+- Faster object resolution
+- Better cache efficiency</p>
+<p>This is an advanced optimization—the basic single-pack index is sufficient for most repositories.</p>
+<hr />
+<h2 id="command-line-tools">Command-Line Tools</h2>
+<h3 id="inspect-index">Inspect Index</h3>
+<pre><code class="language-bash"># Show index summary
+$ git show-index &lt; .git/objects/pack/pack-*.idx | head
+100 abc123def456... (blob)
+250 789012345678... (commit)
+...
+
+# Verify index integrity
+$ git verify-pack -v .git/objects/pack/pack-*.idx
+</code></pre>
+<h3 id="index-statistics">Index Statistics</h3>
+<pre><code class="language-bash"># Count objects
+$ git show-index &lt; .git/objects/pack/*.idx | wc -l
+50000
+
+# Distribution by first byte (should be ~uniform)
+$ git show-index &lt; .git/objects/pack/*.idx | \
+    cut -c1-2 | sort | uniq -c | head
+  195 00
+  198 01
+  202 02
+  ...
+</code></pre>
+<hr />
+<h2 id="implementation-in-gitpy">Implementation in gitpy</h2>
+<h3 id="module-structure">Module Structure</h3>
+<pre><code class="language-python"># gitpy/storage/pack_index.py
+
+from dataclasses import dataclass
+from pathlib import Path
+import hashlib
+
+IDX_SIGNATURE = b&quot;\xff\x74\x4f\x63&quot;
+IDX_VERSION = 2
+
+
+@dataclass(slots=True)
+class PackIndexEntry:
+    &quot;&quot;&quot;Single entry in pack index.&quot;&quot;&quot;
+    sha: str       # 40-char hex SHA
+    offset: int    # Offset in pack file
+    crc32: int     # CRC32 of packed object data
+
+
+class PackIndex:
+    &quot;&quot;&quot;
+    Pack index for fast object lookup.
+
+    Provides O(log n) lookup of pack file offset by SHA.
+    &quot;&quot;&quot;
+
+    def __init__(self, pack_sha: str, entries: list[PackIndexEntry]):
+        self.pack_sha = pack_sha
+        self.entries = sorted(entries, key=lambda e: e.sha)
+        self._build_fanout()
+        self._sha_to_idx = {e.sha: i for i, e in enumerate(self.entries)}
+
+    def _build_fanout(self) -&gt; None:
+        &quot;&quot;&quot;Build fanout table from entries.&quot;&quot;&quot;
+        self._fanout = [0] * 256
+        counts = [0] * 256
+
+        for entry in self.entries:
+            first_byte = int(entry.sha[:2], 16)
+            counts[first_byte] += 1
+
+        # Convert to cumulative
+        cumulative = 0
+        for i in range(256):
+            cumulative += counts[i]
+            self._fanout[i] = cumulative
+
+    def find(self, sha: str) -&gt; PackIndexEntry | None:
+        &quot;&quot;&quot;Look up entry by SHA.&quot;&quot;&quot;
+        idx = self._sha_to_idx.get(sha)
+        if idx is not None:
+            return self.entries[idx]
+        return None
+
+    def get_offset(self, sha: str) -&gt; int | None:
+        &quot;&quot;&quot;Get pack file offset for SHA.&quot;&quot;&quot;
+        entry = self.find(sha)
+        return entry.offset if entry else None
+
+    def __contains__(self, sha: str) -&gt; bool:
+        return sha in self._sha_to_idx
+
+    @property
+    def object_count(self) -&gt; int:
+        return len(self.entries)
+
+    @classmethod
+    def from_file(cls, path: Path) -&gt; &quot;PackIndex&quot;:
+        &quot;&quot;&quot;Load index from .idx file.&quot;&quot;&quot;
+        return parse_index(path.read_bytes())
+
+    def serialize(self) -&gt; bytes:
+        &quot;&quot;&quot;Serialize to index file format.&quot;&quot;&quot;
+        return serialize_index(self)
+</code></pre>
+<hr />
+<h2 id="testing-index-code">Testing Index Code</h2>
+<pre><code class="language-python">def test_index_roundtrip():
+    &quot;&quot;&quot;Serialize then parse should preserve data.&quot;&quot;&quot;
+    entries = [
+        PackIndexEntry(sha=&quot;a&quot; * 40, offset=100, crc32=0x12345678),
+        PackIndexEntry(sha=&quot;b&quot; * 40, offset=500, crc32=0xdeadbeef),
+        PackIndexEntry(sha=&quot;f&quot; * 40, offset=1000, crc32=0xcafebabe),
+    ]
+
+    index = PackIndex(pack_sha=&quot;c&quot; * 40, entries=entries)
+    data = index.serialize()
+    restored = PackIndex.parse(data)
+
+    assert restored.object_count == 3
+    assert restored.get_offset(&quot;a&quot; * 40) == 100
+    assert restored.get_offset(&quot;b&quot; * 40) == 500
+    assert restored.get_offset(&quot;f&quot; * 40) == 1000
+
+
+def test_fanout_distribution():
+    &quot;&quot;&quot;Fanout should enable efficient lookup.&quot;&quot;&quot;
+    # Create entries with known distribution
+    entries = [
+        PackIndexEntry(sha=&quot;00&quot; + &quot;a&quot; * 38, offset=100, crc32=0),
+        PackIndexEntry(sha=&quot;00&quot; + &quot;b&quot; * 38, offset=200, crc32=0),
+        PackIndexEntry(sha=&quot;ff&quot; + &quot;c&quot; * 38, offset=300, crc32=0),
+    ]
+
+    index = PackIndex(pack_sha=&quot;d&quot; * 40, entries=entries)
+
+    # Check fanout values
+    assert index._fanout[0x00] == 2   # Two objects ≤ 0x00
+    assert index._fanout[0xfe] == 2   # Still two (none in 01-fe)
+    assert index._fanout[0xff] == 3   # Three total
+
+
+def test_large_offset():
+    &quot;&quot;&quot;Handle offsets &gt; 2GB.&quot;&quot;&quot;
+    large_offset = 0x100000000  # 4GB
+
+    entries = [
+        PackIndexEntry(sha=&quot;a&quot; * 40, offset=large_offset, crc32=0),
+    ]
+
+    index = PackIndex(pack_sha=&quot;b&quot; * 40, entries=entries)
+    data = index.serialize()
+    restored = PackIndex.parse(data)
+
+    assert restored.get_offset(&quot;a&quot; * 40) == large_offset
+</code></pre>
+<hr />
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ol>
+<li><strong>Fanout table</strong> reduces search space by ~256x</li>
+<li><strong>Binary search</strong> on sorted SHAs gives O(log n) lookup</li>
+<li><strong>CRC32 values</strong> enable fast corruption detection</li>
+<li><strong>Large offset table</strong> supports packs up to 16 exabytes</li>
+<li><strong>Trailing checksums</strong> verify both pack and index integrity</li>
+<li><strong>Compact format</strong> keeps index ~28 bytes per object</li>
+</ol>
+<p>The pack index is a masterpiece of data structure design—simple, efficient, and elegant. It transforms linear search into near-constant-time lookup, making Git fast regardless of repository size.</p>
+<hr />
+<h2 id="whats-next">What's Next?</h2>
+<ul>
+<li><strong><a href="../pack_files/">Pack Files</a></strong>: How objects are stored in packs</li>
+<li><strong><a href="../delta_compression/">Delta Compression</a></strong>: How similar objects share storage</li>
+<li><strong>Implementation</strong>: See <code>gitpy/storage/pack_index.py</code> for code</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
