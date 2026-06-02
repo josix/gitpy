@@ -644,3 +644,9 @@ from typing import Self
 from pathlib import Path
 from collections.abc import Iterator
 ```
+
+---
+
+## See Also
+
+- **[Pack Objects API](pack.md)**: Pack files, delta compression, and pack indexes

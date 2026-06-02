@@ -1758,22 +1758,22 @@ class TestPackFileIntegration:
 
 ### 9.1 Functional Requirements
 
-- [ ] Pack files can be read and objects extracted
-- [ ] Pack index enables O(1) lookup by SHA
-- [ ] OFS_DELTA objects are correctly resolved
-- [ ] REF_DELTA objects are correctly resolved
-- [ ] Delta chains of arbitrary depth are handled
-- [ ] Pack files can be written from loose objects
-- [ ] Delta compression is applied when beneficial
-- [ ] Large offsets (>2GB) are handled correctly
+- [x] Pack files can be read and objects extracted
+- [x] Pack index enables O(1) lookup by SHA
+- [x] OFS_DELTA objects are correctly resolved
+- [x] REF_DELTA objects are correctly resolved
+- [x] Delta chains of arbitrary depth are handled
+- [x] Pack files can be written from loose objects
+- [x] Delta compression is applied when beneficial
+- [x] Large offsets (>2GB) are handled correctly
 
 ### 9.2 Non-Functional Requirements
 
-- [ ] Compatible with Git pack format v2
-- [ ] Pack files created by gitpy are readable by real Git
-- [ ] Pack files created by Git are readable by gitpy
-- [ ] Memory efficient (streaming where possible)
-- [ ] Reasonable performance for typical repository sizes
+- [x] Compatible with Git pack format v2
+- [x] Pack files created by gitpy are readable by real Git
+- [x] Pack files created by Git are readable by gitpy
+- [ ] Memory efficient (streaming where possible) — not verified; no streaming API implemented
+- [ ] Reasonable performance for typical repository sizes — not benchmarked
 
 ### 9.3 Verification Commands
 

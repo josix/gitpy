@@ -131,12 +131,14 @@ tests/
 **Dependencies**: Agent 1 (Object Model), Agent 2 (Storage)
 
 **Acceptance Criteria**:
-- [ ] Pack files can be read and objects extracted
-- [ ] Pack index enables O(1) lookup by SHA
-- [ ] OFS_DELTA and REF_DELTA objects resolved correctly
-- [ ] Delta chains of arbitrary depth handled
-- [ ] Pack files can be written with delta compression
-- [ ] Git can read gitpy pack files and vice versa
+- [x] Pack files can be read and objects extracted
+- [x] Pack index enables O(1) lookup by SHA
+- [x] OFS_DELTA and REF_DELTA objects resolved correctly
+- [x] Delta chains of arbitrary depth handled
+- [x] Pack files can be written with delta compression
+- [x] Git can read gitpy pack files and vice versa
+
+**Status**: ✅ **COMPLETE** (Phase 2b)
 
 **Estimated Complexity**: High
 
@@ -176,12 +178,14 @@ tests/
 **Dependencies**: Agent 1, Agent 2
 
 **Acceptance Criteria**:
-- [ ] HEAD attached/detached states work
-- [ ] Branch create/delete/rename operations
-- [ ] Symbolic refs resolve correctly
-- [ ] Revision expressions (HEAD^, main~3) parse
-- [ ] Packed refs are readable
-- [ ] Reflog entries recorded
+- [x] HEAD attached/detached states work
+- [x] Branch create/delete/rename operations
+- [x] Symbolic refs resolve correctly
+- [x] Revision expressions (HEAD^, main~3) parse
+- [x] Packed refs are readable
+- [x] Reflog entries recorded
+
+**Status**: ✅ **COMPLETE** (Phase 3)
 
 **Estimated Complexity**: High
 
@@ -216,13 +220,15 @@ tests/
 **Dependencies**: Agent 1, Agent 2
 
 **Acceptance Criteria**:
-- [ ] Parse Git index file (version 2)
-- [ ] Write Git-compatible index
-- [ ] Checksum validation
-- [ ] Atomic writes with lock file
-- [ ] read_tree populates index from tree
-- [ ] write_tree creates tree from index
-- [ ] Status detection (modified, added, deleted)
+- [x] Parse Git index file (version 2)
+- [x] Write Git-compatible index
+- [x] Checksum validation
+- [x] Atomic writes with lock file
+- [x] read_tree populates index from tree
+- [x] write_tree creates tree from index
+- [x] Status detection (modified, added, deleted)
+
+**Status**: ✅ **COMPLETE** (Phase 4)
 
 **Estimated Complexity**: High
 
@@ -256,17 +262,21 @@ tests/
 **Dependencies**: Agent 1, Agent 2
 
 **Acceptance Criteria**:
-- [ ] Myers produces minimal edit distance
-- [ ] Unified diff format matches Git
-- [ ] Tree diff detects add/modify/delete
-- [ ] Context lines configurable
-- [ ] Binary files handled gracefully
+- [x] Myers produces minimal edit distance
+- [x] Unified diff format matches Git
+- [x] Tree diff detects add/modify/delete
+- [x] Context lines configurable
+- [x] Binary files handled gracefully
+
+**Status**: ✅ **COMPLETE** (Phase 5)
 
 **Estimated Complexity**: Medium
 
 ---
 
 ### Agent 6: Plumbing Commands Agent
+
+**Status**: ✅ **COMPLETE** (Phase 6)
 
 **Domain**: Low-level Git commands
 
@@ -302,10 +312,10 @@ tests/
 **Dependencies**: Agents 1-4
 
 **Acceptance Criteria**:
-- [ ] All commands match Git behavior
-- [ ] Exit codes correct
-- [ ] Error messages helpful
-- [ ] Argument parsing complete
+- [x] All commands match Git behavior
+- [x] Exit codes correct
+- [x] Error messages helpful
+- [x] Argument parsing complete
 
 **Estimated Complexity**: Medium
 
@@ -347,11 +357,13 @@ tests/
 **Dependencies**: Agents 1-6
 
 **Acceptance Criteria**:
-- [ ] Basic workflow works: init → add → commit
-- [ ] Status shows correct state
-- [ ] Log displays history
-- [ ] Branch operations functional
-- [ ] CLI entry point works
+- [x] Basic workflow works: init → add → commit
+- [x] Status shows correct state
+- [x] Log displays history
+- [x] Branch operations functional
+- [x] CLI entry point works
+
+**Status**: ✅ **COMPLETE** (Phase 7)
 
 **Estimated Complexity**: High
 
@@ -384,11 +396,13 @@ tests/
 **Dependencies**: All agents
 
 **Acceptance Criteria**:
-- [ ] Full workflow tests pass
-- [ ] Git can use gitpy repos
-- [ ] gitpy can use Git repos
-- [ ] All edge cases handled
-- [ ] CI passes on all PRs
+- [x] Full workflow tests pass
+- [x] Git can use gitpy repos
+- [x] gitpy can use Git repos
+- [x] All edge cases handled
+- [x] CI passes on all PRs
+
+**Status**: ✅ **COMPLETE** (Phase 8)
 
 **Estimated Complexity**: Medium
 

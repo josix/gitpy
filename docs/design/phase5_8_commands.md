@@ -1320,29 +1320,29 @@ gitpy = "gitpy.cli:app"
 
 ### 9.1 Plumbing Commands
 
-- [ ] `hash-object` computes SHA, optionally writes
-- [ ] `cat-file` shows type/size/content
-- [ ] `ls-tree` lists tree contents
-- [ ] `write-tree` creates tree from index
-- [ ] `commit-tree` creates commit object
-- [ ] `update-ref` modifies references
+- [x] `hash-object` computes SHA, optionally writes
+- [x] `cat-file` shows type/size/content
+- [x] `ls-tree` lists tree contents
+- [x] `write-tree` creates tree from index
+- [x] `commit-tree` creates commit object
+- [x] `update-ref` modifies references
 
 ### 9.2 Porcelain Commands
 
-- [ ] `init` creates repository
-- [ ] `add` stages files
-- [ ] `commit` creates commit and updates HEAD
-- [ ] `status` shows working tree state
-- [ ] `log` shows history
-- [ ] `diff` shows changes
-- [ ] `branch` manages branches
-- [ ] `checkout` switches branches
+- [x] `init` creates repository
+- [x] `add` stages files
+- [x] `commit` creates commit and updates HEAD
+- [x] `status` shows working tree state
+- [x] `log` shows history
+- [x] `diff` shows changes
+- [x] `branch` manages branches
+- [x] `checkout` switches branches
 
 ### 9.3 Compatibility
 
-- [ ] Can create repo usable by real Git
-- [ ] Can work with repo created by real Git
-- [ ] Output format matches Git where appropriate
+- [x] Can create repo usable by real Git
+- [x] Can work with repo created by real Git
+- [x] Output format matches Git where appropriate
 
 ---
 

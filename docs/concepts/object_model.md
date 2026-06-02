@@ -961,9 +961,12 @@ The known hash tests are critical—they prove we're Git-compatible.
 
 The object model is the foundation. The next layers build on top:
 
-- **Object Storage** ✅ **Implemented**: How objects are compressed and stored on disk
+- **[Object Storage](object_storage.md)** ✅ **Implemented**: How objects are compressed and stored on disk
   - See `gitpy/storage/` for `LooseObjectStore`, `ObjectDatabase`
   - See `gitpy/repository.py` for `Repository` class
+- **[Pack Files](pack_files.md)**: Efficient storage combining many objects
+- **[Delta Compression](delta_compression.md)**: How Git stores only differences
+- **[Pack Index](pack_index.md)**: Fast object lookup in packs
 - **References**: How branches, tags, and HEAD point to objects
 - **Index**: The staging area between working directory and repository
 - **Commands**: The porcelain commands that orchestrate everything
@@ -976,6 +979,7 @@ Every Git operation ultimately reduces to creating, reading, or referencing thes
 |-----------|--------|--------|
 | Object Model | ✅ Complete | `gitpy/objects/` |
 | Object Storage | ✅ Complete | `gitpy/storage/`, `gitpy/repository.py` |
+| Pack Files | 🔲 Phase 2b | `gitpy/storage/pack*.py` |
 | References | 🔲 Planned | `gitpy/refs/` |
 | Index | 🔲 Planned | `gitpy/index/` |
 | Commands | 🔲 Planned | `gitpy/commands/` |

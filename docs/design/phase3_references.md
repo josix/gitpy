@@ -1118,20 +1118,20 @@ class TestBranchManager:
 
 ### 10.1 Functional Requirements
 
-- [ ] HEAD can be attached (branch) or detached (SHA)
-- [ ] References resolve through prefix search
-- [ ] Symbolic refs are followed recursively
-- [ ] Packed refs are read correctly
-- [ ] Branch create/delete/rename work
-- [ ] Tags (lightweight and annotated) work
-- [ ] Reflog entries are recorded
-- [ ] Revision expressions (^, ~) parse correctly
+- [x] HEAD can be attached (branch) or detached (SHA)
+- [x] References resolve through prefix search
+- [x] Symbolic refs are followed recursively
+- [x] Packed refs are read correctly
+- [x] Branch create/delete/rename work
+- [x] Tags (lightweight and annotated) work
+- [x] Reflog entries are recorded
+- [x] Revision expressions (^, ~) parse correctly
 
 ### 10.2 Non-Functional Requirements
 
-- [ ] Atomic ref updates (lock files)
-- [ ] Compatible with real Git refs
-- [ ] Efficient packed-refs reading
+- [x] Atomic ref updates (lock files)
+- [x] Compatible with real Git refs
+- [x] Efficient packed-refs reading
 
 ---
 
