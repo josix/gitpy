@@ -89,6 +89,55 @@ def _encode_delta_size(size: int) -> bytes:
     return bytes(result)
 
 
+def _parse_copy_op(data: bytes, cmd: int, offset: int) -> tuple[DeltaCopy, int]:
+    """Decode a COPY instruction (cmd has bit 7 set).
+
+    Reads the variable-length offset and size fields that follow the
+    command byte and returns the decoded operation plus the updated
+    stream position.
+
+    Args:
+        data: Raw delta bytes.
+        cmd: Command byte (already consumed from *data*).
+        offset: Current stream position (immediately after *cmd*).
+
+    Returns:
+        Tuple of (DeltaCopy, new_offset).
+    """
+    copy_offset = 0
+    copy_size = 0
+
+    # Offset bytes (little-endian, presence controlled by bits 0-3 of cmd)
+    if cmd & 0x01:
+        copy_offset |= data[offset]
+        offset += 1
+    if cmd & 0x02:
+        copy_offset |= data[offset] << 8
+        offset += 1
+    if cmd & 0x04:
+        copy_offset |= data[offset] << 16
+        offset += 1
+    if cmd & 0x08:
+        copy_offset |= data[offset] << 24
+        offset += 1
+
+    # Size bytes (little-endian, presence controlled by bits 4-6 of cmd)
+    if cmd & 0x10:
+        copy_size |= data[offset]
+        offset += 1
+    if cmd & 0x20:
+        copy_size |= data[offset] << 8
+        offset += 1
+    if cmd & 0x40:
+        copy_size |= data[offset] << 16
+        offset += 1
+
+    if copy_size == 0:
+        copy_size = 0x10000
+
+    return DeltaCopy(offset=copy_offset, size=copy_size), offset
+
+
 def parse_delta(data: bytes) -> tuple[int, int, list[DeltaOp]]:
     """Parse delta instructions.
 
@@ -103,14 +152,12 @@ def parse_delta(data: bytes) -> tuple[int, int, list[DeltaOp]]:
     """
     offset = 0
 
-    # Read source and target sizes
     source_size, consumed = read_delta_size(data, offset)
     offset += consumed
 
     target_size, consumed = read_delta_size(data, offset)
     offset += consumed
 
-    # Parse instructions
     ops: list[DeltaOp] = []
 
     while offset < len(data):
@@ -118,49 +165,12 @@ def parse_delta(data: bytes) -> tuple[int, int, list[DeltaOp]]:
         offset += 1
 
         if cmd & 0x80:
-            # COPY instruction
-            copy_offset = 0
-            copy_size = 0
-
-            # Read offset bytes (little-endian)
-            if cmd & 0x01:
-                copy_offset |= data[offset]
-                offset += 1
-            if cmd & 0x02:
-                copy_offset |= data[offset] << 8
-                offset += 1
-            if cmd & 0x04:
-                copy_offset |= data[offset] << 16
-                offset += 1
-            if cmd & 0x08:
-                copy_offset |= data[offset] << 24
-                offset += 1
-
-            # Read size bytes (little-endian)
-            if cmd & 0x10:
-                copy_size |= data[offset]
-                offset += 1
-            if cmd & 0x20:
-                copy_size |= data[offset] << 8
-                offset += 1
-            if cmd & 0x40:
-                copy_size |= data[offset] << 16
-                offset += 1
-
-            # Size of 0 means 0x10000
-            if copy_size == 0:
-                copy_size = 0x10000
-
-            ops.append(DeltaCopy(offset=copy_offset, size=copy_size))
-
+            op, offset = _parse_copy_op(data, cmd, offset)
+            ops.append(op)
         elif cmd > 0:
-            # INSERT instruction - cmd is the size
-            insert_data = data[offset : offset + cmd]
+            ops.append(DeltaInsert(data=data[offset : offset + cmd]))
             offset += cmd
-            ops.append(DeltaInsert(data=insert_data))
-
         else:
-            # cmd == 0 is reserved/invalid
             raise ValueError("Invalid delta instruction: 0x00")
 
     return source_size, target_size, ops
@@ -261,6 +271,92 @@ def _emit_insert(result: bytearray, data: bytes) -> None:
         result.extend(chunk)
 
 
+_MAX_COPY_SIZE = 0xFFFFFF  # Maximum bytes a single COPY instruction can copy.
+
+
+def _emit_copy(result: bytearray, offset: int, size: int) -> None:
+    """Emit one or more COPY instructions for a region in the base object.
+
+    Splits the copy into chunks of at most 0xFFFFFF bytes so the 24-bit
+    size field in the COPY instruction is never overflowed.
+
+    Args:
+        result: Output buffer to append to.
+        offset: Starting byte offset in the base object.
+        size: Total number of bytes to copy.
+    """
+    while size > 0:
+        chunk = min(size, _MAX_COPY_SIZE)
+        result.extend(_encode_copy_instruction(offset, chunk))
+        offset += chunk
+        size -= chunk
+
+
+def _build_source_index(source: bytes, chunk_size: int) -> dict[bytes, list[int]]:
+    """Build a lookup map from source chunks to their starting positions.
+
+    Args:
+        source: Base object data.
+        chunk_size: Size of each chunk key.
+
+    Returns:
+        Mapping of chunk bytes → list of offsets in *source*.
+    """
+    index: dict[bytes, list[int]] = {}
+    for i in range(len(source) - chunk_size + 1):
+        chunk = source[i : i + chunk_size]
+        if chunk not in index:
+            index[chunk] = []
+        index[chunk].append(i)
+    return index
+
+
+def _find_best_match(
+    source: bytes,
+    target: bytes,
+    target_pos: int,
+    source_index: dict[bytes, list[int]],
+    chunk_size: int,
+) -> tuple[int, int]:
+    """Find the longest match for *target[target_pos:]* in *source*.
+
+    Args:
+        source: Base object data.
+        target: Target object data.
+        target_pos: Current position in *target*.
+        source_index: Output of ``_build_source_index``.
+        chunk_size: Minimum chunk size for a valid match.
+
+    Returns:
+        Tuple of (best_src_offset, best_length); best_length is 0 when no
+        match reaches *chunk_size*.
+    """
+    best_offset = -1
+    best_length = 0
+
+    if target_pos + chunk_size > len(target):
+        return best_offset, best_length
+
+    chunk = target[target_pos : target_pos + chunk_size]
+    if chunk not in source_index:
+        return best_offset, best_length
+
+    for src_pos in source_index[chunk]:
+        length = chunk_size
+        while (
+            target_pos + length < len(target)
+            and src_pos + length < len(source)
+            and target[target_pos + length] == source[src_pos + length]
+        ):
+            length += 1
+
+        if length > best_length:
+            best_offset = src_pos
+            best_length = length
+
+    return best_offset, best_length
+
+
 def create_delta(source: bytes, target: bytes) -> bytes:
     """Create delta from source to target.
 
@@ -275,67 +371,34 @@ def create_delta(source: bytes, target: bytes) -> bytes:
         Delta bytes that transform source into target.
     """
     result = bytearray()
-
-    # Write sizes
     result.extend(_encode_delta_size(len(source)))
     result.extend(_encode_delta_size(len(target)))
 
-    # Handle empty source - everything is INSERT
     if len(source) == 0:
         _emit_insert(result, target)
         return bytes(result)
 
-    # Build index of chunks in source
     chunk_size = 16
-    source_index: dict[bytes, list[int]] = {}
-    for i in range(len(source) - chunk_size + 1):
-        chunk = source[i : i + chunk_size]
-        if chunk not in source_index:
-            source_index[chunk] = []
-        source_index[chunk].append(i)
+    source_index = _build_source_index(source, chunk_size)
 
-    # Scan target, finding matches
     target_pos = 0
     pending_insert = bytearray()
 
     while target_pos < len(target):
-        best_offset = -1
-        best_length = 0
-
-        # Try to find a match
-        if target_pos + chunk_size <= len(target):
-            chunk = target[target_pos : target_pos + chunk_size]
-
-            if chunk in source_index:
-                for src_pos in source_index[chunk]:
-                    # Extend match as far as possible
-                    length = chunk_size
-                    while (
-                        target_pos + length < len(target)
-                        and src_pos + length < len(source)
-                        and target[target_pos + length] == source[src_pos + length]
-                    ):
-                        length += 1
-
-                    if length > best_length:
-                        best_offset = src_pos
-                        best_length = length
+        best_offset, best_length = _find_best_match(
+            source, target, target_pos, source_index, chunk_size
+        )
 
         if best_length >= chunk_size:
-            # Found a good match - emit pending insert first
             if pending_insert:
                 _emit_insert(result, bytes(pending_insert))
                 pending_insert = bytearray()
-
-            # Emit copy
-            result.extend(_encode_copy_instruction(best_offset, best_length))
+            _emit_copy(result, best_offset, best_length)
             target_pos += best_length
         else:
-            # No match - accumulate for insert
             pending_insert.append(target[target_pos])
             target_pos += 1
 
-    # Emit final pending insert
     if pending_insert:
         _emit_insert(result, bytes(pending_insert))
 

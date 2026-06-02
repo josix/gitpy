@@ -84,6 +84,20 @@ class ObjectDatabase:
         # Check pack files
         return any(sha in pack for pack in self._pack_files)
 
+    def resolve_short_sha(self, short_sha: str) -> str | None:
+        """Resolve abbreviated SHA to full SHA (public API).
+
+        Args:
+            short_sha: Abbreviated SHA (minimum 4 chars).
+
+        Returns:
+            Full 40-char SHA or None if not found or ambiguous.
+        """
+        try:
+            return self._resolve_short_sha(short_sha)
+        except ValueError:
+            return None
+
     def _resolve_short_sha(self, short_sha: str) -> str | None:
         """Resolve abbreviated SHA to full SHA.
 

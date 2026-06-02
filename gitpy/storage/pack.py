@@ -392,52 +392,194 @@ class PackFile:
         """Return number of objects in pack."""
         return self.object_count
 
-    def _build_index(self) -> PackIndex:
-        """Build index by scanning pack file.
+    def _scan_raw_entries(self) -> list[tuple[int, int]]:
+        """Scan pack data and collect (entry_start, crc32) pairs.
+
+        Traverses the compressed object stream without resolving deltas.
 
         Returns:
-            PackIndex built from pack contents.
+            List of (entry_start_offset, crc32) for every object.
         """
-        entries: list[PackIndexEntry] = []
+        raw_entries: list[tuple[int, int]] = []
         offset = 12  # After header
 
         for _ in range(self.object_count):
             entry_start = offset
 
-            # Read object header
-            obj_type, size, consumed = read_pack_object_header(self._data, offset)
+            obj_type, _size, consumed = read_pack_object_header(self._data, offset)
             offset += consumed
 
-            # Skip delta base reference if present
             if obj_type == PackObjectType.OFS_DELTA:
                 _, consumed = read_ofs_delta_offset(self._data, offset)
                 offset += consumed
             elif obj_type == PackObjectType.REF_DELTA:
                 offset += 20
 
-            # Find end of compressed data
             decompressor = zlib.decompressobj()
             decompressor.decompress(self._data[offset:])
             compressed_size = len(self._data[offset:]) - len(decompressor.unused_data)
             next_offset = offset + compressed_size
 
-            # Compute CRC32 of entire entry
             crc = zlib.crc32(self._data[entry_start:next_offset]) & 0xFFFFFFFF
-
-            # Resolve to get final type and data for SHA computation
-            type_name, resolved_data = self._resolve_object(entry_start)
-
-            # Compute SHA
-            header = f"{type_name} {len(resolved_data)}\0".encode()
-            sha = hashlib.sha1(
-                header + resolved_data, usedforsecurity=False
-            ).hexdigest()
-
-            entries.append(PackIndexEntry(sha=sha, offset=entry_start, crc32=crc))
+            raw_entries.append((entry_start, crc))
             offset = next_offset
+
+        return raw_entries
+
+    def _build_sha_map(self, raw_entries: list[tuple[int, int]]) -> dict[str, int]:
+        """Build a complete SHA→offset map for all objects in the pack.
+
+        Non-delta and OFS_DELTA objects are resolved first (their bases are
+        self-contained).  REF_DELTA objects are resolved iteratively: each
+        pass resolves any delta whose base SHA is now known, until all are
+        resolved or no further progress can be made.
+
+        Args:
+            raw_entries: Output of ``_scan_raw_entries``.
+
+        Returns:
+            Mapping of 40-char hex SHA to byte offset in the pack file.
+
+        Raises:
+            ValueError: A REF_DELTA chain references an unknown base.
+        """
+        sha_to_offset: dict[str, int] = {}
+
+        for entry_start, _ in raw_entries:
+            obj_type = read_pack_object_header(self._data, entry_start)[0]
+            if obj_type != PackObjectType.REF_DELTA:
+                type_name, resolved_data = self._resolve_object(entry_start)
+                hdr = f"{type_name} {len(resolved_data)}\0".encode()
+                sha = hashlib.sha1(
+                    hdr + resolved_data, usedforsecurity=False
+                ).hexdigest()
+                sha_to_offset[sha] = entry_start
+
+        pending = [
+            s
+            for s, _ in raw_entries
+            if read_pack_object_header(self._data, s)[0] == PackObjectType.REF_DELTA
+        ]
+        self._resolve_ref_delta_chain(pending, sha_to_offset)
+        return sha_to_offset
+
+    def _resolve_ref_delta_chain(
+        self,
+        pending: list[int],
+        sha_to_offset: dict[str, int],
+    ) -> None:
+        """Resolve REF_DELTA entries iteratively, updating *sha_to_offset* in-place.
+
+        Args:
+            pending: Pack offsets of unresolved REF_DELTA objects.
+            sha_to_offset: Grows as each delta is resolved.
+
+        Raises:
+            ValueError: No progress in a round — chain cannot be resolved.
+        """
+        while pending:
+            resolved_this_round: list[int] = []
+            for entry_start in pending:
+                _, _, _, _, _, base_sha = self._read_object_at(entry_start)
+                if base_sha is not None and base_sha in sha_to_offset:
+                    type_name, resolved_data = self._resolve_object_with_map(
+                        entry_start, sha_to_offset
+                    )
+                    hdr = f"{type_name} {len(resolved_data)}\0".encode()
+                    sha = hashlib.sha1(
+                        hdr + resolved_data, usedforsecurity=False
+                    ).hexdigest()
+                    sha_to_offset[sha] = entry_start
+                    resolved_this_round.append(entry_start)
+
+            if not resolved_this_round:
+                unresolved = [self._read_object_at(s)[5] for s in pending]
+                raise ValueError(
+                    f"Cannot resolve REF_DELTA chain; missing base(s): {unresolved}"
+                )
+
+            pending = [e for e in pending if e not in resolved_this_round]
+
+    def _build_index(self) -> PackIndex:
+        """Build index by scanning pack file.
+
+        Uses a multi-pass strategy so that REF_DELTA chains of arbitrary
+        depth can be resolved even when no ``.idx`` file exists.
+
+        Returns:
+            PackIndex built from pack contents.
+        """
+        raw_entries = self._scan_raw_entries()
+        sha_to_offset = self._build_sha_map(raw_entries)
+
+        entries: list[PackIndexEntry] = []
+        for entry_start, crc in raw_entries:
+            type_name, resolved_data = self._resolve_object_with_map(
+                entry_start, sha_to_offset
+            )
+            hdr = f"{type_name} {len(resolved_data)}\0".encode()
+            sha = hashlib.sha1(hdr + resolved_data, usedforsecurity=False).hexdigest()
+            entries.append(PackIndexEntry(sha=sha, offset=entry_start, crc32=crc))
 
         pack_sha = self._data[-20:].hex()
         return PackIndex(pack_sha=pack_sha, entries=entries)
+
+    def _resolve_object_with_map(
+        self, offset: int, sha_to_offset: dict[str, int]
+    ) -> tuple[str, bytes]:
+        """Resolve object at *offset* using *sha_to_offset* for REF_DELTA.
+
+        Identical to ``_resolve_object`` except that REF_DELTA resolution
+        uses *sha_to_offset* instead of ``self.index`` (which may not yet
+        exist during index construction).
+
+        Args:
+            offset: Byte offset in pack file.
+            sha_to_offset: Mapping of SHA → pack offset for base objects.
+
+        Returns:
+            Tuple of (type_name, object_data).
+        """
+        if offset in self._cache:
+            return self._cache[offset]
+
+        obj_type, _size, data, _next, base_offset, base_sha = self._read_object_at(
+            offset
+        )
+
+        if obj_type in (
+            PackObjectType.COMMIT,
+            PackObjectType.TREE,
+            PackObjectType.BLOB,
+            PackObjectType.TAG,
+        ):
+            type_name = PackObjectType(obj_type).to_object_type()
+            result = (type_name, data)
+
+        elif obj_type == PackObjectType.OFS_DELTA:
+            if base_offset is None:
+                raise ValueError("OFS_DELTA missing base offset")
+            base_type, base_data = self._resolve_object_with_map(
+                base_offset, sha_to_offset
+            )
+            result = (base_type, apply_delta(base_data, data))
+
+        elif obj_type == PackObjectType.REF_DELTA:
+            if base_sha is None:
+                raise ValueError("REF_DELTA missing base SHA")
+            ref_base_offset = sha_to_offset.get(base_sha)
+            if ref_base_offset is None:
+                raise ValueError(f"Base object not found in map: {base_sha}")
+            base_type, base_data = self._resolve_object_with_map(
+                ref_base_offset, sha_to_offset
+            )
+            result = (base_type, apply_delta(base_data, data))
+
+        else:
+            raise ValueError(f"Unknown object type: {obj_type}")
+
+        self._cache[offset] = result
+        return result
 
     def clear_cache(self) -> None:
         """Clear the resolved object cache."""

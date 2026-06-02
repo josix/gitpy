@@ -950,20 +950,20 @@ class TestGitCompatibility:
 
 ### 7.1 Functional Requirements
 
-- [ ] Parse Git index file (version 2)
-- [ ] Write Git-compatible index file
-- [ ] Checksum validation on read
-- [ ] Atomic writes with lock file
-- [ ] Entry metadata caching for fast status
-- [ ] read_tree populates index from tree
-- [ ] write_tree creates tree from index
-- [ ] Merge conflict stages (1-3) supported
+- [x] Parse Git index file (version 2)
+- [x] Write Git-compatible index file
+- [x] Checksum validation on read
+- [x] Atomic writes with lock file
+- [x] Entry metadata caching for fast status
+- [x] read_tree populates index from tree
+- [x] write_tree creates tree from index
+- [x] Merge conflict stages (1-3) supported
 
 ### 7.2 Non-Functional Requirements
 
-- [ ] Binary compatible with Git
-- [ ] Lock file prevents concurrent writes
-- [ ] Efficient stat caching
+- [x] Binary compatible with Git
+- [x] Lock file prevents concurrent writes
+- [x] Efficient stat caching
 
 ### 7.3 Verification
 

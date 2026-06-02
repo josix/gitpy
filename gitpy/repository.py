@@ -7,6 +7,13 @@ including initialization, discovery, and access to storage components.
 from pathlib import Path
 from typing import Self
 
+from .config import GitConfig
+from .index.index import IndexFile
+from .refs.branch import BranchManager
+from .refs.head import HeadManager
+from .refs.manager import RefManager
+from .refs.reflog import Reflog
+from .refs.tag import TagManager
 from .storage.database import ObjectDatabase
 
 
@@ -34,6 +41,63 @@ class Repository:
             raise ValueError(f"Not a git repository: {path}")
 
         self.objects = ObjectDatabase(self.git_dir)
+
+        self._refs: RefManager | None = None
+        self._head: HeadManager | None = None
+        self._branches: BranchManager | None = None
+        self._tags: TagManager | None = None
+        self._reflog: Reflog | None = None
+        self._index: IndexFile | None = None
+        self._config: GitConfig | None = None
+
+    @property
+    def refs(self) -> RefManager:
+        """Lazily initialised RefManager for this repository."""
+        if self._refs is None:
+            self._refs = RefManager(self.git_dir)
+        return self._refs
+
+    @property
+    def head(self) -> HeadManager:
+        """Lazily initialised HeadManager for this repository."""
+        if self._head is None:
+            self._head = HeadManager(self.git_dir)
+        return self._head
+
+    @property
+    def branches(self) -> BranchManager:
+        """Lazily initialised BranchManager for this repository."""
+        if self._branches is None:
+            self._branches = BranchManager(self.refs, self.head)
+        return self._branches
+
+    @property
+    def tags(self) -> TagManager:
+        """Lazily initialised TagManager for this repository."""
+        if self._tags is None:
+            self._tags = TagManager(self.refs, self.objects)
+        return self._tags
+
+    @property
+    def reflog(self) -> Reflog:
+        """Lazily initialised Reflog for this repository."""
+        if self._reflog is None:
+            self._reflog = Reflog(self.git_dir)
+        return self._reflog
+
+    @property
+    def index(self) -> IndexFile:
+        """Lazily initialised IndexFile for this repository."""
+        if self._index is None:
+            self._index = IndexFile(self.git_dir)
+        return self._index
+
+    @property
+    def config(self) -> GitConfig:
+        """Lazily initialised GitConfig for this repository."""
+        if self._config is None:
+            self._config = GitConfig(self.git_dir)
+        return self._config
 
     @classmethod
     def init(cls, path: Path, *, bare: bool = False) -> Self:
